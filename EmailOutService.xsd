@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="Counter.xsd"/>
+	<xs:include schemaLocation="DocumentTypes.xsd"/>
+	<xs:include schemaLocation="ServiceTypes.xsd"/>
+	<xs:include schemaLocation="JobTypes.xsd"/>
+	<xs:include schemaLocation="Subunits.xsd"/>
+	<!--02/24/11 PJZ Added supported XXXPasswordXXXSupported ServiceDescription elements-->
+	<!--12/14/11 PJZ Service Description is mandatory-->
+	<!--12/11/11 PJZ ServiceChargeInfoUri and ServiceOrganizations moved to base class-->
+	<!--11/08/11 PJZ Removed DefaultDocumentTicket & added extension point-->
+	<!--04/21/11 PJZ Fixed QueuedJobCount-->
+	<!--02/02/11 PJZ added some cloud elements to ServiceDescription-->
+	<!--12/06/10 PJZ added mandatory ImagesCompleted to ServiceStatus, Added missing EmailOutDocument-->
+	<!--10/6/10 PJZ Fixed order of capabilitiers and defaults-->
+	<!--09/23/10 PJZ Made Compression/DocumentFormat Default/Supported mandatory-->
+	<!--09/23/10 PJZ Fixed capabilitiers and defaults-->
+	<!--04/1/10 PJZ added "Type" suffix to ComplexTypes-->
+	<!--01/19/10 PJZ Added ImagesCompleted to Document Status-->
+	<!--010/22/09 PJZ Reworked concrete and abstract classes-->
+	<!--08/02/09 PJZ Modified configuration representation-->
+	<!--07/20/09 PJZ Fixed CapabilitiesReady and Configuration-->
+	<!--04/14/09 PJZ Updated Namespace-->
+	<!--01/30/09 PJZ Made IsAcceptingJobs service specific-->
+	<!--06/01/08 PJZ Added  anyAttribute extension point-->
+	<!--05/31/08 PJZ Move back to ##Other-->
+	<!--05/30/08 PJZ Move back to single namespace-->
+	<!--05/21/08 PJZ Partial alignment with WS-Scan-->
+	<!--12/14/07 PJZ Reworked Capabilities-->
+	<!--12/12/07 PJZ Reworked Service/Job/Document counters-->
+	<!--09/13/07 PJZ Reworked default and supported-->
+	<!--10/08/06 PJZ Reworked dependencies and removed Chameleon-->
+	<!--10/04/06 PJZ Created-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<!---->
+	<!-- EmailOutDocument - group -->
+	<!---->
+	<!-- EmailOutDocumentStatus - group -->
+	<xs:complexType name="EmailOutDocumentStatusType">
+		<xs:complexContent>
+			<xs:extension base="ImagingDocumentStatusType">
+				<xs:sequence>
+					<!-- EmailOut Document status references here -->
+					<!-- EmailOut Document counters from service counters definition -->
+					<xs:element ref="EmailOutDocumentCounters" minOccurs="0"/>
+					<xs:element ref="ImagesCompleted"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- EmailOutDocumentStatus - group -->
+	</xs:complexType>
+	<xs:element name="EmailOutDocumentStatus" type="EmailOutDocumentStatusType"/>
+	<!-- EmailOutDocumentTicket - group -->
+	<xs:complexType name="EmailOutDocumentTicketType">
+		<xs:sequence>
+			<xs:element ref="EmailOutDocumentDescription" minOccurs="0"/>
+			<xs:element ref="EmailOutDocumentProcessing" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EmailOutDocumentTicket" type="EmailOutDocumentTicketType"/>
+	<xs:element name="EmailOutDocumentReceipt" type="EmailOutDocumentTicketType"/>
+	<!-- EmailOutDocumentDescription - group -->
+	<xs:complexType name="EmailOutDocumentDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="ImagingDocumentDescriptionType">
+				<xs:sequence>
+					<!-- EmailOut Document description references here -->
+					<xs:element name="CompressionSupplied" type="CompressionType" minOccurs="0"/>
+					<xs:element name="DocumentCharsetSupplied" type="CharsetType" minOccurs="0"/>
+					<xs:element name="DocumentDigitalSignatureSupplied" type="DocumentDigitalSignatureType" minOccurs="0"/>
+					<xs:element name="DocumentFormatDetailsSupplied" type="DocumentFormatDetailsType" minOccurs="0"/>
+					<xs:element name="DocumentFormatSupplied" type="DocumentFormatType" minOccurs="0"/>
+					<xs:element name="DocumentFormatVersionSupplied" type="xs:string" minOccurs="0"/>
+					<xs:element name="DocumentMessageSupplied" type="xs:string" minOccurs="0"/>
+					<xs:element name="DocumentNameSupplied" type="xs:string" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- EmailOutDocumentDescription - group -->
+	</xs:complexType>
+	<xs:element name="EmailOutDocumentDescription" type="EmailOutDocumentDescriptionType"/>
+	<!-- EmailOutDocumentProcessing - group -->
+	<xs:complexType name="EmailOutDocumentProcessingType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobProcessingType">
+				<xs:sequence>
+					<!-- EmailOut document processing references here -->
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- EmailOutDocumentProcessing - group -->
+	</xs:complexType>
+	<xs:element name="EmailOutDocumentProcessing" type="EmailOutDocumentProcessingType"/>
+	<!-- EmailOutDocuments - set of EmailOut Documents -->
+	<xs:complexType name="EmailOutDocumentsType">
+		<xs:sequence>
+			<xs:element ref="EmailOutDocument" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- EmailOutDocuments - set of EmailOut Documents -->
+	</xs:complexType>
+	<xs:element name="EmailOutDocuments" type="EmailOutDocumentsType"/>
+	<!-- EmailOutDocument - object -->
+	<xs:complexType name="EmailOutDocumentType">
+		<xs:sequence>
+			<xs:element ref="EmailOutDocumentReceipt" minOccurs="0"/>
+			<xs:element ref="EmailOutDocumentStatus"/>
+			<xs:element ref="EmailOutDocumentTicket" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- EmailOutDocument - object -->
+	</xs:complexType>
+	<xs:element name="EmailOutDocument" type="EmailOutDocumentType"/>
+	<!---->
+	<!-- EmailOutJob - group -->
+	<!---->
+	<!-- EmailOutJobStatus - group -->
+	<xs:complexType name="EmailOutJobStatusType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobStatusType">
+				<xs:sequence>
+					<!-- EmailOut job status references here -->
+					<!-- EmailOut job counters from service counters definition -->
+					<xs:element ref="EmailOutJobCounters" minOccurs="0"/>
+					<xs:element ref="ImagesCompleted"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- EmailOutJobStatus - group -->
+	</xs:complexType>
+	<xs:element name="EmailOutJobStatus" type="EmailOutJobStatusType"/>
+	<!-- EmailOutJobTicket - group -->
+	<xs:complexType name="EmailOutJobTicketType">
+		<xs:sequence>
+			<xs:element ref="EmailOutDocumentProcessing" minOccurs="0"/>
+			<xs:element ref="EmailOutJobDescription" minOccurs="0"/>
+			<xs:element ref="EmailOutJobProcessing" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:element name="EmailOutJobTicket" type="EmailOutJobTicketType"/>
+	<xs:element name="EmailOutJobReceipt" type="EmailOutJobTicketType"/>
+	<!-- EmailOutJobDescription - group -->
+	<xs:complexType name="EmailOutJobDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobDescriptionType">
+				<xs:sequence>
+					<!-- EmailOut job description references here -->
+					<xs:element name="CompressionSupplied" type="CompressionType" minOccurs="0"/>
+					<xs:element name="DocumentCharsetSupplied" type="CharsetType" minOccurs="0"/>
+					<xs:element name="DocumentDigitalSignatureSupplied" type="DocumentDigitalSignatureType" minOccurs="0"/>
+					<xs:element name="DocumentFormatDetailsSupplied" type="DocumentFormatDetailsType" minOccurs="0"/>
+					<xs:element name="DocumentFormatSupplied" type="DocumentFormatType" minOccurs="0"/>
+					<xs:element name="DocumentFormatVersionSupplied" type="xs:string" minOccurs="0"/>
+					<xs:element name="DocumentMessageSupplied" type="xs:string" minOccurs="0"/>
+					<xs:element name="DocumentNameSupplied" type="xs:string" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- EmailOutJobDescription - group -->
+	</xs:complexType>
+	<xs:element name="EmailOutJobDescription" type="EmailOutJobDescriptionType"/>
+	<!-- EmailOutJobProcessing - group -->
+	<xs:complexType name="EmailOutJobProcessingType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobProcessingType">
+				<xs:sequence>
+					<!-- EmailOut job processing references here -->
+					<xs:element ref="JobSaveDisposition" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- EmailOutJobProcessing - group -->
+	</xs:complexType>
+	<xs:element name="EmailOutJobProcessing" type="EmailOutJobProcessingType"/>
+	<!-- EmailOutJobs - set of EmailOut jobs -->
+	<xs:complexType name="EmailOutJobsType">
+		<xs:sequence>
+			<xs:element ref="EmailOutJob" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- EmailOutJobs - set of EmailOut jobs -->
+	</xs:complexType>
+	<!-- EmailOutJob - object -->
+	<xs:complexType name="EmailOutJobType">
+		<xs:sequence>
+			<xs:element ref="EmailOutJobReceipt" minOccurs="0"/>
+			<xs:element ref="EmailOutJobStatus"/>
+			<xs:element ref="EmailOutJobTicket" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- EmailOutJob - object -->
+	</xs:complexType>
+	<xs:element name="EmailOutJob">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="EmailOutJobType">
+					<xs:sequence>
+						<xs:element ref="EmailOutDocument" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<!---->
+	<!-- EmailOutService - group -->
+	<!---->
+	<!-- EmailOutServiceStatus - group -->
+	<xs:complexType name="EmailOutServiceStatusType">
+		<xs:complexContent>
+			<xs:extension base="ImagingServiceStatusType">
+				<xs:sequence>
+					<xs:element ref="IsAcceptingJobs"/>
+					<xs:element ref="ImagesCompleted"/>
+					<xs:element ref="EmailOutServiceCounters" minOccurs="0"/>
+					<xs:element ref="QueuedJobCount" minOccurs="1"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- EmailOutServiceStatus - group -->
+	</xs:complexType>
+	<xs:element name="EmailOutServiceStatus" type="EmailOutServiceStatusType"/>
+	<!-- EmailOutServiceDescription - group -->
+	<xs:complexType name="EmailOutServiceDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="ImagingServiceDescriptionType">
+				<xs:sequence>
+					<!-- EmailOut service description references -->
+					<xs:element ref="CompressionDefault" minOccurs="1"/>
+					<xs:element ref="CompressionSupported" minOccurs="1"/>
+					<xs:element ref="DocumentFormatDefault" minOccurs="1"/>
+					<xs:element ref="DocumentFormatSupported" minOccurs="1"/>
+					<xs:element ref="DocumentFormatDetailsDefault" minOccurs="0"/>
+					<xs:element ref="DocumentFormatDetailsSupported" minOccurs="0"/>
+					<xs:element ref="DocumentFormatVersionSupported" minOccurs="0"/>
+					<xs:element ref="DocumentFormatVersionDefault" minOccurs="0"/>
+					<xs:element ref="DocumentPasswordSupported" minOccurs="0"/>
+					<xs:element ref="JobPasswordSupported" minOccurs="0"/>
+					<xs:element ref="JobPasswordEncryptionSupported" minOccurs="0"/>
+					<xs:element ref="MultipleOperationTimeout" minOccurs="0"/>
+					<xs:element ref="MultipleOperationTimeoutAction" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- EmailOutServiceDescription - group -->
+	</xs:complexType>
+	<xs:element name="EmailOutServiceDescription" type="EmailOutServiceDescriptionType"/>
+	<!-- EmailOut Service Default Ticket - group -->
+	<xs:element name="DefaultEmailOutJobTicket" type="EmailOutJobTicketType"/>
+	<!-- EmailOutService Capabilities - group -->
+	<xs:complexType name="EmailOutDocumentTicketCapabilitiesType">
+		<xs:sequence>
+			<xs:element ref="EmailOutDocumentProcessingCapabilities" minOccurs="0"/>
+			<xs:element name="EmailOutDocumentDescriptionCapabilities" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EmailOutDocumentTicketCapabilities" type="EmailOutDocumentTicketCapabilitiesType"/>
+	<xs:complexType name="EmailOutDocumentDescriptionCapabilitiesType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobDescriptionCapabilitiesType">
+				<xs:sequence>
+					<xs:element name="CompressionSupplied" type="CompressionSupportedType" minOccurs="0"/>
+					<xs:element name="DocumentCharsetSupplied" type="DocumentCharsetSupportedType" minOccurs="0"/>
+					<xs:element name="DocumentDigitalSignatureSupplied" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="DocumentFormatDetailsSupplied" type="DocumentFormatDetailsSupportedType" minOccurs="0"/>
+					<xs:element name="DocumentFormatSupplied" type="DocumentFormatSupportedType" minOccurs="0"/>
+					<xs:element name="DocumentFormatVersionSupplied" type="DocumentFormatVersionSupportedType" minOccurs="0"/>
+					<xs:element name="DocumentMessageSupplied" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="DocumentNameSupplied" type="xs:boolean" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- EmailOutDocumentDescription - group -->
+	</xs:complexType>
+	<xs:complexType name="EmailOutDocumentProcessingCapabilitiesType">
+		<xs:annotation>
+			<xs:documentation>ISSUE: (GP): I did not see a capability for the “light source” this can be changed in EmailOutning and can be done for the document type (paper, transparencies, negatives).</xs:documentation>
+		</xs:annotation>
+		<xs:complexContent>
+			<xs:extension base="ImagingDocumentProcessingCapabilitiesType">
+				<xs:sequence>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="EmailOutDocumentProcessingCapabilities" type="EmailOutDocumentProcessingCapabilitiesType"/>
+	<xs:complexType name="EmailOutJobProcessingCapabilitiesType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobProcessingCapabilitiesType">
+				<xs:sequence>
+					<xs:element name="JobSaveDisposition" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="SaveDisposition" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValues" type="SaveDispositionType" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="SaveInfo" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="SaveDocumentFormat" minOccurs="0">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="AllowedValues" type="SaveDocumentFormatType" maxOccurs="unbounded"/>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="SaveLocation" minOccurs="0">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element ref="UriSchemSupported" maxOccurs="unbounded"/>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="SaveName" type="xs:boolean" minOccurs="0"/>
+											<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="EmailOutJobProcessingCapabilities" type="EmailOutJobProcessingCapabilitiesType"/>
+	<xs:complexType name="EmailOutJobDescriptionCapabilitiesType">
+		<xs:complexContent>
+			<xs:extension base="pwg:ImagingJobDescriptionCapabilitiesType">
+				<xs:sequence>
+					<xs:element name="CompressionSupplied" type="CompressionSupportedType" minOccurs="0"/>
+					<xs:element name="DocumentCharsetSupplied" type="DocumentCharsetSupportedType" minOccurs="0"/>
+					<xs:element name="DocumentDigitalSignatureSupplied" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="DocumentFormatDetailsSupplied" type="DocumentFormatDetailsSupportedType" minOccurs="0"/>
+					<xs:element name="DocumentFormatSupplied" type="DocumentFormatSupportedType" minOccurs="0"/>
+					<xs:element name="DocumentFormatVersionSupplied" type="DocumentFormatVersionSupportedType" minOccurs="0"/>
+					<xs:element name="DocumentMessageSupplied" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="DocumentNameSupplied" type="xs:boolean" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="EmailOutJobDescriptionCapabilities" type="EmailOutJobDescriptionCapabilitiesType"/>
+	<xs:complexType name="EmailOutJobTicketCapabilitiesType">
+		<xs:sequence>
+			<xs:element ref="EmailOutDocumentProcessingCapabilities" minOccurs="0"/>
+			<xs:element ref="EmailOutJobDescriptionCapabilities" minOccurs="0"/>
+			<xs:element ref="EmailOutJobProcessingCapabilities" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:element name="EmailOutJobTicketCapabilities" type="EmailOutJobTicketCapabilitiesType"/>
+	<xs:complexType name="EmailOutServiceCapabilitiesType">
+		<xs:sequence>
+			<xs:element ref="EmailOutDocumentTicketCapabilities" minOccurs="0"/>
+			<xs:element ref="EmailOutJobTicketCapabilities" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EmailOutServiceCapabilities" type="EmailOutServiceCapabilitiesType"/>
+	<xs:element name="EmailOutServiceCapabilitiesReady" type="EmailOutServiceCapabilitiesType"/>
+	<!--EmailOutService Configuration - group -->
+	<xs:element name="EmailOutServiceConfiguration">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Consoles" minOccurs="0"/>
+				<xs:element ref="Covers" minOccurs="0"/>
+				<xs:element ref="Interfaces" minOccurs="0"/>
+				<xs:element ref="Interpreters" minOccurs="0"/>
+				<xs:element ref="OutputChannels" minOccurs="0"/>
+				<xs:element ref="Processors" minOccurs="0"/>
+				<xs:element ref="VendorSubunits" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- EmailOutServices - set of EmailOut services -->
+	<xs:complexType name="EmailOutServicesType">
+		<xs:sequence>
+			<xs:element ref="EmailOutService" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- EmailOutServices - set of EmailOut services -->
+	</xs:complexType>
+	<xs:element name="EmailOutServices" type="EmailOutServicesType"/>
+	<!-- EmailOutService - object -->
+	<xs:complexType name="EmailOutServiceBaseType">
+		<xs:sequence>
+			<xs:element ref="EmailOutServiceCapabilities" minOccurs="0"/>
+			<xs:element ref="EmailOutServiceCapabilitiesReady" minOccurs="0"/>
+			<xs:element name="EmailOutServiceDefaults" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="DefaultEmailOutJobTicket" minOccurs="0"/>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="EmailOutServiceDescription"/>
+			<xs:element ref="EmailOutServiceConfiguration" minOccurs="0"/>
+			<xs:element ref="EmailOutServiceStatus"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- EmailOutService - object -->
+	</xs:complexType>
+	<xs:complexType name="EmailOutServiceType">
+		<xs:complexContent>
+			<xs:extension base="EmailOutServiceBaseType">
+				<xs:sequence>
+					<xs:element name="JobTable">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="ActiveJobs" type="EmailOutJobsType"/>
+								<xs:element name="JobHistory" type="EmailOutJobsType" minOccurs="0"/>
+								<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="EmailOutService" type="EmailOutServiceType"/>
+</xs:schema>

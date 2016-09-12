@@ -1,0 +1,688 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   PWG Semantic Model v3   
+
+Copyright 2002-2014, IEEE Industry Standards and Technology Organization/PWG - System Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald, Joe Murdock 
+-->
+<!--08/01/11 PJZ Incorporated IDS operations-->
+<!--06/03/11 PJZ Fixes from May Face to Face-->
+<!--04/21/11 PJZ Fixed SystemControlService name-->
+<!--12/20/10 PJZ Added RestartSystemService-->
+<!--12/19/10 PJZ Removed System from Service operations-->
+<!--07/26/10 PJZ Added listing of services-->
+<!--07/23/10 PJZ Changed name from MFD to System, Changed filename-->
+<!--03/01/10 PJZ Updates per January Face to Face-->
+<!--07/09/09 PJZ Initial version-->
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:sm="http://www.pwg.org/schemas/2016/01/sm" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" targetNamespace="http://www.pwg.org/schemas/2016/01/sm">
+	<types>
+		<xs:schema xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" elementFormDefault="qualified" targetNamespace="http://schemas.xmlsoap.org/ws/2004/08/addressing">
+			<xs:include schemaLocation="addressing.xsd"/>
+		</xs:schema>
+		<xs:schema xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:sm="http://www.pwg.org/schemas/2016/01/sm" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+			<xs:include schemaLocation="PwgSemanticModel.xsd"/>
+			<xs:include schemaLocation="JobTypes.xsd"/>
+			<xs:include schemaLocation="DocumentTypes.xsd"/>
+			<xs:include schemaLocation="PwgSystemControlOpMsg.xsd"/>
+			<xs:include schemaLocation="PwgCommonOpMsg.xsd"/>
+			<xs:include schemaLocation="PwgSecurityOpMsg.xsd"/>
+			<xs:import namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing" schemaLocation="addressing.xsd"/>
+			<xs:element name="BinaryData" type="xs:base64Binary"/>
+			<xs:element name="RequestedElement" type="xs:QName"/>
+		</xs:schema>
+	</types>
+	<message name="DeleteServiceRequestMsg">
+		<part name="body" element="sm:DeleteServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="DeleteServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:DeleteServiceResponse"/>
+	</message>
+	<message name="DisableAllServicesRequestMsg">
+		<part name="body" element="sm:DisableAllServicesRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="DisableAllServicesResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:DisableAllServicesResponse"/>
+	</message>
+	<message name="EnableAllServicesRequestMsg">
+		<part name="body" element="sm:EnableAllServicesRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="EnableAllServicesResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:EnableAllServicesResponse"/>
+	</message>
+	<message name="GetSystemElementsRequestMsg">
+		<part name="body" element="sm:GetSystemElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetSystemElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetSystemElementsResponse"/>
+	</message>
+	<message name="ListAllServicesRequestMsg">
+		<part name="body" element="sm:ListAllServicesRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ListAllServicesResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ListAllServicesResponse"/>
+	</message>
+	<message name="PauseAllServicesRequestMsg">
+		<part name="body" element="sm:PauseAllServicesRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="PauseAllServicesResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:PauseAllServicesResponse"/>
+	</message>
+	<message name="PauseAllServicesAfterCurrentJobRequestMsg">
+		<part name="body" element="sm:PauseAllServicesAfterCurrentJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="PauseAllServicesAfterCurrentJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:PauseAllServicesAfterCurrentJobResponse"/>
+	</message>
+	<message name="RestartAllServicesRequestMsg">
+		<part name="body" element="sm:RestartAllServicesRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="RestartAllServicesResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:RestartAllServicesResponse"/>
+	</message>
+	<message name="RestartServiceRequestMsg">
+		<part name="body" element="sm:RestartServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="RestartServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:RestartServiceResponse"/>
+	</message>
+	<message name="ResumeAllServicesRequestMsg">
+		<part name="body" element="sm:ResumeAllServicesRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ResumeAllServicesResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ResumeAllServicesResponse"/>
+	</message>
+	<message name="SetSystemElementsRequestMsg">
+		<part name="body" element="sm:SetSystemElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SetSystemElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SetSystemElementsResponse"/>
+	</message>
+	<message name="ShutdownAllServicesRequestMsg">
+		<part name="body" element="sm:ShutdownAllServicesRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ShutdownAllServicesResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ShutdownAllServicesResponse"/>
+	</message>
+	<message name="ShutdownServiceRequestMsg">
+		<part name="body" element="sm:ShutdownServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ShutdownServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ShutdownServiceResponse"/>
+	</message>
+	<message name="StartupAllServicesRequestMsg">
+		<part name="body" element="sm:StartupAllServicesRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="StartupAllServicesResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:StartupAllServicesResponse"/>
+	</message>
+	<message name="StartupServiceRequestMsg">
+		<part name="body" element="sm:StartupServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="StartupServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:StartupServiceResponse"/>
+	</message>
+	<message name="GetSecurityElementsRequestMsg">
+		<part name="body" element="sm:GetSecurityElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetSecurityElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetSecurityElementsResponse"/>
+	</message>
+	<message name="RequestSecurityElementsRequestMsg">
+		<part name="body" element="sm:RequestSecurityElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="RequestSecurityElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:RequestSecurityElementsResponse"/>
+	</message>
+	<portType name="PwgSystemControlPort">
+		<operation name="DeleteService">
+			<input message="sm:DeleteServiceRequestMsg"/>
+			<output message="sm:DeleteServiceResponseMsg"/>
+		</operation>
+		<operation name="DisableAllServices">
+			<input message="sm:DisableAllServicesRequestMsg"/>
+			<output message="sm:DisableAllServicesResponseMsg"/>
+		</operation>
+		<operation name="EnableAllServices">
+			<input message="sm:EnableAllServicesRequestMsg"/>
+			<output message="sm:EnableAllServicesResponseMsg"/>
+		</operation>
+		<operation name="GetSystemElements">
+			<input message="sm:GetSystemElementsRequestMsg"/>
+			<output message="sm:GetSystemElementsResponseMsg"/>
+		</operation>
+		<operation name="ListAllServices">
+			<input message="sm:ListAllServicesRequestMsg"/>
+			<output message="sm:ListAllServicesResponseMsg"/>
+		</operation>
+		<operation name="PauseAllServices">
+			<input message="sm:PauseAllServicesRequestMsg"/>
+			<output message="sm:PauseAllServicesResponseMsg"/>
+		</operation>
+		<operation name="PauseAllServicesAfterCurrentJob">
+			<input message="sm:PauseAllServicesAfterCurrentJobRequestMsg"/>
+			<output message="sm:PauseAllServicesAfterCurrentJobResponseMsg"/>
+		</operation>
+		<operation name="RestartAllServices">
+			<input message="sm:RestartAllServicesRequestMsg"/>
+			<output message="sm:RestartAllServicesResponseMsg"/>
+		</operation>
+		<operation name="RestartService">
+			<input message="sm:RestartServiceRequestMsg"/>
+			<output message="sm:RestartServiceResponseMsg"/>
+		</operation>
+		<operation name="ResumeAllServices">
+			<input message="sm:ResumeAllServicesRequestMsg"/>
+			<output message="sm:ResumeAllServicesResponseMsg"/>
+		</operation>
+		<operation name="SetSystemElements">
+			<input message="sm:SetSystemElementsRequestMsg"/>
+			<output message="sm:SetSystemElementsResponseMsg"/>
+		</operation>
+		<operation name="ShutdownAllServices">
+			<input message="sm:ShutdownAllServicesRequestMsg"/>
+			<output message="sm:ShutdownAllServicesResponseMsg"/>
+		</operation>
+		<operation name="ShutdownService">
+			<input message="sm:ShutdownServiceRequestMsg"/>
+			<output message="sm:ShutdownServiceResponseMsg"/>
+		</operation>
+		<operation name="StartupAllServices">
+			<input message="sm:StartupAllServicesRequestMsg"/>
+			<output message="sm:StartupAllServicesResponseMsg"/>
+		</operation>
+		<operation name="StartupService">
+			<input message="sm:StartupServiceRequestMsg"/>
+			<output message="sm:StartupServiceResponseMsg"/>
+		</operation>
+	</portType>
+	<portType name="PwgSecurityPort">
+		<operation name="GetSecurityElements">
+			<input message="sm:GetSecurityElementsRequestMsg"/>
+			<output message="sm:GetSecurityElementsResponseMsg"/>
+		</operation>
+		<operation name="RequestSecurityElements">
+			<input message="sm:RequestSecurityElementsRequestMsg"/>
+			<output message="sm:RequestSecurityElementsResponseMsg"/>
+		</operation>
+	</portType>
+	<binding name="PwgSystemControlBinding" type="sm:PwgSystemControlPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="DeleteService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2016/01/sm:DeleteService"/>
+			<input>
+				<soap:header message="sm:DeleteServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:DeleteServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:DeleteServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:DeleteServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:DeleteServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:DeleteServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:DeleteServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:DeleteServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:DeleteServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="DisableAllServices">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2016/01/sm:DisableAllServices"/>
+			<input>
+				<soap:header message="sm:DisableAllServicesRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:DisableAllServicesRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:DisableAllServicesRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:DisableAllServicesRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:DisableAllServicesResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:DisableAllServicesResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:DisableAllServicesResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:DisableAllServicesResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:DisableAllServicesResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="EnableAllServices">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2016/01/sm:EnableAllServices"/>
+			<input>
+				<soap:header message="sm:EnableAllServicesRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:EnableAllServicesRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:EnableAllServicesRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:EnableAllServicesRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:EnableAllServicesResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:EnableAllServicesResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:EnableAllServicesResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:EnableAllServicesResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:EnableAllServicesResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetSystemElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2016/01/sm:GetSystemElements"/>
+			<input>
+				<soap:header message="sm:GetSystemElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetSystemElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetSystemElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetSystemElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetSystemElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetSystemElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetSystemElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetSystemElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetSystemElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ListAllServices">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2016/01/sm:ListAllServices"/>
+			<input>
+				<soap:header message="sm:ListAllServicesRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ListAllServicesRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ListAllServicesRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ListAllServicesRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ListAllServicesResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ListAllServicesResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ListAllServicesResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ListAllServicesResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ListAllServicesResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="PauseAllServices">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2016/01/sm:PauseAllServices"/>
+			<input>
+				<soap:header message="sm:PauseAllServicesRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PauseAllServicesRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:PauseAllServicesRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:PauseAllServicesRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:PauseAllServicesResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PauseAllServicesResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:PauseAllServicesResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:PauseAllServicesResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:PauseAllServicesResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="PauseAllServicesAfterCurrentJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2016/01/sm:PauseAllServicesAfterCurrentJob"/>
+			<input>
+				<soap:header message="sm:PauseAllServicesAfterCurrentJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PauseAllServicesAfterCurrentJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:PauseAllServicesAfterCurrentJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:PauseAllServicesAfterCurrentJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:PauseAllServicesAfterCurrentJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PauseAllServicesAfterCurrentJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:PauseAllServicesAfterCurrentJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:PauseAllServicesAfterCurrentJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:PauseAllServicesAfterCurrentJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="RestartAllServices">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2016/01/sm:RestartAllServices"/>
+			<input>
+				<soap:header message="sm:RestartAllServicesRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RestartAllServicesRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:RestartAllServicesRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:RestartAllServicesRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:RestartAllServicesResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RestartAllServicesResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:RestartAllServicesResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:RestartAllServicesResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:RestartAllServicesResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="RestartService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2016/01/sm:RestartService"/>
+			<input>
+				<soap:header message="sm:RestartServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RestartServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:RestartServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:RestartServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:RestartServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RestartServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:RestartServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:RestartServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:RestartServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ResumeAllServices">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2016/01/sm:ResumeService"/>
+			<input>
+				<soap:header message="sm:ResumeAllServicesRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResumeAllServicesRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResumeAllServicesRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResumeAllServicesRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ResumeAllServicesResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResumeAllServicesResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ResumeAllServicesResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResumeAllServicesResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResumeAllServicesResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SetSystemElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2016/01/sm:SetSystemElements"/>
+			<input>
+				<soap:header message="sm:SetSystemElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetSystemElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetSystemElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetSystemElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SetSystemElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetSystemElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SetSystemElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetSystemElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetSystemElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ShutdownAllServices">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2016/01/sm:ShutdownAllServices"/>
+			<input>
+				<soap:header message="sm:ShutdownAllServicesRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ShutdownAllServicesRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ShutdownAllServicesRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ShutdownAllServicesRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ShutdownAllServicesResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ShutdownAllServicesResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ShutdownAllServicesResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ShutdownAllServicesResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ShutdownAllServicesResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ShutdownService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2016/01/sm:ShutdownService"/>
+			<input>
+				<soap:header message="sm:ShutdownServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ShutdownServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ShutdownServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ShutdownServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ShutdownServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ShutdownServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ShutdownServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ShutdownServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ShutdownServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="StartupAllServices">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2016/01/sm:StartupAllServices"/>
+			<input>
+				<soap:header message="sm:StartupAllServicesRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:StartupAllServicesRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:StartupAllServicesRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:StartupAllServicesRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:StartupAllServicesResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:StartupAllServicesResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:StartupAllServicesResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:StartupAllServicesResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:StartupAllServicesResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="StartupService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2016/01/sm:StartupService"/>
+			<input>
+				<soap:header message="sm:StartupServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:StartupServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:StartupServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:StartupServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:StartupServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:StartupServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:StartupServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:StartupServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:StartupServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<binding name="PwgSecurityBinding" type="sm:PwgSecurityPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="GetSecurityElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelJob"/>
+			<input>
+				<soap:header message="sm:GetSecurityElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetSecurityElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetSecurityElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetSecurityElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetSecurityElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetSecurityElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetSecurityElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetSecurityElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetSecurityElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="RequestSecurityElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelCopyJobs"/>
+			<input>
+				<soap:header message="sm:RequestSecurityElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RequestSecurityElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:RequestSecurityElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:RequestSecurityElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:RequestSecurityElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RequestSecurityElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:RequestSecurityElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:RequestSecurityElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:RequestSecurityElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="PwgSystemControlService">
+		<port name="PwgSystemControlPort" binding="sm:PwgSystemControlBinding">
+			<soap:address location="http://localhost:53107/PwgSystemControlService"/>
+		</port>
+		<port name="PwgSecurityPort" binding="sm:PwgSecurityBinding">
+			<soap:address location="http://localhost:53106/PwgSystemControlService"/>
+			<soap:address location="http://localhost:53101/PwgCopyService"/>
+			<soap:address location="http://localhost:53101/PwgScanService"/>
+			<soap:address location="http://localhost:53102/PwgResourceService"/>
+			<soap:address location="http://localhost:53100/PwgPrintService"/>
+			<soap:address location="http://localhost:53103/PwgFaxOutService"/>
+		</port>
+	</service>
+</definitions>

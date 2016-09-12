@@ -1,0 +1,926 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<!--12/06/12 PJZ Normalized Cloud operation names-->
+	<!--11/27/012 PJZ GetFetchablePrintJobs limited to one printer-->
+	<!--11/27/012 PJZ Changed ReplyTo* to AcknowledgePrint*-->
+	<!--11/26/12 PJZ Updated GetFetchablePrintJobs response-->
+	<!--10/11/12 PJZ Merged in an initial straw man for Cloud Print Manager/Cloud Print Service messages-->
+	<!--06/06/12 PJZ Final JPS3 update-->
+	<!--02/24/11 PJZ Added password operational elements-->
+	<!--02/03/12 PJZ DocumentPassword is operational element-->
+	<!--01/10/12 PJZ Aligned with latest JPS3 and Raster specs-->
+	<!--07/19/11 PJZ Completed fixes for Set operation-->
+	<!--05/0511 PJZ Added JPS3 operation & parameters-->
+	<!--05/05/11 PJZ Added IdentifyPrinter operation-->
+	<!--05/02/11 PJZ Removed Startup operation-->
+	<!--10/19/10 PJZ Changed URI to Uri-->
+	<!--06/04/10 PJZ Reworked Set Service Elements input parameters-->
+	<!--10/19/10 PJZ Changed URI to Uri-->
+	<!--04/22/10 PJZ added "Message parameter and made all operations extensible-->
+	<!--04/1/10 PJZ added "Type" suffix to ComplexTypes-->
+	<!--03/01/10 PJZ Added CloseJob back in-->
+	<!--02/05/10 PJZ Fixed operation names-->
+	<!--01/19/10 PJZ Made all service interfaces homogenous (as much as possible)-->
+	<!--01/05/10 PJZ Added some missing operations-->
+	<!--01/05/10 PJZ Added active and history job lists-->
+	<!--01/02/10 PJZ Gets/Sets now contain NaturalLanguage(declarative) and ElementsNaturalLanguageRequested(request) as appropriate-->
+	<!--11/23/09 PJZ Changed ValidatePrintJob to ValidatePrintJobTicket-->
+	<!--10/23/09 PJZ Updates per October face to face-->
+	<!--04/14/09 PJZ Updated Namespace-->
+	<!--10/03/08 PJZ Aligned admin ops-->
+	<!--08/29/08 PJZ Move Admin stuff out into its own schema-->
+	<!--05/30/08 PJZ Move back to single namespace-->
+	<!--05/21/08 PJZ Partial alignment with WS-Print-->
+	<!--PJZ 01/15/07    Updated for SM 2.0-->
+	<!--PJZ 04/17/02    Initial version-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<xs:include schemaLocation="PrintServiceCapabilities.xsd"/>
+	<xs:include schemaLocation="Subunits.xsd"/>
+	<xs:include schemaLocation="PwgCommon.xsd"/>
+	<xs:include schemaLocation="PwgWellKnownValues.xsd"/>
+	<xs:include schemaLocation="PrintService.xsd"/>
+	<xs:include schemaLocation="PwgCommonOpMsg.xsd"/>
+	<xs:import namespace="http://www.w3.org/2004/08/xop/include" schemaLocation="include.xsd"/>
+	<xs:import namespace="http://www.w3.org/2005/05/xmlmime" schemaLocation="xmlmime.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">Complex types and elements specific to operations</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="PrintDocumentSummaryType">
+		<xs:sequence>
+			<xs:element ref="DocumentNumber"/>
+			<xs:element ref="DocumentState"/>
+			<xs:element ref="DocumentStateReasons" minOccurs="0"/>
+			<xs:element ref="ImpressionsCompleted"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ListOfPrintDocumentSummarysType">
+		<xs:sequence>
+			<xs:element name="DocumentSummary" type="PrintDocumentSummaryType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="PrintJobSummaryType">
+		<xs:sequence>
+			<xs:element ref="ImpressionsCompleted"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="JobName"/>
+			<xs:element ref="JobOriginatingUserName"/>
+			<xs:element ref="JobState"/>
+			<xs:element ref="JobStateReasons" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ListOfPrintJobSummarysType">
+		<xs:sequence>
+			<xs:element name="JobSummary" type="PrintJobSummaryType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="FetchableJobsType">
+		<xs:sequence>
+			<xs:element ref="ImpressionsCompleted"/>
+			<xs:element ref="JobId" minOccurs="0"/>
+			<xs:element ref="JobName"/>
+			<xs:element ref="JobOriginatingUserName"/>
+			<xs:element ref="JobState"/>
+			<xs:element ref="JobStateReasons" minOccurs="0"/>
+			<xs:element ref="JobUuid"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--Some Elements needed for cloud print-->
+	<xs:element name="DestinationDocumentUuid">
+		<xs:annotation>
+			<xs:documentation>Global ID</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:restriction base="UuidType">
+					<xs:maxLength value="45"/>
+				</xs:restriction>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SourceDocumentUuid">
+		<xs:annotation>
+			<xs:documentation>Global ID</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:restriction base="UuidType">
+					<xs:maxLength value="45"/>
+				</xs:restriction>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DestinationJobUuid" type="UuidType">
+		<xs:annotation>
+			<xs:documentation>Global ID</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="SourceJobUuid" type="UuidType">
+		<xs:annotation>
+			<xs:documentation>Global ID</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DestinationServiceUuid" type="UuidType">
+		<xs:annotation>
+			<xs:documentation>Global ID</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="SourceServiceUuid" type="UuidType">
+		<xs:annotation>
+			<xs:documentation>Global ID</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="TimeOut" type="xs:int"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">Operation and Response messages</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ActivatePrintServiceRequest" type="ActivateServiceRequestType"/>
+	<xs:element name="ActivatePrintServiceResponse" type="ActivateServiceResponseType"/>
+	<xs:element name="CancelPrintDocumentRequest" type="CancelDocumentRequestType"/>
+	<xs:element name="CancelPrintDocumentResponse" type="CancelDocumentResponseType"/>
+	<xs:element name="CancelPrintJobRequest" type="CancelJobRequestType"/>
+	<xs:element name="CancelPrintJobResponse" type="CancelJobResponseType"/>
+	<xs:element name="CancelCurrentPrintJobRequest" type="CancelCurrentJobRequestType"/>
+	<xs:element name="CancelCurrentPrintJobResponse" type="CancelCurrentJobResponseType"/>
+	<xs:element name="CancelMyPrintJobsRequest" type="CancelMyJobsRequestType"/>
+	<xs:element name="CancelMyPrintJobsResponse" type="CancelMyJobsResponseType"/>
+	<xs:element name="CancelPrintJobsRequest" type="CancelJobsRequestType"/>
+	<xs:element name="CancelPrintJobsResponse" type="CancelJobsResponseType"/>
+	<xs:element name="ClosePrintJobRequest" type="CloseJobRequestType"/>
+	<xs:element name="ClosePrintJobResponse" type="CloseJobResponseType"/>
+	<xs:complexType name="CreatePrintJobRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentPassword" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobPasswordEncryption" minOccurs="0"/>
+			<xs:element ref="JobPassword" minOccurs="0"/>
+			<xs:element ref="PrintJobTicket" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CreatePrintJobRequest" type="CreatePrintJobRequestType"/>
+	<xs:complexType name="CreatePrintJobResponseType">
+		<xs:sequence>
+			<xs:element ref="JobId"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CreatePrintJobResponse" type="CreatePrintJobResponseType"/>
+	<xs:element name="DisablePrintServiceRequest" type="DisableServiceRequestType"/>
+	<xs:element name="DisablePrintServiceResponse" type="DisableServiceResponseType"/>
+	<xs:element name="DeactivatePrintServiceRequest" type="DeactivateServiceRequestType"/>
+	<xs:element name="DeactivatePrintServiceResponse" type="DeactivateServiceResponseType"/>
+	<xs:element name="EnablePrintServiceRequest" type="EnableServiceRequestType"/>
+	<xs:element name="EnablePrintServiceResponse" type="EnableServiceResponseType"/>
+	<xs:element name="GetActivePrintJobsRequest" type="GetJobsRequestType"/>
+	<xs:complexType name="GetActivePrintJobsResponseType">
+		<xs:sequence>
+			<xs:element name="ActiveJobs" type="ListOfPrintJobSummarysType"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetActivePrintJobsResponse" type="GetActivePrintJobsResponseType"/>
+	<xs:element name="GetPrintDocumentsRequest" type="GetDocumentsRequestType"/>
+	<xs:complexType name="GetPrintDocumentsResponseType">
+		<xs:sequence>
+			<xs:element name="Documents" type="ListOfPrintDocumentSummarysType"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="JobName"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetPrintDocumentsResponse" type="GetPrintDocumentsResponseType"/>
+	<xs:complexType name="GetPrintDocumentElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentNumber"/>
+			<xs:element ref="ElementsNaturalLanguageRequested" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element name="RequestedElements" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Name" maxOccurs="unbounded">
+							<xs:simpleType>
+								<xs:union memberTypes="PrintDocumentElementNamesWKV KeywordNsExtensionPattern"/>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetPrintDocumentElementsRequest" type="GetPrintDocumentElementsRequestType"/>
+	<xs:complexType name="GetPrintDocumentElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element name="PrintDocument">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="PrintDocumentReceipt" minOccurs="0"/>
+						<xs:element ref="PrintDocumentStatus" minOccurs="0"/>
+						<xs:element ref="PrintDocumentTicket" minOccurs="0"/>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetPrintDocumentElementsResponse" type="GetPrintDocumentElementsResponseType"/>
+	<xs:complexType name="GetPrintJobsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguageRequested" minOccurs="0"/>
+			<xs:element ref="FirstIndex" minOccurs="0"/>
+			<xs:element ref="Limit" minOccurs="0"/>
+			<xs:element name="RequestedElements" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Name" maxOccurs="unbounded">
+							<xs:simpleType>
+								<xs:union memberTypes="PrintJobElementNamesWKV KeywordNsExtensionPattern"/>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetPrintJobsRequest" type="GetPrintJobsRequestType"/>
+	<xs:complexType name="GetPrintJobsResponseType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element name="PrintJobs">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PrintJob" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element ref="PrintJobReceipt" minOccurs="0"/>
+									<xs:element ref="PrintJobStatus" minOccurs="0"/>
+									<xs:element ref="PrintJobTicket" minOccurs="0"/>
+									<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetPrintJobsResponse" type="GetPrintJobsResponseType"/>
+	<xs:complexType name="GetPrintJobElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguageRequested" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element name="RequestedElements" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Name" maxOccurs="unbounded">
+							<xs:simpleType>
+								<xs:union memberTypes="PrintJobElementNamesWKV KeywordNsExtensionPattern"/>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetPrintJobElementsRequest" type="GetPrintJobElementsRequestType"/>
+	<xs:complexType name="GetPrintJobElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element name="PrintJob">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="PrintJobReceipt" minOccurs="0"/>
+						<xs:element ref="PrintJobStatus" minOccurs="0"/>
+						<xs:element ref="PrintJobTicket" minOccurs="0"/>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetPrintJobElementsResponse" type="GetPrintJobElementsResponseType"/>
+	<xs:element name="GetPrintJobHistoryRequest" type="GetJobsRequestType"/>
+	<xs:complexType name="GetPrintJobHistoryResponseType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element name="JobHistory" type="ListOfPrintJobSummarysType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetPrintJobHistoryResponse" type="GetPrintJobHistoryResponseType"/>
+	<xs:complexType name="GetPrintServiceElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguageRequested" minOccurs="0"/>
+			<xs:element ref="FirstIndex" minOccurs="0"/>
+			<xs:element ref="Limit" minOccurs="0"/>
+			<xs:element name="RequestedElements" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Name" maxOccurs="unbounded">
+							<xs:simpleType>
+								<xs:union memberTypes="PrintServiceElementNamesWKV KeywordNsExtensionPattern"/>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetPrintServiceElementsRequest" type="GetPrintServiceElementsRequestType"/>
+	<xs:complexType name="GetPrintServiceElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element name="PrintService" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="DefaultPrintJobTicket" minOccurs="0"/>
+						<xs:element ref="PrintServiceCapabilities" minOccurs="0"/>
+						<xs:element ref="PrintServiceCapabilitiesReady" minOccurs="0"/>
+						<xs:element name="PrintServiceConfiguration" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element ref="Consoles" minOccurs="0"/>
+									<xs:element ref="Covers" minOccurs="0"/>
+									<xs:element ref="Finishers" minOccurs="0"/>
+									<xs:element ref="InputChannels" minOccurs="0"/>
+									<xs:element ref="InputTrays" minOccurs="0"/>
+									<xs:element ref="Interfaces" minOccurs="0"/>
+									<xs:element ref="Interpreters" minOccurs="0"/>
+									<xs:element ref="Markers" minOccurs="0"/>
+									<xs:element ref="MediaPaths" minOccurs="0"/>
+									<xs:element ref="OutputTrays" minOccurs="0"/>
+									<xs:element ref="Processors" minOccurs="0"/>
+									<xs:element ref="Storages" minOccurs="0"/>
+									<xs:element ref="VendorSubunits" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element ref="PrintServiceDescription" minOccurs="0"/>
+						<xs:element ref="PrintServiceStatus" minOccurs="0"/>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetPrintServiceElementsResponse" type="GetPrintServiceElementsResponseType"/>
+	<xs:element name="HoldNewPrintJobsRequest" type="HoldNewJobsRequestType"/>
+	<xs:element name="HoldNewPrintJobsResponse" type="HoldNewJobsResponseType"/>
+	<xs:element name="HoldPrintJobRequest" type="HoldJobRequestType"/>
+	<xs:element name="HoldPrintJobResponse" type="HoldJobResponseType"/>
+	<xs:complexType name="IdentifyPrinterRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="IdentifyActions"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="IdentifyPrinterRequest" type="IdentifyPrinterRequestType"/>
+	<xs:complexType name="IdentifyPrinterResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:element name="IdentifyPrinterResponse" type="IdentifyPrinterResponseType"/>
+	<xs:element name="PausePrintServiceRequest" type="PauseServiceRequestType"/>
+	<xs:element name="PausePrintServiceResponse" type="PauseServiceResponseType"/>
+	<xs:element name="PausePrintServiceAfterCurrentJobRequest" type="PauseServiceAfterCurrentJobRequestType"/>
+	<xs:element name="PausePrintServiceAfterCurrentJobResponse" type="PauseServiceAfterCurrentJobResponseType"/>
+	<xs:complexType name="PrintJobRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentPassword" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobPasswordEncryption" minOccurs="0"/>
+			<xs:element ref="JobPassword" minOccurs="0"/>
+			<xs:element ref="PrintJobTicket"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element name="DocumentData">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="xop:Include"/>
+					</xs:sequence>
+					<xs:attribute ref="xmime:contentType"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PrintJobRequest" type="PrintJobRequestType"/>
+	<xs:complexType name="PrintJobResponseType">
+		<xs:sequence>
+			<xs:element ref="JobId"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PrintJobResponse" type="PrintJobResponseType"/>
+	<xs:complexType name="PrintUriRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentPassword" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobPasswordEncryption" minOccurs="0"/>
+			<xs:element ref="JobPassword" minOccurs="0"/>
+			<xs:element ref="PrintJobTicket"/>
+			<xs:element ref="DocumentUri"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PrintUriRequest" type="PrintUriRequestType"/>
+	<xs:complexType name="PrintUriResponseType">
+		<xs:sequence>
+			<xs:element ref="JobId"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PrintUriResponse" type="PrintUriResponseType"/>
+	<xs:element name="PromotePrintJobRequest" type="PromoteJobRequestType"/>
+	<xs:element name="PromotePrintJobResponse" type="PromoteJobResponseType"/>
+	<xs:element name="PurgePrintJobRequest" type="PurgeJobsRequestType"/>
+	<xs:element name="PurgePrintJobResponse" type="PurgeJobsResponseType"/>
+	<xs:element name="ReleaseNewPrintJobsRequest" type="ReleaseNewJobsRequestType"/>
+	<xs:element name="ReleaseNewPrintJobsResponse" type="ReleaseNewJobsResponseType"/>
+	<xs:element name="ReleasePrintJobRequest" type="ReleaseJobRequestType"/>
+	<xs:element name="ReleasePrintJobResponse" type="ReleaseJobResponseType"/>
+	<xs:complexType name="ReprocessPrintJobRequestType">
+		<xs:sequence>
+			<xs:element ref="JobId"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ReprocessPrintJobRequest" type="ReprocessPrintJobRequestType"/>
+	<xs:complexType name="ReprocessPrintJobResponseType">
+		<xs:sequence>
+			<xs:element ref="JobId"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ReprocessPrintJobResponse" type="ReprocessPrintJobResponseType"/>
+	<xs:complexType name="RestartPrintJobRequestType">
+		<xs:sequence>
+			<xs:element ref="JobId"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="RestartPrintJobRequest" type="RestartPrintJobRequestType"/>
+	<xs:complexType name="RestartPrintJobResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:element name="RestartPrintJobResponse" type="RestartPrintJobResponseType"/>
+	<xs:element name="RestartPrintServiceRequest" type="RestartServiceRequestType"/>
+	<xs:element name="RestartPrintServiceResponse" type="RestartServiceResponseType"/>
+	<xs:complexType name="ResubmitPrintJobRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="PrintJobTicket" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ResubmitPrintJobRequest" type="ResubmitPrintJobRequestType"/>
+	<xs:complexType name="ResubmitPrintJobResponseType">
+		<xs:sequence>
+			<xs:element ref="JobId"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ResubmitPrintJobResponse" type="ResubmitPrintJobResponseType"/>
+	<xs:element name="ResumePrintJobRequest" type="ResumeJobRequestType"/>
+	<xs:element name="ResumePrintJobResponse" type="ResumeJobResponseType"/>
+	<xs:element name="ResumePrintServiceRequest" type="ResumeServiceRequestType"/>
+	<xs:element name="ResumePrintServiceResponse" type="ResumeServiceResponseType"/>
+	<xs:complexType name="SendPrintDocumentRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentPassword" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="PrintDocumentTicket" minOccurs="0"/>
+			<xs:element ref="LastDocument"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element name="DocumentData">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="xop:Include"/>
+					</xs:sequence>
+					<xs:attribute ref="xmime:contentType"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SendPrintDocumentRequest" type="SendPrintDocumentRequestType"/>
+	<xs:complexType name="SendPrintDocumentResponseType">
+		<xs:sequence>
+			<xs:element ref="DocumentNumber"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SendPrintDocumentResponse" type="SendPrintDocumentResponseType"/>
+	<xs:complexType name="SendPrintUriRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentPassword" minOccurs="0"/>
+			<xs:element ref="DocumentUri"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="PrintDocumentTicket" minOccurs="0"/>
+			<xs:element ref="LastDocument"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SendPrintUriRequest" type="SendPrintUriRequestType"/>
+	<xs:complexType name="SendPrintUriResponseType">
+		<xs:sequence>
+			<xs:element ref="DocumentNumber"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SendPrintUriResponse" type="SendPrintUriResponseType"/>
+	<xs:complexType name="SetPrintDocumentElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentNumber"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="OperationMode" minOccurs="0"/>
+			<xs:element ref="PrintDocumentTicket" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetPrintDocumentElementsRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="SetPrintDocumentElementsRequestType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="SetPrintDocumentElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetPrintDocumentElementsResponse" type="SetPrintDocumentElementsResponseType"/>
+	<xs:complexType name="SetPrintJobElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="OperationMode" minOccurs="0"/>
+			<xs:element ref="PrintJobTicket" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetPrintJobElementsRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="SetPrintJobElementsRequestType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="SetPrintJobElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetPrintJobElementsResponse" type="SetPrintJobElementsResponseType"/>
+	<xs:complexType name="SetPrintServiceElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="OperationMode" minOccurs="0"/>
+			<xs:element name="PrintServiceElements">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="DefaultPrintJobTicket" minOccurs="0"/>
+						<xs:element ref="PrintServiceCapabilities" minOccurs="0"/>
+						<xs:element ref="PrintServiceCapabilitiesReady" minOccurs="0"/>
+						<xs:element ref="PrintServiceDescription" minOccurs="0"/>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetPrintServiceElementsRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="SetPrintServiceElementsRequestType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="SetPrintServiceElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetPrintServiceElementsResponse" type="SetPrintServiceElementsResponseType"/>
+	<xs:element name="ShutdownPrintServiceRequest" type="ShutdownServiceRequestType"/>
+	<xs:element name="ShutdownPrintServiceResponse" type="ShutdownServiceResponseType"/>
+	<xs:element name="SuspendCurrentPrintJobRequest" type="SuspendCurrentJobRequestType"/>
+	<xs:element name="SuspendCurrentPrintJobResponse" type="SuspendCurrentJobResponseType"/>
+	<xs:complexType name="ValidatePrintDocumentTicketRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentPassword" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="PrintDocumentTicket"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ValidatePrintDocumentTicketRequest" type="ValidatePrintDocumentTicketRequestType"/>
+	<xs:complexType name="ValidatePrintDocumentTicketResponseType">
+		<xs:sequence>
+			<xs:element ref="PreferredElements" minOccurs="0"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ValidatePrintDocumentTicketResponse" type="ValidatePrintDocumentTicketResponseType"/>
+	<xs:complexType name="ValidatePrintJobTicketRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentPassword" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobPasswordEncryption" minOccurs="0"/>
+			<xs:element ref="JobPassword" minOccurs="0"/>
+			<xs:element ref="PrintJobTicket"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ValidatePrintJobTicketRequest" type="ValidatePrintJobTicketRequestType"/>
+	<xs:complexType name="ValidatePrintJobTicketResponseType">
+		<xs:sequence>
+			<xs:element ref="JobId"/>
+			<xs:element ref="PreferredElements" minOccurs="0"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ValidatePrintJobTicketResponse" type="ValidatePrintJobTicketResponseType"/>
+	<!--The Cloud Print specific messages-->
+	<xs:complexType name="AcknowledgePrintDocumentRequestType">
+		<xs:sequence>
+			<xs:element ref="DateTimeAtCreation" minOccurs="0"/>
+			<xs:element ref="DestinationDocumentUuid"/>
+			<xs:element ref="DestinationJobUuid"/>
+			<xs:element ref="DestinationServiceUuid"/>
+			<xs:element ref="ImpressionsCompleted"/>
+			<xs:element ref="DocumentState"/>
+			<xs:element ref="DocumentStateReasons" minOccurs="0"/>
+			<xs:element ref="SourceDocumentUuid"/>
+			<xs:element ref="SourceJobUuid"/>
+			<xs:element ref="SourceServiceUuid"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AcknowledgePrintDocumentRequest" type="AcknowledgePrintDocumentRequestType"/>
+	<xs:complexType name="AcknowledgePrintDocumentResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:element name="AcknowledgePrintDocumentResponse" type="AcknowledgePrintDocumentResponseType"/>
+	<xs:complexType name="AcknowledgePrintJobRequestType">
+		<xs:sequence>
+			<xs:element ref="DateTimeAtCreation" minOccurs="0"/>
+			<xs:element ref="DestinationJobUuid"/>
+			<xs:element ref="DestinationServiceUuid"/>
+			<xs:element ref="ImpressionsCompleted"/>
+			<xs:element ref="JobName"/>
+			<xs:element ref="JobOriginatingUserName"/>
+			<xs:element ref="JobState"/>
+			<xs:element ref="JobStateReasons" minOccurs="0"/>
+			<xs:element ref="SourceJobUuid"/>
+			<xs:element ref="SourceServiceUuid"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AcknowledgePrintJobRequest" type="AcknowledgePrintJobRequestType"/>
+	<xs:complexType name="AcknowledgePrintJobResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:element name="AcknowledgePrintJobResponse" type="AcknowledgePrintJobResponseType"/>
+	<xs:complexType name="AvailablePrintJobSummaryType">
+		<xs:sequence>
+			<xs:element ref="Copies" minOccurs="0"/>
+			<xs:element ref="Finishings" minOccurs="0"/>
+			<xs:element ref="Impressions" minOccurs="0"/>
+			<xs:element ref="KOctets" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:sequence minOccurs="0">
+					<xs:element ref="Media" minOccurs="0"/>
+					<xs:element ref="MediaType" minOccurs="0"/>
+				</xs:sequence>
+				<xs:element ref="MediaCol" minOccurs="0"/>
+			</xs:choice>
+			<xs:element ref="SourceJobUuid" maxOccurs="unbounded"/>
+			<xs:element name="OtherElements" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FetchPrintDocumentRequestType">
+		<xs:sequence>
+			<xs:element ref="DestinationServiceUuid"/>
+			<xs:element ref="DestinationJobUuid"/>
+			<xs:element ref="SourceDocumentUuid"/>
+			<xs:element ref="SourceJobUuid"/>
+			<xs:element ref="SourceServiceUuid"/>
+			<xs:element ref="TimeOut" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FetchPrintDocumentRequest" type="FetchPrintDocumentRequestType"/>
+	<xs:complexType name="FetchPrintDocumentResponseType">
+		<xs:sequence>
+			<xs:element ref="DocumentPassword" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Compression" minOccurs="0"/>
+			<xs:element ref="DocumentFormat" minOccurs="0"/>
+			<xs:element ref="PrintDocumentTicket" minOccurs="0"/>
+			<xs:element ref="LastDocument"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:choice>
+				<xs:element name="DocumentData">
+					<xs:complexType>
+						<xs:simpleContent>
+							<xs:extension base="xs:base64Binary"/>
+						</xs:simpleContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="DocumentUri"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FetchPrintDocumentResponse" type="FetchPrintDocumentResponseType"/>
+	<xs:complexType name="FetchPrintJobRequestType">
+		<xs:sequence>
+			<xs:element ref="DestinationServiceUuid"/>
+			<xs:element ref="SourceJobUuid"/>
+			<xs:element ref="SourceServiceUuid"/>
+			<xs:element ref="TimeOut" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FetchPrintJobRequest" type="FetchPrintJobRequestType"/>
+	<xs:complexType name="FetchPrintJobResponseType">
+		<xs:sequence>
+			<xs:element ref="DocumentPassword" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobPasswordEncryption" minOccurs="0"/>
+			<xs:element ref="JobPassword" minOccurs="0"/>
+			<xs:element ref="PrintJobTicket" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FetchPrintJobResponse" type="FetchPrintJobResponseType"/>
+	<xs:complexType name="GetFetchablePrintJobsRequestType">
+		<xs:sequence>
+			<xs:element ref="DestinationServiceUuid"/>
+			<xs:element ref="SourceServiceUuid"/>
+			<xs:element ref="TimeOut" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetFetchablePrintJobsRequest" type="GetFetchablePrintJobsRequestType"/>
+	<xs:complexType name="GetFetchablePrintJobsResponseType">
+		<xs:sequence>
+			<xs:element name="PrinterWithJobs" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="DestinationServiceUuid"/>
+						<xs:element name="AvailableJobs">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="AvailablePrintJobSummary" type="AvailablePrintJobSummaryType" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element ref="SourceServiceUuid"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetFetchablePrintJobsResponse" type="GetFetchablePrintJobsResponseType"/>
+	<xs:complexType name="UpdateFetchablePrintJobsRequestType">
+		<xs:sequence>
+			<xs:element name="JobTable">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ActiveJobs" type="FetchableJobsType"/>
+						<xs:element name="JobHistory" type="FetchableJobsType" minOccurs="0"/>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UpdateFetchablePrintJobsRequest" type="UpdateFetchablePrintJobsRequestType"/>
+	<xs:complexType name="UpdateFetchablePrintJobsResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:element name="UpdateFetchablePrintJobsResponse" type="UpdateFetchablePrintJobsResponseType"/>
+	<xs:complexType name="UpdatePrintDocumentStateRequestType">
+		<xs:sequence>
+			<xs:element ref="DateTimeAtLastUpdate" minOccurs="0"/>
+			<xs:element ref="DestinationJobUuid"/>
+			<xs:element ref="DestinationServiceUuid"/>
+			<xs:element ref="DocumentNumber"/>
+			<xs:element ref="SourceJobUuid"/>
+			<xs:element ref="SourceServiceUuid"/>
+			<xs:element ref="PrintDocumentReceipt" minOccurs="0"/>
+			<xs:element ref="PrintDocumentStatus" minOccurs="0"/>
+			<xs:element ref="PrintDocumentTicket" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UpdatePrintDocumentStateRequest" type="UpdatePrintDocumentStateRequestType"/>
+	<xs:complexType name="UpdatePrintDocumentStateResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:element name="UpdatePrintDocumentStateResponse" type="UpdatePrintDocumentStateResponseType"/>
+	<xs:complexType name="UpdatePrintJobStateRequestType">
+		<xs:sequence>
+			<xs:element ref="DateTimeAtLastUpdate" minOccurs="0"/>
+			<xs:element ref="DestinationJobUuid"/>
+			<xs:element ref="DestinationServiceUuid"/>
+			<xs:element ref="SourceJobUuid"/>
+			<xs:element ref="SourceServiceUuid"/>
+			<xs:element ref="PrintJobReceipt" minOccurs="0"/>
+			<xs:element ref="PrintJobStatus" minOccurs="0"/>
+			<xs:element ref="PrintJobTicket" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UpdatePrintJobStateRequest" type="UpdatePrintJobStateRequestType"/>
+	<xs:complexType name="UpdatePrintJobStateResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:element name="UpdatePrintJobStateResponse" type="UpdatePrintJobStateResponseType"/>
+	<xs:complexType name="UpdatePrintServiceStateRequestType">
+		<xs:sequence>
+			<xs:element ref="DateTimeAtLastUpdate" minOccurs="0"/>
+			<xs:element ref="DestinationServiceUuid"/>
+			<xs:element ref="SourceServiceUuid"/>
+			<xs:element ref="PrintServiceCapabilities" minOccurs="0"/>
+			<xs:element name="PrintServiceConfiguration" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Consoles" minOccurs="0"/>
+						<xs:element ref="Covers" minOccurs="0"/>
+						<xs:element ref="Finishers" minOccurs="0"/>
+						<xs:element ref="InputChannels" minOccurs="0"/>
+						<xs:element ref="InputTrays" minOccurs="0"/>
+						<xs:element ref="Interfaces" minOccurs="0"/>
+						<xs:element ref="Interpreters" minOccurs="0"/>
+						<xs:element ref="Markers" minOccurs="0"/>
+						<xs:element ref="MediaPaths" minOccurs="0"/>
+						<xs:element ref="OutputTrays" minOccurs="0"/>
+						<xs:element ref="Processors" minOccurs="0"/>
+						<xs:element ref="Storages" minOccurs="0"/>
+						<xs:element ref="VendorSubunits" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="PrintServiceDefaults" minOccurs="0"/>
+			<xs:element ref="PrintServiceDescription" minOccurs="0"/>
+			<xs:element ref="PrintServiceStatus" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UpdatePrintServiceStateRequest" type="UpdatePrintServiceStateRequestType"/>
+	<xs:complexType name="UpdatePrintServiceStateResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:element name="UpdatePrintServiceStateResponse" type="UpdatePrintServiceStateResponseType"/>
+</xs:schema>

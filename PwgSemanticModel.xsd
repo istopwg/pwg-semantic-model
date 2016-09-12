@@ -1,0 +1,56 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="PwgCommon.xsd"/>
+	<xs:include schemaLocation="System.xsd"/>
+	<xs:include schemaLocation="Services.xsd"/>
+	<xs:include schemaLocation="Subunits.xsd"/>
+	<xs:include schemaLocation="Conditions.xsd"/>
+	<!--09/20/10 PJZ Removed Agent Manager and Device-->
+	<!--09/12/10 PJZ Removed AvailableResources.xsd since ftp://ftp.pwg.org/pub/pwg/ipp/new_RES/draft-ietf-ipp-get-resource-00.pdf never progressed-->
+	<!--09/10/10 PJZ Removed SystemCapabilities & moved contained Power elements-->
+	<!--06/15/10 PJZ Changed MfdService to SystemService-->
+	<!--06/14/10 PJZ Removed IsHoldingNewJobs-->
+	<!--05/28/10 PJZ added system health-->
+	<!--04/1/10 PJZ added "Type" suffix to ComplexTypes-->
+	<!--07/23/09 PJZ Promoted System to root of schema-->
+	<!--07/20/09 PJZ Collapsed various Fax services-->
+	<!--06/25/09 PJZ Moved Subunit-->
+	<!--04/14/09 PJZ Updated Namespace-->
+	<!--09/01/08 PJZ Changed ResidentResources to AvailableResources-->
+	<!--07/17/08 PJZ Changed Resources to ResidentResources-->
+	<!--06/12/08 PJZ Added Condition Table-->
+	<!--06/01/08 PJZ Added  anyAttribute extension point-->
+	<!--05/31/08 PJZ Move back to ##Other-->
+	<!--05/30/08 PJZ Move back to single namespace-->
+	<!--05/21/08 PJZ Partial alignment with WS-Scan-->
+	<!--10/08/06 PJZ Reworked dependencies and removed Chameleon-->
+	<!--08/08/06 PJZ Changed namespace-->
+	<!--070606  PJZ Added Media namespace-->
+	<!--050906  IEM  modified to integrate WIMS/1.0 objects for SM/2.0-->
+	<!--040506  PJZ  modified from ver 1.0 to prepare for SM editing work-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDoanald, Joe Murdock, Daniel Manchala 
+</xs:documentation>
+	</xs:annotation>
+	<!--                           -->
+	<!-- system object definitions -->
+	<!--                           -->
+	<!-- System - object -->
+	<xs:complexType name="SystemType">
+		<xs:sequence>
+			<xs:element ref="Services"/>
+			<xs:element ref="SystemConfiguration"/>
+			<xs:element ref="SystemDescription"/>
+			<xs:element ref="SystemStatus"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- System - object -->
+	</xs:complexType>
+	<xs:element name="System" type="SystemType"/>
+</xs:schema>

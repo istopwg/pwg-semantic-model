@@ -1,0 +1,257 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   PWG Semantic Model v2   
+
+Copyright 2002-2012, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler
+-->
+<!--12/02/12 PJZ Initial version-->
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:sm="http://www.pwg.org/schemas/2016/01/sm" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:ns="http://purl.org/dc/elements/1.1/" xmlns:ns1="http://purl.org/dc/terms/" xmlns:ns2="http://purl.org/dc/dcmitype/" targetNamespace="http://www.pwg.org/schemas/2016/01/sm">
+	<types>
+		<xs:schema xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" elementFormDefault="qualified" targetNamespace="http://schemas.xmlsoap.org/ws/2004/08/addressing">
+			<xs:include schemaLocation="addressing.xsd"/>
+		</xs:schema>
+		<xs:schema xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:sm="http://www.pwg.org/schemas/2016/01/sm" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+			<xs:include schemaLocation="JobTypes.xsd"/>
+			<xs:include schemaLocation="DocumentTypes.xsd"/>
+			<xs:include schemaLocation="PwgNotificationOpMsg.xsd"/>
+			<xs:include schemaLocation="PwgCommonOpMsg.xsd"/>
+			<xs:import namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing" schemaLocation="addressing.xsd"/>
+			<xs:element name="RequestedElement" type="xs:QName"/>
+		</xs:schema>
+	</types>
+	<message name="CreateJobSubscriptionsRequestMsg">
+		<part name="body" element="sm:CreateJobSubscriptionsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CreateJobSubscriptionsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CreateJobSubscriptionsResponse"/>
+	</message>
+	<message name="CreateServiceSubscriptionsRequestMsg">
+		<part name="body" element="sm:CreateServiceSubscriptionsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CreateServiceSubscriptionsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CreateServiceSubscriptionsResponse"/>
+	</message>
+	<message name="GetSubscriptionElementsRequestMsg">
+		<part name="body" element="sm:GetSubscriptionElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetSubscriptionElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetSubscriptionElementsResponse"/>
+	</message>
+	<message name="GetSubscriptionsRequestMsg">
+		<part name="body" element="sm:GetSubscriptionsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetSubscriptionsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetSubscriptionsResponse"/>
+	</message>
+	<message name="RenewSubscriptionRequestMsg">
+		<part name="body" element="sm:RenewSubscriptionRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="RenewSubscriptionResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:RenewSubscriptionResponse"/>
+	</message>
+	<message name="CancelSubscriptionRequestMsg">
+		<part name="body" element="sm:CancelSubscriptionRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CancelSubscriptionResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CancelSubscriptionResponse"/>
+	</message>
+	<portType name="PwgNotificationPort">
+		<operation name="CreateJobSubscriptions">
+			<input message="sm:CreateJobSubscriptionsRequestMsg"/>
+			<output message="sm:CreateJobSubscriptionsResponseMsg"/>
+		</operation>
+		<operation name="CreateServiceSubscriptions">
+			<input message="sm:CreateServiceSubscriptionsRequestMsg"/>
+			<output message="sm:CreateServiceSubscriptionsResponseMsg"/>
+		</operation>
+		<operation name="GetSubscriptionElements">
+			<input message="sm:GetSubscriptionElementsRequestMsg"/>
+			<output message="sm:GetSubscriptionElementsResponseMsg"/>
+		</operation>
+		<operation name="GetSubscriptions">
+			<input message="sm:GetSubscriptionsRequestMsg"/>
+			<output message="sm:GetSubscriptionsResponseMsg"/>
+		</operation>
+		<operation name="RenewSubscription">
+			<input message="sm:RenewSubscriptionRequestMsg"/>
+			<output message="sm:RenewSubscriptionResponseMsg"/>
+		</operation>
+		<operation name="CancelSubscription">
+			<input message="sm:CancelSubscriptionRequestMsg"/>
+			<output message="sm:CancelSubscriptionResponseMsg"/>
+		</operation>
+	</portType>
+	<binding name="PwgNotificationBinding" type="sm:PwgNotificationPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="CreateJobSubscriptions">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CreateJobSubscriptions"/>
+			<input>
+				<soap:header message="sm:CreateJobSubscriptionsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CreateJobSubscriptionsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CreateJobSubscriptionsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CreateJobSubscriptionsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CreateJobSubscriptionsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CreateJobSubscriptionsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CreateJobSubscriptionsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CreateJobSubscriptionsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CreateJobSubscriptionsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="CreateServiceSubscriptions">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CreateServiceSubscriptions"/>
+			<input>
+				<soap:header message="sm:CreateServiceSubscriptionsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CreateServiceSubscriptionsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CreateServiceSubscriptionsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CreateServiceSubscriptionsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CreateServiceSubscriptionsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CreateServiceSubscriptionsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CreateServiceSubscriptionsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CreateServiceSubscriptionsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CreateServiceSubscriptionsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetSubscriptionElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetSubscriptionElements"/>
+			<input>
+				<soap:header message="sm:GetSubscriptionElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetSubscriptionElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetSubscriptionElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetSubscriptionElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetSubscriptionElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetSubscriptionElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetSubscriptionElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetSubscriptionElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetSubscriptionElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetSubscriptions">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetSubscriptions"/>
+			<input>
+				<soap:header message="sm:GetSubscriptionsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetSubscriptionsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetSubscriptionsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetSubscriptionsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetSubscriptionsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetSubscriptionsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetSubscriptionsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetSubscriptionsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetSubscriptionsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="RenewSubscription">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/RenewSubscription"/>
+			<input>
+				<soap:header message="sm:RenewSubscriptionRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RenewSubscriptionRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:RenewSubscriptionRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:RenewSubscriptionRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:RenewSubscriptionResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RenewSubscriptionResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:RenewSubscriptionResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:RenewSubscriptionResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:RenewSubscriptionResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="CancelSubscription">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelSubscription"/>
+			<input>
+				<soap:header message="sm:CancelSubscriptionRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelSubscriptionRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelSubscriptionRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelSubscriptionRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CancelSubscriptionResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelSubscriptionResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CancelSubscriptionResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelSubscriptionResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelSubscriptionResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="PwgNotificationService">
+		<port name="PwgNotificationPort" binding="sm:PwgNotificationBinding">
+			<soap:address location="http://localhost:5108/PwgNotificationService"/>
+		</port>
+	</service>
+</definitions>

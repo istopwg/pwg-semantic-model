@@ -1,0 +1,373 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="Counter.xsd"/>
+	<xs:include schemaLocation="DocumentTypes.xsd"/>
+	<xs:include schemaLocation="ServiceTypes.xsd"/>
+	<xs:include schemaLocation="JobTypes.xsd"/>
+	<xs:include schemaLocation="Subunits.xsd"/>
+	<!--12/14/11 PJZ Service Description is mandatory-->
+	<!--12/11/11 PJZ ServiceChargeInfoUri and ServiceOrganizations moved to base class-->
+	<!--11/08/11 PJZ Removed DefaultDocumentTicket & added extension point-->
+	<!--04/21/11 PJZ Fixed QueuedJobCount-->
+	<!--02/02/11 PJZ Fixed document cardinality-->
+	<!--02/02/11 PJZ added some cloud elements to ServiceDescription-->
+	<!--12/06/10 PJZ added mandatory ImagesCompleted to ServiceStatus & optional ImpressionsCompleted to Service, Job and Document status-->
+	<!--12/02/10 PJZ ImagesCompleted mandatory for Jobs and Documents-->
+	<!--10/6/10 PJZ Fixed order of capabilitiers and defaults-->
+	<!--09/23/10 PJZ Fixed capabilitiers and defaults-->
+	<!--04/1/10 PJZ added "Type" suffix to ComplexTypes-->
+	<!--010/22/09 PJZ Reworked concrete and abstract classes-->
+	<!--08/02/09 PJZ Modified configuration representation-->
+	<!--07/20/09 PJZ Fixed CapabilitiesReady and Configuration-->
+	<!--04/14/09 PJZ Updated Namespace-->
+	<!--01/30/09 PJZ Made IsAcceptingJobs service specific-->
+	<!--06/01/08 PJZ Added  anyAttribute extension point-->
+	<!--05/31/08 PJZ Move back to ##Other-->
+	<!--05/30/08 PJZ Move back to single namespace-->
+	<!--05/21/08 PJZ Partial alignment with WS-Scan-->
+	<!--12/14/07 PJZ Reworked Capabilities-->
+	<!--12/12/07 PJZ Reworked Service/Job/Document counters-->
+	<!--09/13/07 PJZ Reworked default and supported-->
+	<!--10/08/06 PJZ Reworked dependencies and removed Chameleon-->
+	<!--10/04/06 PJZ Created-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<!---->
+	<!-- EmailInDocument - group -->
+	<!---->
+	<!-- EmailInDocumentStatus - group -->
+	<xs:complexType name="EmailInDocumentStatusType">
+		<xs:complexContent>
+			<xs:extension base="ImagingDocumentStatusType">
+				<xs:sequence>
+					<!-- EmailIn Document status references here -->
+					<!-- EmailIn Document counters from service counters definition -->
+					<xs:element ref="EmailInDocumentCounters" minOccurs="0"/>
+					<xs:element ref="ImagesCompleted"/>
+					<xs:element ref="ImpressionsCompleted" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- EmailInDocumentStatus - group -->
+	</xs:complexType>
+	<xs:element name="EmailInDocumentStatus" type="EmailInDocumentStatusType"/>
+	<!-- EmailInDocumentTicket - group -->
+	<xs:complexType name="EmailInDocumentTicketType">
+		<xs:sequence>
+			<xs:element ref="EmailInDocumentDescription" minOccurs="0"/>
+			<xs:element ref="EmailInDocumentProcessing" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:element name="EmailInDocumentTicket" type="EmailInDocumentTicketType"/>
+	<xs:element name="EmailInDocumentReceipt" type="EmailInDocumentTicketType"/>
+	<!-- EmailInDocumentDescription - group -->
+	<xs:complexType name="EmailInDocumentDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="ImagingDocumentDescriptionType">
+				<xs:sequence>
+					<!-- EmailIn Document description references here -->
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- EmailInDocumentDescription - group -->
+	</xs:complexType>
+	<xs:element name="EmailInDocumentDescription" type="EmailInDocumentDescriptionType"/>
+	<!-- EmailInDocumentProcessing - group -->
+	<xs:complexType name="EmailInDocumentProcessingType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobProcessingType">
+				<xs:sequence>
+					<!-- EmailIn document processing references here -->
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- EmailInDocumentProcessing - group -->
+	</xs:complexType>
+	<xs:element name="EmailInDocumentProcessing" type="EmailInDocumentProcessingType"/>
+	<!-- EmailInDocuments - set of EmailIn Documents -->
+	<xs:complexType name="EmailInDocumentsType">
+		<xs:sequence>
+			<xs:element ref="EmailInDocument" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- EmailInDocuments - set of EmailIn Documents -->
+	</xs:complexType>
+	<xs:element name="EmailInDocuments" type="EmailInDocumentsType"/>
+	<!-- EmailInDocument - object -->
+	<xs:complexType name="EmailInDocumentType">
+		<xs:sequence>
+			<xs:element ref="EmailInDocumentReceipt" minOccurs="0"/>
+			<xs:element ref="EmailInDocumentStatus"/>
+			<xs:element ref="EmailInDocumentTicket" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- EmailInDocument - object -->
+	</xs:complexType>
+	<xs:element name="EmailInDocument" type="EmailInDocumentType"/>
+	<!---->
+	<!-- EmailInJob - group -->
+	<!---->
+	<!-- EmailInJobStatus - group -->
+	<xs:complexType name="EmailInJobStatusType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobStatusType">
+				<xs:sequence>
+					<!-- EmailIn job status references here -->
+					<!-- EmailIn job counters from service counters definition -->
+					<xs:element ref="EmailInJobCounters" minOccurs="0"/>
+					<xs:element ref="ImagesCompleted"/>
+					<xs:element ref="ImpressionsCompleted" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- EmailInJobStatus - group -->
+	</xs:complexType>
+	<xs:element name="EmailInJobStatus" type="EmailInJobStatusType"/>
+	<!-- EmailInJobTicket - group -->
+	<xs:complexType name="EmailInJobTicketType">
+		<xs:sequence>
+			<xs:element ref="EmailInDocumentProcessing" minOccurs="0"/>
+			<xs:element ref="EmailInJobDescription" minOccurs="0"/>
+			<xs:element ref="EmailInJobProcessing" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:element name="EmailInJobTicket" type="EmailInJobTicketType"/>
+	<xs:element name="EmailInJobReceipt" type="EmailInJobTicketType"/>
+	<!-- EmailInJobDescription - group -->
+	<xs:complexType name="EmailInJobDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobDescriptionType">
+				<xs:sequence>
+					<!-- EmailIn job description references here -->
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- EmailInJobDescription - group -->
+	</xs:complexType>
+	<xs:element name="EmailInJobDescription" type="EmailInJobDescriptionType"/>
+	<!-- EmailInJobProcessing - group -->
+	<xs:complexType name="EmailInJobProcessingType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobProcessingType">
+				<xs:sequence>
+					<!-- EmailIn job processing references here -->
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- EmailInJobProcessing - group -->
+	</xs:complexType>
+	<xs:element name="EmailInJobProcessing" type="EmailInJobProcessingType"/>
+	<!-- EmailInJobs - set of EmailIn jobs -->
+	<xs:complexType name="EmailInJobsType">
+		<xs:sequence>
+			<xs:element ref="EmailInJob" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- EmailInJobs - set of EmailIn jobs -->
+	</xs:complexType>
+	<!-- EmailInJob - object -->
+	<xs:complexType name="EmailInJobType">
+		<xs:sequence>
+			<xs:element ref="EmailInJobReceipt" minOccurs="0"/>
+			<xs:element ref="EmailInJobStatus"/>
+			<xs:element ref="EmailInJobTicket" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- EmailInJob - object -->
+	</xs:complexType>
+	<xs:element name="EmailInJob">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="EmailInJobType">
+					<xs:sequence>
+						<xs:element ref="EmailInDocuments" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<!---->
+	<!-- EmailInService - group -->
+	<!---->
+	<!-- EmailInServiceStatus - group -->
+	<xs:complexType name="EmailInServiceStatusType">
+		<xs:complexContent>
+			<xs:extension base="ImagingServiceStatusType">
+				<xs:sequence>
+					<xs:element ref="ImagesCompleted"/>
+					<xs:element ref="ImpressionsCompleted" minOccurs="0"/>
+					<xs:element ref="IsAcceptingJobs"/>
+					<xs:element ref="EmailInServiceCounters" minOccurs="0"/>
+					<xs:element ref="QueuedJobCount" minOccurs="1"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- EmailInServiceStatus - group -->
+	</xs:complexType>
+	<xs:element name="EmailInServiceStatus" type="EmailInServiceStatusType"/>
+	<!-- EmailInServiceDescription - group -->
+	<xs:complexType name="EmailInServiceDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="ImagingServiceDescriptionType">
+				<xs:sequence>
+					<!-- EmailIn service description references -->
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- EmailInServiceDescription - group -->
+	</xs:complexType>
+	<xs:element name="EmailInServiceDescription" type="EmailInServiceDescriptionType"/>
+	<!-- EmailIn Service Default Ticket - group -->
+	<xs:element name="DefaultEmailInJobTicket" type="EmailInJobTicketType"/>
+	<!-- EmailInService Capabilities - group -->
+	<xs:complexType name="EmailInDocumentDescriptionCapabilitiesType">
+		<xs:complexContent>
+			<xs:extension base="ImagingDocumentDescriptionCapabilitiesType">
+				<xs:sequence>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- EmailInDocumentDescription - group -->
+	</xs:complexType>
+	<xs:element name="EmailInDocumentDescriptionCapabilities" type="EmailInDocumentDescriptionCapabilitiesType"/>
+	<xs:complexType name="EmailInDocumentProcessingCapabilitiesType">
+		<xs:complexContent>
+			<xs:extension base="ImagingDocumentProcessingCapabilitiesType">
+				<xs:sequence>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="EmailInDocumentProcessingCapabilities" type="EmailInDocumentProcessingCapabilitiesType"/>
+	<xs:complexType name="EmailInJobProcessingCapabilitiesType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobProcessingCapabilitiesType">
+				<xs:sequence>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="EmailInJobProcessingCapabilities" type="EmailInJobProcessingCapabilitiesType"/>
+	<xs:complexType name="EmailInJobDescriptionCapabilitiesType">
+		<xs:complexContent>
+			<xs:extension base="pwg:ImagingJobDescriptionCapabilitiesType">
+				<xs:sequence>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="EmailInJobDescriptionCapabilities" type="EmailInJobDescriptionCapabilitiesType"/>
+	<xs:complexType name="EmailInJobTicketCapabilitiesType">
+		<xs:sequence>
+			<xs:element ref="EmailInDocumentProcessingCapabilities" minOccurs="0"/>
+			<xs:element ref="EmailInJobDescriptionCapabilities" minOccurs="0"/>
+			<xs:element ref="EmailInJobProcessingCapabilities" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="EmailInServiceCapabilitiesType">
+		<xs:sequence>
+			<xs:element name="EmailInDocumentTicketCapabilities" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="EmailInDocumentProcessingCapabilities" minOccurs="0"/>
+						<xs:element ref="EmailInDocumentDescriptionCapabilities" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="EmailInJobTicketCapabilities" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="EmailInJobTicketCapabilities" type="EmailInJobTicketCapabilitiesType"/>
+	<xs:element name="EmailInServiceCapabilitiesReady" type="EmailInServiceCapabilitiesType"/>
+	<!--EmailInService Configuration - group -->
+	<xs:element name="EmailInServiceConfiguration">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Consoles" minOccurs="0"/>
+				<xs:element ref="Covers" minOccurs="0"/>
+				<xs:element ref="InputChannels" minOccurs="0"/>
+				<xs:element ref="Interfaces" minOccurs="0"/>
+				<xs:element ref="Interpreters" minOccurs="0"/>
+				<xs:element ref="Processors" minOccurs="0"/>
+				<xs:element ref="Storages" minOccurs="0"/>
+				<xs:element ref="VendorSubunits" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- EmailInServices - set of EmailIn services -->
+	<xs:complexType name="EmailInServicesType">
+		<xs:sequence>
+			<xs:element ref="EmailInService" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- EmailInServices - set of EmailIn services -->
+	</xs:complexType>
+	<xs:element name="EmailInServices" type="EmailInServicesType"/>
+	<!-- EmailInService - object -->
+	<xs:complexType name="EmailInServiceBaseType">
+		<xs:sequence>
+			<xs:element name="EmailInServiceCapabilities" type="EmailInServiceCapabilitiesType"/>
+			<xs:element ref="EmailInServiceCapabilitiesReady" minOccurs="0"/>
+			<xs:element ref="EmailInServiceConfiguration" minOccurs="0"/>
+			<xs:element name="EmailInServiceDefaults" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="DefaultEmailInJobTicket" minOccurs="0"/>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="EmailInServiceDescription"/>
+			<xs:element ref="EmailInServiceStatus"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- EmailInService - object -->
+	</xs:complexType>
+	<xs:complexType name="EmailInServiceType">
+		<xs:complexContent>
+			<xs:extension base="EmailInServiceBaseType">
+				<xs:sequence>
+					<xs:element name="JobTable">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="ActiveJobs" type="EmailInJobsType"/>
+								<xs:element name="JobHistory" type="EmailInJobsType" minOccurs="0"/>
+								<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="EmailInService" type="EmailInServiceType"/>
+</xs:schema>

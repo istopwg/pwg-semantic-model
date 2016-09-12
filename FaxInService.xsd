@@ -1,0 +1,600 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="Counter.xsd"/>
+	<xs:include schemaLocation="PwgCommon.xsd"/>
+	<xs:include schemaLocation="DocumentTypes.xsd"/>
+	<xs:include schemaLocation="ServiceTypes.xsd"/>
+	<xs:include schemaLocation="JobTypes.xsd"/>
+	<xs:include schemaLocation="Subunits.xsd"/>
+	<!--12/14/11 PJZ Service Description is mandatory-->
+	<!--12/11/11 PJZ ServiceChargeInfoUri and ServiceOrganizations moved to base class, Added sending and recieving URIs to status-->
+	<!--11/30/11 PJZFixed capabilities, removed impressions completed, Generalized Metric elements-->
+	<!--11/14/11 PJZ Added DestinationUris and associated elements-->
+	<!--11/08/11 PJZ Removed DefaultDocumentTicket & added extension point-->
+	<!--10/31/11 PJZ Modified ServiceDescription-->
+	<!--08/26/11 PJZ Fixed cardinality of FaxIn document-->
+	<!--04/21/11 PJZ Added service charge stuff-->
+	<!--04/21/11 PJZ Fixed QueuedJobCount-->
+	<!--02/02/11 PJZ Fixed document cardinality-->
+	<!--02/02/11 PJZ added some cloud elements to ServiceDescription-->
+	<!--12/06/10 PJZ added mandatory ImagesCompleted to ServiceStatus & optional ImpressionsCompleted to Service, Job and Document status-->
+	<!--12/02/10 PJZ ImagesCompleted mandatory for Jobs and Documents-->
+	<!--10/19/10 PJZ Changed URI to Uri-->
+	<!--10/6/10 PJZ Fixed order of capabilitiers and defaults-->
+	<!--09/23/10 PJZ Fixed capabilitiers and defaults-->
+	<!--07/22/10 PJZ added missing document-->
+	<!--04/1/10 PJZ added "Type" suffix to ComplexTypes-->
+	<!--010/22/09 PJZ Reworked concrete and abstract classes-->
+	<!--08/02/09 PJZ Modified configuration representation-->
+	<!--07/20/09 PJZ Added Configuration-->
+	<!--04/14/09 PJZ Updated Namespace-->
+	<!--01/30/09 PJZ Made IsAcceptingJobs service specific-->
+	<!--05/31/08 PJZ Move back to ##Other-->
+	<!--05/30/08 PJZ Move back to single namespace-->
+	<!--05/21/08 PJZ Partial alignment with WS-Scan-->
+	<!--12/12/07 PJZ Reworked Service/Job/Document counters-->
+	<!--09/13/07 PJZ Reworked default and supported-->
+	<!--10/08/06 PJZ Reworked dependencies and removed Chameleon-->
+	<!--10/04/06 PJZ Created-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<!---->
+	<!-- FaxInDocumentStatus - group -->
+	<xs:complexType name="FaxInDocumentStatusType">
+		<xs:complexContent>
+			<xs:extension base="ImagingDocumentStatusType">
+				<xs:sequence>
+					<!-- FaxIn Document status references here -->
+					<!-- FaxIn Document counters from service counters definition -->
+					<xs:element ref="FaxInDocumentCounters" minOccurs="0"/>
+					<xs:element ref="ImagesCompleted"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- FaxInDocumentStatus - group -->
+	</xs:complexType>
+	<xs:element name="FaxInDocumentStatus" type="FaxInDocumentStatusType"/>
+	<!-- FaxInDocumentProcessing - group -->
+	<xs:complexType name="FaxInDocumentProcessingType">
+		<xs:complexContent>
+			<xs:extension base="ImagingDocumentProcessingType">
+				<xs:sequence>
+					<!-- FaxIn document processing references here -->
+					<xs:element ref="AutoSkewCorrection" minOccurs="0"/>
+					<xs:element ref="Compression" minOccurs="0"/>
+					<xs:element ref="CompressionQualityFactor" minOccurs="0"/>
+					<xs:choice>
+						<xs:element ref="Destination"/>
+						<xs:element ref="DestinationUris"/>
+					</xs:choice>
+					<xs:element ref="DocumentDigitalSignature" minOccurs="0"/>
+					<xs:element ref="DocumentFormat" minOccurs="0"/>
+					<xs:element ref="DocumentFormatDetails" minOccurs="0"/>
+					<xs:element ref="DocumentFormatVersion" minOccurs="0"/>
+					<xs:element ref="Exposure" minOccurs="0"/>
+					<xs:element ref="PrintColorMode" minOccurs="0"/>
+					<xs:element ref="Resolution" minOccurs="0"/>
+					<xs:element ref="Scaling" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- FaxInDocumentProcessing - group -->
+	</xs:complexType>
+	<xs:element name="FaxInDocumentProcessing" type="FaxInDocumentProcessingType"/>
+	<!-- FaxInDocumentTicket - group -->
+	<xs:complexType name="FaxInDocumentTicketType">
+		<xs:sequence>
+			<xs:element ref="FaxInDocumentDescription" minOccurs="0"/>
+			<xs:element ref="FaxInDocumentProcessing" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FaxInDocumentReceipt" type="FaxInDocumentTicketType"/>
+	<xs:element name="FaxInDocumentTicket" type="FaxInDocumentTicketType"/>
+	<!-- FaxInDocumentDescription - group -->
+	<xs:complexType name="FaxInDocumentDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="ImagingDocumentDescriptionType">
+				<xs:sequence>
+					<!-- FaxIn Document description references here -->
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- FaxInDocumentDescription - group -->
+	</xs:complexType>
+	<xs:element name="FaxInDocumentDescription" type="FaxInDocumentDescriptionType"/>
+	<!-- FaxInDocument - object -->
+	<xs:complexType name="FaxInDocumentsType">
+		<xs:sequence>
+			<xs:element ref="FaxInDocument" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FaxInDocuments" type="FaxInDocumentsType"/>
+	<xs:complexType name="FaxInDocumentType">
+		<xs:sequence>
+			<xs:element ref="FaxInDocumentReceipt" minOccurs="0"/>
+			<xs:element ref="FaxInDocumentStatus"/>
+			<xs:element ref="FaxInDocumentTicket" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- FaxInDocument - object -->
+	</xs:complexType>
+	<xs:element name="FaxInDocument" type="FaxInDocumentType"/>
+	<!---->
+	<!-- FaxInJob - group -->
+	<!---->
+	<!-- FaxInJobStatus - group -->
+	<xs:complexType name="FaxInJobStatusType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobStatusType">
+				<xs:sequence>
+					<!-- FaxIn job status references here -->
+					<!-- FaxIn job counters from service counters definition -->
+					<xs:element ref="ColorMode" minOccurs="0"/>
+					<xs:element name="DestinationsStatuses" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="DestinationsStatus" maxOccurs="unbounded">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="DestinationURI" type="xs:anyURI"/>
+											<xs:element name="TransmissionStatus" type="TransmissionStatusWKV"/>
+											<xs:element ref="ImagesCompleted"/>
+											<xs:any namespace="##other" minOccurs="0"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element ref="FaxInJobCounters" minOccurs="0"/>
+					<xs:element name="FaxInJobChannel">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="InputChannelId"/>
+								<xs:element ref="FaxModemId" minOccurs="0"/>
+								<xs:element name="SourceUri" type="xs:anyURI" minOccurs="0"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element ref="ImagesCompleted"/>
+					<xs:element ref="JobReceivingUri"/>
+					<xs:element ref="JobSendingUri"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- FaxInJobStatus - group -->
+	</xs:complexType>
+	<xs:element name="FaxInJobStatus" type="FaxInJobStatusType"/>
+	<!-- FaxInJobDescription - group -->
+	<xs:complexType name="FaxInJobDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobDescriptionType">
+				<xs:sequence>
+					<!-- FaxIn job description references here -->
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- FaxInJobDescription - group -->
+	</xs:complexType>
+	<xs:element name="FaxInJobDescription" type="FaxInJobDescriptionType"/>
+	<!-- FaxInJobTicket - group -->
+	<xs:complexType name="FaxInJobTicketType">
+		<xs:sequence>
+			<xs:element ref="FaxInDocumentProcessing" minOccurs="0"/>
+			<xs:element ref="FaxInJobDescription" minOccurs="0"/>
+			<xs:element ref="FaxInJobProcessing" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FaxInJobTicket" type="FaxInJobTicketType"/>
+	<xs:element name="FaxInJobReceipt" type="FaxInJobTicketType"/>
+	<!-- FaxInJobProcessing - group -->
+	<xs:complexType name="FaxInJobProcessingType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobProcessingType">
+				<xs:sequence>
+					<!-- FaxIn job processing references here -->
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- FaxInJobProcessing - group -->
+	</xs:complexType>
+	<xs:element name="FaxInJobProcessing" type="FaxInJobProcessingType"/>
+	<!-- FaxInJobs - set of FaxIn jobs -->
+	<xs:complexType name="FaxInJobsType">
+		<xs:sequence>
+			<xs:element ref="FaxInJob" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- FaxInJobs - set of FaxIn jobs -->
+	</xs:complexType>
+	<!-- FaxInJob - object -->
+	<xs:complexType name="FaxInJobType">
+		<xs:sequence>
+			<xs:element ref="FaxInJobReceipt" minOccurs="0"/>
+			<xs:element ref="FaxInJobStatus"/>
+			<xs:element ref="FaxInJobTicket" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- FaxInJob - object -->
+	</xs:complexType>
+	<xs:element name="FaxInJob">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="FaxInJobType">
+					<xs:sequence>
+						<xs:element ref="FaxInDocuments" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<!---->
+	<!-- FaxInService - group -->
+	<!---->
+	<!-- FaxInServiceStatus - group -->
+	<xs:complexType name="FaxInServiceStatusType">
+		<xs:complexContent>
+			<xs:extension base="ImagingServiceStatusType">
+				<xs:sequence>
+					<xs:element ref="ImagesCompleted"/>
+					<xs:element ref="IsAcceptingJobs"/>
+					<xs:element ref="FaxInServiceCounters" minOccurs="0"/>
+					<xs:element ref="QueuedJobCount" minOccurs="1"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- FaxInServiceStatus - group -->
+	</xs:complexType>
+	<xs:element name="FaxInServiceStatus" type="FaxInServiceStatusType"/>
+	<!-- FaxInServiceDescription - group -->
+	<xs:complexType name="FaxInServiceDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="ImagingServiceDescriptionType">
+				<xs:sequence>
+					<!-- FaxIn service description references -->
+					<xs:element ref="FaxLogUri"/>
+					<xs:element ref="MultipleDocumentJobsSupported" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- FaxInServiceDescription - group -->
+	</xs:complexType>
+	<xs:element name="FaxInServiceDescription" type="FaxInServiceDescriptionType"/>
+	<!-- FaxIn Service Default Ticket - group -->
+	<xs:element name="DefaultFaxInJobTicket" type="FaxInJobTicketType"/>
+	<xs:element name="AvailableFaxInJobTicket">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AvailableFaxInJobTicketEntry" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="Id"/>
+							<xs:element name="FaxInMetrics">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ColorMode" minOccurs="0"/>
+										<xs:element ref="JobSendingUri" minOccurs="0"/>
+										<xs:element ref="JobReceivingUri" minOccurs="0"/>
+										<xs:element ref="T33SubAddress" minOccurs="0"/>
+										<xs:element ref="TimePeriod" minOccurs="0"/>
+										<xs:element ref="ISDNSubAddress" minOccurs="0"/>
+										<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element ref="FaxInJobTicket"/>
+							<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- FaxInService Capabilities - group -->
+	<xs:complexType name="FaxInDocumentProcessingCapabilitiesType">
+		<xs:complexContent>
+			<xs:extension base="ImagingDocumentProcessingCapabilitiesType">
+				<xs:sequence>
+					<xs:element name="AutoSkewCorrection" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="Compression" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" type="CompressionType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="CompressionQualityFactor" type="RangeOfIntType" minOccurs="0"/>
+					<xs:element name="Destination" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="DestinationUriSchemes" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValues" type="xs:string" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="DestinationUris" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="DestinationUriSchemes" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValues" type="xs:string" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="PreDialString" type="xs:boolean" minOccurs="0"/>
+								<xs:element name="PostDialString" type="xs:boolean" minOccurs="0"/>
+								<xs:element name="T33Subaddress" type="xs:boolean" minOccurs="0"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="DocumentDigitalSignature" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" type="DocumentDigitalSignatureType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="DocumentFormat" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" type="DocumentFormatType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="DocumentFormatDetailsSupplied" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="DocumentSourceApplicationName" type="xs:boolean" minOccurs="0"/>
+								<xs:element name="DocumentSourceApplicationVersion" type="xs:boolean" minOccurs="0"/>
+								<xs:element name="DocumentSourceOsName" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValues" maxOccurs="unbounded">
+												<xs:simpleType>
+													<xs:union memberTypes="OperatingSystemNameWKV OperatingSystemNameExtensionPattern"/>
+												</xs:simpleType>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="DocumentSourceOsVersion" type="xs:boolean" minOccurs="0"/>
+								<xs:element name="DocumentFormat" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValues" type="DocumentFormatType"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="DocumentFormatDeviceId" type="xs:boolean" minOccurs="0"/>
+								<xs:element name="DocumentFormatVersion" type="xs:boolean" minOccurs="0"/>
+								<xs:element name="DocumentNaturalLanguage" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValues" type="NaturalLanguageType"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="DocumentFormatVersion" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="Exposure" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AutoExposure" type="xs:boolean" minOccurs="0"/>
+								<xs:element name="Brightness" type="xs:boolean" minOccurs="0"/>
+								<xs:element name="Contrast" type="xs:boolean" minOccurs="0"/>
+								<xs:element name="Sharpness" type="xs:boolean" minOccurs="0"/>
+								<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="PrintColorMode" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>JPS3</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" maxOccurs="unbounded">
+									<xs:simpleType>
+										<xs:union memberTypes="PrintColorModeWKV KeywordNsExtensionPattern"/>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Resolutions" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Resolution" maxOccurs="unbounded">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="CrossFeedDir">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="AllowedValue" type="xs:int"/>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="FeedDir">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="AllowedValue" type="xs:int"/>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element ref="Units"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Scaling" minOccurs="0">
+						<xs:complexType>
+							<xs:choice>
+								<xs:sequence>
+									<xs:element name="ScalingHeight" type="RangeOfIntType"/>
+									<xs:element name="ScalingWidth" type="RangeOfIntType"/>
+								</xs:sequence>
+								<xs:element name="AutoScaling" type="xs:boolean"/>
+							</xs:choice>
+						</xs:complexType>
+					</xs:element>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FaxInDocumentProcessingCapabilities" type="FaxInDocumentProcessingCapabilitiesType"/>
+	<xs:complexType name="FaxInJobProcessingCapabilitiesType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobProcessingCapabilitiesType">
+				<xs:sequence>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FaxInJobProcessingCapabilities" type="FaxInJobProcessingCapabilitiesType"/>
+	<xs:complexType name="FaxInJobDescriptionCapabilitiesType">
+		<xs:complexContent>
+			<xs:extension base="pwg:ImagingJobDescriptionCapabilitiesType">
+				<xs:sequence>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FaxInJobDescriptionCapabilities" type="FaxInJobDescriptionCapabilitiesType"/>
+	<xs:element name="FaxInJobTicketCapabilities">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="FaxInDocumentProcessingCapabilities" minOccurs="0"/>
+				<xs:element ref="FaxInJobDescriptionCapabilities" minOccurs="0"/>
+				<xs:element ref="FaxInJobProcessingCapabilities" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="FaxInDocumentDescriptionCapabilitiesType">
+		<xs:complexContent>
+			<xs:extension base="pwg:ImagingDocumentDescriptionCapabilitiesType">
+				<xs:sequence>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FaxInDocumentDescriptionCapabilities" type="FaxInDocumentDescriptionCapabilitiesType"/>
+	<xs:element name="FaxInDocumentTicketCapabilities">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="FaxInDocumentDescriptionCapabilities" minOccurs="0"/>
+				<xs:element ref="FaxInDocumentProcessingCapabilities" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="FaxInServiceCapabilitiesType">
+		<xs:sequence>
+			<xs:element ref="FaxInDocumentTicketCapabilities" minOccurs="0"/>
+			<xs:element ref="FaxInJobTicketCapabilities" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FaxInServiceCapabilities" type="FaxInServiceCapabilitiesType"/>
+	<xs:element name="FaxInServiceCapabilitiesReady" type="FaxInServiceCapabilitiesType"/>
+	<!--FaxInService Configuration - group -->
+	<xs:element name="FaxInServiceConfiguration">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Consoles" minOccurs="0"/>
+				<xs:element ref="Covers" minOccurs="0"/>
+				<xs:element ref="FaxModems" minOccurs="0"/>
+				<xs:element ref="Finishers" minOccurs="0"/>
+				<xs:element ref="InputChannels" minOccurs="0"/>
+				<xs:element ref="InputTrays" minOccurs="0"/>
+				<xs:element ref="Interfaces" minOccurs="0"/>
+				<xs:element ref="Interpreters" minOccurs="0"/>
+				<xs:element ref="Markers" minOccurs="0"/>
+				<xs:element ref="MediaPaths" minOccurs="0"/>
+				<xs:element ref="OutputChannels" minOccurs="0"/>
+				<xs:element ref="OutputTrays" minOccurs="0"/>
+				<xs:element ref="Processors" minOccurs="0"/>
+				<xs:element ref="Storages" minOccurs="0"/>
+				<xs:element ref="VendorSubunits" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- FaxInServices - set of FaxIn services -->
+	<xs:complexType name="FaxInServicesType">
+		<xs:sequence>
+			<xs:element ref="FaxInService" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- FaxInServices - set of FaxIn services -->
+	</xs:complexType>
+	<xs:element name="FaxInServices" type="FaxInServicesType"/>
+	<!-- FaxInService - object -->
+	<xs:complexType name="FaxInServiceBaseType">
+		<xs:sequence>
+			<xs:element ref="AvailableFaxInJobTicket" minOccurs="0"/>
+			<xs:element ref="FaxInServiceCapabilities" minOccurs="0"/>
+			<xs:element ref="FaxInServiceCapabilitiesReady" minOccurs="0"/>
+			<xs:element ref="FaxInServiceConfiguration" minOccurs="0"/>
+			<xs:element name="FaxInServiceDefaults" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="DefaultFaxInJobTicket" minOccurs="0"/>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="FaxInServiceDescription"/>
+			<xs:element ref="FaxInServiceStatus"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- FaxInService - object -->
+	</xs:complexType>
+	<xs:complexType name="FaxInServiceType">
+		<xs:complexContent>
+			<xs:extension base="FaxInServiceBaseType">
+				<xs:sequence>
+					<xs:element name="JobTable">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="ActiveJobs" type="FaxInJobsType"/>
+								<xs:element name="JobHistory" type="FaxInJobsType"/>
+								<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FaxInService" type="FaxInServiceType"/>
+</xs:schema>

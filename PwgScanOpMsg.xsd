@@ -1,0 +1,380 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<!--02/24/11 PJZ Added password operational elements-->
+	<!--02/03/12 PJZ DocumentPassword is operational element-->
+	<!--01/10/12 PJZ Aligned with latest JPS3 and Raster specs-->
+	<!--07/19/11 PJZ Completed fixes for Set operation-->
+	<!--05/02/11 PJZ Removed Startup operation-->
+	<!--06/04/10 PJZ Reworked Set Service Elements input parameters-->
+	<!--05/13/10 PJZ Removed extension point from operation signatures-->
+	<!--04/22/10 PJZ added "Message parameter and made all operations extensible-->
+	<!--03/01/10 PJZ Added CloseJob back in-->
+	<!--02/05/10 PJZ Fixed operation names-->
+	<!--01/19/10 PJZ Made all service interfaces homogenous (as much as possible)-->
+	<!--01/05/10 PJZ Added SuspendCurrent Job-->
+	<!--01/02/10 PJZ Gets/Sets now contain NaturalLanguage(declarative) and ElementsNaturalLanguageRequested(request) as appropriate-->
+	<!--11/23/09 PJZ GetScanXXXElements response parameter is now optional-->
+	<!--11/22/09 PJZ Changed ValidateScanJob to ValidateScanJobTicket-->
+	<!--10/23/09 PJZ Updates per October face to face-->
+	<!--04/14/09 PJZ Updated Namespace-->
+	<!--08/29/08 PJZ Move Admin stuff out into its own schema-->
+	<!--05/31/08 PJZ Move back to ##Other-->
+	<!--05/30/08 PJZ Move back to single namespace-->
+	<!--05/21/08 PJZ Partial alignment with WS-Scan-->
+	<!--PJZ 12/14/07   Updates per 12/11 Face to Face meeting-->
+	<!--PJZ 07/09/07    Initial version-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2011, IEEE Industry Standards and Technology Organization/MFD Working Group. 
+All rights reserved  
+
+    - version 1.65 -16 January 2009 -Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<xs:include schemaLocation="PwgCommon.xsd"/>
+	<xs:include schemaLocation="Subunits.xsd"/>
+	<xs:include schemaLocation="PwgWellKnownValues.xsd"/>
+	<xs:include schemaLocation="ScanService.xsd"/>
+	<xs:include schemaLocation="PwgCommonOpMsg.xsd"/>
+	<xs:import namespace="http://www.w3.org/2004/08/xop/include" schemaLocation="include.xsd"/>
+	<xs:import namespace="http://www.w3.org/2005/05/xmlmime" schemaLocation="xmlmime.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">Complex types and elements specific to operations</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="ScannerElementsType">
+		<xs:sequence>
+			<xs:element ref="ScanServiceCapabilities" minOccurs="0"/>
+			<xs:element ref="ScanServiceConfiguration" minOccurs="0"/>
+			<xs:element ref="ScanServiceDescription" minOccurs="0"/>
+			<xs:element ref="ScanServiceStatus" minOccurs="0"/>
+			<xs:element ref="DefaultScanJobTicket" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ScanDocumentSummaryType">
+		<xs:sequence>
+			<xs:element ref="DocumentNumber"/>
+			<xs:element ref="DocumentState"/>
+			<xs:element ref="DocumentStateReasons" minOccurs="0"/>
+			<xs:element ref="ImagesCompleted"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ListOfScanDocumentSummarysType">
+		<xs:sequence>
+			<xs:element name="DocumentSummary" type="ScanDocumentSummaryType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ScanJobSummaryType">
+		<xs:sequence>
+			<xs:element ref="ImagesCompleted"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="JobName"/>
+			<xs:element ref="JobOriginatingUserName"/>
+			<xs:element ref="JobState"/>
+			<xs:element ref="JobStateReasons" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ListOfScanJobSummarysType">
+		<xs:sequence>
+			<xs:element name="JobSummary" type="ScanJobSummaryType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="DocumentElementsType">
+		<xs:sequence>
+			<xs:element ref="ScanDocumentReceipt" minOccurs="0"/>
+			<xs:element ref="ScanDocumentStatus" minOccurs="0"/>
+			<xs:element ref="ScanDocumentTicket" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="JobElementsType">
+		<xs:sequence>
+			<xs:element ref="ScanJobReceipt" minOccurs="0"/>
+			<xs:element ref="ScanJobStatus" minOccurs="0"/>
+			<xs:element ref="ScanJobTicket" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">Operation and Response messages</xs:documentation>
+	</xs:annotation>
+	<xs:element name="CancelCurrentScanJobRequest" type="CancelCurrentJobRequestType"/>
+	<xs:element name="CancelCurrentScanJobResponse" type="CancelCurrentJobResponseType"/>
+	<xs:element name="CancelScanDocumentRequest" type="CancelDocumentRequestType"/>
+	<xs:element name="CancelScanDocumentResponse" type="CancelDocumentResponseType"/>
+	<xs:element name="CancelScanJobRequest" type="CancelJobRequestType"/>
+	<xs:element name="CancelScanJobResponse" type="CancelJobResponseType"/>
+	<xs:element name="CancelMyScanJobsRequest" type="CancelMyJobsRequestType"/>
+	<xs:element name="CancelMyScanJobsResponse" type="CancelMyJobsResponseType"/>
+	<xs:element name="CancelScanJobsRequest" type="CancelJobsRequestType"/>
+	<xs:element name="CancelScanJobsResponse" type="CancelJobsResponseType"/>
+	<xs:element name="CloseScanJobRequest" type="CloseJobRequestType"/>
+	<xs:element name="CloseScanJobResponse" type="CloseJobResponseType"/>
+	<xs:complexType name="CreateScanJobRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentPassword" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobPasswordEncryption" minOccurs="0"/>
+			<xs:element ref="JobPassword" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="ScanJobTicket"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CreateScanJobRequest" type="CreateScanJobRequestType"/>
+	<xs:complexType name="CreateScanJobResponseType">
+		<xs:sequence>
+			<xs:element ref="JobId"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CreateScanJobResponse" type="CreateScanJobResponseType"/>
+	<xs:element name="DisableScanServiceRequest" type="DisableServiceRequestType"/>
+	<xs:element name="DisableScanServiceResponse" type="DisableServiceResponseType"/>
+	<xs:element name="EnableScanServiceRequest" type="EnableServiceRequestType"/>
+	<xs:element name="EnableScanServiceResponse" type="EnableServiceResponseType"/>
+	<xs:element name="GetActiveScanJobsRequest" type="GetJobsRequestType"/>
+	<xs:complexType name="GetActiveScanJobsResponseType">
+		<xs:sequence>
+			<xs:element name="ActiveJobs" type="ListOfScanJobSummarysType"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetActiveScanJobsResponse" type="GetActiveScanJobsResponseType"/>
+	<xs:complexType name="GetScanDocumentElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguageRequested" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="DocumentNumber"/>
+			<xs:element ref="RequestedElements" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetScanDocumentElementsRequest" type="GetScanDocumentElementsRequestType"/>
+	<xs:complexType name="GetScanDocumentElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element name="ScanDocumentElements" type="DocumentElementsType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetScanDocumentElementsResponse" type="GetScanDocumentElementsResponseType"/>
+	<xs:element name="GetScanDocumentsRequest" type="GetDocumentsRequestType"/>
+	<xs:complexType name="GetScanDocumentsResponseType">
+		<xs:sequence>
+			<xs:element name="Documents" type="ListOfScanDocumentSummarysType"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="JobName"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetScanDocumentsResponse" type="GetScanDocumentsResponseType"/>
+	<xs:complexType name="GetScanJobElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguageRequested" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="RequestedElements" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetScanJobElementsRequest" type="GetScanJobElementsRequestType"/>
+	<xs:complexType name="GetScanJobElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element name="ScanJobElements" type="JobElementsType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetScanJobElementsResponse" type="GetScanJobElementsResponseType"/>
+	<xs:element name="GetScanJobHistoryRequest" type="GetJobsRequestType"/>
+	<xs:complexType name="GetScanJobHistoryResponseType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element name="JobHistory" type="ListOfScanJobSummarysType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetScanJobHistoryResponse" type="GetScanJobHistoryResponseType"/>
+	<xs:complexType name="GetScanServiceElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguageRequested" minOccurs="0"/>
+			<xs:element ref="RequestedElements" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetScanServiceElementsRequest" type="GetScanServiceElementsRequestType"/>
+	<xs:complexType name="GetScanServiceElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element name="ScanServiceElements" type="ScannerElementsType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetScanServiceElementsResponse" type="GetScanServiceElementsResponseType"/>
+	<xs:element name="HoldNewScanJobsRequest" type="HoldNewJobsRequestType"/>
+	<xs:element name="HoldNewScanJobsResponse" type="HoldNewJobsResponseType"/>
+	<xs:element name="HoldScanJobRequest" type="HoldJobRequestType"/>
+	<xs:element name="HoldScanJobResponse" type="HoldJobResponseType"/>
+	<xs:element name="PauseScanServiceRequest" type="PauseServiceRequestType"/>
+	<xs:element name="PauseScanServiceResponse" type="PauseServiceResponseType"/>
+	<xs:element name="PauseScanServiceAfterCurrentJobRequest" type="PauseServiceAfterCurrentJobRequestType"/>
+	<xs:element name="PauseScanServiceAfterCurrentJobResponse" type="PauseServiceAfterCurrentJobResponseType"/>
+	<xs:element name="PromoteScanJobRequest" type="PromoteJobRequestType"/>
+	<xs:element name="PromoteScanJobResponse" type="PromoteJobResponseType"/>
+	<xs:element name="ReleaseNewScanJobsRequest" type="ReleaseNewJobsRequestType"/>
+	<xs:element name="ReleaseNewScanJobsResponse" type="ReleaseNewJobsResponseType"/>
+	<xs:element name="ReleaseScanJobRequest" type="ReleaseJobRequestType"/>
+	<xs:element name="ReleaseScanJobResponse" type="ReleaseJobResponseType"/>
+	<xs:element name="RestartScanServiceRequest" type="RestartServiceRequestType"/>
+	<xs:element name="RestartScanServiceResponse" type="RestartServiceResponseType"/>
+	<xs:complexType name="ResubmitScanJobRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="ScanJobTicket" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ResubmitScanJobRequest" type="ResubmitScanJobRequestType"/>
+	<xs:complexType name="ResubmitScanJobResponseType">
+		<xs:sequence>
+			<xs:element ref="JobId"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ResubmitScanJobResponse" type="ResubmitScanJobResponseType"/>
+	<xs:element name="ResumeScanServiceRequest" type="ResumeServiceRequestType"/>
+	<xs:element name="ResumeScanJobRequest" type="ResumeJobRequestType"/>
+	<xs:element name="ResumeScanJobResponse" type="ResumeJobResponseType"/>
+	<xs:element name="ResumeScanServiceResponse" type="ResumeServiceResponseType"/>
+	<xs:element name="ShutdownScanServiceResponse" type="ShutdownServiceResponseType"/>
+	<xs:element name="ShutdownScanServiceRequest" type="ShutdownServiceRequestType"/>
+	<xs:complexType name="SetScanDocumentElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentNumber"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="OperationMode" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="ScanDocumentTicket" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetScanDocumentElementsRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="SetScanDocumentElementsRequestType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="SetScanDocumentElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetScanDocumentElementsResponse" type="SetScanDocumentElementsResponseType"/>
+	<xs:complexType name="SetScanJobElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="ScanJobTicket" minOccurs="0"/>
+			<xs:element ref="OperationMode" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetScanJobElementsRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="SetScanJobElementsRequestType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="SetScanJobElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetScanJobElementsResponse" type="SetScanJobElementsResponseType"/>
+	<xs:complexType name="SetScanServiceElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element name="ScanServiceElements">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="DefaultScanJobTicket" minOccurs="0"/>
+						<xs:element ref="ScanServiceCapabilities" minOccurs="0"/>
+						<xs:element ref="ScanServiceCapabilitiesReady" minOccurs="0"/>
+						<xs:element ref="ScanServiceDescription" minOccurs="0"/>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="OperationMode" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetScanServiceElementsRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="SetScanServiceElementsRequestType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="SetScanServiceElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetScanServiceElementsResponse" type="SetScanServiceElementsResponseType"/>
+	<xs:element name="SuspendCurrentScanJobRequest" type="SuspendCurrentJobRequestType"/>
+	<xs:element name="SuspendCurrentScanJobResponse" type="SuspendCurrentJobResponseType"/>
+	<xs:complexType name="ValidateScanDocumentTicketRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentPassword" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="ScanDocumentTicket"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ValidateScanDocumentTicketRequest" type="ValidateScanDocumentTicketRequestType"/>
+	<xs:complexType name="ValidateScanDocumentTicketResponseType">
+		<xs:sequence>
+			<xs:element ref="PreferredElements" minOccurs="0"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ValidateScanDocumentTicketResponse" type="ValidateScanDocumentTicketResponseType"/>
+	<xs:complexType name="ValidateScanJobTicketRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentPassword" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobPasswordEncryption" minOccurs="0"/>
+			<xs:element ref="JobPassword" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="ScanJobTicket"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ValidateScanJobTicketRequest" type="ValidateScanJobTicketRequestType"/>
+	<xs:complexType name="ValidateScanJobTicketResponseType">
+		<xs:sequence>
+			<xs:element ref="PreferredElements" minOccurs="0"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ValidateScanJobTicketResponse" type="ValidateScanJobTicketResponseType"/>
+</xs:schema>

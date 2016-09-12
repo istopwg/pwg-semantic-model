@@ -1,0 +1,1460 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   PWG Semantic Model v2   
+
+Copyright 2012, IEEE Industry Standards and Technology Organization/TransformService Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler
+-->
+<!--02/24/12 PJZ Initial version-->
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:sm="http://www.pwg.org/schemas/2016/01/sm" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:ns="http://purl.org/dc/elements/1.1/" xmlns:ns1="http://purl.org/dc/terms/" xmlns:ns2="http://www.w3.org/2000/09/xmldsig#" xmlns:ns3="http://www.w3.org/2001/04/xmlenc#" xmlns:ns4="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:ns5="http://purl.org/dc/dcmitype/" targetNamespace="http://www.pwg.org/schemas/2016/01/sm">
+	<types>
+		<xs:schema xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" elementFormDefault="qualified" targetNamespace="http://schemas.xmlsoap.org/ws/2004/08/addressing">
+			<xs:include schemaLocation="addressing.xsd"/>
+		</xs:schema>
+		<xs:schema xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:sm="http://www.pwg.org/schemas/2016/01/sm" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+			<xs:include schemaLocation="PwgTransformOpMsg.xsd"/>
+			<xs:import namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing" schemaLocation="addressing.xsd"/>
+			<xs:include schemaLocation="PwgSemanticModel.xsd"/>
+			<xs:element name="BinaryData" type="xs:base64Binary"/>
+			<xs:element name="RequestedElement" type="xs:QName"/>
+		</xs:schema>
+	</types>
+	<message name="CancelCurrentTransformJobRequestMsg">
+		<message name="CancelTransformJobResponseMsg">
+			<part name="MessageID" element="wsa:MessageID"/>
+			<part name="RelatesTo" element="wsa:RelatesTo"/>
+			<part name="To" element="wsa:To"/>
+			<part name="From" element="wsa:From"/>
+			<part name="Action" element="wsa:Action"/>
+			<part name="body" element="sm:CancelTransformJobResponse"/>
+		</message>
+		<part name="body" element="sm:CancelCurrentTransformJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CancelCurrentTransformJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CancelCurrentTransformJobResponse"/>
+	</message>
+	<message name="CancelTransformDocumentRequestMsg">
+		<part name="body" element="sm:CancelTransformDocumentRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CancelTransformDocumentResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CancelTransformDocumentResponse"/>
+	</message>
+	<message name="CancelTransformJobRequestMsg">
+		<part name="body" element="sm:CancelTransformJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CancelTransformJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CancelTransformJobResponse"/>
+	</message>
+	<message name="CancelMyTransformJobsRequestMsg">
+		<part name="body" element="sm:CancelMyTransformJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CancelMyTransformJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CancelMyTransformJobsResponse"/>
+	</message>
+	<message name="CancelTransformJobsRequestMsg">
+		<part name="body" element="sm:CancelTransformJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CancelTransformJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CancelTransformJobsResponse"/>
+	</message>
+	<message name="CloseTransformJobRequestMsg">
+		<part name="body" element="sm:CloseTransformJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CloseTransformJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CloseTransformJobResponse"/>
+	</message>
+	<message name="CreateTransformJobRequestMsg">
+		<part name="body" element="sm:CreateTransformJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CreateTransformJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CreateTransformJobResponse"/>
+	</message>
+	<message name="DisableTransformServiceRequestMsg">
+		<part name="body" element="sm:DisableTransformServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="DisableTransformServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:DisableTransformServiceResponse"/>
+	</message>
+	<message name="EnableTransformServiceRequestMsg">
+		<part name="body" element="sm:EnableTransformServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="EnableTransformServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:EnableTransformServiceResponse"/>
+	</message>
+	<message name="GetActiveTransformJobsRequestMsg">
+		<part name="body" element="sm:GetActiveTransformJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetActiveTransformJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetActiveTransformJobsResponse"/>
+	</message>
+	<message name="GetTransformDocumentElementsRequestMsg">
+		<part name="body" element="sm:GetTransformDocumentElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetTransformDocumentElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetTransformDocumentElementsResponse"/>
+	</message>
+	<message name="GetTransformDocumentsRequestMsg">
+		<part name="body" element="sm:GetTransformDocumentsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetTransformDocumentsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetTransformDocumentsResponse"/>
+	</message>
+	<message name="GetTransformJobElementsRequestMsg">
+		<part name="body" element="sm:GetTransformJobElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetTransformJobElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetTransformJobElementsResponse"/>
+	</message>
+	<message name="GetTransformJobHistoryRequestMsg">
+		<part name="body" element="sm:GetTransformJobHistoryRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetTransformJobHistoryResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetTransformJobHistoryResponse"/>
+	</message>
+	<message name="GetTransformServiceElementsRequestMsg">
+		<part name="body" element="sm:GetTransformServiceElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetTransformServiceElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetTransformServiceElementsResponse"/>
+	</message>
+	<message name="HoldTransformJobRequestMsg">
+		<part name="body" element="sm:HoldTransformJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="HoldTransformJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:HoldTransformJobResponse"/>
+	</message>
+	<message name="HoldNewTransformJobsRequestMsg">
+		<part name="body" element="sm:HoldNewTransformJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="HoldNewTransformJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:HoldNewTransformJobsResponse"/>
+	</message>
+	<message name="ListInputDocumentFormatsRequestMsg">
+		<part name="body" element="sm:ListInputDocumentFormatsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ListInputDocumentFormatsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ListInputDocumentFormatsResponse"/>
+	</message>
+	<message name="ListOutputDocumentFormatsRequestMsg">
+		<part name="body" element="sm:ListOutputputDocumentFormatsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ListOutputDocumentFormatsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ListOutPutputDocumentFormatsResponse"/>
+	</message>
+	<message name="PauseTransformServiceAfterCurrentJobRequestMsg">
+		<part name="body" element="sm:PauseTransformServiceAfterCurrentJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="PauseTransformServiceAfterCurrentJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:PauseTransformServiceAfterCurrentJobResponse"/>
+	</message>
+	<message name="PauseTransformServiceRequestMsg">
+		<part name="body" element="sm:PauseTransformServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="PauseTransformServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:PauseTransformServiceResponse"/>
+	</message>
+	<message name="PromoteTransformJobRequestMsg">
+		<part name="body" element="sm:PromoteTransformJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="PromoteTransformJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:PromoteTransformJobResponse"/>
+	</message>
+	<message name="PurgeTransformJobsRequestMsg">
+		<part name="body" element="sm:PurgeTransformJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="PurgeTransformJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:PurgeTransformJobResponse"/>
+	</message>
+	<message name="ReleaseTransformJobRequestMsg">
+		<part name="body" element="sm:ReleaseTransformJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ReleaseTransformJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ReleaseTransformJobResponse"/>
+	</message>
+	<message name="ReleaseNewTransformJobsRequestMsg">
+		<part name="body" element="sm:ReleaseNewTransformJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ReleaseNewTransformJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ReleaseNewTransformJobsResponse"/>
+	</message>
+	<message name="RestartTransformServiceRequestMsg">
+		<part name="body" element="sm:RestartTransformServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="RestartTransformServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:RestartTransformServiceResponse"/>
+	</message>
+	<message name="ResubmitTransformJobRequestMsg">
+		<part name="body" element="sm:ResubmitTransformJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ResubmitTransformJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ResubmitTransformJobResponse"/>
+	</message>
+	<message name="ResumeTransformJobRequestMsg">
+		<part name="body" element="sm:ResumeTransformJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ResumeTransformJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ResumeTransformJobResponse"/>
+	</message>
+	<message name="ResumeTransformServiceRequestMsg">
+		<part name="body" element="sm:ResumeTransformServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ResumeTransformServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ResumeTransformServiceResponse"/>
+	</message>
+	<message name="SendTransformDocumentRequestMsg">
+		<part name="body" element="sm:SendTransformDocumentRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="DocumentStream" element="sm:BinaryData"/>
+	</message>
+	<message name="SendTransformDocumentResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SendTransformDocumentResponse"/>
+	</message>
+	<message name="SendTransformUriRequestMsg">
+		<part name="body" element="sm:SendTransformUriRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SendTransformUriResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SendTransformUriResponse"/>
+	</message>
+	<message name="SetTransformDocumentElementsRequestMsg">
+		<part name="body" element="sm:SetTransformDocumentElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SetTransformDocumentElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SetTransformDocumentElementsResponse"/>
+	</message>
+	<message name="SetTransformJobElementsRequestMsg">
+		<part name="body" element="sm:SetTransformJobElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SetTransformJobElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SetTransformJobElementsResponse"/>
+	</message>
+	<message name="SetTransformServiceElementsRequestMsg">
+		<part name="body" element="sm:SetTransformServiceElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SetTransformServiceElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SetTransformServiceElementsResponse"/>
+	</message>
+	<message name="ShutdownTransformServiceRequestMsg">
+		<part name="body" element="sm:ShutdownTransformServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ShutdownTransformServiceResponseMsg">
+		<part name="body" element="sm:ShutdownTransformServiceResponse"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SuspendCurrentTransformJobRequestMsg">
+		<part name="body" element="sm:SuspendCurrentTransformJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SuspendCurrentTransformJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SuspendCurrentTransformJobResponse"/>
+	</message>
+	<message name="ValidateTransformDocumentTicketRequestMsg">
+		<part name="body" element="sm:ValidateTransformDocumentTicketRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ValidateTransformDocumentTicketResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ValidateTransformDocumentTicketResponse"/>
+	</message>
+	<message name="ValidateTransformJobTicketRequestMsg">
+		<part name="body" element="sm:ValidateTransformJobTicketRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ValidateTransformJobTicketResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ValidateTransformJobTicketResponse"/>
+	</message>
+	<portType name="PwgTransformPort">
+		<operation name="CancelCurrentTransformJob">
+			<input message="sm:CancelCurrentTransformJobRequestMsg"/>
+			<output message="sm:CancelCurrentTransformJobResponseMsg"/>
+		</operation>
+		<operation name="CancelTransformDocument">
+			<input message="sm:CancelTransformDocumentRequestMsg"/>
+			<output message="sm:CancelTransformDocumentResponseMsg"/>
+		</operation>
+		<operation name="CancelTransformJob">
+			<input message="sm:CancelTransformJobRequestMsg"/>
+			<output message="sm:CancelTransformJobResponseMsg"/>
+		</operation>
+		<operation name="CancelTransformJobs">
+			<input message="sm:CancelTransformJobsRequestMsg"/>
+			<output message="sm:CancelTransformJobsResponseMsg"/>
+		</operation>
+		<operation name="CancelMyTransformJobs">
+			<input message="sm:CancelMyTransformJobsRequestMsg"/>
+			<output message="sm:CancelMyTransformJobsResponseMsg"/>
+		</operation>
+		<operation name="CloseTransformJob">
+			<input message="sm:CloseTransformJobRequestMsg"/>
+			<output message="sm:CloseTransformJobResponseMsg"/>
+		</operation>
+		<operation name="CreateTransformJob">
+			<input message="sm:CreateTransformJobRequestMsg"/>
+			<output message="sm:CreateTransformJobResponseMsg"/>
+		</operation>
+		<operation name="DisableTransformService">
+			<input message="sm:DisableTransformServiceRequestMsg"/>
+			<output message="sm:DisableTransformServiceResponseMsg"/>
+		</operation>
+		<operation name="EnableTransformService">
+			<input message="sm:EnableTransformServiceRequestMsg"/>
+			<output message="sm:EnableTransformServiceResponseMsg"/>
+		</operation>
+		<operation name="GetActiveTransformJobs">
+			<input message="sm:GetActiveTransformJobsRequestMsg"/>
+			<output message="sm:GetActiveTransformJobsResponseMsg"/>
+		</operation>
+		<operation name="GetTransformDocumentElements">
+			<input message="sm:GetTransformDocumentElementsRequestMsg"/>
+			<output message="sm:GetTransformDocumentElementsResponseMsg"/>
+		</operation>
+		<operation name="GetTransformDocuments">
+			<input message="sm:GetTransformDocumentsRequestMsg"/>
+			<output message="sm:GetTransformDocumentsResponseMsg"/>
+		</operation>
+		<operation name="GetTransformJobElements">
+			<input message="sm:GetTransformJobElementsRequestMsg"/>
+			<output message="sm:GetTransformJobElementsResponseMsg"/>
+		</operation>
+		<operation name="GetTransformJobHistory">
+			<input message="sm:GetTransformJobHistoryRequestMsg"/>
+			<output message="sm:GetTransformJobHistoryResponseMsg"/>
+		</operation>
+		<operation name="GetTransformServiceElements">
+			<input message="sm:GetTransformServiceElementsRequestMsg"/>
+			<output message="sm:GetTransformServiceElementsResponseMsg"/>
+		</operation>
+		<operation name="HoldTransformJob">
+			<input message="sm:HoldTransformJobRequestMsg"/>
+			<output message="sm:HoldTransformJobResponseMsg"/>
+		</operation>
+		<operation name="HoldNewTransformJobs">
+			<input message="sm:HoldNewTransformJobsRequestMsg"/>
+			<output message="sm:HoldNewTransformJobsResponseMsg"/>
+		</operation>
+		<operation name="ListInputDocumentFormats">
+			<input message="sm:ListInputDocumentFormatsRequestMsg"/>
+			<output message="sm:ListInputDocumentFormatsResponseMsg"/>
+		</operation>
+		<operation name="ListOutputDocumentFormats">
+			<input message="sm:ListOutputDocumentFormatsRequestMsg"/>
+			<output message="sm:ListOutputDocumentFormatsResponseMsg"/>
+		</operation>
+		<operation name="PauseTransformService">
+			<input message="sm:PauseTransformServiceRequestMsg"/>
+			<output message="sm:PauseTransformServiceResponseMsg"/>
+		</operation>
+		<operation name="PauseTransformServiceAfterCurrentJob">
+			<input message="sm:PauseTransformServiceAfterCurrentJobRequestMsg"/>
+			<output message="sm:PauseTransformServiceAfterCurrentJobResponseMsg"/>
+		</operation>
+		<operation name="PromoteTransformJob">
+			<input message="sm:PromoteTransformJobRequestMsg"/>
+			<output message="sm:PromoteTransformJobResponseMsg"/>
+		</operation>
+		<operation name="PurgeTransformJobs">
+			<input message="sm:PurgeTransformJobsRequestMsg"/>
+			<output message="sm:PurgeTransformJobsResponseMsg"/>
+		</operation>
+		<operation name="ReleaseTransformJob">
+			<input message="sm:ReleaseTransformJobRequestMsg"/>
+			<output message="sm:ReleaseTransformJobResponseMsg"/>
+		</operation>
+		<operation name="ReleaseNewTransformJobs">
+			<input message="sm:ReleaseNewTransformJobsRequestMsg"/>
+			<output message="sm:ReleaseNewTransformJobsResponseMsg"/>
+		</operation>
+		<operation name="RestartTransformService">
+			<input message="sm:RestartTransformServiceRequestMsg"/>
+			<output message="sm:RestartTransformServiceResponseMsg"/>
+		</operation>
+		<operation name="ResubmitTransformJob">
+			<input message="sm:ResubmitTransformJobRequestMsg"/>
+			<output message="sm:ResubmitTransformJobResponseMsg"/>
+		</operation>
+		<operation name="ResumeTransformJob">
+			<input message="sm:ResumeTransformJobRequestMsg"/>
+			<output message="sm:ResumeTransformJobResponseMsg"/>
+		</operation>
+		<operation name="ResumeTransformService">
+			<input message="sm:ResumeTransformServiceRequestMsg"/>
+			<output message="sm:ResumeTransformServiceResponseMsg"/>
+		</operation>
+		<operation name="SendTransformDocument">
+			<input message="sm:SendTransformDocumentRequestMsg"/>
+			<output message="sm:SendTransformDocumentResponseMsg"/>
+		</operation>
+		<operation name="SendTransformUri">
+			<input message="sm:SendTransformUriRequestMsg"/>
+			<output message="sm:SendTransformUriResponseMsg"/>
+		</operation>
+		<operation name="SetTransformDocumentElements">
+			<input message="sm:SetTransformDocumentElementsRequestMsg"/>
+			<output message="sm:SetTransformDocumentElementsResponseMsg"/>
+		</operation>
+		<operation name="SetTransformJobElements">
+			<input message="sm:SetTransformJobElementsRequestMsg"/>
+			<output message="sm:SetTransformJobElementsResponseMsg"/>
+		</operation>
+		<operation name="SetTransformServiceElements">
+			<input message="sm:SetTransformServiceElementsRequestMsg"/>
+			<output message="sm:SetTransformServiceElementsResponseMsg"/>
+		</operation>
+		<operation name="ShutdownTransformService">
+			<input message="sm:ShutdownTransformServiceRequestMsg"/>
+			<output message="sm:ShutdownTransformServiceResponseMsg"/>
+		</operation>
+		<operation name="SuspendCurrentTransformJob">
+			<input message="sm:SuspendCurrentTransformJobRequestMsg"/>
+			<output message="sm:SuspendCurrentTransformJobResponseMsg"/>
+		</operation>
+		<operation name="ValidateTransformDocumentTicket">
+			<input message="sm:ValidateTransformDocumentTicketRequestMsg"/>
+			<output message="sm:ValidateTransformDocumentTicketResponseMsg"/>
+		</operation>
+		<operation name="ValidateTransformJobTicket">
+			<input message="sm:ValidateTransformJobTicketRequestMsg"/>
+			<output message="sm:ValidateTransformJobTicketResponseMsg"/>
+		</operation>
+	</portType>
+	<binding name="PwgTransformBinding" type="sm:PwgTransformPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="CancelCurrentTransformJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelCurrentTransformJob"/>
+			<input>
+				<soap:header message="sm:CancelCurrentTransformJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelCurrentTransformJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelCurrentTransformJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelCurrentTransformJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CancelCurrentTransformJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelCurrentTransformJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CancelCurrentTransformJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelCurrentTransformJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelCurrentTransformJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="CancelTransformDocument">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelTransformDocument"/>
+			<input>
+				<soap:header message="sm:CancelTransformDocumentRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelTransformDocumentRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelTransformDocumentRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelTransformDocumentRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CancelTransformDocumentResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelTransformDocumentResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CancelTransformDocumentResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelTransformDocumentResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelTransformDocumentResponseMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="CancelTransformJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelTransformJob"/>
+			<input>
+				<soap:header message="sm:CancelTransformJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelTransformJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelTransformJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelTransformJobRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CancelTransformJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelTransformJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CancelTransformJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelTransformJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelTransformJobResponseMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="CancelTransformJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelTransformJobs"/>
+			<input>
+				<soap:header message="sm:CancelTransformJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelTransformJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelTransformJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelTransformJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CancelTransformJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelTransformJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CancelTransformJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelTransformJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelTransformJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="CancelMyTransformJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelMyTransformJobs"/>
+			<input>
+				<soap:header message="sm:CancelMyTransformJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelMyTransformJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelMyTransformJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelMyTransformJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CancelMyTransformJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelMyTransformJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CancelMyTransformJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelMyTransformJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelMyTransformJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="CloseTransformJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CloseTransformJob"/>
+			<input>
+				<soap:header message="sm:CloseTransformJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CloseTransformJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CloseTransformJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CloseTransformJobRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CloseTransformJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CloseTransformJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CloseTransformJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CloseTransformJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CloseTransformJobResponseMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="CreateTransformJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CreateTransformJob"/>
+			<input>
+				<soap:header message="sm:CreateTransformJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CreateTransformJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CreateTransformJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CreateTransformJobRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CreateTransformJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CreateTransformJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CreateTransformJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CreateTransformJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CreateTransformJobResponseMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="DisableTransformService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/DisableTransformService"/>
+			<input>
+				<soap:header message="sm:DisableTransformServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:DisableTransformServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:DisableTransformServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:DisableTransformServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:DisableTransformServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:DisableTransformServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:DisableTransformServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:DisableTransformServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:DisableTransformServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="EnableTransformService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/EnableTransformService"/>
+			<input>
+				<soap:header message="sm:EnableTransformServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:EnableTransformServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:EnableTransformServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:EnableTransformServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:EnableTransformServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:EnableTransformServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:EnableTransformServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:EnableTransformServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:EnableTransformServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetActiveTransformJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetActiveJobs"/>
+			<input>
+				<soap:header message="sm:GetActiveTransformJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetActiveTransformJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetActiveTransformJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetActiveTransformJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetActiveTransformJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetActiveTransformJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetActiveTransformJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetActiveTransformJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetActiveTransformJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetTransformDocumentElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetTransformDocumentElements"/>
+			<input>
+				<soap:header message="sm:GetTransformDocumentElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetTransformDocumentElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetTransformDocumentElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetTransformDocumentElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetTransformDocumentElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetTransformDocumentElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetTransformDocumentElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetTransformDocumentElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetTransformDocumentElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetTransformDocuments">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetDocuments"/>
+			<input>
+				<soap:header message="sm:GetTransformDocumentsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetTransformDocumentsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetTransformDocumentsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetTransformDocumentsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetTransformDocumentsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetTransformDocumentsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetTransformDocumentsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetTransformDocumentsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetTransformDocumentsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetTransformJobElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetTransformJobElements"/>
+			<input>
+				<soap:header message="sm:GetTransformJobElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetTransformJobElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetTransformJobElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetTransformJobElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetTransformJobElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetTransformJobElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetTransformJobElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetTransformJobElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetTransformJobElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetTransformJobHistory">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetJobHistory"/>
+			<input>
+				<soap:header message="sm:GetTransformJobHistoryRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetTransformJobHistoryRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetTransformJobHistoryRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetTransformJobHistoryRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetTransformJobHistoryResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetTransformJobHistoryResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetTransformJobHistoryResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetTransformJobHistoryResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetTransformJobHistoryResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetTransformServiceElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetTransformServiceElements"/>
+			<input>
+				<soap:header message="sm:GetTransformServiceElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetTransformServiceElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetTransformServiceElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetTransformServiceElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetTransformServiceElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetTransformServiceElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetTransformServiceElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetTransformServiceElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetTransformServiceElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="HoldTransformJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/HoldJob"/>
+			<input>
+				<soap:header message="sm:HoldTransformJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:HoldTransformJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:HoldTransformJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:HoldTransformJobRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:HoldTransformJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:HoldTransformJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:HoldTransformJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:HoldTransformJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:HoldTransformJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="HoldNewTransformJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/HoldNewTransformJobs"/>
+			<input>
+				<soap:header message="sm:HoldNewTransformJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:HoldNewTransformJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:HoldNewTransformJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:HoldNewTransformJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:HoldNewTransformJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:HoldNewTransformJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:HoldNewTransformJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:HoldNewTransformJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:HoldNewTransformJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ListInputDocumentFormats">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ListInputDocumentFormats"/>
+			<input>
+				<soap:header message="sm:ListInputDocumentFormatsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ListInputDocumentFormatsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ListInputDocumentFormatsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ListInputDocumentFormatsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ListInputDocumentFormatsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ListInputDocumentFormatsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ListInputDocumentFormatsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ListInputDocumentFormatsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ListInputDocumentFormatsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ListOutputDocumentFormats">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ListOutputDocumentFormats"/>
+			<input>
+				<soap:header message="sm:ListOutputDocumentFormatsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ListOutputDocumentFormatsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ListOutputDocumentFormatsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ListOutputDocumentFormatsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ListOutputDocumentFormatsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ListOutputDocumentFormatsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ListOutputDocumentFormatsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ListOutputDocumentFormatsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ListOutputDocumentFormatsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="PauseTransformService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/PauseTransformService"/>
+			<input>
+				<soap:header message="sm:PauseTransformServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PauseTransformServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:PauseTransformServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:PauseTransformServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:PauseTransformServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PauseTransformServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:PauseTransformServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:PauseTransformServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:PauseTransformServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="PauseTransformServiceAfterCurrentJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/PauseTransformServiceAfterCurrentJob"/>
+			<input>
+				<soap:header message="sm:PauseTransformServiceAfterCurrentJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PauseTransformServiceAfterCurrentJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:PauseTransformServiceAfterCurrentJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:PauseTransformServiceAfterCurrentJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:PauseTransformServiceAfterCurrentJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PauseTransformServiceAfterCurrentJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:PauseTransformServiceAfterCurrentJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:PauseTransformServiceAfterCurrentJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:PauseTransformServiceAfterCurrentJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="PromoteTransformJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/PromoteTransformJob"/>
+			<input>
+				<soap:header message="sm:PromoteTransformJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PromoteTransformJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:PromoteTransformJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:PromoteTransformJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:PromoteTransformJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PromoteTransformJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:PromoteTransformJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:PromoteTransformJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:PromoteTransformJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="PurgeTransformJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/PurgeTransformJobs"/>
+			<input>
+				<soap:header message="sm:PurgeTransformJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PurgeTransformJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:PurgeTransformJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:PurgeTransformJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:PurgeTransformJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PurgeTransformJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:PurgeTransformJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:PurgeTransformJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:PurgeTransformJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ReleaseTransformJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ReleaseJob"/>
+			<input>
+				<soap:header message="sm:ReleaseTransformJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ReleaseTransformJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ReleaseTransformJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ReleaseTransformJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ReleaseTransformJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ReleaseTransformJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ReleaseTransformJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ReleaseTransformJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ReleaseTransformJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ReleaseNewTransformJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ReleaseNewTransformJobs"/>
+			<input>
+				<soap:header message="sm:ReleaseNewTransformJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ReleaseNewTransformJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ReleaseNewTransformJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ReleaseNewTransformJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ReleaseNewTransformJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ReleaseNewTransformJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ReleaseNewTransformJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ReleaseNewTransformJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ReleaseNewTransformJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="RestartTransformService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/RestartTransformService"/>
+			<input>
+				<soap:header message="sm:RestartTransformServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RestartTransformServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:RestartTransformServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:RestartTransformServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:RestartTransformServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RestartTransformServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:RestartTransformServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:RestartTransformServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:RestartTransformServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ResubmitTransformJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ResubmitTransformJob"/>
+			<input>
+				<soap:header message="sm:ResubmitTransformJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResubmitTransformJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResubmitTransformJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResubmitTransformJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ResubmitTransformJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResubmitTransformJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ResubmitTransformJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResubmitTransformJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResubmitTransformJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ResumeTransformJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ResumeTransformJob"/>
+			<input>
+				<soap:header message="sm:ResumeTransformJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResumeTransformJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResumeTransformJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResumeTransformJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ResumeTransformJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResumeTransformJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ResumeTransformJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResumeTransformJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResumeTransformJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ResumeTransformService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ResumeTransformService"/>
+			<input>
+				<soap:header message="sm:ResumeTransformServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResumeTransformServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResumeTransformServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResumeTransformServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ResumeTransformServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResumeTransformServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ResumeTransformServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResumeTransformServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResumeTransformServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SendTransformDocument">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/SendTransformDocument"/>
+			<input>
+				<soap:header message="sm:SendTransformDocumentRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SendTransformDocumentRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SendTransformDocumentRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SendTransformDocumentRequestMsg" part="Action" use="literal"/>
+				<!-- Omitted for .NET compatibility - gSOAP doesn't actually use this anyway -->
+				<!--<mime:multipartRelated>
+					<mime:part>
+						<soap:body parts="body" use="literal"/>
+					</mime:part>
+					<mime:part>
+						<mime:content part="DocumentStream" type="application/octetstream"/>
+					</mime:part>
+				</mime:multipartRelated>-->
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SendTransformDocumentResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SendTransformDocumentResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SendTransformDocumentResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SendTransformDocumentResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SendTransformDocumentResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SendTransformUri">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/SendTransformUri"/>
+			<input>
+				<soap:header message="sm:SendTransformUriRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SendTransformUriRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SendTransformUriRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SendTransformUriRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SendTransformUriResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SendTransformUriResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SendTransformUriResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SendTransformUriResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SendTransformUriResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SetTransformDocumentElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/SetTransformDocumentElements"/>
+			<input>
+				<soap:header message="sm:SetTransformDocumentElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetTransformDocumentElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetTransformDocumentElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetTransformDocumentElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SetTransformDocumentElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetTransformDocumentElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SetTransformDocumentElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetTransformDocumentElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetTransformDocumentElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SetTransformJobElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/SetTransformJobElements"/>
+			<input>
+				<soap:header message="sm:SetTransformJobElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetTransformJobElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetTransformJobElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetTransformJobElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SetTransformJobElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetTransformJobElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SetTransformJobElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetTransformJobElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetTransformJobElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SetTransformServiceElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/SetTransformServiceElements"/>
+			<input>
+				<soap:header message="sm:SetTransformServiceElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetTransformServiceElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetTransformServiceElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetTransformServiceElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SetTransformServiceElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetTransformServiceElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SetTransformServiceElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetTransformServiceElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetTransformServiceElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ShutdownTransformService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ShutdownTransformService"/>
+			<input>
+				<soap:header message="sm:ShutdownTransformServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ShutdownTransformServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ShutdownTransformServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ShutdownTransformServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ShutdownTransformServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ShutdownTransformServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ShutdownTransformServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ShutdownTransformServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ShutdownTransformServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SuspendCurrentTransformJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/SuspendCurrentTransformJob"/>
+			<input>
+				<soap:header message="sm:SuspendCurrentTransformJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SuspendCurrentTransformJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SuspendCurrentTransformJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SuspendCurrentTransformJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SuspendCurrentTransformJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SuspendCurrentTransformJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SuspendCurrentTransformJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SuspendCurrentTransformJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SuspendCurrentTransformJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ValidateTransformDocumentTicket">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ValidateTransformDocumentTicket"/>
+			<input>
+				<soap:header message="sm:ValidateTransformDocumentTicketRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ValidateTransformDocumentTicketRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ValidateTransformDocumentTicketRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ValidateTransformDocumentTicketRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ValidateTransformDocumentTicketResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ValidateTransformDocumentTicketResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ValidateTransformDocumentTicketResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ValidateTransformDocumentTicketResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ValidateTransformDocumentTicketResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ValidateTransformJobTicket">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ValidateTransformJobTicket"/>
+			<input>
+				<soap:header message="sm:ValidateTransformJobTicketRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ValidateTransformJobTicketRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ValidateTransformJobTicketRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ValidateTransformJobTicketRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ValidateTransformJobTicketResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ValidateTransformJobTicketResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ValidateTransformJobTicketResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ValidateTransformJobTicketResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ValidateTransformJobTicketResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="PwgTransformService">
+		<port name="PwgTransformPort" binding="sm:PwgTransformBinding">
+			<soap:address location="http://localhost:53103/PwgTransformService"/>
+		</port>
+	</service>
+	<!--End User operation messages-->
+	<!--Administrative operation messages-->
+</definitions>

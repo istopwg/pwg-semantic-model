@@ -1,0 +1,404 @@
+﻿<?xml version="1.0" encoding="UTF-8" standalone="no"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="PwgCommon.xsd"/>
+	<xs:include schemaLocation="Counter.xsd"/>
+	<xs:include schemaLocation="qualifieddc.xsd"/>
+	<!--06/06/12 PJZ Final JPS3 update-->
+	<!--01/10/12 PJZ Aligned with latest JPS3 and Raster specs-->
+	<!--01/06/12 PJZ Fixed InsertSheets-->
+	<!--01/02/12 PJZ Added abstract data class for service specific counters-->
+	<!--12/31/11 PJZ Added some more service specific DocumentProcessing elements-->
+	<!--12/06/11 PJZ Broke out metadata to make it available to PrintJobDescription & added extension point-->
+	<!--11/19/11 PJZ Added Dublin Core metadata-->
+	<!--11/11/11 PJZ Added Example elements to document service specific elements-->
+	<!--09/10/11 PJZ Added missing MustHonor and attribute extensions-->
+	<!--05/02/11 PJZ DocumentStateReasons is mandatory-->
+	<!--12/28/10 PJZ Added ImagesCompleted and ImpressionsCompleted-->
+	<!--11/15/10 PJZ Added Receipt-->
+	<!--09/23/10 PJZ Fixed capabilitiers and defaults-->
+	<!--07/22/10 PJZ Added Global identifiers-->
+	<!--010/22/09 PJZ Split concrete and abstract classes-->
+	<!--06/17/09 PJZ Reworked NaturalLanguage-->
+	<!--04/14/09 PJZ Updated Namespace-->
+	<!--06/01/08 PJZ Added  anyAttribute extension point & fixed Template Service(s)-->
+	<!--05/31/08 PJZ Move back to ##Other-->
+	<!--05/30/08 PJZ Move back to single namespace-->
+	<!--05/21/08 PJZ Partial alignment with WS-Scan-->
+	<!--03/27/08 PJZ Orientation made specific to printing-->
+	<!--11/29/07 PJZ Made some elements mandatory and moved out some print specific elements-->
+	<!--10/13/06 PJZ Created-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<xs:annotation>
+		<xs:documentation>Document Element Definition</xs:documentation>
+	</xs:annotation>
+	<!---->
+	<!--Concrete Class definitions-->
+	<xs:complexType name="ImagingDocumentDescriptionType">
+		<xs:sequence>
+			<xs:element ref="DocumentDigitalSignature" minOccurs="0"/>
+			<xs:element ref="DocumentMessage" minOccurs="0"/>
+			<xs:element ref="DocumentMetadata" minOccurs="0"/>
+			<xs:element ref="DocumentName" minOccurs="0"/>
+			<xs:element ref="DocumentNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="DocumentPages" minOccurs="0"/>
+			<xs:element ref="LastDocument" minOccurs="0"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ImagingDocumentDescriptionCapabilitiesType">
+		<xs:sequence>
+			<xs:element name="DocumentDigitalSignature" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AllowedValue" type="DocumentDigitalSignatureType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="DocumentMessage" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="DocumentName" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="DocumentNaturalLanguage" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AllowedValue" type="NaturalLanguageType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="DocumentPages" type="xs:boolean" minOccurs="0"/>
+			<xs:element ref="LastDocument" minOccurs="0"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ImagingDocumentProcessingType">
+		<xs:sequence>
+			<xs:element ref="NumberUp" minOccurs="0"/>
+			<xs:element ref="PresentationDirectionNumberUp" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- ImagingDocumentProcessing - group -->
+	</xs:complexType>
+	<xs:complexType name="ImagingDocumentProcessingCapabilitiesType">
+		<xs:sequence>
+			<xs:element name="NumberUp" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AllowedValue" type="xs:int" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="PresentationDirectionNumberUp" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AllowedValue" type="PresentationDirectionNumberUpType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ImagingDocumentStatusType">
+		<xs:sequence>
+			<xs:element ref="DateTimeAtCompleted" minOccurs="0"/>
+			<xs:element ref="DateTimeAtCreation" minOccurs="0"/>
+			<xs:element ref="DateTimeAtProcessing" minOccurs="0"/>
+			<xs:element ref="DetailedStatusMessages" minOccurs="0"/>
+			<xs:element ref="DocumentAccessErrors" minOccurs="0"/>
+			<xs:sequence>
+				<xs:element ref="DocumentNumber"/>
+				<xs:element ref="DocumentUuid"/>
+			</xs:sequence>
+			<xs:element ref="DocumentPagesCompleted" minOccurs="0"/>
+			<xs:element ref="DocumentPagesCompletedCurrentCopy" minOccurs="0"/>
+			<xs:element ref="DocumentState"/>
+			<xs:element ref="DocumentStateMessage" minOccurs="0"/>
+			<xs:element ref="DocumentStateReasons" minOccurs="1"/>
+			<xs:element ref="DocumentUri" minOccurs="0"/>
+			<xs:element ref="ErrorsCount" minOccurs="0"/>
+			<xs:sequence>
+				<xs:element ref="JobId" minOccurs="0"/>
+				<xs:element ref="JobUuid" minOccurs="0"/>
+			</xs:sequence>
+			<xs:element ref="JobUri" minOccurs="0"/>
+			<xs:element ref="KOctetsProcessed" minOccurs="0"/>
+			<xs:element ref="MoreInfo" minOccurs="0"/>
+			<xs:element ref="TimeAtCompleted" minOccurs="0"/>
+			<xs:element ref="TimeAtCreation" minOccurs="0"/>
+			<xs:element ref="TimeAtProcessing" minOccurs="0"/>
+			<xs:element ref="UpTime" minOccurs="0"/>
+			<xs:element ref="WarningsCount" minOccurs="0"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<!--Example Class Extensions-->
+	<xs:element name="ServiceSpecificDocumentStatus">
+		<xs:annotation>
+			<xs:documentation>Example</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CurrentPageOrder" minOccurs="0"/>
+				<xs:element ref="DocumentFormatDetailsDetected" minOccurs="0"/>
+				<xs:element ref="DocumentFormatDetected" minOccurs="0"/>
+				<xs:element ref="DocumentFormatVersionDetected" minOccurs="0"/>
+				<xs:element ref="ImpressionsCompletedCurrentCopy" minOccurs="0"/>
+				<xs:element ref="MediaSheetsCompleted" minOccurs="0"/>
+				<xs:element ref="OutputDeviceAssigned" minOccurs="0"/>
+				<xs:element name="ServiceSpecificCounters" minOccurs="0"/>
+				<xs:element ref="ServiceUri" minOccurs="0"/>
+				<xs:element ref="SheetsCompletedCopyNumber" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ServiceSpecificDocumentDescription">
+		<xs:annotation>
+			<xs:documentation>Example</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CompressionSupported" minOccurs="0"/>
+				<xs:element ref="DocumentCharsetSupplied" minOccurs="0"/>
+				<xs:element ref="DocumentDigitalSignatureSupplied" minOccurs="0"/>
+				<xs:choice>
+					<xs:element ref="DocumentFormatDetailsSupplied"/>
+					<xs:sequence>
+						<xs:element ref="DocumentFormatSupplied"/>
+						<xs:element ref="DocumentFormatVersionSupplied" minOccurs="0"/>
+					</xs:sequence>
+				</xs:choice>
+				<xs:element ref="DocumentMessageSupplied" minOccurs="0"/>
+				<xs:element ref="DocumentNameSupplied" minOccurs="0"/>
+				<xs:element ref="PageOrderReceived" minOccurs="0"/>
+				<xs:element ref="MediaSheets" minOccurs="0"/>
+				<xs:element ref="KOctets" minOccurs="0"/>
+				<xs:element ref="Impressions" minOccurs="0"/>
+				<xs:element ref="DocumentUri" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ServiceSpecificDocumentProcessing">
+		<xs:annotation>
+			<xs:documentation>Example</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="AutoSkewCorrection" minOccurs="0"/>
+				<xs:element ref="ColorEntry" minOccurs="0"/>
+				<xs:element ref="Copies" minOccurs="0"/>
+				<xs:element ref="Compression" minOccurs="0"/>
+				<xs:element ref="CompressionQualityFactor" minOccurs="0"/>
+				<xs:element ref="ContentType" minOccurs="0"/>
+				<xs:element ref="CoverBack" minOccurs="0"/>
+				<xs:element ref="CoverFront" minOccurs="0"/>
+				<xs:choice>
+					<xs:element ref="Destination"/>
+					<xs:element ref="DestinationUris"/>
+				</xs:choice>
+				<xs:element ref="DocumentDigitalSignature" minOccurs="0"/>
+				<xs:element ref="DocumentFormat" minOccurs="0"/>
+				<xs:element ref="Exposure" minOccurs="0"/>
+				<xs:element ref="FeedOrientation" minOccurs="0"/>
+				<xs:element ref="FilmScanMode" minOccurs="0"/>
+				<xs:element ref="Finishings" minOccurs="0"/>
+				<xs:element ref="FinishingsCol" minOccurs="0"/>
+				<xs:element ref="FontNameRequested" minOccurs="0"/>
+				<xs:element ref="FontSizeRequested" minOccurs="0"/>
+				<xs:element ref="ForceFrontSide" minOccurs="0"/>
+				<xs:element ref="HeaderPrint" minOccurs="0"/>
+				<xs:element ref="ImagesToTransfer" minOccurs="0"/>
+				<xs:element ref="ImpositionTemplate" minOccurs="0"/>
+				<xs:element ref="InputSource" minOccurs="0"/>
+				<xs:element ref="InsertSheets" minOccurs="0"/>
+				<xs:choice minOccurs="0">
+					<xs:choice>
+						<xs:sequence minOccurs="0">
+							<xs:element ref="Media" minOccurs="0"/>
+							<xs:element ref="MediaType" minOccurs="0"/>
+						</xs:sequence>
+						<xs:element ref="MediaSource" minOccurs="0">
+							<xs:annotation>
+								<xs:documentation>JPS3</xs:documentation>
+							</xs:annotation>
+						</xs:element>
+					</xs:choice>
+					<xs:element ref="MediaCol" minOccurs="0"/>
+				</xs:choice>
+				<xs:element ref="MediaBox" minOccurs="0"/>
+				<xs:element ref="MediaInputTrayCheck" minOccurs="0"/>
+				<xs:element ref="OrientationRequested" minOccurs="0"/>
+				<xs:element ref="OutputBin" minOccurs="0"/>
+				<xs:element ref="OutputDevice" minOccurs="0"/>
+				<xs:element ref="PageDelivery" minOccurs="0"/>
+				<xs:element ref="PageRanges" minOccurs="0"/>
+				<xs:element ref="PagesPerSubset" minOccurs="0"/>
+				<xs:element ref="PdlInitFiles" minOccurs="0"/>
+				<xs:element ref="PrintContentOptimize" minOccurs="0"/>
+				<xs:element ref="PrintColorMode" minOccurs="0"/>
+				<xs:element ref="PrintRenderingIntent" minOccurs="0"/>
+				<xs:element ref="Quality" minOccurs="0"/>
+				<xs:element ref="Resolution" minOccurs="0"/>
+				<xs:element ref="Rotation" minOccurs="0"/>
+				<xs:element ref="Scaling" minOccurs="0"/>
+				<xs:choice minOccurs="0">
+					<xs:element ref="DocumentSizeAutoDetect" minOccurs="0"/>
+					<xs:element ref="ScanRegions" minOccurs="0"/>
+				</xs:choice>
+				<xs:element ref="SeparatorSheets" minOccurs="0"/>
+				<xs:element ref="SheetCollate" minOccurs="0"/>
+				<xs:element ref="Sides" minOccurs="0"/>
+				<xs:element ref="XImagePosition" minOccurs="0"/>
+				<xs:element ref="XImageShift" minOccurs="0"/>
+				<xs:element ref="XSide1ImageShift" minOccurs="0"/>
+				<xs:element ref="XSide2ImageShift" minOccurs="0"/>
+				<xs:element ref="YImagePosition" minOccurs="0"/>
+				<xs:element ref="YImageShift" minOccurs="0"/>
+				<xs:element ref="YSide1ImageShift" minOccurs="0"/>
+				<xs:element ref="YSide2ImageShift" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!---->
+	<!--Abstract Base Class definitions-->
+	<xs:element name="ImagingDocumentDescription">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ImagingDocumentDescriptionType">
+					<xs:sequence>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ImagingDocumentDescriptionCapabilities" type="ImagingDocumentDescriptionCapabilitiesType">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ImagingDocumentProcessing">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ImagingDocumentProcessingType">
+					<xs:sequence>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ImagingDocumentProcessingCapabilities">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ImagingDocumentProcessingCapabilitiesType">
+					<xs:sequence>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ImagingDocumentStatus">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ImagingDocumentStatusType">
+					<xs:sequence>
+						<xs:choice>
+							<xs:element ref="ImagesCompleted"/>
+							<xs:element ref="ImpressionsCompleted"/>
+						</xs:choice>
+						<xs:element ref="ServiceSpecificCounters"/>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="ImagingDocumentTicketType">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="ImagingDocumentDescription" minOccurs="0"/>
+			<xs:element ref="ImagingDocumentProcessing" minOccurs="0"/>
+			<xs:sequence>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ImagingDocumentTicket">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ImagingDocumentTicketType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ImagingDocumentReceipt">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ImagingDocumentTicketType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="ImagingDocumentType">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="ImagingDocumentReceipt" minOccurs="0"/>
+			<xs:element ref="ImagingDocumentStatus"/>
+			<xs:element ref="ImagingDocumentTicket" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:element name="ImagingDocument" type="ImagingDocumentType">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ImagingDocumentsType">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="ImagingDocument" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- ScanDocuments - set of Scan Documents -->
+	</xs:complexType>
+	<xs:element name="ImagingDocuments" type="ImagingDocumentsType">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

@@ -1,0 +1,159 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="Counter.xsd"/>
+	<xs:include schemaLocation="ServiceTypes.xsd"/>
+	<xs:include schemaLocation="Subunits.xsd"/>
+	<xs:include schemaLocation="Power.xsd"/>
+	<xs:include schemaLocation="SystemHealth.xsd"/>
+	<!--12/14/10 PJZ Changed Service Instance to ServiceSummary, System Description is mandatory-->
+	<!--11/02/10 PJZ Moved ConfiguredResources back to status-->
+	<!--10/22/10 PJZ Added ServiceXriSupported to ConfiguredServices and AvailableResources to ConfiguredResources, Changed name of included schema from DeviceHealth to SyatemHealth, added SystemHealth-->
+	<!--09/20/10 PJZ Added AvailableResources based on ResourceService's ListResource operation-->
+	<!--09/12/10 PJZ Removed AvailableResources.xsd since ftp://ftp.pwg.org/pub/pwg/ipp/new_RES/draft-ietf-ipp-get-resource-00.pdf never progressed, Removed DevicesSupported due to no clean mapping to PWG5104.2-->
+	<!--05/26/11 PJZ Changed name of device health include-->
+	<!--12/08/10 PJZ Changed Service GeoLocation to SystemGeoLocation-->
+	<!--10/25/10 PJZ Changed Subunits to SubunitsType (complex type name change)-->
+	<!--10/19/10 PJZ Changed URI to Uri-->
+	<!--09/23/10 PJZ Changed ServiceUUID to SystemUUID-->
+	<!--09/15/10 PJZ Added missing GeoLocation, ServiceUUID-->
+	<!--09/10/10 PJZ Removed SystemCapabilities & moved contained Power elements-->
+	<!--08/19/10 PJZ Fixed Powertimeout name-->
+	<!--05/28/10 PJZ added system health-->
+	<!--04/1/10 PJZ added "Type" suffix to ComplexTypes-->
+	<!--12/28/09 PJZ Removed deprecated elements-->
+	<!--08/02/09 PJZ No longer base System base types on Imaging Service-->
+	<!--07/23/09 PJZ Promoted System to root of schema-->
+	<!--04/14/09 PJZ Updated Namespace-->
+	<!--06/01/08 PJZ Added  anyAttribute extension point-->
+	<!--05/31/08 PJZ Move back to ##Other-->
+	<!--05/30/08 PJZ Move back to single namespace-->
+	<!--05/21/08 PJZ Partial alignment with WS-Scan-->
+	<!--11/29/07 PJZ Reworked System Description-->
+	<!--10/08/06 PJZ Reworked dependencies and removed Chameleon-->
+	<!--08/08/06 PJZ Changed namespace-->
+	<!--070606  PJZ Added core namespace-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v3   
+
+Copyright 2002-2014, IEEE Industry Standards and Technology Organization/PWG - SM Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald, Daniel Manchala 
+</xs:documentation>
+	</xs:annotation>
+	<!--                            -->
+	<!-- system element definitions -->
+	<!--                            -->
+	<xs:element name="SystemInfo" type="ObjectStringLongType"/>
+	<!-- OPTIONAL - MUST be single-valued -->
+	<!-- system vendor-supplied description and/or label -->
+	<!-- see printer-info - section 4.4.6 [RFC2911] -->
+	<xs:element name="SystemName" type="ObjectStringLongType"/>
+	<xs:element name="SystemConfigChangeNumber" type="xs:int"/>
+	<!-- OPTIONAL - MUST be single-valued -->
+	<xs:element name="SystemServicePerson" type="ObjectStringLongType"/>
+	<xs:element name="SystemCurrentOperator" type="ObjectStringLongType"/>
+	<xs:element name="SystemStartupPage" type="xs:boolean"/>
+	<!-- system administrative name -->
+	<!-- see printer-name - section 4.4.4 [RFC2911] -->
+	<!-- see prtGeneralPrinterName - section 6 [RFC3805] -->
+	<xs:element name="SystemServiceSupported" type="ObjectServiceSupportedType"/>
+	<!-- REQUIRED - MAY be multi-valued -->
+	<!-- list of services (by ID/name/URI) supported by this system -->
+	<xs:element name="SystemDeviceSupported" type="ObjectDeviceSupportedType"/>
+	<!-- REQUIRED - MAY be multi-valued -->
+	<!-- list of devices (by ID/name/URI) supported by this system -->
+	<xs:element name="SystemSubunitSupported" type="SubunitReferencesType"/>
+	<!-- REQUIRED - MAY be multi-valued -->
+	<!-- list of subunits (by ID) supported by this system -->
+	<!-- see Printer Sub-Units - section 2.2 [RFC3805] -->
+	<xs:element name="SystemResourceSupported" type="ObjectResourceReferencesType"/>
+	<!-- OPTIONAL - MAY be multi-valued -->
+	<!-- list of resources (by ID/name/URI) supported by this system -->
+	<!-- see ResourceId in Resource XML schema -->
+	<!-- see ResourceName in Resource XML schema -->
+	<!--                          -->
+	<!-- system group definitions -->
+	<!--                          -->
+	<!--SystemConfiguration - group -->
+	<xs:element name="SystemConfiguration" type="SubunitsType"/>
+	<!-- SystemStatus - group -->
+	<xs:element name="SystemStatus">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="AccessModes" minOccurs="0"/>
+				<xs:element ref="ConditionTable" minOccurs="0"/>
+				<xs:element name="ConfiguredResources" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="ResourceSummary" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ConfiguredServices" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ServiceSummary" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="Id"/>
+										<xs:element ref="ServiceType"/>
+										<xs:element ref="ServiceXriSupported"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="CreateDate" minOccurs="0"/>
+				<xs:element ref="CurrentTime" minOccurs="0"/>
+				<xs:element ref="MessageDateTime" minOccurs="0"/>
+				<xs:element ref="MessageTime" minOccurs="0"/>
+				<xs:element ref="NaturalLanguage" minOccurs="0"/>
+				<xs:element ref="PowerCounters" minOccurs="0"/>
+				<xs:element ref="PowerGeneral" minOccurs="0"/>
+				<xs:element ref="PowerLog" minOccurs="0"/>
+				<xs:element ref="PowerMeters" minOccurs="0"/>
+				<xs:element ref="PowerMonitor" minOccurs="0"/>
+				<xs:element ref="PowerSupport" minOccurs="0"/>
+				<xs:element ref="PowerTransition" minOccurs="0"/>
+				<xs:element ref="SerialNumber" minOccurs="0"/>
+				<xs:element ref="SystemUuid"/>
+				<xs:element ref="State"/>
+				<xs:element ref="StateMessages" minOccurs="0"/>
+				<xs:element ref="StateReasons" minOccurs="0"/>
+				<xs:element ref="SystemHealth" minOccurs="0"/>
+				<xs:element ref="SystemConfigChangeNumber" minOccurs="0"/>
+				<xs:element ref="SystemTotals" minOccurs="0"/>
+				<xs:element ref="UpTime" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- SystemDescription - group -->
+	<xs:element name="SystemDescription">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CharsetConfigured"/>
+				<xs:element ref="CharsetSupported"/>
+				<xs:element ref="DeviceId" minOccurs="0"/>
+				<xs:element ref="MakeAndModel" minOccurs="0"/>
+				<xs:element ref="MessageFromOperator" minOccurs="0"/>
+				<xs:element ref="NaturalLanguageConfigured"/>
+				<xs:element ref="NaturalLanguageSupported"/>
+				<xs:element ref="OwnerUri" minOccurs="0"/>
+				<xs:element ref="OwnerVCard" minOccurs="0"/>
+				<xs:element ref="PowerCalendar" minOccurs="0"/>
+				<xs:element ref="PowerEvent" minOccurs="0"/>
+				<xs:element ref="PowerTimeout" minOccurs="0"/>
+				<xs:element ref="SystemGeoLocation" minOccurs="0"/>
+				<xs:element ref="SystemInfo" minOccurs="0"/>
+				<xs:element name="SystemLocation" type="xs:string" minOccurs="0"/>
+				<xs:element ref="ServicesSupported"/>
+				<xs:element ref="SystemName"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

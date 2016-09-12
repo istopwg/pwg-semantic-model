@@ -1,0 +1,1279 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   PWG Semantic Model v2   
+
+Copyright 2002-2009, IEEE Industry Standards and Technology Organization/ScanService Working Group. 
+All rights reserved  
+
+Editors:  Peter Zehler, Ira McDonald 
+-->
+<!--05/02/11 PJZ Removed Startup operation-->
+<!--03/01/10 PJZ Added CloseJob back in-->
+<!--02/05/10 PJZ Fixed operation names-->
+<!--01/19/10 PJZ Made all service interfaces homogenous (as much as possible)-->
+<!--01/05/10 PJZ Added SuspendCurrent & Resume Job-->
+<!--11/23/09 PJZ Changed ValidateScanJob to ValidateScanJobTicket-->
+<!--10/23/09 PJZ Updates per October face to face-->
+<!--04/14/09 PJZ Updated Namespace-->
+<!--02/20/09 PJZ Reordered body in request messages for WSI compliance-->
+<!--02/16/09 PJZ Removed invalid attributes from definitions-->
+<!--05/30/08 PJZ Move back to single namespace-->
+<!--05/21/08 PJZ Partial alignment with WS-Scan-->
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:sm="http://www.pwg.org/schemas/2016/01/sm" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" targetNamespace="http://www.pwg.org/schemas/2016/01/sm">
+	<types>
+		<xs:schema xmlns:sm="http://www.pwg.org/schemas/2016/01/sm" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905" targetNamespace="http://www.pwg.org/schemas/2016/01/sm">
+			<xs:include schemaLocation="PwgScanOpMsg.xsd"/>
+			<xs:include schemaLocation="PwgCommonOpMsg.xsd"/>
+			<xs:import namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing" schemaLocation="addressing.xsd"/>
+			<xs:include schemaLocation="PwgSemanticModel.xsd"/>
+			<xs:include schemaLocation="PwgCommon.xsd"/>
+			<xs:include schemaLocation="ServiceTypes.xsd"/>
+			<xs:include schemaLocation="JobTypes.xsd"/>
+			<xs:include schemaLocation="DocumentTypes.xsd"/>
+			<xs:element name="BinaryData" type="xs:base64Binary"/>
+			<xs:element name="RequestedElement" type="xs:QName"/>
+		</xs:schema>
+		<xs:schema xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" elementFormDefault="qualified" version="1.84" targetNamespace="http://schemas.xmlsoap.org/ws/2004/08/addressing">
+			<xs:include schemaLocation="addressing.xsd"/>
+		</xs:schema>
+	</types>
+	<message name="CancelCurrentScanJobRequestMsg">
+		<message name="CancelScanJobResponseMsg">
+			<part name="MessageID" element="wsa:MessageID"/>
+			<part name="RelatesTo" element="wsa:RelatesTo"/>
+			<part name="To" element="wsa:To"/>
+			<part name="From" element="wsa:From"/>
+			<part name="Action" element="wsa:Action"/>
+			<part name="body" element="sm:CancelScanJobResponse"/>
+		</message>
+		<part name="body" element="sm:CancelCurrentScanJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CancelCurrentScanJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CancelCurrentScanJobResponse"/>
+	</message>
+	<message name="CancelScanDocumentRequestMsg">
+		<part name="body" element="sm:CancelScanDocumentRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CancelScanDocumentResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CancelScanDocumentResponse"/>
+	</message>
+	<message name="CancelScanJobRequestMsg">
+		<part name="body" element="sm:CancelScanJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CancelScanJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CancelScanJobResponse"/>
+	</message>
+	<message name="CancelMyScanJobsRequestMsg">
+		<part name="body" element="sm:CancelMyScanJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CancelMyScanJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CancelMyScanJobsResponse"/>
+	</message>
+	<message name="CancelScanJobsRequestMsg">
+		<part name="body" element="sm:CancelScanJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CancelScanJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CancelScanJobsResponse"/>
+	</message>
+	<message name="CloseScanJobRequestMsg">
+		<part name="body" element="sm:CloseScanJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CloseScanJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CloseScanJobResponse"/>
+	</message>
+	<message name="CreateScanJobRequestMsg">
+		<part name="body" element="sm:CreateScanJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CreateScanJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CreateScanJobResponse"/>
+	</message>
+	<message name="DisableScanServiceRequestMsg">
+		<part name="body" element="sm:DisableScanServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="DisableScanServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:DisableScanServiceResponse"/>
+	</message>
+	<message name="EnableScanServiceRequestMsg">
+		<part name="body" element="sm:EnableScanServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="EnableScanServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:EnableScanServiceResponse"/>
+	</message>
+	<message name="HoldScanJobRequestMsg">
+		<part name="body" element="sm:HoldScanJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="HoldScanJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:HoldScanJobResponse"/>
+	</message>
+	<message name="HoldNewScanJobsRequestMsg">
+		<part name="body" element="sm:HoldNewScanJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="HoldNewScanJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:HoldNewScanJobsResponse"/>
+	</message>
+	<message name="ReleaseScanJobRequestMsg">
+		<part name="body" element="sm:ReleaseScanJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ReleaseScanJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ReleaseScanJobResponse"/>
+	</message>
+	<message name="GetActiveScanJobsRequestMsg">
+		<part name="body" element="sm:GetActiveScanJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetActiveScanJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetActiveScanJobsResponse"/>
+	</message>
+	<message name="GetScanJobHistoryRequestMsg">
+		<part name="body" element="sm:GetScanJobHistoryRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetScanJobHistoryResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetScanJobHistoryResponse"/>
+	</message>
+	<message name="GetScanDocumentElementsRequestMsg">
+		<part name="body" element="sm:GetScanDocumentElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetScanDocumentElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetScanDocumentElementsResponse"/>
+	</message>
+	<message name="GetScanDocumentsRequestMsg">
+		<part name="body" element="sm:GetScanDocumentsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetScanDocumentsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetScanDocumentsResponse"/>
+	</message>
+	<message name="GetScanJobElementsRequestMsg">
+		<part name="body" element="sm:GetScanJobElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetScanJobElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetScanJobElementsResponse"/>
+	</message>
+	<message name="GetScanServiceElementsRequestMsg">
+		<part name="body" element="sm:GetScanServiceElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetScanServiceElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetScanServiceElementsResponse"/>
+	</message>
+	<message name="PauseScanServiceRequestMsg">
+		<part name="body" element="sm:PauseScanServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="PauseScanServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:PauseScanServiceResponse"/>
+	</message>
+	<message name="PauseScanServiceAfterCurrentJobRequestMsg">
+		<part name="body" element="sm:PauseScanServiceAfterCurrentJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="PauseScanServiceAfterCurrentJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:PauseScanServiceAfterCurrentJobResponse"/>
+	</message>
+	<message name="PromoteScanJobRequestMsg">
+		<part name="body" element="sm:PromoteScanJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="PromoteScanJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:PromoteScanJobResponse"/>
+	</message>
+	<message name="ResumeScanServiceRequestMsg">
+		<part name="body" element="sm:ResumeScanServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ResumeScanServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ResumeScanServiceResponse"/>
+	</message>
+	<message name="ReleaseNewScanJobsRequestMsg">
+		<part name="body" element="sm:ReleaseNewScanJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ReleaseNewScanJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ReleaseNewScanJobsResponse"/>
+	</message>
+	<message name="ResubmitScanJobRequestMsg">
+		<part name="body" element="sm:ResubmitScanJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ResubmitScanJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ResubmitScanJobResponse"/>
+	</message>
+	<message name="SetScanDocumentElementsRequestMsg">
+		<part name="body" element="sm:SetScanDocumentElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SetScanDocumentElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SetScanDocumentElementsResponse"/>
+	</message>
+	<message name="SetScanJobElementsRequestMsg">
+		<part name="body" element="sm:SetScanJobElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SetScanJobElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SetScanJobElementsResponse"/>
+	</message>
+	<message name="SetScanServiceElementsRequestMsg">
+		<part name="body" element="sm:SetScanServiceElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SetScanServiceElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SetScanServiceElementsResponse"/>
+	</message>
+	<message name="ShutdownScanServiceRequestMsg">
+		<part name="body" element="sm:ShutdownScanServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ShutdownScanServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ShutdownScanServiceResponse"/>
+	</message>
+	<message name="RestartScanServiceRequestMsg">
+		<part name="body" element="sm:RestartScanServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="RestartScanServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:RestartScanServiceResponse"/>
+	</message>
+	<message name="ResumeScanJobRequestMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ResumeScanJobRequest"/>
+	</message>
+	<message name="ResumeScanJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ResumeScanJobResponse"/>
+	</message>
+	<message name="SuspendCurrentScanJobRequestMsg">
+		<part name="body" element="sm:SuspendCurrentScanJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SuspendCurrentScanJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SuspendCurrentScanJobResponse"/>
+	</message>
+	<message name="ValidateScanDocumentTicketRequestMsg">
+		<part name="body" element="sm:ValidateScanDocumentTicketRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ValidateScanDocumentTicketResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ValidateScanDocumentTicketResponse"/>
+	</message>
+	<message name="ValidateScanJobTicketRequestMsg">
+		<part name="body" element="sm:ValidateScanJobTicketRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ValidateScanJobTicketResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ValidateScanJobTicketResponse"/>
+	</message>
+	<portType name="PwgScanPort">
+		<operation name="CancelCurrentScanJob">
+			<input message="sm:CancelCurrentScanJobRequestMsg"/>
+			<output message="sm:CancelCurrentScanJobResponseMsg"/>
+		</operation>
+		<operation name="CancelMyScanJobs">
+			<input message="sm:CancelMyScanJobsRequestMsg"/>
+			<output message="sm:CancelMyScanJobsResponseMsg"/>
+		</operation>
+		<operation name="CancelScanDocument">
+			<input message="sm:CancelScanDocumentRequestMsg"/>
+			<output message="sm:CancelScanDocumentResponseMsg"/>
+		</operation>
+		<operation name="CancelScanJob">
+			<input message="sm:CancelScanJobRequestMsg"/>
+			<output message="sm:CancelScanJobResponseMsg"/>
+		</operation>
+		<operation name="CancelScanJobs">
+			<input message="sm:CancelScanJobsRequestMsg"/>
+			<output message="sm:CancelScanJobsResponseMsg"/>
+		</operation>
+		<operation name="CloseScanJob">
+			<input message="sm:CloseScanJobRequestMsg"/>
+			<output message="sm:CloseScanJobResponseMsg"/>
+		</operation>
+		<operation name="CreateScanJob">
+			<input message="sm:CreateScanJobRequestMsg"/>
+			<output message="sm:CreateScanJobResponseMsg"/>
+		</operation>
+		<operation name="DisableScanService">
+			<input message="sm:DisableScanServiceRequestMsg"/>
+			<output message="sm:DisableScanServiceResponseMsg"/>
+		</operation>
+		<operation name="EnableScanService">
+			<input message="sm:EnableScanServiceRequestMsg"/>
+			<output message="sm:EnableScanServiceResponseMsg"/>
+		</operation>
+		<operation name="GetActiveScanJobs">
+			<input message="sm:GetActiveScanJobsRequestMsg"/>
+			<output message="sm:GetActiveScanJobsResponseMsg"/>
+		</operation>
+		<operation name="GetScanDocumentElements">
+			<input message="sm:GetScanDocumentElementsRequestMsg"/>
+			<output message="sm:GetScanDocumentElementsResponseMsg"/>
+		</operation>
+		<operation name="GetScanDocuments">
+			<input message="sm:GetScanDocumentsRequestMsg"/>
+			<output message="sm:GetScanDocumentsResponseMsg"/>
+		</operation>
+		<operation name="GetScanJobElements">
+			<input message="sm:GetScanJobElementsRequestMsg"/>
+			<output message="sm:GetScanJobElementsResponseMsg"/>
+		</operation>
+		<operation name="GetScanJobHistory">
+			<input message="sm:GetScanJobHistoryRequestMsg"/>
+			<output message="sm:GetScanJobHistoryResponseMsg"/>
+		</operation>
+		<operation name="GetScanServiceElements">
+			<input message="sm:GetScanServiceElementsRequestMsg"/>
+			<output message="sm:GetScanServiceElementsResponseMsg"/>
+		</operation>
+		<operation name="HoldNewScanJobs">
+			<input message="sm:HoldNewScanJobsRequestMsg"/>
+			<output message="sm:HoldNewScanJobsResponseMsg"/>
+		</operation>
+		<operation name="HoldScanJob">
+			<input message="sm:HoldScanJobRequestMsg"/>
+			<output message="sm:HoldScanJobResponseMsg"/>
+		</operation>
+		<operation name="PauseScanService">
+			<input message="sm:PauseScanServiceRequestMsg"/>
+			<output message="sm:PauseScanServiceResponseMsg"/>
+		</operation>
+		<operation name="PauseScanServiceAfterCurrentJob">
+			<input message="sm:PauseScanServiceAfterCurrentJobRequestMsg"/>
+			<output message="sm:PauseScanServiceAfterCurrentJobResponseMsg"/>
+		</operation>
+		<operation name="PromoteScanJob">
+			<input message="sm:PromoteScanJobRequestMsg"/>
+			<output message="sm:PromoteScanJobResponseMsg"/>
+		</operation>
+		<operation name="ReleaseNewScanJobs">
+			<input message="sm:ReleaseNewScanJobsRequestMsg"/>
+			<output message="sm:ReleaseNewScanJobsResponseMsg"/>
+		</operation>
+		<operation name="ReleaseScanJob">
+			<input message="sm:ReleaseScanJobRequestMsg"/>
+			<output message="sm:ReleaseScanJobResponseMsg"/>
+		</operation>
+		<operation name="RestartScanService">
+			<input message="sm:RestartScanServiceRequestMsg"/>
+			<output message="sm:RestartScanServiceResponseMsg"/>
+		</operation>
+		<operation name="ResubmitScanJob">
+			<input message="sm:ResubmitScanJobRequestMsg"/>
+			<output message="sm:ResubmitScanJobResponseMsg"/>
+		</operation>
+		<operation name="ResumeScanJob">
+			<input message="sm:ResumeScanJobRequestMsg"/>
+			<output message="sm:ResumeScanJobResponseMsg"/>
+		</operation>
+		<operation name="ResumeScanService">
+			<input message="sm:ResumeScanServiceRequestMsg"/>
+			<output message="sm:ResumeScanServiceResponseMsg"/>
+		</operation>
+		<operation name="SetScanDocumentElements">
+			<input message="sm:SetScanDocumentElementsRequestMsg"/>
+			<output message="sm:SetScanDocumentElementsResponseMsg"/>
+		</operation>
+		<operation name="SetScanJobElements">
+			<input message="sm:SetScanJobElementsRequestMsg"/>
+			<output message="sm:SetScanJobElementsResponseMsg"/>
+		</operation>
+		<operation name="SetScanServiceElements">
+			<input message="sm:SetScanServiceElementsRequestMsg"/>
+			<output message="sm:SetScanServiceElementsResponseMsg"/>
+		</operation>
+		<operation name="ShutdownScanService">
+			<input message="sm:ShutdownScanServiceRequestMsg"/>
+			<output message="sm:ShutdownScanServiceResponseMsg"/>
+		</operation>
+		<operation name="SuspendCurrentScanJob">
+			<input message="sm:SuspendCurrentScanJobRequestMsg"/>
+			<output message="sm:SuspendCurrentScanJobResponseMsg"/>
+		</operation>
+		<operation name="ValidateScanDocumentTicket">
+			<input message="sm:ValidateScanDocumentTicketRequestMsg"/>
+			<output message="sm:ValidateScanDocumentTicketResponseMsg"/>
+		</operation>
+		<operation name="ValidateScanJobTicket">
+			<input message="sm:ValidateScanJobTicketRequestMsg"/>
+			<output message="sm:ValidateScanJobTicketResponseMsg"/>
+		</operation>
+	</portType>
+	<binding name="PwgScanBinding" type="sm:PwgScanPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="CancelCurrentScanJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2016/01/sm:CancelCurrentScanJob"/>
+			<input>
+				<soap:header message="sm:CancelCurrentScanJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelCurrentScanJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelCurrentScanJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelCurrentScanJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CancelCurrentScanJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelCurrentScanJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CancelCurrentScanJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelCurrentScanJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelCurrentScanJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="CancelMyScanJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelMyScanJobs"/>
+			<input>
+				<soap:header message="sm:CancelMyScanJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelMyScanJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelMyScanJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelMyScanJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CancelMyScanJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelMyScanJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CancelMyScanJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelMyScanJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelMyScanJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="CancelScanDocument">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelScanDocument"/>
+			<input>
+				<soap:header message="sm:CancelScanDocumentRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelScanDocumentRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelScanDocumentRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelScanDocumentRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CancelScanDocumentResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelScanDocumentResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CancelScanDocumentResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelScanDocumentResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelScanDocumentResponseMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="CancelScanJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelJob"/>
+			<input>
+				<soap:header message="sm:CancelScanJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelScanJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelScanJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelScanJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CancelScanJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelScanJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CancelScanJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelScanJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelScanJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="CancelScanJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelScanJobs"/>
+			<input>
+				<soap:header message="sm:CancelScanJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelScanJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelScanJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelScanJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CancelScanJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelScanJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CancelScanJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelScanJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelScanJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="CloseScanJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CloseScanJob"/>
+			<input>
+				<soap:header message="sm:CloseScanJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CloseScanJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CloseScanJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CloseScanJobRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CloseScanJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CloseScanJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CloseScanJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CloseScanJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CloseScanJobResponseMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="CreateScanJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CreateScanJob"/>
+			<input>
+				<soap:header message="sm:CreateScanJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CreateScanJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CreateScanJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CreateScanJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CreateScanJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CreateScanJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CreateScanJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CreateScanJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CreateScanJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="DisableScanService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/DisableScanService"/>
+			<input>
+				<soap:header message="sm:DisableScanServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:DisableScanServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:DisableScanServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:DisableScanServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:DisableScanServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:DisableScanServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:DisableScanServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:DisableScanServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:DisableScanServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="EnableScanService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/EnableScanService"/>
+			<input>
+				<soap:header message="sm:EnableScanServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:EnableScanServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:EnableScanServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:EnableScanServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:EnableScanServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:EnableScanServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:EnableScanServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:EnableScanServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:EnableScanServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetActiveScanJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetActiveJobs"/>
+			<input>
+				<soap:header message="sm:GetActiveScanJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetActiveScanJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetActiveScanJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetActiveScanJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetActiveScanJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetActiveScanJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetActiveScanJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetActiveScanJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetActiveScanJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetScanDocumentElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetJobElements"/>
+			<input>
+				<soap:header message="sm:GetScanDocumentElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetScanDocumentElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetScanDocumentElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetScanDocumentElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetScanDocumentElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetScanDocumentElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetScanDocumentElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetScanDocumentElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetScanDocumentElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetScanDocuments">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetDocuments"/>
+			<input>
+				<soap:header message="sm:GetScanDocumentsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetScanDocumentsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetScanDocumentsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetScanDocumentsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetScanDocumentsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetScanDocumentsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetScanDocumentsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetScanDocumentsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetScanDocumentsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetScanJobElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetJobElements"/>
+			<input>
+				<soap:header message="sm:GetScanJobElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetScanJobElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetScanJobElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetScanJobElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetScanJobElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetScanJobElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetScanJobElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetScanJobElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetScanJobElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetScanJobHistory">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetJobHistory"/>
+			<input>
+				<soap:header message="sm:GetScanJobHistoryRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetScanJobHistoryRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetScanJobHistoryRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetScanJobHistoryRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetScanJobHistoryResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetScanJobHistoryResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetScanJobHistoryResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetScanJobHistoryResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetScanJobHistoryResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetScanServiceElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetScanServiceElements"/>
+			<input>
+				<soap:header message="sm:GetScanServiceElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetScanServiceElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetScanServiceElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetScanServiceElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetScanServiceElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetScanServiceElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetScanServiceElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetScanServiceElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetScanServiceElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="HoldScanJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/HoldJob"/>
+			<input>
+				<soap:header message="sm:HoldScanJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:HoldScanJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:HoldScanJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:HoldScanJobRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:HoldScanJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:HoldScanJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:HoldScanJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:HoldScanJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:HoldScanJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="HoldNewScanJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/HoldNewScanJobs"/>
+			<input>
+				<soap:header message="sm:HoldNewScanJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:HoldNewScanJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:HoldNewScanJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:HoldNewScanJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:HoldNewScanJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:HoldNewScanJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:HoldNewScanJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:HoldNewScanJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:HoldNewScanJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="PauseScanService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/PauseScanService"/>
+			<input>
+				<soap:header message="sm:PauseScanServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PauseScanServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:PauseScanServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:PauseScanServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:PauseScanServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PauseScanServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:PauseScanServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:PauseScanServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:PauseScanServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="PauseScanServiceAfterCurrentJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/PauseScanServiceAfterCurrentJob"/>
+			<input>
+				<soap:header message="sm:PauseScanServiceAfterCurrentJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PauseScanServiceAfterCurrentJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:PauseScanServiceAfterCurrentJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:PauseScanServiceAfterCurrentJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:PauseScanServiceAfterCurrentJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PauseScanServiceAfterCurrentJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:PauseScanServiceAfterCurrentJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:PauseScanServiceAfterCurrentJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:PauseScanServiceAfterCurrentJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="PromoteScanJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/PromoteScanJob"/>
+			<input>
+				<soap:header message="sm:PromoteScanJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PromoteScanJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:PromoteScanJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:PromoteScanJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:PromoteScanJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PromoteScanJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:PromoteScanJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:PromoteScanJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:PromoteScanJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ReleaseNewScanJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ReleaseNewScanJobs"/>
+			<input>
+				<soap:header message="sm:ReleaseNewScanJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ReleaseNewScanJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ReleaseNewScanJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ReleaseNewScanJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ReleaseNewScanJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ReleaseNewScanJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ReleaseNewScanJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ReleaseNewScanJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ReleaseNewScanJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ReleaseScanJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ReleaseJob"/>
+			<input>
+				<soap:header message="sm:ReleaseScanJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ReleaseScanJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ReleaseScanJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ReleaseScanJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ReleaseScanJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ReleaseScanJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ReleaseScanJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ReleaseScanJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ReleaseScanJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="RestartScanService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/RestartScanService"/>
+			<input>
+				<soap:header message="sm:RestartScanServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RestartScanServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:RestartScanServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:RestartScanServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:RestartScanServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RestartScanServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:RestartScanServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:RestartScanServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:RestartScanServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ResubmitScanJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ResubmitScanJob"/>
+			<input>
+				<soap:header message="sm:ResubmitScanJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResubmitScanJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResubmitScanJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResubmitScanJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ResubmitScanJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResubmitScanJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ResubmitScanJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResubmitScanJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResubmitScanJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ResumeScanJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ResumeScanJob"/>
+			<input>
+				<soap:header message="sm:ResumeScanJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResumeScanJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResumeScanJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResumeScanJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ResumeScanJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResumeScanJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ResumeScanJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResumeScanJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResumeScanJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ResumeScanService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ResumeScanService"/>
+			<input>
+				<soap:header message="sm:ResumeScanServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResumeScanServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResumeScanServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResumeScanServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ResumeScanServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResumeScanServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ResumeScanServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResumeScanServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResumeScanServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SetScanDocumentElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/SetScanDocumentElements"/>
+			<input>
+				<soap:header message="sm:SetScanDocumentElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetScanDocumentElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetScanDocumentElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetScanDocumentElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SetScanDocumentElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetScanDocumentElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SetScanDocumentElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetScanDocumentElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetScanDocumentElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SetScanJobElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/SetScanJobElements"/>
+			<input>
+				<soap:header message="sm:SetScanJobElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetScanJobElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetScanJobElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetScanJobElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SetScanJobElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetScanJobElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SetScanJobElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetScanJobElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetScanJobElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SetScanServiceElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/SetScanServiceElements"/>
+			<input>
+				<soap:header message="sm:SetScanServiceElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetScanServiceElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetScanServiceElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetScanServiceElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SetScanServiceElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetScanServiceElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SetScanServiceElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetScanServiceElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetScanServiceElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ShutdownScanService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ShutdownScanService"/>
+			<input>
+				<soap:header message="sm:ShutdownScanServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ShutdownScanServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ShutdownScanServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ShutdownScanServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ShutdownScanServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ShutdownScanServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ShutdownScanServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ShutdownScanServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ShutdownScanServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SuspendCurrentScanJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/SuspendCurrentScanJob"/>
+			<input>
+				<soap:header message="sm:SuspendCurrentScanJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SuspendCurrentScanJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SuspendCurrentScanJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SuspendCurrentScanJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SuspendCurrentScanJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SuspendCurrentScanJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SuspendCurrentScanJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SuspendCurrentScanJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SuspendCurrentScanJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ValidateScanDocumentTicket">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ValidateScanDocumentTicket"/>
+			<input>
+				<soap:header message="sm:ValidateScanDocumentTicketRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ValidateScanDocumentTicketRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ValidateScanDocumentTicketRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ValidateScanDocumentTicketRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ValidateScanDocumentTicketResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ValidateScanDocumentTicketResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ValidateScanDocumentTicketResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ValidateScanDocumentTicketResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ValidateScanDocumentTicketResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ValidateScanJobTicket">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ValidateTicket"/>
+			<input>
+				<soap:header message="sm:ValidateScanJobTicketRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ValidateScanJobTicketRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ValidateScanJobTicketRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ValidateScanJobTicketRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ValidateScanJobTicketResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ValidateScanJobTicketResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ValidateScanJobTicketResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ValidateScanJobTicketResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ValidateScanJobTicketResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="PwgScanService">
+		<port name="PwgScanPort" binding="sm:PwgScanBinding">
+			<soap:address location="http://localhost:53105/PwgScanService"/>
+		</port>
+	</service>
+</definitions>

@@ -1,0 +1,307 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="MediaWellKnownValues.xsd"/>
+	<xs:include schemaLocation="PwgWellKnownValues.xsd"/>
+	<!--06/06/12 PJZ Final JPS3 update-->
+	<!--02/02/12 PJZ Aligned MediaMargins with JPS3-->
+	<!--01/24/12 PJZ Fixed MediaColSupported and added MediaColDatabase-->
+	<!--01/10/12 PJZ Aligned with latest JPS3 and Raster specs-->
+	<!--01/09/12 PJZ Fixed media size and source elements-->
+	<!--01/06/12 PJZ Fixed datatype naming convention, Removed MediaSizeName from MediaCol-->
+	<!--11/30/11 PJZCreated some types-->
+	<!--07/18/11 PJZ added some types-->
+	<!--02/27/11 PJZ Removed MediaMaterial-->
+	<!--11/06/09 PJZ Updated Media representation-->
+	<!--09/09/09 PJZ Made some more Print Service elements common-->
+	<!--06/16/09 PJZ created a type for meda (did not use MediaType to avoid confunsion)-->
+	<!--04/14/09 PJZ Updated Namespace-->
+	<!--05/30/08 PJZ Move back to single namespace-->
+	<!--05/21/08 PJZ Partial alignment with WS-Scan-->
+	<!--10/13/07 PJZ reworked supported values, fixed MediaOrderCount, MediaPreprinted-->
+	<!--09/13/07 PJZ removed default and supported, added attributes to supply supported values-->
+	<!--10/08/06 PJZ Reworked dependencies and removed Chameleon-->
+	<!--08/08/06  PJZ  Changed namespace-->
+	<!--070606  PJZ  Changed namespace-->
+	<!--040506  PJZ  modified from ver 1.0 to prepare for SM editing work-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">Editor: Peter Zehler</xs:documentation>
+	</xs:annotation>
+	<xs:annotation>
+		<xs:documentation>Media/MediaCol Element definition</xs:documentation>
+	</xs:annotation>
+	<xs:element name="Media">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="Media">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MediaCol" type="MediaColType"/>
+	<xs:element name="MediaColDatabase">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="MediaCol" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="MediaColType">
+								<xs:sequence>
+									<xs:element name="MediaSourceProperties">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="MediaSourceFeedDirection" type="FeedOrientationWKV"/>
+												<xs:element name="MediaSourceFeedOrientation" type="MediaSourceFeedOrientationType"/>
+												<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MediaColSupported">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any namespace="##any" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:annotation>
+		<xs:documentation>Associated Media/MediaCol element definitions</xs:documentation>
+	</xs:annotation>
+	<xs:element name="MediaActual">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Media" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MediaColActual">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MediaCol" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MediaColReady">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MediaCol" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MediaReady">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Media" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:annotation>
+		<xs:documentation>Media Col specific semantic elements and associated elements</xs:documentation>
+	</xs:annotation>
+	<xs:element name="MediaBackCoating">
+		<xs:simpleType>
+			<xs:union memberTypes="MediaCoatingWKV MediaNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MediaBottomMargin" type="xs:int"/>
+	<xs:element name="MediaBottomMarginSupported">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MediaBottomMargin" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MediaColor" type="MediaColorType"/>
+	<xs:element name="MediaFrontCoating">
+		<xs:simpleType>
+			<xs:union memberTypes="MediaCoatingWKV MediaNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MediaGrain">
+		<xs:simpleType>
+			<xs:union memberTypes="MediaGrainWKV MediaNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MediaHoleCount" type="xs:int"/>
+	<xs:element name="MediaInfo">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="255"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MediaKey">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="255"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MediaLeftMargin" type="xs:int"/>
+	<xs:element name="MediaLeftMarginSupported">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MediaLeftMargin" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MediaOrderCount" type="xs:int"/>
+	<xs:element name="MediaPreprinted">
+		<xs:simpleType>
+			<xs:union memberTypes="MediaPreprintedWKV MediaNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MediaRecycled">
+		<xs:simpleType>
+			<xs:union memberTypes="MediaRecycledWKV MediaNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MediaRightMargin" type="xs:int"/>
+	<xs:element name="MediaRightMarginSupported">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MediaRightMargin" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MediaSize" type="mediaSize"/>
+	<xs:element name="MediaSizeName" type="MediaSizeNameType"/>
+	<xs:element name="MediaSource">
+		<xs:simpleType>
+			<xs:union memberTypes="MediaSourceWKV MediaNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MediaSourceSupported">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MediaSource" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MediaThickness" type="xs:int"/>
+	<xs:element name="MediaTooth">
+		<xs:simpleType>
+			<xs:union memberTypes="MediaToothWKV MediaNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MediaTopMargin" type="xs:int"/>
+	<xs:element name="MediaTopMarginSupported">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MediaTopMargin" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MediaType">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="MediaTypeType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MediaWeightMetric" type="xs:int"/>
+	<xs:annotation>
+		<xs:documentation>Attributes used by semantic elements</xs:documentation>
+	</xs:annotation>
+	<xs:attribute name="MustHonor" type="xs:boolean"/>
+	<xs:complexType name="mediaSize">
+		<xs:sequence>
+			<xs:element name="XDimension" type="xs:int"/>
+			<xs:element name="YDimension" type="xs:int"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Types used by semantic elements</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="MediaSizeNameType">
+		<xs:union memberTypes="MediaSizeNameWKV MediaSizeNameExtensionPattern"/>
+	</xs:simpleType>
+	<xs:complexType name="MediaSupportedType">
+		<xs:sequence>
+			<xs:element name="AllowedValue" maxOccurs="unbounded">
+				<xs:simpleType>
+					<xs:union memberTypes="MediaSizeAliasNameWKV MediaSizeLegacyNamesWKV MediaSizeSelfDescribingNameWKV MediaSizeNameExtensionPattern"/>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="MediaTypeSupportedType">
+		<xs:sequence>
+			<xs:element name="AllowedValue" maxOccurs="unbounded">
+				<xs:simpleType>
+					<xs:union memberTypes="MediaTypeWKV MediaTypeExtensionPattern"/>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="MediaTypeType">
+		<xs:union memberTypes="MediaTypeWKV MediaTypeExtensionPattern"/>
+	</xs:simpleType>
+	<xs:complexType name="MediaColType">
+		<xs:sequence>
+			<xs:element ref="MediaBackCoating" minOccurs="0"/>
+			<xs:element ref="MediaBottomMargin" minOccurs="0"/>
+			<xs:element ref="MediaColor" minOccurs="0"/>
+			<xs:element ref="MediaFrontCoating" minOccurs="0"/>
+			<xs:element ref="MediaGrain" minOccurs="0"/>
+			<xs:element ref="MediaHoleCount" minOccurs="0"/>
+			<xs:element ref="MediaInfo" minOccurs="0"/>
+			<xs:element ref="MediaKey" minOccurs="0"/>
+			<xs:element ref="MediaLeftMargin" minOccurs="0"/>
+			<xs:element ref="MediaOrderCount" minOccurs="0"/>
+			<xs:element ref="MediaPreprinted" minOccurs="0"/>
+			<xs:element ref="MediaRecycled" minOccurs="0"/>
+			<xs:element ref="MediaRightMargin" minOccurs="0"/>
+			<xs:choice>
+				<xs:element ref="MediaSize"/>
+				<xs:element ref="MediaSizeName"/>
+			</xs:choice>
+			<xs:element ref="MediaSource" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation/>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="MediaThickness" minOccurs="0"/>
+			<xs:element ref="MediaTooth" minOccurs="0"/>
+			<xs:element ref="MediaTopMargin" minOccurs="0"/>
+			<xs:element ref="MediaType" minOccurs="0"/>
+			<xs:element ref="MediaWeightMetric" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other"/>
+	</xs:complexType>
+	<xs:simpleType name="MediaColorType">
+		<xs:union memberTypes="MediaColorWKV MediaColorExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="MediaSourceFeedOrientationType">
+		<xs:union memberTypes="OrientationRequestedWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:annotation>
+		<xs:documentation>media types</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="Media">
+		<xs:union memberTypes="MediaSizeAliasNameWKV MediaSizeLegacyNamesWKV MediaSizeSelfDescribingNameWKV MediaSizeNameExtensionPattern"/>
+	</xs:simpleType>
+</xs:schema>

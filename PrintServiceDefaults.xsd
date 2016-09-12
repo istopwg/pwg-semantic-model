@@ -1,0 +1,35 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="MediaElements.xsd"/>
+	<xs:include schemaLocation="DocumentTypes.xsd"/>
+	<xs:include schemaLocation="JobTypes.xsd"/>
+	<xs:include schemaLocation="PrintJobTicket.xsd"/>
+	<!--12/11/11 PJZ use new restricted type for defaults to delete a couple of elements-->
+	<!--11/21/11 PJZ Split out from PrintService.xsd-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-20011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<!---->
+	<!---->
+	<!---->
+	<!-- PrintService Default Ticket - group -->
+	<!---->
+	<xs:element name="PrintServiceDefaults">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="DefaultPrintDocumentTicket" minOccurs="0"/>
+				<xs:element ref="DefaultPrintJobTicket" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DefaultPrintDocumentTicket" type="PrintDocumentTicketDefaultType"/>
+	<xs:element name="DefaultPrintJobTicket" type="PrintJobTicketDefaultType"/>
+</xs:schema>

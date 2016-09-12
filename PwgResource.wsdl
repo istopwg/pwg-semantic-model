@@ -1,0 +1,601 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   PWG Semantic Model v2   
+
+Copyright 2002-2009, IEEE Industry Standards and Technology Organization/MFD Working Group. 
+All rights reserved  
+
+    Editors:  Peter Zehler, Ira McDonald 
+-->
+<!--05/02/11 PJZ Added missing SetResourceServiceElement operation, fixed RenewResourceResponse header-->
+<!--05/02/11 PJZ Removed Startup operation-->
+<!--10/23/09 PJZ Updates per October face to face-->
+<!--04/14/09 PJZ Updated Namespace-->
+<!--02/20/09 PJZ Reordered body in request messages for WSI compliance-->
+<!--02/16/09 PJZ Removed invalid attributes from definitions-->
+<!--02/04/09 PJZ Added Restart-->
+<!--11/06/08 PJZ Removed Pause and Resume-->
+<!--07/11/08 PJZ Moved to MTOM transfer of Resources-->
+<!--07/11/08 PJZ Change to MFD Resource Service-->
+<!--05/30/08 PJZ Move back to single namespace-->
+<!--05/21/08 PJZ Partial alignment with WS-->
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:sm="http://www.pwg.org/schemas/2016/01/sm" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" targetNamespace="http://www.pwg.org/schemas/2016/01/sm">
+	<types>
+		<xs:schema xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" elementFormDefault="qualified" targetNamespace="http://schemas.xmlsoap.org/ws/2004/08/addressing">
+			<xs:include schemaLocation="addressing.xsd"/>
+		</xs:schema>
+		<xs:schema xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:sm="http://www.pwg.org/schemas/2016/01/sm" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+			<xs:include schemaLocation="PwgResourceOpMsg.xsd"/>
+			<xs:include schemaLocation="PwgCommonOpMsg.xsd"/>
+			<xs:include schemaLocation="PwgSemanticModel.xsd"/>
+			<xs:include schemaLocation="PwgCommon.xsd"/>
+			<xs:include schemaLocation="ServiceTypes.xsd"/>
+			<xs:include schemaLocation="JobTypes.xsd"/>
+			<xs:include schemaLocation="DocumentTypes.xsd"/>
+			<xs:include schemaLocation="PrintService.xsd"/>
+			<xs:include schemaLocation="ResourceService.xsd"/>
+			<xs:include schemaLocation="MediaElements.xsd"/>
+			<xs:include schemaLocation="MediaWellKnownValues.xsd"/>
+			<xs:import namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing" schemaLocation="addressing.xsd"/>
+			<xs:element name="BinaryData" type="xs:base64Binary"/>
+		</xs:schema>
+	</types>
+	<message name="DeleteResourceServiceRequestMsg">
+		<part name="body" element="sm:DeleteResourceRequest"/>
+		<part name="To" element="wsa:To"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="DeleteResourceServiceResponseMsg">
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:DeleteResourceResponse"/>
+	</message>
+	<message name="DisableResourceServiceRequestMsg">
+		<part name="body" element="sm:DisableResourceServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="DisableResourceServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:DisableResourceServiceResponse"/>
+	</message>
+	<message name="EnableResourceServiceRequestMsg">
+		<part name="body" element="sm:EnableResourceServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="EnableResourceServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:EnableResourceServiceResponse"/>
+	</message>
+	<message name="GetResourceElementsRequestMsg">
+		<part name="body" element="sm:GetResourceElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetResourceElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetResourceElementsResponse"/>
+	</message>
+	<message name="GetResourceServiceElementsRequestMsg">
+		<part name="body" element="sm:GetResourceServiceElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetResourceServiceElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetResourceServiceElementsResponse"/>
+	</message>
+	<message name="ListResourcesRequestMsg">
+		<part name="body" element="sm:ListResourcesRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ListResourcesResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ListResourcesResponse"/>
+	</message>
+	<message name="RenewResourceRequestMsg">
+		<part name="body" element="sm:RenewResourceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="RenewResourceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:RenewResourceResponse"/>
+	</message>
+	<message name="RetrieveResourceRequestMsg">
+		<part name="body" element="sm:RetrieveResourceRequest"/>
+		<part name="To" element="wsa:To"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="RetrieveResourceResponseMsg">
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:RetrieveResourceRequest"/>
+		<part name="ResourceStream" element="sm:BinaryData"/>
+	</message>
+	<message name="ReplaceResourceServiceRequestMsg">
+		<part name="body" element="sm:ReplaceResourceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="ResourceStream" element="sm:BinaryData"/>
+	</message>
+	<message name="ReplaceResourceServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ReplaceResourceResponse"/>
+	</message>
+	<message name="RestartResourceServiceRequestMsg">
+		<part name="body" element="sm:RestartResourceServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="RestartResourceServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:RestartResourceServiceResponse"/>
+	</message>
+	<message name="SetResourceElementsRequestMsg">
+		<part name="body" element="sm:SetResourceElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SetResourceElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SetResourceElementsResponse"/>
+	</message>
+	<message name="SetResourceServiceElementsRequestMsg">
+		<part name="body" element="sm:SetResourceServiceElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SetResourceServiceElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SetResourceServiceElementsResponse"/>
+	</message>
+	<message name="ShutdownResourceServiceRequestMsg">
+		<part name="body" element="sm:ShutdownResourceServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ShutdownResourceServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ShutdownResourceServiceResponse"/>
+	</message>
+	<message name="StoreResourceRequestMsg">
+		<part name="body" element="sm:StoreResourceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="ResourceStream" element="sm:BinaryData"/>
+	</message>
+	<message name="StoreResourceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:StoreResourceResponse"/>
+	</message>
+	<portType name="PwgResourcePort">
+		<operation name="DeleteResource">
+			<input message="sm:DeleteResourceServiceRequestMsg"/>
+			<output message="sm:DeleteResourceServiceResponseMsg"/>
+		</operation>
+		<operation name="DisableResourceService">
+			<input message="sm:DisableResourceServiceRequestMsg"/>
+			<output message="sm:DisableResourceServiceResponseMsg"/>
+		</operation>
+		<operation name="EnableResourceService">
+			<input message="sm:EnableResourceServiceRequestMsg"/>
+			<output message="sm:EnableResourceServiceResponseMsg"/>
+		</operation>
+		<operation name="GetResourceElements">
+			<input message="sm:GetResourceElementsRequestMsg"/>
+			<output message="sm:GetResourceElementsResponseMsg"/>
+		</operation>
+		<operation name="GetResourceServiceElements">
+			<input message="sm:GetResourceServiceElementsRequestMsg"/>
+			<output message="sm:GetResourceServiceElementsResponseMsg"/>
+		</operation>
+		<operation name="ListResources">
+			<input message="sm:ListResourcesRequestMsg"/>
+			<output message="sm:ListResourcesResponseMsg"/>
+		</operation>
+		<operation name="RenewResource">
+			<input message="sm:RenewResourceRequestMsg"/>
+			<output message="sm:RenewResourceResponseMsg"/>
+		</operation>
+		<operation name="ReplaceResource">
+			<input message="sm:ReplaceResourceServiceRequestMsg"/>
+			<output message="sm:ReplaceResourceServiceResponseMsg"/>
+		</operation>
+		<operation name="RestartResourceService">
+			<input message="sm:RestartResourceServiceRequestMsg"/>
+			<output message="sm:RestartResourceServiceResponseMsg"/>
+		</operation>
+		<operation name="RetrieveResource">
+			<input message="sm:RetrieveResourceRequestMsg"/>
+			<output message="sm:RetrieveResourceResponseMsg"/>
+		</operation>
+		<operation name="SetResourceElements">
+			<input message="sm:SetResourceElementsRequestMsg"/>
+			<output message="sm:SetResourceElementsResponseMsg"/>
+		</operation>
+		<operation name="SetResourceServiceElements">
+			<input message="sm:SetResourceServiceElementsRequestMsg"/>
+			<output message="sm:SetResourceServiceElementsResponseMsg"/>
+		</operation>
+		<operation name="ShutdownResourceService">
+			<input message="sm:ShutdownResourceServiceRequestMsg"/>
+			<output message="sm:ShutdownResourceServiceResponseMsg"/>
+		</operation>
+		<operation name="StoreResource">
+			<input message="sm:StoreResourceRequestMsg"/>
+			<output message="sm:StoreResourceResponseMsg"/>
+		</operation>
+	</portType>
+	<binding name="PwgResourceBinding" type="sm:PwgResourcePort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="DeleteResource">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2006/10/DeleteResource" soapActionRequired="true"/>
+			<input>
+				<soap:header message="sm:DeleteResourceServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:DeleteResourceServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:DeleteResourceServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:DeleteResourceServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:DeleteResourceServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:DeleteResourceServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:DeleteResourceServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:DeleteResourceServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:DeleteResourceServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="DisableResourceService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2006/10/DisableResourceService" soapActionRequired="true"/>
+			<input>
+				<soap:header message="sm:DisableResourceServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:DisableResourceServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:DisableResourceServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:DisableResourceServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:DisableResourceServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:DisableResourceServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:DisableResourceServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:DisableResourceServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:DisableResourceServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="EnableResourceService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2006/10/EnableResourceService" soapActionRequired="true"/>
+			<input>
+				<soap:header message="sm:EnableResourceServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:EnableResourceServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:EnableResourceServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:EnableResourceServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:EnableResourceServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:EnableResourceServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:EnableResourceServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:EnableResourceServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:EnableResourceServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetResourceServiceElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2006/10/GetResourceServiceElements" soapActionRequired="true"/>
+			<input>
+				<soap:header message="sm:GetResourceServiceElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetResourceServiceElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetResourceServiceElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetResourceServiceElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetResourceServiceElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetResourceServiceElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetResourceServiceElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetResourceServiceElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetResourceServiceElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetResourceElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2006/10/GetResourceElement" soapActionRequired="true"/>
+			<input>
+				<soap:header message="sm:GetResourceElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetResourceElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetResourceElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetResourceElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetResourceElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetResourceElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetResourceElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetResourceElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetResourceElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ListResources">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2006/10/ListResources" soapActionRequired="true"/>
+			<input>
+				<soap:header message="sm:ListResourcesRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ListResourcesRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ListResourcesRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ListResourcesRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ListResourcesResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ListResourcesResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ListResourcesResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ListResourcesResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ListResourcesResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="RenewResource">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2006/10/RenewResource" soapActionRequired="true"/>
+			<input>
+				<soap:header message="sm:RenewResourceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RenewResourceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:RenewResourceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:RenewResourceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:RenewResourceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RenewResourceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:RenewResourceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:RenewResourceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:RenewResourceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ReplaceResource">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2006/10/ReplaceResource" soapActionRequired="true"/>
+			<input>
+				<!-- Omitted MTOM specification for .NET compatibility.  Used soap:body in its place-->
+				<!-- <mime:multipartRelated>
+		<mime:part> 
+			<soap:body parts="body" use="literal"/>
+		</mime:part> 
+		<mime:part>
+			<mime:content part="ResourceStream" type="application/octetstream"/>
+		</mime:part>
+</mime:multipartRelated> -->
+				<soap:header message="sm:ReplaceResourceServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ReplaceResourceServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ReplaceResourceServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ReplaceResourceServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ReplaceResourceServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ReplaceResourceServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ReplaceResourceServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ReplaceResourceServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ReplaceResourceServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="RestartResourceService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2006/10/RestartResourceService" soapActionRequired="true"/>
+			<input>
+				<soap:header message="sm:RestartResourceServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RestartResourceServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:RestartResourceServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:RestartResourceServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:RestartResourceServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RestartResourceServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:RestartResourceServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:RestartResourceServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:RestartResourceServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="RetrieveResource">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2006/10/RetrieveResource" soapActionRequired="true"/>
+			<input>
+				<soap:header message="sm:RetrieveResourceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:RetrieveResourceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RetrieveResourceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:RetrieveResourceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<!-- Omitted MTOM specification for .NET compatibility.  Used soap:body in its place-->
+				<!-- <mime:multipartRelated>
+		<mime:part> 
+			<soap:body parts="body" use="literal"/>
+		</mime:part> 
+		<mime:part>
+			<mime:content part="ResourceStream" type="application/octetstream"/>
+		</mime:part>
+</mime:multipartRelated> -->
+				<soap:header message="sm:RetrieveResourceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:RetrieveResourceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RetrieveResourceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:RetrieveResourceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:RetrieveResourceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SetResourceElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2006/10/SetResourceElements" soapActionRequired="true"/>
+			<input>
+				<soap:header message="sm:SetResourceElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetResourceElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetResourceElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetResourceElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SetResourceElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetResourceElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SetResourceElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetResourceElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetResourceElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SetResourceServiceElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2006/10/SetResourceServiceElements" soapActionRequired="true"/>
+			<input>
+				<soap:header message="sm:SetResourceServiceElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetResourceServiceElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetResourceServiceElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetResourceServiceElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SetResourceServiceElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetResourceServiceElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SetResourceServiceElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetResourceServiceElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetResourceServiceElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ShutdownResourceService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2006/10/ShutdownResourceService" soapActionRequired="true"/>
+			<input>
+				<soap:header message="sm:ShutdownResourceServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ShutdownResourceServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ShutdownResourceServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ShutdownResourceServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ShutdownResourceServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ShutdownResourceServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ShutdownResourceServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ShutdownResourceServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ShutdownResourceServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="StoreResource">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2006/10/StoreResource" soapActionRequired="true"/>
+			<input>
+				<!-- Omitted MTOM specification for .NET compatibility.  Used soap:body in its place-->
+				<!-- <mime:multipartRelated>
+		<mime:part> 
+			<soap:body parts="body" use="literal"/>
+		</mime:part> 
+		<mime:part>
+			<mime:content part="ResourceStream" type="application/octetstream"/>
+		</mime:part>
+</mime:multipartRelated> -->
+				<soap:header message="sm:StoreResourceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:StoreResourceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:StoreResourceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:StoreResourceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:StoreResourceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:StoreResourceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:StoreResourceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:StoreResourceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:StoreResourceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="PwgResourceService">
+		<port name="PwgResourcePort" binding="sm:PwgResourceBinding">
+			<soap:address location="http://localhost:53104/PwgResourceService"/>
+		</port>
+	</service>
+</definitions>

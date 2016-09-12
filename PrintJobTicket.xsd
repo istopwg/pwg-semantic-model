@@ -1,0 +1,309 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="PwgWellKnownValues.xsd"/>
+	<xs:include schemaLocation="PwgCommon.xsd"/>
+	<xs:include schemaLocation="MediaElements.xsd"/>
+	<xs:include schemaLocation="JobTypes.xsd"/>
+	<xs:include schemaLocation="DocumentTypes.xsd"/>
+	<!--07/16/12 PJZ Added missing JobCollationType-->
+	<!--06/06/12 PJZ Final JPS3 update-->
+	<!--03/13/12 PJZ JobPassword is operational element-->
+	<!--01/10/12 PJZ Aligned with latest JPS3 and Raster specs-->
+	<!--01/09/12 PJZ Fixed media size and source elements-->
+	<!--01/06/12 PJZ Fixed InsertSheets-->
+	<!--01/02/12 PJZ Fixed document format info construct-->
+	<!--12/11/11 PJZ Added restricted type for defaults to delete a couple of elements-->
+	<!--06/06/12 PJZ Final JPS3 update-->
+	<!--12/06/11 PJZ Added metadata to JobDescription-->
+	<!--11/11/11 PJZ Added missing JobCollationType-->
+	<!--11/11/11 PJZ Added missing JobCollationType-->
+	<!--09/10/11 PJZ Added missing MustHonor and attribute extensions-->
+	<!--08/23/11 PJZ Fixed location of Media, MediaType and MediaSource-->
+	<!--08/15/11 PJZ Added DocumentUri that was missing from JobDescription, removed DocumentNameSupplied, DocumentMessageSupplied, DocumentDigitalSignatureSupplied from DocumentDescriptionj-->
+	<!--04/21/11 PJZ Added JPS3 elements-->
+	<!--03/02/11 PJZ Added PdlInitFile-->
+	<!--01/20/11 PJZ Added print color mode-->
+	<!--09/23/10 PJZ Fixed capabilitiers and defaults-->
+	<!--04/23/10 PJZ Created, Split out from PrintService-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v3   
+
+Copyright 2002-2014, IEEE Industry Standards and Technology Organization/PWG - SM Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald, Daniel Manchala 
+</xs:documentation>
+	</xs:annotation>
+	<!---->
+	<!---->
+	<!-- PrintDocumentDescription -->
+	<xs:complexType name="PrintDocumentDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="ImagingDocumentDescriptionType">
+				<xs:sequence>
+					<!-- Print Document description references here -->
+					<xs:element ref="CompressionSupplied" minOccurs="0"/>
+					<xs:element ref="DocumentCharsetSupplied" minOccurs="0"/>
+					<xs:choice>
+						<xs:element ref="DocumentFormatDetailsSupplied"/>
+						<xs:sequence>
+							<xs:element ref="DocumentFormatSupplied"/>
+							<xs:element ref="DocumentFormatVersionSupplied" minOccurs="0"/>
+						</xs:sequence>
+					</xs:choice>
+					<xs:element ref="DocumentUri" minOccurs="0"/>
+					<xs:element ref="Impressions" minOccurs="0"/>
+					<xs:element ref="KOctets" minOccurs="0"/>
+					<xs:element ref="MediaSheets" minOccurs="0"/>
+					<xs:element ref="PageOrderReceived" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- PrintDocumentDescription - group -->
+	</xs:complexType>
+	<xs:element name="PrintDocumentDescription" type="PrintDocumentDescriptionType"/>
+	<!-- PrintDocumentProcessing -->
+	<xs:complexType name="PrintDocumentProcessingDefaultType">
+		<xs:complexContent>
+			<xs:extension base="ImagingDocumentProcessingType">
+				<xs:sequence>
+					<!-- Print document processing references here -->
+					<xs:element ref="Copies" minOccurs="0"/>
+					<xs:element ref="CoverBack" minOccurs="0"/>
+					<xs:element ref="CoverFront" minOccurs="0"/>
+					<xs:element ref="FeedOrientation" minOccurs="0"/>
+					<xs:element ref="Finishings" minOccurs="0"/>
+					<xs:element ref="FinishingsCol" minOccurs="0"/>
+					<xs:element ref="FontNameRequested" minOccurs="0"/>
+					<xs:element ref="FontSizeRequested" minOccurs="0"/>
+					<xs:element ref="ImpositionTemplate" minOccurs="0"/>
+					<xs:element ref="InsertSheets" minOccurs="0"/>
+					<xs:choice minOccurs="0">
+						<xs:choice>
+							<xs:sequence minOccurs="0">
+								<xs:element ref="Media" minOccurs="0"/>
+								<xs:element ref="MediaType" minOccurs="0"/>
+							</xs:sequence>
+							<xs:element ref="MediaSource" minOccurs="0">
+								<xs:annotation>
+									<xs:documentation>JPS3</xs:documentation>
+								</xs:annotation>
+							</xs:element>
+						</xs:choice>
+						<xs:element ref="MediaCol" minOccurs="0"/>
+					</xs:choice>
+					<xs:element ref="OrientationRequested" minOccurs="0"/>
+					<xs:element ref="OutputBin" minOccurs="0"/>
+					<xs:element ref="OutputDevice" minOccurs="0"/>
+					<xs:element ref="PageDelivery" minOccurs="0"/>
+					<xs:element ref="PageRanges" minOccurs="0"/>
+					<xs:element ref="PdlInitFiles" minOccurs="0"/>
+					<xs:element ref="PrintContentOptimize" minOccurs="0"/>
+					<xs:element ref="PrintColorMode" minOccurs="0"/>
+					<xs:element ref="PrintRenderingIntent" minOccurs="0"/>
+					<xs:element ref="Quality" minOccurs="0"/>
+					<xs:element ref="Resolution" minOccurs="0"/>
+					<xs:element ref="SeparatorSheets" minOccurs="0"/>
+					<xs:element ref="SheetCollate" minOccurs="0"/>
+					<xs:element ref="Sides" minOccurs="0"/>
+					<xs:element ref="XImagePosition" minOccurs="0"/>
+					<xs:element ref="XImageShift" minOccurs="0"/>
+					<xs:element ref="XSide1ImageShift" minOccurs="0"/>
+					<xs:element ref="XSide2ImageShift" minOccurs="0"/>
+					<xs:element ref="YImagePosition" minOccurs="0"/>
+					<xs:element ref="YImageShift" minOccurs="0"/>
+					<xs:element ref="YSide1ImageShift" minOccurs="0"/>
+					<xs:element ref="YSide2ImageShift" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- PrintDocumentProcessing - group -->
+	</xs:complexType>
+	<xs:complexType name="PrintDocumentProcessingType">
+		<xs:complexContent>
+			<xs:extension base="ImagingDocumentProcessingType">
+				<xs:sequence>
+					<!-- Print document processing references here -->
+					<xs:element ref="Copies" minOccurs="0"/>
+					<xs:element ref="CoverBack" minOccurs="0"/>
+					<xs:element ref="CoverFront" minOccurs="0"/>
+					<xs:element ref="FeedOrientation" minOccurs="0"/>
+					<xs:element ref="Finishings" minOccurs="0"/>
+					<xs:element ref="FinishingsCol" minOccurs="0"/>
+					<xs:element ref="FontNameRequested" minOccurs="0"/>
+					<xs:element ref="FontSizeRequested" minOccurs="0"/>
+					<xs:element ref="ForceFrontSide" minOccurs="0"/>
+					<xs:element ref="ImpositionTemplate" minOccurs="0"/>
+					<xs:element ref="InsertSheets" minOccurs="0"/>
+					<xs:choice minOccurs="0">
+						<xs:sequence minOccurs="0">
+							<xs:element ref="Media" minOccurs="0"/>
+							<xs:element ref="MediaType" minOccurs="0"/>
+						</xs:sequence>
+						<xs:element ref="MediaCol" minOccurs="0"/>
+					</xs:choice>
+					<xs:element ref="MediaInputTrayCheck" minOccurs="0"/>
+					<xs:element ref="OrientationRequested" minOccurs="0"/>
+					<xs:element ref="OutputBin" minOccurs="0"/>
+					<xs:element ref="OutputDevice" minOccurs="0"/>
+					<xs:element ref="PageDelivery" minOccurs="0"/>
+					<xs:element ref="PageRanges" minOccurs="0"/>
+					<xs:element ref="PdlInitFiles" minOccurs="0"/>
+					<xs:element ref="PrintContentOptimize" minOccurs="0"/>
+					<xs:element ref="PrintColorMode" minOccurs="0"/>
+					<xs:element ref="PrintRenderingIntent" minOccurs="0"/>
+					<xs:element ref="Quality" minOccurs="0"/>
+					<xs:element ref="Resolution" minOccurs="0"/>
+					<xs:element ref="SeparatorSheets" minOccurs="0"/>
+					<xs:element ref="SheetCollate" minOccurs="0"/>
+					<xs:element ref="Sides" minOccurs="0"/>
+					<xs:element ref="XImagePosition" minOccurs="0"/>
+					<xs:element ref="XImageShift" minOccurs="0"/>
+					<xs:element ref="XSide1ImageShift" minOccurs="0"/>
+					<xs:element ref="XSide2ImageShift" minOccurs="0"/>
+					<xs:element ref="YImagePosition" minOccurs="0"/>
+					<xs:element ref="YImageShift" minOccurs="0"/>
+					<xs:element ref="YSide1ImageShift" minOccurs="0"/>
+					<xs:element ref="YSide2ImageShift" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- PrintDocumentProcessing - group -->
+	</xs:complexType>
+	<xs:element name="PrintDocumentProcessing" type="PrintDocumentProcessingType"/>
+	<!--Print Document Ticket Job -->
+	<xs:complexType name="PrintDocumentTicketDefaultType">
+		<xs:sequence>
+			<xs:element ref="PrintDocumentDescription" minOccurs="0"/>
+			<xs:element name="PrintDocumentProcessing" type="PrintDocumentProcessingDefaultType" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other"/>
+	</xs:complexType>
+	<xs:complexType name="PrintDocumentTicketType">
+		<xs:sequence>
+			<xs:element ref="PrintDocumentDescription" minOccurs="0"/>
+			<xs:element ref="PrintDocumentProcessing" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other"/>
+	</xs:complexType>
+	<xs:element name="PrintDocumentTicket" type="PrintDocumentTicketType"/>
+	<xs:element name="PrintDocumentReceipt" type="PrintDocumentTicketType"/>
+	<!---->
+	<!-- PrintJobDescription -->
+	<xs:complexType name="PrintJobDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobDescriptionType">
+				<xs:sequence>
+					<!-- Print job description references here -->
+					<xs:element ref="CompressionSupplied" minOccurs="0"/>
+					<xs:element ref="DocumentCharsetSupplied" minOccurs="0"/>
+					<xs:element ref="DocumentDigitalSignatureSupplied" minOccurs="0"/>
+					<xs:element ref="DocumentFormatDetailsSupplied" minOccurs="0"/>
+					<xs:element ref="DocumentFormatSupplied" minOccurs="0"/>
+					<xs:element ref="DocumentFormatVersionSupplied" minOccurs="0"/>
+					<xs:element ref="DocumentMessageSupplied" minOccurs="0"/>
+					<xs:element ref="DocumentMetadata" minOccurs="0"/>
+					<xs:element ref="DocumentNameSupplied" minOccurs="0"/>
+					<xs:element ref="DocumentUri" minOccurs="0"/>
+					<xs:element ref="Impressions" minOccurs="0"/>
+					<xs:element ref="JobCollationType" minOccurs="0"/>
+					<xs:element ref="MediaSheets" minOccurs="0"/>
+					<xs:element ref="PageOrderReceived" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- PrintJobDescription - group -->
+	</xs:complexType>
+	<xs:element name="PrintJobDescription" type="PrintJobDescriptionType"/>
+	<!-- PrintJobProcessing -->
+	<xs:complexType name="PrintJobProcessingDefaultType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobProcessingType">
+				<xs:sequence>
+					<!-- Print job processing references here -->
+					<xs:element ref="JobAccountingSheets" minOccurs="0"/>
+					<xs:element ref="JobCollationType" minOccurs="0"/>
+					<xs:element ref="JobCopies" minOccurs="0"/>
+					<xs:element ref="JobCoverBack" minOccurs="0"/>
+					<xs:element ref="JobCoverFront" minOccurs="0"/>
+					<xs:element ref="JobErrorSheet" minOccurs="0"/>
+					<xs:element ref="JobFinishings" minOccurs="0"/>
+					<xs:element ref="JobFinishingsCol" minOccurs="0"/>
+					<xs:element ref="JobSaveDisposition" minOccurs="0"/>
+					<xs:element ref="JobSheetMessage" minOccurs="0"/>
+					<xs:element ref="JobSheets" minOccurs="0"/>
+					<xs:element ref="JobSheetsCol" minOccurs="0"/>
+					<xs:element ref="MultipleDocumentsHandling" minOccurs="0"/>
+					<xs:element ref="OutputBin" minOccurs="0"/>
+					<xs:element ref="OutputDevice" minOccurs="0"/>
+					<xs:element ref="PagesPerSubset" minOccurs="0"/>
+					<xs:element ref="ProofPrint" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- PrintJobProcessing - group -->
+	</xs:complexType>
+	<xs:complexType name="PrintJobProcessingType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobProcessingType">
+				<xs:sequence>
+					<!-- Print job processing references here -->
+					<xs:element ref="JobAccountingSheets" minOccurs="0"/>
+					<xs:element ref="JobCollationType" minOccurs="0"/>
+					<xs:element ref="JobCopies" minOccurs="0"/>
+					<xs:element ref="JobCoverBack" minOccurs="0"/>
+					<xs:element ref="JobCoverFront" minOccurs="0"/>
+					<xs:element ref="JobErrorSheet" minOccurs="0"/>
+					<xs:element ref="JobFinishings" minOccurs="0"/>
+					<xs:element ref="JobFinishingsCol" minOccurs="0"/>
+					<xs:element ref="JobSaveDisposition" minOccurs="0"/>
+					<xs:element ref="JobSheetMessage" minOccurs="0"/>
+					<xs:element ref="JobSheets" minOccurs="0"/>
+					<xs:element ref="JobSheetsCol" minOccurs="0"/>
+					<xs:element ref="MultipleDocumentsHandling" minOccurs="0"/>
+					<xs:element ref="OutputBin" minOccurs="0"/>
+					<xs:element ref="OutputDevice" minOccurs="0"/>
+					<xs:element ref="Overrides" minOccurs="0"/>
+					<xs:element ref="PagesPerSubset" minOccurs="0"/>
+					<xs:element ref="ProofPrint" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- PrintJobProcessing - group -->
+	</xs:complexType>
+	<xs:element name="PrintJobProcessing" type="PrintJobProcessingType"/>
+	<!--Print Job Ticket Job -->
+	<xs:complexType name="PrintJobTicketDefaultType">
+		<xs:sequence>
+			<xs:element name="PrintDocumentProcessing" type="PrintDocumentProcessingDefaultType" minOccurs="0"/>
+			<xs:element ref="PrintJobDescription" minOccurs="0"/>
+			<xs:element name="PrintJobProcessing" type="PrintJobProcessingDefaultType" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other"/>
+	</xs:complexType>
+	<xs:complexType name="PrintJobTicketType">
+		<xs:sequence>
+			<xs:element ref="PrintDocumentProcessing" minOccurs="0"/>
+			<xs:element ref="PrintJobDescription" minOccurs="0"/>
+			<xs:element ref="PrintJobProcessing" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other"/>
+	</xs:complexType>
+	<xs:element name="PrintJobReceipt" type="PrintJobTicketType"/>
+	<xs:element name="PrintJobTicket" type="PrintJobTicketType"/>
+</xs:schema>

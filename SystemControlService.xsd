@@ -1,0 +1,132 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="ScanService.xsd"/>
+	<xs:include schemaLocation="PrintService.xsd"/>
+	<xs:include schemaLocation="Counter.xsd"/>
+	<xs:include schemaLocation="PwgCommon.xsd"/>
+	<xs:include schemaLocation="ServiceTypes.xsd"/>
+	<xs:include schemaLocation="Subunits.xsd"/>
+	<!--12/14/11 PJZ Service Description is mandatory-->
+	<!--12/11/11 PJZ ServiceChargeInfoUri and ServiceOrganizations moved to base class-->
+	<!--09/09/11 PJZ FixedServiceXriSupported name-->
+	<!--07/18/11 PJZ Completed fixes for Set operation-->
+	<!--06/03/11 PJZ Fixes from May Face to Face-->
+	<!--04/21/11 PJZ Added service charge stuff-->
+	<!--04/21/11 PJZ Fixed SystemControlService name-->
+	<!--02/02/11 PJZ added some cloud elements to ServiceDescription-->
+	<!--12/16/10 PJZ Added counts, accepting and queue count to service summary-->
+	<!--07/26/10 PJZ Added listing of services-->
+	<!--12/21/09 PJZ Changed name from Mfd to System, Changed filename-->
+	<!--12/21/09 PJZ Created-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<!---->
+	<!---->
+	<!-- MFD System Service - group -->
+	<!---->
+	<!-- MFD System ServiceStatus - group -->
+	<xs:complexType name="SystemControlServiceStatusType">
+		<xs:complexContent>
+			<xs:extension base="ImagingServiceStatusType">
+				<xs:sequence>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- MfdServiceStatus - group -->
+	</xs:complexType>
+	<xs:element name="SystemControlServiceStatus" type="SystemControlServiceStatusType"/>
+	<!-- MFD System ServiceDescription - group -->
+	<xs:complexType name="SystemControlServiceDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="ImagingServiceDescriptionType">
+				<xs:sequence>
+					<!--  service type (function of this service object) REQUIRED - MUST be single-valued  see WIMS Object Model - section 4 [WIMS-PRO] -->
+					<!--  list of URI supported by this service  REQUIRED - MAY be multi-valued  see printer-uri-supported - section 4.4.1 [RFC2911] -->
+					<!-- service vendor-supplied description and/or label  OPTIONAL - MUST be single-valued  see printer-info - section 4.4.6 [RFC2911] -->
+					<!--  Object administrative name OPTIONAL - MUST be single-valued  see printer-name - section 4.4.4 [RFC2911]  see prtGeneralPrinterName - section 6 [RFC3805] -->
+					<!-- list of services (by ID/name/URI) subordinate to this service  REQUIRED - MAY be multi-valued -->
+					<!-- list of devices (by ID/name/URI) subordinate to this service  REQUIRED - MAY be multi-valued -->
+					<!-- list of subunits (by ID) supported by this service,  REQUIRED - MAY be multi-valued  see Printer Sub-Units - section 2.2 [RFC3805] -->
+					<!--  document formats supported by this service REQUIRED - MAY be multi-valued  see document-format-supported - section 4.4.22 [RFC2911] -->
+					<!-- list of resources (by ID/name/URI) supported by this service  OPTIONAL - MAY be multi-valued see ResourceId in Resource XML schema  see ResourceName in Resource XML schema -->
+					<xs:any namespace="##local" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- MfdServiceDescription - group -->
+	</xs:complexType>
+	<xs:complexType name="SystemControlServiceDescriptionSetType">
+		<xs:complexContent>
+			<xs:extension base="ImagingServiceDescriptionSetType">
+				<xs:sequence>
+					<!--  service type (function of this service object) REQUIRED - MUST be single-valued  see WIMS Object Model - section 4 [WIMS-PRO] -->
+					<!--  list of URI supported by this service  REQUIRED - MAY be multi-valued  see printer-uri-supported - section 4.4.1 [RFC2911] -->
+					<!-- service vendor-supplied description and/or label  OPTIONAL - MUST be single-valued  see printer-info - section 4.4.6 [RFC2911] -->
+					<!--  Object administrative name OPTIONAL - MUST be single-valued  see printer-name - section 4.4.4 [RFC2911]  see prtGeneralPrinterName - section 6 [RFC3805] -->
+					<!-- list of services (by ID/name/URI) subordinate to this service  REQUIRED - MAY be multi-valued -->
+					<!-- list of devices (by ID/name/URI) subordinate to this service  REQUIRED - MAY be multi-valued -->
+					<!-- list of subunits (by ID) supported by this service,  REQUIRED - MAY be multi-valued  see Printer Sub-Units - section 2.2 [RFC3805] -->
+					<!--  document formats supported by this service REQUIRED - MAY be multi-valued  see document-format-supported - section 4.4.22 [RFC2911] -->
+					<!-- list of resources (by ID/name/URI) supported by this service  OPTIONAL - MAY be multi-valued see ResourceId in Resource XML schema  see ResourceName in Resource XML schema -->
+					<xs:any namespace="##local" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- MfdServiceDescription - group -->
+	</xs:complexType>
+	<xs:element name="SystemControlServiceDescription" type="SystemControlServiceDescriptionType"/>
+	<!-- Summary information when listing services-->
+	<xs:element name="ServiceSummaries">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ServiceSummary" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ServiceSummary">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="DeviceId" minOccurs="0"/>
+				<xs:sequence>
+					<xs:element ref="Id"/>
+					<xs:element ref="ServiceUuid" minOccurs="0"/>
+				</xs:sequence>
+				<xs:choice>
+					<xs:element ref="ImagesCompleted"/>
+					<xs:element ref="ImpressionsCompleted"/>
+					<xs:element ref="KOctetsProcessed"/>
+				</xs:choice>
+				<xs:choice>
+					<xs:element ref="IsAcceptingJobs"/>
+					<xs:element ref="IsAcceptingResources"/>
+				</xs:choice>
+				<xs:element ref="QueuedJobCount" minOccurs="1"/>
+				<xs:element ref="ServiceName"/>
+				<xs:element ref="ServiceType"/>
+				<xs:element ref="State"/>
+				<xs:element ref="StateReasons"/>
+				<xs:element ref="ServiceXriSupported"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- MFD System Service - object -->
+	<xs:complexType name="SystemControlServiceType">
+		<xs:sequence>
+			<xs:element ref="SystemControlServiceDescription"/>
+			<xs:element ref="SystemControlServiceStatus"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- MfdService - object -->
+	</xs:complexType>
+	<xs:element name="SystemControlService" type="SystemControlServiceType"/>
+</xs:schema>

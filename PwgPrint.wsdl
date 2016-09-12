@@ -1,0 +1,2035 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   PWG Semantic Model v2   
+
+Copyright 2002-2013, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald, Daniel Manchala 
+-->
+<!--01/22/13 DWM Deleted an extraneous message element in CancelCurrentPrintJobRequestMsg-->
+<!--12/06/12 PJZ Normalized Cloud operation names-->
+<!--05/05/11 PJZ Added IdentifyPrinter operation-->
+<!--05/02/11 PJZ Removed Startup operation-->
+<!--10/19/10 PJZ Changed URI to Uri-->
+<!--03/01/10 PJZ Added CloseJob back in-->
+<!--02/05/10 PJZ Fixed operation names-->
+<!--01/19/10 PJZ Made all service interfaces homogenous (as much as possible)-->
+<!--01/05/10 PJZ Added active and history job list operations-->
+<!--10/23/09 PJZ Changed ValidatePrintJob to ValidatePrintJobTicket-->
+<!--10/23/09 PJZ Updates per October face to face-->
+<!--07/08/09 PJZ Removed explicit MTOM encoding, added new operations-->
+<!--04/14/09 PJZ Updated Namespace-->
+<!--02/20/09 PJZ Reordered body in request messages for WSI compliance-->
+<!--02/16/09 PJZ Removed invalid attributes from definitions-->
+<!--05/30/08 PJZ Move back to single namespace-->
+<!--05/21/08 PJZ Partial alignment with WS-Scan-->
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:sm="http://www.pwg.org/schemas/2016/01/sm" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:ns="http://purl.org/dc/elements/1.1/" xmlns:ns1="http://purl.org/dc/terms/" xmlns:ns2="http://purl.org/dc/dcmitype/" targetNamespace="http://www.pwg.org/schemas/2016/01/sm">
+	<types>
+		<xs:schema xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" elementFormDefault="qualified" targetNamespace="http://schemas.xmlsoap.org/ws/2004/08/addressing">
+			<xs:include schemaLocation="addressing.xsd"/>
+		</xs:schema>
+		<xs:schema xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:sm="http://www.pwg.org/schemas/2016/01/sm" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+			<xs:include schemaLocation="JobTypes.xsd"/>
+			<xs:include schemaLocation="DocumentTypes.xsd"/>
+			<xs:include schemaLocation="PwgPrintOpMsg.xsd"/>
+			<xs:include schemaLocation="PwgCommonOpMsg.xsd"/>
+			<xs:import namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing" schemaLocation="addressing.xsd"/>
+			<xs:element name="BinaryData" type="xs:base64Binary"/>
+			<xs:element name="RequestedElement" type="xs:QName"/>
+		</xs:schema>
+	</types>
+	<message name="AcknowledgePrintDocumentRequestMsg">
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="body" element="sm:AcknowledgePrintDocumentRequest"/>
+	</message>
+	<message name="AcknowledgePrintDocumentResponseMsg">
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="body" element="sm:AcknowledgePrintDocumentResponse"/>
+	</message>
+	<message name="AcknowledgePrintJobRequestMsg">
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="body" element="sm:AcknowledgePrintJobRequest"/>
+	</message>
+	<message name="AcknowledgePrintJobResponseMsg">
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="body" element="sm:AcknowledgePrintJobResponse"/>
+	</message>
+	<message name="ActivatePrintServiceRequestMsg">
+		<part name="body" element="sm:ActivatePrintServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ActivatePrintServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ActivatePrintServiceResponse"/>
+	</message>
+	<message name="CancelCurrentPrintJobRequestMsg">
+		<part name="body" element="sm:CancelCurrentPrintJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CancelCurrentPrintJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CancelCurrentPrintJobResponse"/>
+	</message>
+	<message name="CancelPrintDocumentRequestMsg">
+		<part name="body" element="sm:CancelPrintDocumentRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CancelPrintDocumentResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CancelPrintDocumentResponse"/>
+	</message>
+	<message name="CancelPrintJobRequestMsg">
+		<part name="body" element="sm:CancelPrintJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CancelPrintJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CancelPrintJobResponse"/>
+	</message>
+	<message name="CancelMyPrintJobsRequestMsg">
+		<part name="body" element="sm:CancelMyPrintJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CancelMyPrintJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CancelMyPrintJobsResponse"/>
+	</message>
+	<message name="CancelPrintJobsRequestMsg">
+		<part name="body" element="sm:CancelPrintJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CancelPrintJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CancelPrintJobsResponse"/>
+	</message>
+	<message name="ClosePrintJobRequestMsg">
+		<part name="body" element="sm:ClosePrintJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ClosePrintJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ClosePrintJobResponse"/>
+	</message>
+	<message name="CreatePrintJobRequestMsg">
+		<part name="body" element="sm:CreatePrintJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CreatePrintJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CreatePrintJobResponse"/>
+	</message>
+	<message name="DisablePrintServiceRequestMsg">
+		<part name="body" element="sm:DisablePrintServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="DisablePrintServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:DisablePrintServiceResponse"/>
+	</message>
+	<message name="DeactivatePrintServiceRequestMsg">
+		<part name="body" element="sm:DeactivatePrintServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="DeactivatePrintServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:DeactivatePrintServiceResponse"/>
+	</message>
+	<message name="EnablePrintServiceRequestMsg">
+		<part name="body" element="sm:EnablePrintServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="EnablePrintServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:EnablePrintServiceResponse"/>
+	</message>
+	<message name="FetchPrintDocumentRequestMsg">
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="body" element="sm:FetchPrintDocumentRequest"/>
+		<part name="DocumentStream" element="sm:BinaryData"/>
+	</message>
+	<message name="FetchPrintDocumentResponseMsg">
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="body" element="sm:FetchPrintDocumentResponse"/>
+	</message>
+	<message name="FetchPrintJobRequestMsg">
+		<part name="body" element="sm:FetchPrintJobRequest"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+	</message>
+	<message name="FetchPrintJobResponseMsg">
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="body" element="sm:FetchPrintJobResponse"/>
+	</message>
+	<message name="GetActivePrintJobsRequestMsg">
+		<part name="body" element="sm:GetActivePrintJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetActivePrintJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetActivePrintJobsResponse"/>
+	</message>
+	<message name="GetFetchablePrintJobsRequestMsg">
+		<part name="body" element="sm:GetFetchablePrintJobsRequest"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+	</message>
+	<message name="GetFetchablePrintJobsResponseMsg">
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="body" element="sm:GetFetchablePrintJobsResponse"/>
+	</message>
+	<message name="GetPrintJobHistoryRequestMsg">
+		<part name="body" element="sm:GetPrintJobHistoryRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetPrintJobHistoryResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetPrintJobHistoryResponse"/>
+	</message>
+	<message name="GetPrintJobsRequestMsg">
+		<part name="body" element="sm:GetPrintJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetPrintJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetPrintJobsResponse"/>
+	</message>
+	<message name="GetPrintDocumentsRequestMsg">
+		<part name="body" element="sm:GetPrintDocumentsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetPrintDocumentsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetPrintDocumentsResponse"/>
+	</message>
+	<message name="GetPrintDocumentElementsRequestMsg">
+		<part name="body" element="sm:GetPrintDocumentElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetPrintDocumentElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetPrintDocumentElementsResponse"/>
+	</message>
+	<message name="GetPrintJobElementsRequestMsg">
+		<part name="body" element="sm:GetPrintJobElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetPrintJobElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetPrintJobElementsResponse"/>
+	</message>
+	<message name="GetPrintServiceElementsRequestMsg">
+		<part name="body" element="sm:GetPrintServiceElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetPrintServiceElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetPrintServiceElementsResponse"/>
+	</message>
+	<message name="HoldNewPrintJobsRequestMsg">
+		<part name="body" element="sm:HoldNewPrintJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="HoldNewPrintJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:HoldNewPrintJobsResponse"/>
+	</message>
+	<message name="HoldPrintJobRequestMsg">
+		<part name="body" element="sm:HoldPrintJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="HoldPrintJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:HoldPrintJobResponse"/>
+	</message>
+	<message name="IdentifyPrinterRequestMsg">
+		<part name="body" element="sm:IdentifyPrinterRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="IdentifyPrinterResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:IdentifyPrinterResponse"/>
+	</message>
+	<message name="PausePrintServiceRequestMsg">
+		<part name="body" element="sm:PausePrintServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="PausePrintServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:PausePrintServiceResponse"/>
+	</message>
+	<message name="PausePrintServiceAfterCurrentJobRequestMsg">
+		<part name="body" element="sm:PausePrintServiceAfterCurrentJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="PausePrintServiceAfterCurrentJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:PausePrintServiceAfterCurrentJobResponse"/>
+	</message>
+	<message name="PrintJobRequestMsg">
+		<part name="body" element="sm:PrintJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="DocumentStream" element="sm:BinaryData"/>
+	</message>
+	<message name="PrintJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:PrintJobResponse"/>
+	</message>
+	<message name="PrintUriRequestMsg">
+		<part name="body" element="sm:PrintUriRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="PrintUriResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:PrintUriResponse"/>
+	</message>
+	<message name="PromotePrintJobRequestMsg">
+		<part name="body" element="sm:PromotePrintJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="PromotePrintJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:PromotePrintJobResponse"/>
+	</message>
+	<message name="PurgePrintJobRequestMsg">
+		<part name="body" element="sm:PurgePrintJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="PurgePrintJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:PurgePrintJobResponse"/>
+	</message>
+	<message name="ReleasePrintJobRequestMsg">
+		<part name="body" element="sm:ReleasePrintJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ReleasePrintJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ReleasePrintJobResponse"/>
+	</message>
+	<message name="ReprocessPrintJobRequestMsg">
+		<part name="body" element="sm:ReprocessPrintJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ReprocessPrintJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ReprocessPrintJobResponse"/>
+	</message>
+	<message name="ReleaseNewPrintJobsRequestMsg">
+		<part name="body" element="sm:ReleaseNewPrintJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ReleaseNewPrintJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ReleaseNewPrintJobsResponse"/>
+	</message>
+	<message name="RestartPrintJobRequestMsg">
+		<part name="body" element="sm:RestartPrintJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="RestartPrintJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:RestartPrintJobResponse"/>
+	</message>
+	<message name="RestartPrintServiceRequestMsg">
+		<part name="body" element="sm:RestartPrintServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="RestartPrintServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:RestartPrintServiceResponse"/>
+	</message>
+	<message name="ResubmitPrintJobRequestMsg">
+		<part name="body" element="sm:ResubmitPrintJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ResubmitPrintJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ResubmitPrintJobResponse"/>
+	</message>
+	<message name="ResumePrintJobRequestMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ResumePrintJobRequest"/>
+	</message>
+	<message name="ResumePrintJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ResumePrintJobResponse"/>
+	</message>
+	<message name="ResumePrintServiceRequestMsg">
+		<part name="body" element="sm:ResumePrintServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ResumePrintServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ResumePrintServiceResponse"/>
+	</message>
+	<message name="SendPrintDocumentRequestMsg">
+		<part name="body" element="sm:SendPrintDocumentRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="DocumentStream" element="sm:BinaryData"/>
+	</message>
+	<message name="SendPrintDocumentResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SendPrintDocumentResponse"/>
+	</message>
+	<message name="SendPrintUriRequestMsg">
+		<part name="body" element="sm:SendPrintUriRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SendPrintUriResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SendPrintUriResponse"/>
+	</message>
+	<message name="SetPrintDocumentElementsRequestMsg">
+		<part name="body" element="sm:SetPrintDocumentElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SetPrintDocumentElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SetPrintDocumentElementsResponse"/>
+	</message>
+	<message name="SetPrintJobElementsRequestMsg">
+		<part name="body" element="sm:SetPrintJobElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SetPrintJobElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SetPrintJobElementsResponse"/>
+	</message>
+	<message name="SetPrintServiceElementsRequestMsg">
+		<part name="body" element="sm:SetPrintServiceElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SetPrintServiceElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SetPrintServiceElementsResponse"/>
+	</message>
+	<message name="ShutdownPrintServiceRequestMsg">
+		<part name="body" element="sm:ShutdownPrintServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ShutdownPrintServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ShutdownPrintServiceResponse"/>
+	</message>
+	<message name="SuspendCurrentPrintJobRequestMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SuspendCurrentPrintJobRequest"/>
+	</message>
+	<message name="SuspendCurrentPrintJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SuspendCurrentPrintJobResponse"/>
+	</message>
+	<message name="UpdateFetchablePrintJobsRequestMsg">
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="body" element="sm:UpdateFetchablePrintJobsRequest"/>
+	</message>
+	<message name="UpdateFetchablePrintJobsResponseMsg">
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="body" element="sm:UpdateFetchablePrintJobsResponse"/>
+	</message>
+	<message name="UpdatePrintDocumentStateRequestMsg">
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="body" element="sm:UpdatePrintDocumentStateRequest"/>
+	</message>
+	<message name="UpdatePrintDocumentStateResponseMsg">
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="body" element="sm:UpdatePrintDocumentStateResponse"/>
+	</message>
+	<message name="UpdatePrintJobStateRequestMsg">
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="body" element="sm:UpdatePrintJobStateRequest"/>
+	</message>
+	<message name="UpdatePrintJobStateResponseMsg">
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="body" element="sm:UpdatePrintJobStateResponse"/>
+	</message>
+	<message name="UpdatePrintServiceStateRequestMsg">
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="body" element="sm:UpdatePrintServiceStateRequest"/>
+	</message>
+	<message name="UpdatePrintServiceStateResponseMsg">
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="body" element="sm:UpdatePrintServiceStateResponse"/>
+	</message>
+	<message name="ValidatePrintDocumentTicketRequestMsg">
+		<part name="body" element="sm:ValidatePrintDocumentTicketRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ValidatePrintDocumentTicketResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ValidatePrintDocumentTicketResponse"/>
+	</message>
+	<message name="ValidatePrintJobTicketRequestMsg">
+		<part name="body" element="sm:ValidatePrintJobTicketRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ValidatePrintJobTicketResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ValidatePrintJobTicketResponse"/>
+	</message>
+	<portType name="PwgPrintPort">
+		<operation name="ActivatePrintService">
+			<input message="sm:ActivatePrintServiceRequestMsg"/>
+			<output message="sm:ActivatePrintServiceResponseMsg"/>
+		</operation>
+		<operation name="CancelCurrentPrintJob">
+			<input message="sm:CancelCurrentPrintJobRequestMsg"/>
+			<output message="sm:CancelCurrentPrintJobResponseMsg"/>
+		</operation>
+		<operation name="CancelPrintDocument">
+			<input message="sm:CancelPrintDocumentRequestMsg"/>
+			<output message="sm:CancelPrintDocumentResponseMsg"/>
+		</operation>
+		<operation name="CancelPrintJob">
+			<input message="sm:CancelPrintJobRequestMsg"/>
+			<output message="sm:CancelPrintJobResponseMsg"/>
+		</operation>
+		<operation name="CancelPrintJobs">
+			<input message="sm:CancelPrintJobsRequestMsg"/>
+			<output message="sm:CancelPrintJobsResponseMsg"/>
+		</operation>
+		<operation name="CancelMyPrintJobs">
+			<input message="sm:CancelMyPrintJobsRequestMsg"/>
+			<output message="sm:CancelMyPrintJobsResponseMsg"/>
+		</operation>
+		<operation name="ClosePrintJob">
+			<input message="sm:ClosePrintJobRequestMsg"/>
+			<output message="sm:ClosePrintJobResponseMsg"/>
+		</operation>
+		<operation name="CreatePrintJob">
+			<input message="sm:CreatePrintJobRequestMsg" wsa:Action="http://www.pwg.org/schemas/2016/01/sm/CreatePrintJob"/>
+			<output message="sm:CreatePrintJobResponseMsg" wsa:Action="http://www.pwg.org/schemas/2016/01/sm/CreatePrintJobResponse"/>
+		</operation>
+		<operation name="DeactivatePrintService">
+			<input message="sm:DeactivatePrintServiceRequestMsg"/>
+			<output message="sm:DeactivatePrintServiceResponseMsg"/>
+		</operation>
+		<operation name="DisablePrintService">
+			<input message="sm:DisablePrintServiceRequestMsg"/>
+			<output message="sm:DisablePrintServiceResponseMsg"/>
+		</operation>
+		<operation name="EnablePrintService">
+			<input message="sm:EnablePrintServiceRequestMsg"/>
+			<output message="sm:EnablePrintServiceResponseMsg"/>
+		</operation>
+		<operation name="GetActivePrintJobs">
+			<input message="sm:GetActivePrintJobsRequestMsg"/>
+			<output message="sm:GetActivePrintJobsResponseMsg"/>
+		</operation>
+		<operation name="GetPrintDocumentElements">
+			<input message="sm:GetPrintDocumentElementsRequestMsg"/>
+			<output message="sm:GetPrintDocumentElementsResponseMsg"/>
+		</operation>
+		<operation name="GetPrintDocuments">
+			<input message="sm:GetPrintDocumentsRequestMsg"/>
+			<output message="sm:GetPrintDocumentsResponseMsg"/>
+		</operation>
+		<operation name="GetPrintJobElements">
+			<input message="sm:GetPrintJobElementsRequestMsg"/>
+			<output message="sm:GetPrintJobElementsResponseMsg"/>
+		</operation>
+		<operation name="GetPrintJobHistory">
+			<input message="sm:GetPrintJobHistoryRequestMsg"/>
+			<output message="sm:GetPrintJobHistoryResponseMsg"/>
+		</operation>
+		<operation name="GetPrintJobs">
+			<input message="sm:GetPrintJobsRequestMsg"/>
+			<output message="sm:GetPrintJobsResponseMsg"/>
+		</operation>
+		<operation name="GetPrintServiceElements">
+			<input message="sm:GetPrintServiceElementsRequestMsg"/>
+			<output message="sm:GetPrintServiceElementsResponseMsg"/>
+		</operation>
+		<operation name="HoldNewPrintJobs">
+			<input message="sm:HoldNewPrintJobsRequestMsg"/>
+			<output message="sm:HoldNewPrintJobsResponseMsg"/>
+		</operation>
+		<operation name="HoldPrintJob">
+			<input message="sm:HoldPrintJobRequestMsg"/>
+			<output message="sm:HoldPrintJobResponseMsg"/>
+		</operation>
+		<operation name="IdentifyPrinter">
+			<input message="sm:IdentifyPrinterRequestMsg"/>
+			<output message="sm:IdentifyPrinterResponseMsg"/>
+		</operation>
+		<operation name="PausePrintService">
+			<input message="sm:PausePrintServiceRequestMsg"/>
+			<output message="sm:PausePrintServiceResponseMsg"/>
+		</operation>
+		<operation name="PausePrintServiceAfterCurrentJob">
+			<input message="sm:PausePrintServiceAfterCurrentJobRequestMsg"/>
+			<output message="sm:PausePrintServiceAfterCurrentJobResponseMsg"/>
+		</operation>
+		<operation name="PrintJob">
+			<input message="sm:PrintJobRequestMsg"/>
+			<output message="sm:PrintJobResponseMsg"/>
+		</operation>
+		<operation name="PrintUri">
+			<input message="sm:PrintUriRequestMsg"/>
+			<output message="sm:PrintUriResponseMsg"/>
+		</operation>
+		<operation name="PurgePrintJob">
+			<input message="sm:PurgePrintJobRequestMsg"/>
+			<output message="sm:PurgePrintJobResponseMsg"/>
+		</operation>
+		<operation name="PromotePrintJob">
+			<input message="sm:PurgePrintJobRequestMsg"/>
+			<output message="sm:PurgePrintJobResponseMsg"/>
+		</operation>
+		<operation name="ReleaseNewPrintJobs">
+			<input message="sm:ReleaseNewPrintJobsRequestMsg"/>
+			<output message="sm:ReleaseNewPrintJobsResponseMsg"/>
+		</operation>
+		<operation name="ReleasePrintJob">
+			<input message="sm:ReleasePrintJobRequestMsg"/>
+			<output message="sm:ReleasePrintJobResponseMsg"/>
+		</operation>
+		<operation name="ReprocessPrintJob">
+			<input message="sm:ReprocessPrintJobRequestMsg"/>
+			<output message="sm:ReprocessPrintJobResponseMsg"/>
+		</operation>
+		<operation name="RestartPrintJob">
+			<input message="sm:RestartPrintJobRequestMsg"/>
+			<output message="sm:RestartPrintJobResponseMsg"/>
+		</operation>
+		<operation name="RestartPrintService">
+			<input message="sm:RestartPrintServiceRequestMsg"/>
+			<output message="sm:RestartPrintServiceResponseMsg"/>
+		</operation>
+		<operation name="ResubmitPrintJob">
+			<input message="sm:ResubmitPrintJobRequestMsg"/>
+			<output message="sm:ResubmitPrintJobResponseMsg"/>
+		</operation>
+		<operation name="ResumePrintJob">
+			<input message="sm:ResumePrintJobRequestMsg"/>
+			<output message="sm:ResumePrintJobResponseMsg"/>
+		</operation>
+		<operation name="ResumePrintService">
+			<input message="sm:ResumePrintServiceRequestMsg"/>
+			<output message="sm:ResumePrintServiceResponseMsg"/>
+		</operation>
+		<operation name="SendPrintDocument">
+			<input message="sm:SendPrintDocumentRequestMsg"/>
+			<output message="sm:SendPrintDocumentResponseMsg"/>
+		</operation>
+		<operation name="SendPrintUri">
+			<input message="sm:SendPrintUriRequestMsg"/>
+			<output message="sm:SendPrintUriResponseMsg"/>
+		</operation>
+		<operation name="SetPrintDocumentElements">
+			<input message="sm:SetPrintDocumentElementsRequestMsg"/>
+			<output message="sm:SetPrintDocumentElementsResponseMsg"/>
+		</operation>
+		<operation name="SetPrintJobElements">
+			<input message="sm:SetPrintJobElementsRequestMsg"/>
+			<output message="sm:SetPrintJobElementsResponseMsg"/>
+		</operation>
+		<operation name="SetPrintServiceElements">
+			<input message="sm:SetPrintServiceElementsRequestMsg"/>
+			<output message="sm:SetPrintServiceElementsResponseMsg"/>
+		</operation>
+		<operation name="ShutdownPrintService">
+			<input message="sm:ShutdownPrintServiceRequestMsg"/>
+			<output message="sm:ShutdownPrintServiceResponseMsg"/>
+		</operation>
+		<operation name="SuspendCurrentPrintJob">
+			<input message="sm:SuspendCurrentPrintJobRequestMsg"/>
+			<output message="sm:SuspendCurrentPrintJobResponseMsg"/>
+		</operation>
+		<operation name="ValidatePrintDocumentTicket">
+			<input message="sm:ValidatePrintDocumentTicketRequestMsg"/>
+			<output message="sm:ValidatePrintDocumentTicketResponseMsg"/>
+		</operation>
+		<operation name="ValidatePrintJobTicket">
+			<input message="sm:ValidatePrintJobTicketRequestMsg"/>
+			<output message="sm:ValidatePrintJobTicketResponseMsg"/>
+		</operation>
+	</portType>
+	<portType name="PWG-CloudPrintPortType">
+		<operation name="AcknowledgePrintDocument">
+			<input message="sm:AcknowledgePrintDocumentRequestMsg" wsa:Action="http://schemas.microsoft.com/windows/2012/9/wdp/print/AcknowledgePrintDocument"/>
+			<output message="sm:AcknowledgePrintDocumentResponseMsg" wsa:Action="http://schemas.microsoft.com/windows/2012/9/wdp/print/AcknowledgePrintDocumentResponse"/>
+		</operation>
+		<operation name="AcknowledgePrintJob">
+			<input message="sm:AcknowledgePrintJobRequestMsg" wsa:Action="http://schemas.microsoft.com/windows/2012/9/wdp/print/AcknowledgePrintJob"/>
+			<output message="sm:AcknowledgePrintJobResponseMsg" wsa:Action="http://schemas.microsoft.com/windows/2012/9/wdp/print/AcknowledgePrintJobResponse"/>
+		</operation>
+		<operation name="FetchPrintDocument">
+			<input message="sm:FetchPrintDocumentRequestMsg" wsa:Action="http://schemas.microsoft.com/windows/2012/9/wdp/print/FetchPrintDocument"/>
+			<output message="sm:FetchPrintDocumentResponseMsg" wsa:Action="http://schemas.microsoft.com/windows/2012/9/wdp/print/FetchPrintDocumentResponse"/>
+		</operation>
+		<operation name="FetchPrintJob">
+			<input message="sm:FetchPrintJobRequestMsg" wsa:Action="http://schemas.microsoft.com/windows/2012/9/wdp/print/FetchPrintJob"/>
+			<output message="sm:FetchPrintJobResponseMsg" wsa:Action="http://schemas.microsoft.com/windows/2012/9/wdp/print/FetchPrintJobResponse"/>
+		</operation>
+		<operation name="GetFetchablePrintJobs">
+			<input message="sm:GetFetchablePrintJobsRequestMsg" wsa:Action="http://schemas.microsoft.com/windows/2012/9/wdp/print/GetFetchablePrintJobs"/>
+			<output message="sm:GetFetchablePrintJobsResponseMsg" wsa:Action="http://schemas.microsoft.com/windows/2012/9/wdp/print/GetFetchablePrintJobsResponse"/>
+		</operation>
+		<operation name="UpdateFetchablePrintJobs">
+			<input message="sm:UpdateFetchablePrintJobsRequestMsg" wsa:Action="http://schemas.microsoft.com/windows/2012/9/wdp/print/UpdateFetchablePrintJobs"/>
+			<output message="sm:UpdateFetchablePrintJobsResponseMsg" wsa:Action="http://schemas.microsoft.com/windows/2012/9/wdp/print/UpdateFetchablePrintJobsResponse"/>
+		</operation>
+		<operation name="UpdatePrintDocumentState">
+			<input message="sm:UpdatePrintDocumentStateRequestMsg" wsa:Action="http://schemas.microsoft.com/windows/2012/9/wdp/print/UpdatePrintDocumentState"/>
+			<output message="sm:UpdatePrintDocumentStateResponseMsg" wsa:Action="http://schemas.microsoft.com/windows/2012/9/wdp/print/UpdatePrintDocumentStateResponse"/>
+		</operation>
+		<operation name="UpdatePrintJobState">
+			<input message="sm:UpdatePrintJobStateRequestMsg" wsa:Action="http://schemas.microsoft.com/windows/2012/9/wdp/print/UpdatePrintJobState"/>
+			<output message="sm:UpdatePrintJobStateResponseMsg" wsa:Action="http://schemas.microsoft.com/windows/2012/9/wdp/print/UpdatePrintJobStateResponse"/>
+		</operation>
+		<operation name="UpdatePrintServiceState">
+			<input message="sm:UpdatePrintServiceStateRequestMsg" wsa:Action="http://schemas.microsoft.com/windows/2012/9/wdp/print/UpdatePrintServiceState"/>
+			<output message="sm:UpdatePrintServiceStateResponseMsg" wsa:Action="http://schemas.microsoft.com/windows/2012/9/wdp/print/UpdatePrintServiceStateResponse"/>
+		</operation>
+	</portType>
+	<binding name="PwgPrintBinding" type="sm:PwgPrintPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="ActivatePrintService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ActivatePrintService"/>
+			<input>
+				<soap:header message="sm:ActivatePrintServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ActivatePrintServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ActivatePrintServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ActivatePrintServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ActivatePrintServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ActivatePrintServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ActivatePrintServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ActivatePrintServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ActivatePrintServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="CancelCurrentPrintJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelCurrentPrintJob"/>
+			<input>
+				<soap:header message="sm:CancelCurrentPrintJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelCurrentPrintJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelCurrentPrintJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelCurrentPrintJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CancelCurrentPrintJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelCurrentPrintJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CancelCurrentPrintJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelCurrentPrintJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelCurrentPrintJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="CancelPrintDocument">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelPrintDocument"/>
+			<input>
+				<soap:header message="sm:CancelPrintDocumentRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelPrintDocumentRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelPrintDocumentRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelPrintDocumentRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CancelPrintDocumentResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelPrintDocumentResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CancelPrintDocumentResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelPrintDocumentResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelPrintDocumentResponseMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="CancelPrintJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelPrintJob"/>
+			<input>
+				<soap:header message="sm:CancelPrintJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelPrintJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelPrintJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelPrintJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CancelPrintJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelPrintJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CancelPrintJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelPrintJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelPrintJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="CancelPrintJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelPrintJobs"/>
+			<input>
+				<soap:header message="sm:CancelPrintJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelPrintJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelPrintJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelPrintJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CancelPrintJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelPrintJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CancelPrintJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelPrintJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelPrintJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="CancelMyPrintJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelMyPrintJobs"/>
+			<input>
+				<soap:header message="sm:CancelMyPrintJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelMyPrintJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelMyPrintJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelMyPrintJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CancelMyPrintJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelMyPrintJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CancelMyPrintJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelMyPrintJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelMyPrintJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ClosePrintJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ClosePrintJob"/>
+			<input>
+				<soap:header message="sm:ClosePrintJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ClosePrintJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ClosePrintJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ClosePrintJobRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ClosePrintJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ClosePrintJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ClosePrintJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ClosePrintJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ClosePrintJobResponseMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="CreatePrintJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CreatePrintJob"/>
+			<input>
+				<soap:header message="sm:CreatePrintJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CreatePrintJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CreatePrintJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CreatePrintJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CreatePrintJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CreatePrintJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CreatePrintJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CreatePrintJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CreatePrintJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="DeactivatePrintService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/DeactivatePrintService"/>
+			<input>
+				<soap:header message="sm:DeactivatePrintServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:DeactivatePrintServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:DeactivatePrintServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:DeactivatePrintServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:DeactivatePrintServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:DeactivatePrintServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:DeactivatePrintServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:DeactivatePrintServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:DeactivatePrintServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="DisablePrintService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/DisablePrintService"/>
+			<input>
+				<soap:header message="sm:DisablePrintServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:DisablePrintServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:DisablePrintServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:DisablePrintServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:DisablePrintServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:DisablePrintServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:DisablePrintServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:DisablePrintServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:DisablePrintServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="EnablePrintService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/EnablePrintService"/>
+			<input>
+				<soap:header message="sm:EnablePrintServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:EnablePrintServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:EnablePrintServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:EnablePrintServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:EnablePrintServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:EnablePrintServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:EnablePrintServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:EnablePrintServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:EnablePrintServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetPrintJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetPrintJobs"/>
+			<input>
+				<soap:header message="sm:GetPrintJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetPrintJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetPrintJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetPrintJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetPrintJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetPrintJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetPrintJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetPrintJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetPrintJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetActivePrintJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetActiveJobs"/>
+			<input>
+				<soap:header message="sm:GetActivePrintJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetActivePrintJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetActivePrintJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetActivePrintJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetActivePrintJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetActivePrintJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetActivePrintJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetActivePrintJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetActivePrintJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetPrintJobHistory">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetJobHistory"/>
+			<input>
+				<soap:header message="sm:GetPrintJobHistoryRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetPrintJobHistoryRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetPrintJobHistoryRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetPrintJobHistoryRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetPrintJobHistoryResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetPrintJobHistoryResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetPrintJobHistoryResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetPrintJobHistoryResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetPrintJobHistoryResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetPrintDocumentElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetPrintDocumentElements"/>
+			<input>
+				<soap:header message="sm:GetPrintDocumentElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetPrintDocumentElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetPrintDocumentElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetPrintDocumentElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetPrintDocumentElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetPrintDocumentElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetPrintDocumentElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetPrintDocumentElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetPrintDocumentElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetPrintDocuments">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetDocuments"/>
+			<input>
+				<soap:header message="sm:GetPrintDocumentsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetPrintDocumentsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetPrintDocumentsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetPrintDocumentsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetPrintDocumentsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetPrintDocumentsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetPrintDocumentsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetPrintDocumentsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetPrintDocumentsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetPrintJobElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetPrintJobElements"/>
+			<input>
+				<soap:header message="sm:GetPrintJobElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetPrintJobElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetPrintJobElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetPrintJobElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetPrintJobElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetPrintJobElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetPrintJobElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetPrintJobElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetPrintJobElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetPrintServiceElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetPrintServiceElements"/>
+			<input>
+				<soap:header message="sm:GetPrintServiceElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetPrintServiceElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetPrintServiceElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetPrintServiceElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetPrintServiceElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetPrintServiceElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetPrintServiceElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetPrintServiceElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetPrintServiceElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="HoldNewPrintJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/HoldNewPrintJobs"/>
+			<input>
+				<soap:header message="sm:HoldNewPrintJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:HoldNewPrintJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:HoldNewPrintJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:HoldNewPrintJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:HoldNewPrintJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:HoldNewPrintJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:HoldNewPrintJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:HoldNewPrintJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:HoldNewPrintJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="HoldPrintJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/HoldPrintJob"/>
+			<input>
+				<soap:header message="sm:HoldPrintJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:HoldPrintJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:HoldPrintJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:HoldPrintJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:HoldPrintJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:HoldPrintJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:HoldPrintJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:HoldPrintJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:HoldPrintJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="IdentifyPrinter">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/IdentifyPrinter"/>
+			<input>
+				<soap:header message="sm:IdentifyPrinterRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:IdentifyPrinterRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:IdentifyPrinterRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:IdentifyPrinterRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:IdentifyPrinterResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:IdentifyPrinterResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:IdentifyPrinterResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:IdentifyPrinterResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:IdentifyPrinterResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="PausePrintService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/PausePrintService"/>
+			<input>
+				<soap:header message="sm:PausePrintServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PausePrintServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:PausePrintServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:PausePrintServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:PausePrintServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PausePrintServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:PausePrintServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:PausePrintServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:PausePrintServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="PausePrintServiceAfterCurrentJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/PausePrintServiceAfterCurrentJob"/>
+			<input>
+				<soap:header message="sm:PausePrintServiceAfterCurrentJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PausePrintServiceAfterCurrentJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:PausePrintServiceAfterCurrentJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:PausePrintServiceAfterCurrentJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:PausePrintServiceAfterCurrentJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PausePrintServiceAfterCurrentJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:PausePrintServiceAfterCurrentJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:PausePrintServiceAfterCurrentJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:PausePrintServiceAfterCurrentJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="PrintJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/PrintJob"/>
+			<input>
+				<soap:header message="sm:PrintJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PrintJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:PrintJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:PrintJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:PrintJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PrintJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:PrintJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:PrintJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:PrintJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="PrintUri">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/PrintUri"/>
+			<input>
+				<soap:header message="sm:PrintUriRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PrintUriRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:PrintUriRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:PrintUriRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:PrintUriResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PrintUriResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:PrintUriResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:PrintUriResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:PrintUriResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="PromotePrintJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/PromotePrintJob"/>
+			<input>
+				<soap:header message="sm:PromotePrintJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PromotePrintJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:PromotePrintJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:PromotePrintJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:PromotePrintJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PromotePrintJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:PromotePrintJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:PromotePrintJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:PromotePrintJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="PurgePrintJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/PurgePrintJob"/>
+			<input>
+				<soap:header message="sm:PurgePrintJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PurgePrintJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:PurgePrintJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:PurgePrintJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:PurgePrintJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PurgePrintJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:PurgePrintJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:PurgePrintJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:PurgePrintJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ReleaseNewPrintJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ReleaseNewPrintJobs"/>
+			<input>
+				<soap:header message="sm:ReleaseNewPrintJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ReleaseNewPrintJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ReleaseNewPrintJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ReleaseNewPrintJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ReleaseNewPrintJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ReleaseNewPrintJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ReleaseNewPrintJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ReleaseNewPrintJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ReleaseNewPrintJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ReleasePrintJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ReleasePrintJob"/>
+			<input>
+				<soap:header message="sm:ReleasePrintJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ReleasePrintJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ReleasePrintJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ReleasePrintJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ReleasePrintJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ReleasePrintJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ReleasePrintJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ReleasePrintJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ReleasePrintJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ReprocessPrintJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ReprocessPrintJob"/>
+			<input>
+				<soap:header message="sm:ReprocessPrintJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ReprocessPrintJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ReprocessPrintJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ReprocessPrintJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ReprocessPrintJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ReprocessPrintJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ReprocessPrintJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ReprocessPrintJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ReprocessPrintJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="RestartPrintJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/RestartPrintJob"/>
+			<input>
+				<soap:header message="sm:RestartPrintJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RestartPrintJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:RestartPrintJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:RestartPrintJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:RestartPrintJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RestartPrintJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:RestartPrintJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:RestartPrintJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:RestartPrintJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="RestartPrintService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/RestartPrintService"/>
+			<input>
+				<soap:header message="sm:RestartPrintServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RestartPrintServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:RestartPrintServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:RestartPrintServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:RestartPrintServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RestartPrintServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:RestartPrintServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:RestartPrintServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:RestartPrintServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ResubmitPrintJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ResubmitPrintJob"/>
+			<input>
+				<soap:header message="sm:ResubmitPrintJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResubmitPrintJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResubmitPrintJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResubmitPrintJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ResubmitPrintJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResubmitPrintJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ResubmitPrintJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResubmitPrintJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResubmitPrintJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ResumePrintJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ResumePrintJob"/>
+			<input>
+				<soap:header message="sm:ResumePrintJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResumePrintJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResumePrintJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResumePrintJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ResumePrintJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResumePrintJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ResumePrintJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResumePrintJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResumePrintJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ResumePrintService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ResumePrintService"/>
+			<input>
+				<soap:header message="sm:ResumePrintServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResumePrintServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResumePrintServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResumePrintServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ResumePrintServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResumePrintServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ResumePrintServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResumePrintServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResumePrintServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SendPrintDocument">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/SendPrintDocument"/>
+			<input>
+				<soap:header message="sm:SendPrintDocumentRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SendPrintDocumentRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SendPrintDocumentRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SendPrintDocumentRequestMsg" part="Action" use="literal"/>
+				<!-- Omitted for .NET compatibility - gSOAP doesn't actually use this anyway -->
+				<!--<mime:multipartRelated>
+					<mime:part>
+						<soap:body parts="body" use="literal"/>
+					</mime:part>
+					<mime:part>
+						<mime:content part="DocumentStream" type="application/octetstream"/>
+					</mime:part>
+				</mime:multipartRelated>-->
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SendPrintDocumentResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SendPrintDocumentResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SendPrintDocumentResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SendPrintDocumentResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SendPrintDocumentResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SendPrintUri">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/SendPrintUri"/>
+			<input>
+				<soap:header message="sm:SendPrintUriRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SendPrintUriRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SendPrintUriRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SendPrintUriRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SendPrintUriResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SendPrintUriResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SendPrintUriResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SendPrintUriResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SendPrintUriResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SetPrintDocumentElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/SetPrintDocumentElements"/>
+			<input>
+				<soap:header message="sm:SetPrintDocumentElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetPrintDocumentElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetPrintDocumentElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetPrintDocumentElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SetPrintDocumentElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetPrintDocumentElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SetPrintDocumentElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetPrintDocumentElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetPrintDocumentElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SetPrintJobElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/SetPrintJobElements"/>
+			<input>
+				<soap:header message="sm:SetPrintJobElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetPrintJobElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetPrintJobElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetPrintJobElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SetPrintJobElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetPrintJobElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SetPrintJobElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetPrintJobElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetPrintJobElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SetPrintServiceElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/SetPrintServiceElements"/>
+			<input>
+				<soap:header message="sm:SetPrintServiceElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetPrintServiceElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetPrintServiceElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetPrintServiceElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SetPrintServiceElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetPrintServiceElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SetPrintServiceElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetPrintServiceElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetPrintServiceElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ShutdownPrintService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ShutdownPrintService"/>
+			<input>
+				<soap:header message="sm:ShutdownPrintServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ShutdownPrintServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ShutdownPrintServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ShutdownPrintServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ShutdownPrintServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ShutdownPrintServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ShutdownPrintServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ShutdownPrintServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ShutdownPrintServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SuspendCurrentPrintJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/SuspendCurrentPrintJob"/>
+			<input>
+				<soap:header message="sm:SuspendCurrentPrintJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SuspendCurrentPrintJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SuspendCurrentPrintJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SuspendCurrentPrintJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SuspendCurrentPrintJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SuspendCurrentPrintJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SuspendCurrentPrintJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SuspendCurrentPrintJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SuspendCurrentPrintJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ValidatePrintDocumentTicket">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ValidatePrintDocumentTicket"/>
+			<input>
+				<soap:header message="sm:ValidatePrintDocumentTicketRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ValidatePrintDocumentTicketRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ValidatePrintDocumentTicketRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ValidatePrintDocumentTicketRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ValidatePrintDocumentTicketResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ValidatePrintDocumentTicketResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ValidatePrintDocumentTicketResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ValidatePrintDocumentTicketResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ValidatePrintDocumentTicketResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ValidatePrintJobTicket">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ValidatePrintJobTicket"/>
+			<input>
+				<soap:header message="sm:ValidatePrintJobTicketRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ValidatePrintJobTicketRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ValidatePrintJobTicketRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ValidatePrintJobTicketRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ValidatePrintJobTicketResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ValidatePrintJobTicketResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ValidatePrintJobTicketResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ValidatePrintJobTicketResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ValidatePrintJobTicketResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<binding name="PWG-CloudPrintServiceBinding" type="sm:PWG-CloudPrintPortType">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="AcknowledgePrintDocument">
+			<soap:operation soapAction="http://xml.namespaces.xerox.com/enterprise/wdp/DistributedQueueSpooler/1/AcknowledgePrintDocument" soapActionRequired=""/>
+			<input>
+				<soap:body parts="body" use="literal"/>
+				<soap:header message="sm:AcknowledgePrintDocumentRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:AcknowledgePrintDocumentRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:AcknowledgePrintDocumentRequestMsg" part="Action" use="literal"/>
+				<soap:header message="sm:AcknowledgePrintDocumentRequestMsg" part="MessageID" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:AcknowledgePrintDocumentResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:AcknowledgePrintDocumentResponseMsg" part="Action" use="literal"/>
+				<soap:header message="sm:AcknowledgePrintDocumentResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:AcknowledgePrintDocumentResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="AcknowledgePrintJob">
+			<soap:operation soapAction="http://xml.namespaces.xerox.com/enterprise/wdp/DistributedQueueSpooler/1/AcknowledgePrintJob" soapActionRequired=""/>
+			<input>
+				<soap:body parts="body" use="literal"/>
+				<soap:header message="sm:AcknowledgePrintJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:AcknowledgePrintJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:AcknowledgePrintJobRequestMsg" part="Action" use="literal"/>
+				<soap:header message="sm:AcknowledgePrintJobRequestMsg" part="MessageID" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:AcknowledgePrintJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:AcknowledgePrintJobResponseMsg" part="Action" use="literal"/>
+				<soap:header message="sm:AcknowledgePrintJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:AcknowledgePrintJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="FetchPrintDocument">
+			<soap:operation soapAction="http://xml.namespaces.xerox.com/enterprise/wdp/DistributedQueueSpooler/1/FetchPrintDocument" soapActionRequired=""/>
+			<input>
+				<!-- Omitted for .NET compatibility - gsoap doesn't use this anyway -->
+				<!-- <mime:multipartRelated>
+					<mime:part> 
+						<soap:body parts="body" use="literal"/>
+					</mime:part> 
+					<mime:part>
+						<mime:content part="DocumentStream" type="application/octetstream"/>
+					</mime:part>
+				</mime:multipartRelated> -->
+				<soap:body parts="body" use="literal"/>
+				<soap:header message="sm:FetchPrintDocumentRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:FetchPrintDocumentRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:FetchPrintDocumentRequestMsg" part="Action" use="literal"/>
+				<soap:header message="sm:FetchPrintDocumentRequestMsg" part="MessageID" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:FetchPrintDocumentResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:FetchPrintDocumentResponseMsg" part="Action" use="literal"/>
+				<soap:header message="sm:FetchPrintDocumentResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:FetchPrintDocumentResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="FetchPrintJob">
+			<soap:operation soapAction="http://xml.namespaces.xerox.com/enterprise/wdp/DistributedQueueSpooler/1/FetchPrintJob" soapActionRequired=""/>
+			<input>
+				<soap:header message="sm:FetchPrintJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:FetchPrintJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:FetchPrintJobRequestMsg" part="Action" use="literal"/>
+				<soap:header message="sm:FetchPrintJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:FetchPrintJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:FetchPrintJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:FetchPrintJobResponseMsg" part="Action" use="literal"/>
+				<soap:header message="sm:FetchPrintJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:FetchPrintJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetFetchablePrintJobs">
+			<soap:operation soapAction="http://xml.namespaces.xerox.com/enterprise/wdp/DistributedQueueSpooler/1/GetFetchablePrintJobs" soapActionRequired=""/>
+			<input>
+				<soap:header message="sm:GetFetchablePrintJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetFetchablePrintJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetFetchablePrintJobsRequestMsg" part="Action" use="literal"/>
+				<soap:header message="sm:GetFetchablePrintJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetFetchablePrintJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetFetchablePrintJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetFetchablePrintJobsResponseMsg" part="Action" use="literal"/>
+				<soap:header message="sm:GetFetchablePrintJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetFetchablePrintJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="UpdateFetchablePrintJobs">
+			<soap:operation soapAction="http://xml.namespaces.xerox.com/enterprise/wdp/DistributedQueueSpooler/1/UpdateFetchablePrintJobs" soapActionRequired=""/>
+			<input>
+				<soap:body parts="body" use="literal"/>
+				<soap:header message="sm:UpdateFetchablePrintJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:UpdateFetchablePrintJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:UpdateFetchablePrintJobsRequestMsg" part="Action" use="literal"/>
+				<soap:header message="sm:UpdateFetchablePrintJobsRequestMsg" part="MessageID" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:UpdateFetchablePrintJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:UpdateFetchablePrintJobsResponseMsg" part="Action" use="literal"/>
+				<soap:header message="sm:UpdateFetchablePrintJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:UpdateFetchablePrintJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="UpdatePrintDocumentState">
+			<soap:operation soapAction="http://xml.namespaces.xerox.com/enterprise/wdp/DistributedQueueSpooler/1/UpdatePrintDocumentState" soapActionRequired=""/>
+			<input>
+				<soap:body parts="body" use="literal"/>
+				<soap:header message="sm:UpdatePrintDocumentStateRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:UpdatePrintDocumentStateRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:UpdatePrintDocumentStateRequestMsg" part="Action" use="literal"/>
+				<soap:header message="sm:UpdatePrintDocumentStateRequestMsg" part="MessageID" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:UpdatePrintDocumentStateResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:UpdatePrintDocumentStateResponseMsg" part="Action" use="literal"/>
+				<soap:header message="sm:UpdatePrintDocumentStateResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:UpdatePrintDocumentStateResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="UpdatePrintJobState">
+			<soap:operation soapAction="http://xml.namespaces.xerox.com/enterprise/wdp/DistributedQueueSpooler/1/UpdatePrintJobState" soapActionRequired=""/>
+			<input>
+				<soap:body parts="body" use="literal"/>
+				<soap:header message="sm:UpdatePrintJobStateRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:UpdatePrintJobStateRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:UpdatePrintJobStateRequestMsg" part="Action" use="literal"/>
+				<soap:header message="sm:UpdatePrintJobStateRequestMsg" part="MessageID" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:UpdatePrintJobStateResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:UpdatePrintJobStateResponseMsg" part="Action" use="literal"/>
+				<soap:header message="sm:UpdatePrintJobStateResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:UpdatePrintJobStateResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="UpdatePrintServiceState">
+			<soap:operation soapAction="http://xml.namespaces.xerox.com/enterprise/wdp/DistributedQueueSpooler/1/UpdatePrintServiceState" soapActionRequired=""/>
+			<input>
+				<soap:body parts="body" use="literal"/>
+				<soap:header message="sm:UpdatePrintServiceStateRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:UpdatePrintServiceStateRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:UpdatePrintServiceStateRequestMsg" part="Action" use="literal"/>
+				<soap:header message="sm:UpdatePrintServiceStateRequestMsg" part="MessageID" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:UpdatePrintServiceStateResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:UpdatePrintServiceStateResponseMsg" part="Action" use="literal"/>
+				<soap:header message="sm:UpdatePrintServiceStateResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:UpdatePrintServiceStateResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="PwgPrintService">
+		<port name="PwgPrintPort" binding="sm:PwgPrintBinding">
+			<soap:address location="http://localhost:53100/PwgPrintService"/>
+		</port>
+		<port name="PWG-CloudPrintServicePort" binding="sm:PWG-CloudPrintServiceBinding">
+			<soap:address location="http://localhost:53631/WorkgroupDistributedPrintService/"/>
+		</port>
+	</service>
+</definitions>

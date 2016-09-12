@@ -1,0 +1,1056 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   PWG Semantic Model v2   
+
+Copyright 2002-2009, IEEE Industry Standards and Technology Organization/CopyService Working Group. 
+All rights reserved  
+
+Editors:  Peter Zehler, Ira McDonald 
+-->
+<!--05/02/11 PJZ Removed Startup operation-->
+<!--02/05/10 PJZ Fixed operation names-->
+<!--01/19/10 PJZ Made all service interfaces homogenous (as much as possible)-->
+<!--12/09/09 PJZ Added SuspendCurrent/Resume Copy Job-->
+<!--11/23/09 PJZ Changed ValidateCopyJob to ValidateCopyJobTicket-->
+<!--10/23/09 PJZ Updates per October face to face-->
+<!--04/14/09 PJZ Updated Namespace-->
+<!--02/20/09 PJZ Reordered body in request messages for WSI compliance-->
+<!--02/16/09 PJZ Removed invalid attributes from definitions-->
+<!--05/30/08 PJZ Move back to single namespace-->
+<!--05/21/08 PJZ Partial alignment with WS-Copy-->
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:sm="http://www.pwg.org/schemas/2016/01/sm" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" targetNamespace="http://www.pwg.org/schemas/2016/01/sm">
+	<types>
+		<xs:schema xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" elementFormDefault="qualified" targetNamespace="http://schemas.xmlsoap.org/ws/2004/08/addressing">
+			<xs:include schemaLocation="addressing.xsd"/>
+		</xs:schema>
+		<xs:schema xmlns:sm="http://www.pwg.org/schemas/2016/01/sm" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905" targetNamespace="http://www.pwg.org/schemas/2016/01/sm">
+			<xs:include schemaLocation="PwgCopyOpMsg.xsd"/>
+			<xs:include schemaLocation="PwgCommonOpMsg.xsd"/>
+			<xs:import namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing" schemaLocation="addressing.xsd"/>
+			<xs:include schemaLocation="PwgSemanticModel.xsd"/>
+			<xs:include schemaLocation="PwgCommon.xsd"/>
+			<xs:include schemaLocation="ServiceTypes.xsd"/>
+			<xs:include schemaLocation="JobTypes.xsd"/>
+			<xs:include schemaLocation="DocumentTypes.xsd"/>
+			<xs:element name="BinaryData" type="xs:base64Binary"/>
+			<xs:element name="RequestedElement" type="xs:QName"/>
+		</xs:schema>
+	</types>
+	<message name="CancelCopyJobRequestMsg">
+		<part name="body" element="sm:CancelCopyJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CancelCopyJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CancelCopyJobResponse"/>
+	</message>
+	<message name="CancelCurrentCopyJobRequestMsg">
+		<message name="CancelCopyJobResponseMsg">
+			<part name="MessageID" element="wsa:MessageID"/>
+			<part name="RelatesTo" element="wsa:RelatesTo"/>
+			<part name="To" element="wsa:To"/>
+			<part name="From" element="wsa:From"/>
+			<part name="Action" element="wsa:Action"/>
+			<part name="body" element="sm:CancelCopyJobResponse"/>
+		</message>
+		<part name="body" element="sm:CancelCurrentCopyJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CancelCurrentCopyJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CancelCurrentCopyJobResponse"/>
+	</message>
+	<message name="CancelMyCopyJobsRequestMsg">
+		<part name="body" element="sm:CancelMyCopyJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CancelMyCopyJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CancelMyCopyJobsResponse"/>
+	</message>
+	<message name="CancelCopyJobsRequestMsg">
+		<part name="body" element="sm:CancelCopyJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CancelCopyJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CancelCopyJobsResponse"/>
+	</message>
+	<message name="CreateCopyJobRequestMsg">
+		<part name="body" element="sm:CreateCopyJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CreateCopyJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CreateCopyJobResponse"/>
+	</message>
+	<message name="DisableCopyServiceRequestMsg">
+		<part name="body" element="sm:DisableCopyServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="DisableCopyServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:DisableCopyServiceResponse"/>
+	</message>
+	<message name="EnableCopyServiceRequestMsg">
+		<part name="body" element="sm:EnableCopyServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="EnableCopyServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:EnableCopyServiceResponse"/>
+	</message>
+	<message name="GetActiveCopyJobsRequestMsg">
+		<part name="body" element="sm:GetActiveCopyJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetActiveCopyJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetActiveCopyJobsResponse"/>
+	</message>
+	<message name="GetCopyJobElementsRequestMsg">
+		<part name="body" element="sm:GetCopyJobElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetCopyJobElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetCopyJobElementsResponse"/>
+	</message>
+	<message name="GetCopyJobHistoryRequestMsg">
+		<part name="body" element="sm:GetCopyJobHistoryRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetCopyJobHistoryResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetCopyJobHistoryResponse"/>
+	</message>
+	<message name="GetCopyServiceElementsRequestMsg">
+		<part name="body" element="sm:GetCopyServiceElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetCopyServiceElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetCopyServiceElementsResponse"/>
+	</message>
+	<message name="HoldCopyJobRequestMsg">
+		<part name="body" element="sm:HoldCopyJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="HoldCopyJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:HoldCopyJobResponse"/>
+	</message>
+	<message name="HoldNewCopyJobsRequestMsg">
+		<part name="body" element="sm:HoldNewCopyJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="HoldNewCopyJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:HoldNewCopyJobsResponse"/>
+	</message>
+	<message name="PauseCopyServiceAfterCurrentJobRequestMsg">
+		<part name="body" element="sm:PauseCopyServiceAfterCurrentJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="PauseCopyServiceAfterCurrentJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:PauseCopyServiceAfterCurrentJobResponse"/>
+	</message>
+	<message name="PauseCopyServiceRequestMsg">
+		<part name="body" element="sm:PauseCopyServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="PauseCopyServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:PauseCopyServiceResponse"/>
+	</message>
+	<message name="PromoteCopyJobRequestMsg">
+		<part name="body" element="sm:PromoteCopyJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="PromoteCopyJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:PromoteCopyJobResponse"/>
+	</message>
+	<message name="ReleaseCopyJobRequestMsg">
+		<part name="body" element="sm:ReleaseCopyJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ReleaseCopyJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ReleaseCopyJobResponse"/>
+	</message>
+	<message name="ReleaseNewCopyJobsRequestMsg">
+		<part name="body" element="sm:ReleaseNewCopyJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ReleaseNewCopyJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ReleaseNewCopyJobsResponse"/>
+	</message>
+	<message name="ResubmitCopyJobRequestMsg">
+		<part name="body" element="sm:ResubmitCopyJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ResubmitCopyJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ResubmitCopyJobResponse"/>
+	</message>
+	<message name="RestartCopyServiceRequestMsg">
+		<part name="body" element="sm:RestartCopyServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="RestartCopyServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:RestartCopyServiceResponse"/>
+	</message>
+	<message name="ResumeCopyJobRequestMsg">
+		<part name="body" element="sm:ResumeCopyJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ResumeCopyJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ResumeCopyJobResponse"/>
+	</message>
+	<message name="ResumeCopyServiceRequestMsg">
+		<part name="body" element="sm:ResumeCopyServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ResumeCopyServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ResumeCopyServiceResponse"/>
+	</message>
+	<message name="SetCopyJobElementsRequestMsg">
+		<part name="body" element="sm:SetCopyJobElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SetCopyJobElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SetCopyJobElementsResponse"/>
+	</message>
+	<message name="SetCopyServiceElementsRequestMsg">
+		<part name="body" element="sm:SetCopyServiceElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SetCopyServiceElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SetCopyServiceElementsResponse"/>
+	</message>
+	<message name="ShutdownCopyServiceRequestMsg">
+		<part name="body" element="sm:ShutdownCopyServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ShutdownCopyServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ShutdownCopyServiceResponse"/>
+	</message>
+	<message name="SuspendCurrentCopyJobRequestMsg">
+		<part name="body" element="sm:SuspendCurrentCopyJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SuspendCurrentCopyJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SuspendCurrentCopyJobResponse"/>
+	</message>
+	<message name="ValidateCopyJobTicketRequestMsg">
+		<part name="body" element="sm:ValidateCopyJobTicketRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ValidateCopyJobTicketResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ValidateCopyJobTicketResponse"/>
+	</message>
+	<portType name="PwgCopyPort">
+		<operation name="CancelCopyJob">
+			<input message="sm:CancelCopyJobRequestMsg"/>
+			<output message="sm:CancelCopyJobResponseMsg"/>
+		</operation>
+		<operation name="CancelCopyJobs">
+			<input message="sm:CancelCopyJobsRequestMsg"/>
+			<output message="sm:CancelCopyJobsResponseMsg"/>
+		</operation>
+		<operation name="CancelCurrentCopyJob">
+			<input message="sm:CancelCurrentCopyJobRequestMsg"/>
+			<output message="sm:CancelCurrentCopyJobResponseMsg"/>
+		</operation>
+		<operation name="CancelMyCopyJobs">
+			<input message="sm:CancelMyCopyJobsRequestMsg"/>
+			<output message="sm:CancelMyCopyJobsResponseMsg"/>
+		</operation>
+		<operation name="CreateCopyJob">
+			<input message="sm:CreateCopyJobRequestMsg"/>
+			<output message="sm:CreateCopyJobResponseMsg"/>
+		</operation>
+		<operation name="DisableCopyService">
+			<input message="sm:DisableCopyServiceRequestMsg"/>
+			<output message="sm:DisableCopyServiceResponseMsg"/>
+		</operation>
+		<operation name="EnableCopyService">
+			<input message="sm:EnableCopyServiceRequestMsg"/>
+			<output message="sm:EnableCopyServiceResponseMsg"/>
+		</operation>
+		<operation name="GetActiveCopyJobs">
+			<input message="sm:GetActiveCopyJobsRequestMsg"/>
+			<output message="sm:GetActiveCopyJobsResponseMsg"/>
+		</operation>
+		<operation name="GetCopyJobElements">
+			<input message="sm:GetCopyJobElementsRequestMsg"/>
+			<output message="sm:GetCopyJobElementsResponseMsg"/>
+		</operation>
+		<operation name="GetCopyJobHistory">
+			<input message="sm:GetCopyJobHistoryRequestMsg"/>
+			<output message="sm:GetCopyJobHistoryResponseMsg"/>
+		</operation>
+		<operation name="GetCopyServiceElements">
+			<input message="sm:GetCopyServiceElementsRequestMsg"/>
+			<output message="sm:GetCopyServiceElementsResponseMsg"/>
+		</operation>
+		<operation name="HoldCopyJob">
+			<input message="sm:HoldCopyJobRequestMsg"/>
+			<output message="sm:HoldCopyJobResponseMsg"/>
+		</operation>
+		<operation name="HoldNewCopyJobs">
+			<input message="sm:HoldNewCopyJobsRequestMsg"/>
+			<output message="sm:HoldNewCopyJobsResponseMsg"/>
+		</operation>
+		<operation name="PauseCopyService">
+			<input message="sm:PauseCopyServiceRequestMsg"/>
+			<output message="sm:PauseCopyServiceResponseMsg"/>
+		</operation>
+		<operation name="PauseCopyServiceAfterCurrentJob">
+			<input message="sm:PauseCopyServiceAfterCurrentJobRequestMsg"/>
+			<output message="sm:PauseCopyServiceAfterCurrentJobResponseMsg"/>
+		</operation>
+		<operation name="PromoteCopyJob">
+			<input message="sm:PromoteCopyJobRequestMsg"/>
+			<output message="sm:PromoteCopyJobResponseMsg"/>
+		</operation>
+		<operation name="ReleaseCopyJob">
+			<input message="sm:ReleaseCopyJobRequestMsg"/>
+			<output message="sm:ReleaseCopyJobResponseMsg"/>
+		</operation>
+		<operation name="ReleaseNewCopyJobs">
+			<input message="sm:ReleaseNewCopyJobsRequestMsg"/>
+			<output message="sm:ReleaseNewCopyJobsResponseMsg"/>
+		</operation>
+		<operation name="RestartCopyService">
+			<input message="sm:RestartCopyServiceRequestMsg"/>
+			<output message="sm:RestartCopyServiceResponseMsg"/>
+		</operation>
+		<operation name="ResubmitCopyJob">
+			<input message="sm:ResubmitCopyJobRequestMsg"/>
+			<output message="sm:ResubmitCopyJobResponseMsg"/>
+		</operation>
+		<operation name="ResumeCopyJob">
+			<input message="sm:ResumeCopyJobRequestMsg"/>
+			<output message="sm:ResumeCopyJobResponseMsg"/>
+		</operation>
+		<operation name="ResumeCopyService">
+			<input message="sm:ResumeCopyServiceRequestMsg"/>
+			<output message="sm:ResumeCopyServiceResponseMsg"/>
+		</operation>
+		<operation name="SetCopyJobElements">
+			<input message="sm:SetCopyJobElementsRequestMsg"/>
+			<output message="sm:SetCopyJobElementsResponseMsg"/>
+		</operation>
+		<operation name="SetCopyServiceElements">
+			<input message="sm:SetCopyServiceElementsRequestMsg"/>
+			<output message="sm:SetCopyServiceElementsResponseMsg"/>
+		</operation>
+		<operation name="ShutdownCopyService">
+			<input message="sm:ShutdownCopyServiceRequestMsg"/>
+			<output message="sm:ShutdownCopyServiceResponseMsg"/>
+		</operation>
+		<operation name="SuspendCurrentCopyJob">
+			<input message="sm:SuspendCurrentCopyJobRequestMsg"/>
+			<output message="sm:SuspendCurrentCopyJobResponseMsg"/>
+		</operation>
+		<operation name="ValidateCopyJobTicket">
+			<input message="sm:ValidateCopyJobTicketRequestMsg"/>
+			<output message="sm:ValidateCopyJobTicketResponseMsg"/>
+		</operation>
+	</portType>
+	<binding name="PwgCopyBinding" type="sm:PwgCopyPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="CancelCopyJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelJob"/>
+			<input>
+				<soap:header message="sm:CancelCopyJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelCopyJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelCopyJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelCopyJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CancelCopyJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelCopyJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CancelCopyJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelCopyJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelCopyJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="CancelCopyJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelCopyJobs"/>
+			<input>
+				<soap:header message="sm:CancelCopyJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelCopyJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelCopyJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelCopyJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CancelCopyJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelCopyJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CancelCopyJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelCopyJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelCopyJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="CancelCurrentCopyJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelCurrentCopyJob"/>
+			<input>
+				<soap:header message="sm:CancelCurrentCopyJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelCurrentCopyJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelCurrentCopyJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelCurrentCopyJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CancelCurrentCopyJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelCurrentCopyJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CancelCurrentCopyJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelCurrentCopyJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelCurrentCopyJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="CancelMyCopyJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelMyCopyJobs"/>
+			<input>
+				<soap:header message="sm:CancelMyCopyJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelMyCopyJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelMyCopyJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelMyCopyJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CancelMyCopyJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelMyCopyJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CancelMyCopyJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelMyCopyJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelMyCopyJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="DisableCopyService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/DisableCopyService"/>
+			<input>
+				<soap:header message="sm:DisableCopyServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:DisableCopyServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:DisableCopyServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:DisableCopyServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:DisableCopyServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:DisableCopyServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:DisableCopyServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:DisableCopyServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:DisableCopyServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="EnableCopyService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/EnableCopyService"/>
+			<input>
+				<soap:header message="sm:EnableCopyServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:EnableCopyServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:EnableCopyServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:EnableCopyServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:EnableCopyServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:EnableCopyServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:EnableCopyServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:EnableCopyServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:EnableCopyServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="CreateCopyJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CreateCopyJob"/>
+			<input>
+				<soap:header message="sm:CreateCopyJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CreateCopyJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CreateCopyJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CreateCopyJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CreateCopyJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CreateCopyJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CreateCopyJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CreateCopyJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CreateCopyJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetActiveCopyJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetActiveJobs"/>
+			<input>
+				<soap:header message="sm:GetActiveCopyJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetActiveCopyJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetActiveCopyJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetActiveCopyJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetActiveCopyJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetActiveCopyJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetActiveCopyJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetActiveCopyJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetActiveCopyJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetCopyJobElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetJobElements"/>
+			<input>
+				<soap:header message="sm:GetCopyJobElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetCopyJobElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetCopyJobElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetCopyJobElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetCopyJobElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetCopyJobElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetCopyJobElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetCopyJobElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetCopyJobElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetCopyJobHistory">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetJobHistory"/>
+			<input>
+				<soap:header message="sm:GetCopyJobHistoryRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetCopyJobHistoryRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetCopyJobHistoryRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetCopyJobHistoryRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetCopyJobHistoryResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetCopyJobHistoryResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetCopyJobHistoryResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetCopyJobHistoryResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetCopyJobHistoryResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetCopyServiceElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetCopyServiceElements"/>
+			<input>
+				<soap:header message="sm:GetCopyServiceElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetCopyServiceElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetCopyServiceElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetCopyServiceElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetCopyServiceElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetCopyServiceElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetCopyServiceElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetCopyServiceElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetCopyServiceElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="HoldCopyJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/HoldJob"/>
+			<input>
+				<soap:header message="sm:HoldCopyJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:HoldCopyJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:HoldCopyJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:HoldCopyJobRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:HoldCopyJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:HoldCopyJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:HoldCopyJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:HoldCopyJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:HoldCopyJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="HoldNewCopyJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/HoldNewCopyJobs"/>
+			<input>
+				<soap:header message="sm:HoldNewCopyJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:HoldNewCopyJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:HoldNewCopyJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:HoldNewCopyJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:HoldNewCopyJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:HoldNewCopyJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:HoldNewCopyJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:HoldNewCopyJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:HoldNewCopyJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="PauseCopyService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/PauseCopyService"/>
+			<input>
+				<soap:header message="sm:PauseCopyServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PauseCopyServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:PauseCopyServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:PauseCopyServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:PauseCopyServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PauseCopyServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:PauseCopyServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:PauseCopyServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:PauseCopyServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="PauseCopyServiceAfterCurrentJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/PauseCopyServiceAfterCurrentJob"/>
+			<input>
+				<soap:header message="sm:PauseCopyServiceAfterCurrentJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PauseCopyServiceAfterCurrentJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:PauseCopyServiceAfterCurrentJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:PauseCopyServiceAfterCurrentJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:PauseCopyServiceAfterCurrentJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PauseCopyServiceAfterCurrentJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:PauseCopyServiceAfterCurrentJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:PauseCopyServiceAfterCurrentJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:PauseCopyServiceAfterCurrentJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="PromoteCopyJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/PromoteCopyJob"/>
+			<input>
+				<soap:header message="sm:PromoteCopyJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PromoteCopyJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:PromoteCopyJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:PromoteCopyJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:PromoteCopyJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PromoteCopyJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:PromoteCopyJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:PromoteCopyJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:PromoteCopyJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ReleaseCopyJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ReleaseJob"/>
+			<input>
+				<soap:header message="sm:ReleaseCopyJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ReleaseCopyJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ReleaseCopyJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ReleaseCopyJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ReleaseCopyJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ReleaseCopyJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ReleaseCopyJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ReleaseCopyJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ReleaseCopyJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ReleaseNewCopyJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ReleaseNewCopyJobs"/>
+			<input>
+				<soap:header message="sm:ReleaseNewCopyJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ReleaseNewCopyJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ReleaseNewCopyJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ReleaseNewCopyJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ReleaseNewCopyJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ReleaseNewCopyJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ReleaseNewCopyJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ReleaseNewCopyJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ReleaseNewCopyJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="RestartCopyService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/RestartCopyService"/>
+			<input>
+				<soap:header message="sm:RestartCopyServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RestartCopyServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:RestartCopyServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:RestartCopyServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:RestartCopyServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RestartCopyServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:RestartCopyServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:RestartCopyServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:RestartCopyServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ResubmitCopyJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ResubmitCopyJob"/>
+			<input>
+				<soap:header message="sm:ResubmitCopyJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResubmitCopyJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResubmitCopyJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResubmitCopyJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ResubmitCopyJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResubmitCopyJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ResubmitCopyJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResubmitCopyJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResubmitCopyJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ResumeCopyJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ResumeCopyJob"/>
+			<input>
+				<soap:header message="sm:ResumeCopyJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResumeCopyJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResumeCopyJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResumeCopyJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ResumeCopyJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResumeCopyJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ResumeCopyJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResumeCopyJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResumeCopyJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ResumeCopyService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ResumeCopyService"/>
+			<input>
+				<soap:header message="sm:ResumeCopyServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResumeCopyServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResumeCopyServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResumeCopyServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ResumeCopyServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResumeCopyServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ResumeCopyServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResumeCopyServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResumeCopyServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SetCopyJobElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/SetCopyJobElements"/>
+			<input>
+				<soap:header message="sm:SetCopyJobElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetCopyJobElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetCopyJobElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetCopyJobElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SetCopyJobElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetCopyJobElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SetCopyJobElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetCopyJobElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetCopyJobElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SetCopyServiceElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/SetCopyServiceElements"/>
+			<input>
+				<soap:header message="sm:SetCopyServiceElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetCopyServiceElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetCopyServiceElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetCopyServiceElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SetCopyServiceElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetCopyServiceElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SetCopyServiceElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetCopyServiceElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetCopyServiceElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ShutdownCopyService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ShutdownCopyService"/>
+			<input>
+				<soap:header message="sm:ShutdownCopyServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ShutdownCopyServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ShutdownCopyServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ShutdownCopyServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ShutdownCopyServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ShutdownCopyServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ShutdownCopyServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ShutdownCopyServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ShutdownCopyServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SuspendCurrentCopyJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/SuspendCurrentCopyJob"/>
+			<input>
+				<soap:header message="sm:SuspendCurrentCopyJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SuspendCurrentCopyJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SuspendCurrentCopyJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SuspendCurrentCopyJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SuspendCurrentCopyJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SuspendCurrentCopyJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SuspendCurrentCopyJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SuspendCurrentCopyJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SuspendCurrentCopyJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ValidateCopyJobTicket">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ValidateTicket"/>
+			<input>
+				<soap:header message="sm:ValidateCopyJobTicketRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ValidateCopyJobTicketRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ValidateCopyJobTicketRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ValidateCopyJobTicketRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ValidateCopyJobTicketResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ValidateCopyJobTicketResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ValidateCopyJobTicketResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ValidateCopyJobTicketResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ValidateCopyJobTicketResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="PwgCopyService">
+		<port name="PwgCopyPort" binding="sm:PwgCopyBinding">
+			<soap:address location="http://localhost:53101/PwgCopyService"/>
+		</port>
+	</service>
+</definitions>

@@ -1,0 +1,265 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<!--02/24/11 PJZ Added password operational elements-->
+	<!--01/10/12 PJZ Aligned with latest JPS3 and Raster specs-->
+	<!--07/19/11 PJZ Completed fixes for Set operation-->
+	<!--05/02/11 PJZ Removed Startup operation-->
+	<!--05/13/10 PJZ Removed extension point from operation signatures-->
+	<!--04/22/10 PJZ added "Message parameter and made all operations extensible-->
+	<!--01/19/10 PJZ Made all service interfaces homogenous (as much as possible)-->
+	<!--01/02/10 PJZ Gets/Sets now contain NaturalLanguage(declarative) and ElementsNaturalLanguageRequested(request) as appropriate-->
+	<!--12/09/09 PJZ Added SuspendCurrent/Resume Copy Job-->
+	<!--11/23/09 PJZ Changed ValidateCopyJob to ValidateCopyJobTicket-->
+	<!--10/23/09 PJZ Updates per October face to face-->
+	<!--04/22/09 PJZ Initial version-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2011, IEEE Industry Standards and Technology Organization/MFD Working Group. 
+All rights reserved  
+
+    - version 1.65 -16 January 2009 -Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<xs:include schemaLocation="PwgCommon.xsd"/>
+	<xs:include schemaLocation="Subunits.xsd"/>
+	<xs:include schemaLocation="PwgWellKnownValues.xsd"/>
+	<xs:include schemaLocation="CopyService.xsd"/>
+	<xs:include schemaLocation="PwgCommonOpMsg.xsd"/>
+	<xs:import namespace="http://www.w3.org/2004/08/xop/include" schemaLocation="include.xsd"/>
+	<xs:import namespace="http://www.w3.org/2005/05/xmlmime" schemaLocation="xmlmime.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">Complex types and elements specific to operations</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="CopyElementsType">
+		<xs:sequence>
+			<xs:element ref="CopyServiceCapabilities" minOccurs="0"/>
+			<xs:element ref="CopyServiceConfiguration" minOccurs="0"/>
+			<xs:element ref="CopyServiceDescription" minOccurs="0"/>
+			<xs:element ref="CopyServiceStatus" minOccurs="0"/>
+			<xs:element ref="DefaultCopyJobTicket" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="CopyJobSummaryType">
+		<xs:sequence>
+			<xs:element ref="ImpressionsCompleted"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="JobName"/>
+			<xs:element ref="JobOriginatingUserName"/>
+			<xs:element ref="JobState"/>
+			<xs:element ref="JobStateReasons" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ListOfCopyJobSummarysType">
+		<xs:sequence>
+			<xs:element name="JobSummary" type="CopyJobSummaryType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="CopyJobElementsType">
+		<xs:sequence>
+			<xs:element ref="CopyJobReceipt" minOccurs="0"/>
+			<xs:element ref="CopyJobStatus" minOccurs="0"/>
+			<xs:element ref="CopyJobTicket" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">Operation and Response messages</xs:documentation>
+	</xs:annotation>
+	<xs:element name="CancelCopyJobRequest" type="CancelJobRequestType"/>
+	<xs:element name="CancelCopyJobResponse" type="CancelJobResponseType"/>
+	<xs:element name="CancelCopyJobsRequest" type="CancelJobsRequestType"/>
+	<xs:element name="CancelCopyJobsResponse" type="CancelJobsResponseType"/>
+	<xs:element name="CancelCurrentCopyJobRequest" type="CancelCurrentJobRequestType"/>
+	<xs:element name="CancelCurrentCopyJobResponse" type="CancelCurrentJobResponseType"/>
+	<xs:element name="CancelMyCopyJobsRequest" type="CancelMyJobsRequestType"/>
+	<xs:element name="CancelMyCopyJobsResponse" type="CancelMyJobsResponseType"/>
+	<xs:complexType name="CreateCopyJobRequestType">
+		<xs:sequence>
+			<xs:element ref="CopyJobTicket" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobPasswordEncryption" minOccurs="0"/>
+			<xs:element ref="JobPassword" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CreateCopyJobRequest" type="CreateCopyJobRequestType"/>
+	<xs:complexType name="CreateCopyJobResponseType">
+		<xs:sequence>
+			<xs:element ref="JobId"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CreateCopyJobResponse" type="CreateCopyJobResponseType"/>
+	<xs:element name="DisableCopyServiceRequest" type="DisableServiceRequestType"/>
+	<xs:element name="DisableCopyServiceResponse" type="DisableServiceResponseType"/>
+	<xs:element name="EnableCopyServiceRequest" type="EnableServiceRequestType"/>
+	<xs:element name="EnableCopyServiceResponse" type="EnableServiceResponseType"/>
+	<xs:element name="GetActiveCopyJobsRequest" type="GetJobsRequestType"/>
+	<xs:complexType name="GetActiveCopyJobsResponseType">
+		<xs:sequence>
+			<xs:element name="ActiveJobs" type="ListOfCopyJobSummarysType"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetActiveCopyJobsResponse" type="GetActiveCopyJobsResponseType"/>
+	<xs:complexType name="GetCopyJobElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguageRequested" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="RequestedElements" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetCopyJobElementsRequest" type="GetCopyJobElementsRequestType"/>
+	<xs:complexType name="GetCopyJobElementsResponseType">
+		<xs:sequence>
+			<xs:element name="CopyJobElements" type="CopyJobElementsType" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetCopyJobElementsResponse" type="GetCopyJobElementsResponseType"/>
+	<xs:element name="GetCopyJobHistoryRequest" type="GetJobsRequestType"/>
+	<xs:complexType name="GetCopyJobHistoryResponseType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element name="JobHistory" type="ListOfCopyJobSummarysType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetCopyJobHistoryResponse" type="GetCopyJobHistoryResponseType"/>
+	<xs:complexType name="GetCopyServiceElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguageRequested" minOccurs="0"/>
+			<xs:element ref="RequestedElements" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetCopyServiceElementsRequest" type="GetCopyServiceElementsRequestType"/>
+	<xs:complexType name="GetCopyServiceElementsResponseType">
+		<xs:sequence>
+			<xs:element name="CopyServiceElements" type="CopyElementsType" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetCopyServiceElementsResponse" type="GetCopyServiceElementsResponseType"/>
+	<xs:element name="HoldCopyJobRequest" type="HoldJobRequestType"/>
+	<xs:element name="HoldCopyJobResponse" type="HoldJobResponseType"/>
+	<xs:element name="HoldNewCopyJobsRequest" type="HoldNewJobsRequestType"/>
+	<xs:element name="HoldNewCopyJobsResponse" type="HoldNewJobsResponseType"/>
+	<xs:element name="PauseCopyServiceAfterCurrentJobRequest" type="PauseServiceAfterCurrentJobRequestType"/>
+	<xs:element name="PauseCopyServiceAfterCurrentJobResponse" type="PauseServiceAfterCurrentJobResponseType"/>
+	<xs:element name="PauseCopyServiceRequest" type="PauseServiceRequestType"/>
+	<xs:element name="PauseCopyServiceResponse" type="PauseServiceResponseType"/>
+	<xs:element name="PromoteCopyJobRequest" type="PromoteJobRequestType"/>
+	<xs:element name="PromoteCopyJobResponse" type="PromoteJobResponseType"/>
+	<xs:element name="ReleaseCopyJobRequest" type="ReleaseJobRequestType"/>
+	<xs:element name="ReleaseCopyJobResponse" type="ReleaseJobResponseType"/>
+	<xs:element name="ReleaseNewCopyJobsRequest" type="ReleaseNewJobsRequestType"/>
+	<xs:element name="ReleaseNewCopyJobsResponse" type="ReleaseNewJobsResponseType"/>
+	<xs:element name="RestartCopyServiceRequest" type="RestartServiceRequestType"/>
+	<xs:element name="RestartCopyServiceResponse" type="RestartServiceResponseType"/>
+	<xs:complexType name="ResubmitCopyJobRequestType">
+		<xs:sequence>
+			<xs:element ref="CopyJobTicket" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ResubmitCopyJobRequest" type="ResubmitCopyJobRequestType"/>
+	<xs:complexType name="ResubmitCopyJobResponseType">
+		<xs:sequence>
+			<xs:element ref="JobId"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ResubmitCopyJobResponse" type="ResubmitCopyJobResponseType"/>
+	<xs:element name="ResumeCopyJobRequest" type="ResumeJobRequestType"/>
+	<xs:element name="ResumeCopyJobResponse" type="ResumeJobResponseType"/>
+	<xs:element name="ResumeCopyServiceRequest" type="ResumeServiceRequestType"/>
+	<xs:element name="ResumeCopyServiceResponse" type="ResumeServiceResponseType"/>
+	<xs:complexType name="SetCopyJobElementsRequestType">
+		<xs:sequence>
+			<xs:element name="CopyJobTicket" type="CopyJobTicketSetType"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="OperationMode" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetCopyJobElementsRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="SetCopyJobElementsRequestType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="SetCopyJobElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetCopyJobElementsResponse" type="SetCopyJobElementsResponseType"/>
+	<xs:complexType name="SetCopyServiceElementsRequestType">
+		<xs:sequence>
+			<xs:element name="CopyServiceElements">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="DefaultCopyJobTicket" type="CopyJobTicketSetType" minOccurs="0"/>
+						<xs:element name="CopyServiceCapabilities" type="CopyServiceCapabilitiesSetType" minOccurs="0"/>
+						<xs:element name="CopyServiceCapabilitiesReady" type="CopyServiceCapabilitiesSetType" minOccurs="0"/>
+						<xs:element name="CopyServiceDescription" type="CopyServiceDescriptionSetType" minOccurs="0"/>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="OperationMode" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetCopyServiceElementsRequest" type="SetCopyServiceElementsRequestType"/>
+	<xs:complexType name="SetCopyServiceElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetCopyServiceElementsResponse" type="SetCopyServiceElementsResponseType"/>
+	<xs:element name="ShutdownCopyServiceRequest" type="ShutdownServiceRequestType"/>
+	<xs:element name="ShutdownCopyServiceResponse" type="ShutdownServiceResponseType"/>
+	<xs:element name="SuspendCurrentCopyJobRequest" type="SuspendCurrentJobRequestType"/>
+	<xs:element name="SuspendCurrentCopyJobResponse" type="SuspendCurrentJobResponseType"/>
+	<xs:complexType name="ValidateCopyJobTicketRequestType">
+		<xs:sequence>
+			<xs:element ref="CopyJobTicket"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobPasswordEncryption" minOccurs="0"/>
+			<xs:element ref="JobPassword" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ValidateCopyJobTicketRequest" type="ValidateCopyJobTicketRequestType"/>
+	<xs:complexType name="ValidateCopyJobTicketResponseType">
+		<xs:sequence>
+			<xs:element ref="PreferredElements" minOccurs="0"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ValidateCopyJobTicketResponse" type="ValidateCopyJobTicketResponseType"/>
+</xs:schema>

@@ -1,0 +1,661 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="JobTypes.xsd"/>
+	<xs:include schemaLocation="DocumentTypes.xsd"/>
+	<xs:include schemaLocation="Conditions.xsd"/>
+	<xs:include schemaLocation="Counter.xsd"/>
+	<xs:include schemaLocation="Subunits.xsd"/>
+	<!--06/06/12 PJZ Final JPS3 update-->
+	<!--03/12/12 PJZ Aligned with  Raster Last Call-->
+	<!--01/10/12 PJZ Aligned with latest JPS3 and Raster specs-->
+	<!--01/02/12 PJZ Added abstract data class for service specific counters-->
+	<!--12/29/11 PJZ Added MoreInfoManufacturerUriand MoreInfoUri elements to base class, Added example elements for service specific elements-->
+	<!--09/20/11 PJZ Added ServiceCharge and Service org elements to base class-->
+	<!--09/20/11 PJZ Removed Agent Manager and Device-->
+	<!--09/12/11 PJZ Removed AvailableResources.xsd since ftp://ftp.pwg.org/pub/pwg/ipp/new_RES/draft-ietf-ipp-get-resource-00.pdf never progressed-->
+	<!--09/09/11 PJZ FixedServiceXriSupported name-->
+	<!--04/21/11 PJZ Fixed charset & natural language-->
+	<!--02/02/11 PJZ added some cloud elements to ServiceDescription-->
+	<!--02/01/11 PJZ Added some Service elements for Cloud-->
+	<!--12/06/10 PJZ Modified ImagingServiceStatus abstract base class to include elements common to all services but are still service specific-->
+	<!--10/25/10 PJZ Changed Subunits to SubunitsType (complex type name change)-->
+	<!--10/19/10 PJZ Changed URI to Uri-->
+	<!--10/6/10 PJZ Fixed order of capabilitiers and defaults-->
+	<!--10/05/10 PJZ Updated abstract service class-->
+	<!--08/19/10 PJZ Added missing base classes -->
+	<!--07/19/10 PJZ Added global ID (uuid) -->
+	<!--07/16/10 PJZ Added GeoLocation, system's UUID-->
+	<!--04/24/10 PJZ "MessageFromOperator" now in ServiceDescription base class-->
+	<!--10/23/09 PJZ Completed abstract classes definitions-->
+	<!--10/22/09 PJZ Split concrete and abstract classes-->
+	<!--06/17/09 PJZ Reworked NaturalLanguage-->
+	<!--07/18/11 PJZ Completed fixes for Set operation-->
+	<!--04/14/09 PJZ Updated Namespace-->
+	<!--01/30/09 PJZ Added IsAcceptingResources-->
+	<!--09/01/08 PJZ Changed ResidentResources to AvailableResources-->
+	<!--07/17/08 PJZ Changed Resources to ResidentResources-->
+	<!--06/01/08 PJZ Added  anyAttribute extension point-->
+	<!--05/31/08 PJZ Move back to ##Other-->
+	<!--05/30/08 PJZ Move back to single namespace-->
+	<!--05/21/08 PJZ Partial alignment with WS-Scan-->
+	<!--03/31/08 PJZ References now a service specific view instead of an object reference-->
+	<!--03/27/08 PJZ added attribute to identify  key elements-->
+	<!--12/12/07 PJZ Added direction for N Up and reduced number of mandatory elements-->
+	<!--11/21/07 PJZ Added direction for N Up and reduced number of mandatory elements-->
+	<!--09/13/07 PJZ Reworked default and supported-->
+	<!--10/08/06 PJZ Reworked dependencies and removed Chameleon-->
+	<!--10/05/06 PJZ Broke out from PwgCommon.xsd-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<!---->
+	<xs:annotation>
+		<xs:documentation>Concrete Base Classes for Services</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="ImagingServiceStatusType">
+		<xs:sequence>
+			<!-- local unique integer key  REQUIRED - MUST be single-valued -->
+			<xs:element ref="AccessModes" minOccurs="0"/>
+			<xs:element ref="ConditionTable" minOccurs="0"/>
+			<xs:element ref="CreateDate" minOccurs="0"/>
+			<xs:element ref="CurrentTime" minOccurs="0"/>
+			<!--Object state  REQUIRED - MUST be single-valued  see printer-state - section 4.4.11 [RFC2911] -->
+			<xs:element ref="DeviceServiceCount" minOccurs="0"/>
+			<xs:sequence>
+				<xs:element ref="Id"/>
+				<xs:element ref="ServiceUuid"/>
+			</xs:sequence>
+			<xs:element ref="MessageDateTime" minOccurs="0"/>
+			<xs:element ref="MessageTime" minOccurs="0"/>
+			<xs:element ref="NaturalLanguage" minOccurs="0"/>
+			<xs:element ref="SerialNumber" minOccurs="0"/>
+			<xs:element ref="State"/>
+			<!-- Object's  state messages  OPTIONAL - MAY be multi-valued  see printer-state-message - section 4.4.13 [RFC2911] -->
+			<xs:element ref="StateMessages" minOccurs="0"/>
+			<xs:element ref="StateReasons"/>
+			<!-- vCard/3.0 (based on ITU-T X.520) for owner of this   OPTIONAL - MUST be single-valued   see vCard/3.0 - vCard MIME Directory Profile [RFC2426] -->
+			<!-- object's  access permissions REQUIRED - MAY be multi-valued  see 'chmod' - POSIX System Interfaces [ISO9945]  see 'sys/stat.h' - POSIX System Interfaces [ISO9945]-->
+			<!-- date and time when this object was created   REQUIRED - MUST be single-valued -->
+			<!-- natural language for object's  text elements  OPTIONAL - MUST be single-valued  see IETF 'Tags for the Identification of Languages' [RFC3066] -->
+			<xs:element ref="UpTime" minOccurs="0"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ImagingServiceDescriptionType">
+		<xs:sequence>
+			<!--  service type (function of this service object) REQUIRED - MUST be single-valued  see WIMS Object Model - section 4 [WIMS-PRO] -->
+			<xs:element ref="CharsetConfigured" minOccurs="1"/>
+			<xs:element ref="CharsetSupported" minOccurs="1"/>
+			<xs:element ref="DeviceId" minOccurs="0"/>
+			<xs:element ref="MakeAndModel" minOccurs="0"/>
+			<xs:element ref="MessageFromOperator" minOccurs="0"/>
+			<xs:element ref="MoreInfoManufacturerUri" minOccurs="0"/>
+			<xs:element ref="MoreInfoUri" minOccurs="0"/>
+			<xs:element ref="NaturalLanguageConfigured" minOccurs="1"/>
+			<xs:element ref="NaturalLanguageSupported" minOccurs="1"/>
+			<xs:element ref="OperationsSupported"/>
+			<xs:element ref="OwnerUri" minOccurs="0"/>
+			<xs:element ref="OwnerVCard" minOccurs="0"/>
+			<xs:element ref="ServiceChargeInfo" minOccurs="0"/>
+			<xs:element ref="ServiceChargeInfoUri" minOccurs="0"/>
+			<xs:element ref="ServiceGeoLocation" minOccurs="0"/>
+			<xs:element ref="ServiceInfo" minOccurs="0"/>
+			<xs:element ref="ServiceOrganizations" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="ServiceLocation" minOccurs="0"/>
+			<xs:element ref="ServiceName"/>
+			<!--  list of URI supported by this service  REQUIRED - MAY be multi-valued  see printer-uri-supported - section 4.4.1 [RFC2911] -->
+			<!-- service vendor-supplied description and/or label  OPTIONAL - MUST be single-valued  see printer-info - section 4.4.6 [RFC2911] -->
+			<!--  Object administrative name OPTIONAL - MUST be single-valued  see printer-name - section 4.4.4 [RFC2911]  see prtGeneralPrinterName - section 6 [RFC3805] -->
+			<!-- list of services (by ID/name/URI) subordinate to this service  REQUIRED - MAY be multi-valued -->
+			<!-- list of devices (by ID/name/URI) subordinate to this service  REQUIRED - MAY be multi-valued -->
+			<!-- list of subunits (by ID) supported by this service,  REQUIRED - MAY be multi-valued  see Printer Sub-Units - section 2.2 [RFC3805] -->
+			<!--  document formats supported by this service REQUIRED - MAY be multi-valued  see document-format-supported - section 4.4.22 [RFC2911] -->
+			<!-- list of resources (by ID/name/URI) supported by this service  OPTIONAL - MAY be multi-valued see ResourceId in Resource XML schema  see ResourceName in Resource XML schema -->
+			<xs:element ref="ServiceStringsLanguageSupported" minOccurs="0"/>
+			<xs:element ref="ServiceStringsUri" minOccurs="0"/>
+			<xs:element ref="ServiceXriSupported"/>
+			<xs:element ref="VersionsSupported"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ImagingServiceDescriptionSetType">
+		<xs:sequence>
+			<!--  service type (function of this service object) REQUIRED - MUST be single-valued  see WIMS Object Model - section 4 [WIMS-PRO] -->
+			<xs:element ref="CharsetConfigured" minOccurs="0"/>
+			<xs:element ref="CharsetSupported" minOccurs="0"/>
+			<xs:element ref="DeviceId" minOccurs="0"/>
+			<xs:element ref="MakeAndModel" minOccurs="0"/>
+			<xs:element ref="MessageFromOperator" minOccurs="0"/>
+			<xs:element ref="NaturalLanguageConfigured" minOccurs="0"/>
+			<xs:element ref="NaturalLanguageSupported" minOccurs="0"/>
+			<xs:element ref="OperationsSupported" minOccurs="0"/>
+			<xs:element ref="OwnerUri" minOccurs="0"/>
+			<xs:element ref="OwnerVCard" minOccurs="0"/>
+			<xs:element ref="ServiceChargeInfo" minOccurs="0"/>
+			<xs:element ref="ServiceChargeInfoUri" minOccurs="0"/>
+			<xs:element ref="ServiceGeoLocation" minOccurs="0"/>
+			<xs:element ref="ServiceInfo" minOccurs="0"/>
+			<xs:element ref="ServiceOrganizations" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element ref="ServiceLocation" minOccurs="0"/>
+			<xs:element ref="ServiceName" minOccurs="0"/>
+			<!--  list of URI supported by this service  REQUIRED - MAY be multi-valued  see printer-uri-supported - section 4.4.1 [RFC2911] -->
+			<!-- service vendor-supplied description and/or label  OPTIONAL - MUST be single-valued  see printer-info - section 4.4.6 [RFC2911] -->
+			<!--  Object administrative name OPTIONAL - MUST be single-valued  see printer-name - section 4.4.4 [RFC2911]  see prtGeneralPrinterName - section 6 [RFC3805] -->
+			<!-- list of services (by ID/name/URI) subordinate to this service  REQUIRED - MAY be multi-valued -->
+			<!-- list of devices (by ID/name/URI) subordinate to this service  REQUIRED - MAY be multi-valued -->
+			<!-- list of subunits (by ID) supported by this service,  REQUIRED - MAY be multi-valued  see Printer Sub-Units - section 2.2 [RFC3805] -->
+			<!--  document formats supported by this service REQUIRED - MAY be multi-valued  see document-format-supported - section 4.4.22 [RFC2911] -->
+			<!-- list of resources (by ID/name/URI) supported by this service  OPTIONAL - MAY be multi-valued see ResourceId in Resource XML schema  see ResourceName in Resource XML schema -->
+			<xs:element ref="VersionsSupported" minOccurs="0"/>
+			<xs:element name="XriSupported" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Xri" minOccurs="0" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="XriUri" type="xs:anyURI" minOccurs="0"/>
+									<xs:element name="XriAuthentication" minOccurs="0">
+										<xs:simpleType>
+											<xs:union memberTypes="UriAuthenticationWKV KeywordNsExtensionPattern"/>
+										</xs:simpleType>
+									</xs:element>
+									<xs:element name="XriSecurity" minOccurs="0">
+										<xs:simpleType>
+											<xs:union memberTypes="UriSecurityWKV KeywordNsExtensionPattern"/>
+										</xs:simpleType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<!--service type specific elements-->
+	<xs:element name="ServiceStringsLanguageSupported">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="NaturalLanguage"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ServiceStringsUri"/>
+	<!--Extensions to http://www.pwg.org/schemas/2010/12/sm schema -->
+	<xs:complexType name="ImagingServiceDescriptionExtensionType">
+		<xs:sequence>
+			<!--  service type (function of this service object) REQUIRED - MUST be single-valued  see WIMS Object Model - section 4 [WIMS-PRO] -->
+			<!--  list of URI supported by this service  REQUIRED - MAY be multi-valued  see printer-uri-supported - section 4.4.1 [RFC2911] -->
+			<!-- service vendor-supplied description and/or label  OPTIONAL - MUST be single-valued  see printer-info - section 4.4.6 [RFC2911] -->
+			<!--  Object administrative name OPTIONAL - MUST be single-valued  see printer-name - section 4.4.4 [RFC2911]  see prtGeneralPrinterName - section 6 [RFC3805] -->
+			<!-- list of services (by ID/name/URI) subordinate to this service  REQUIRED - MAY be multi-valued -->
+			<!-- list of devices (by ID/name/URI) subordinate to this service  REQUIRED - MAY be multi-valued -->
+			<!-- list of subunits (by ID) supported by this service,  REQUIRED - MAY be multi-valued  see Printer Sub-Units - section 2.2 [RFC3805] -->
+			<!--  document formats supported by this service REQUIRED - MAY be multi-valued  see document-format-supported - section 4.4.22 [RFC2911] -->
+			<!-- list of resources (by ID/name/URI) supported by this service  OPTIONAL - MAY be multi-valued see ResourceId in Resource XML schema  see ResourceName in Resource XML schema -->
+		</xs:sequence>
+	</xs:complexType>
+	<!---->
+	<!--Example Class Extensions-->
+	<xs:element name="ServiceSpecificServiceDescription">
+		<xs:annotation>
+			<xs:documentation>Example</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="DefaultFaxModem" type="ObjectIdentifier16Type" minOccurs="0"/>
+				<xs:element ref="FaxLogUri" minOccurs="0"/>
+				<xs:element ref="GetEventLife" minOccurs="0"/>
+				<xs:element ref="JobCreationElementsSupported" minOccurs="0"/>
+				<xs:element ref="JobSettableElementsSupported" minOccurs="0"/>
+				<xs:element ref="JobSpoolingSupported" minOccurs="0"/>
+				<xs:element ref="MultipleDocumentJobsSupported" minOccurs="0"/>
+				<xs:element ref="MultipleOperationTimeout" minOccurs="0"/>
+				<xs:element ref="MultipleOperationTimeoutAction" minOccurs="0"/>
+				<xs:element ref="PagesPerMinute" minOccurs="0"/>
+				<xs:element ref="PagesPerMinuteColor" minOccurs="0"/>
+				<xs:element ref="ParentPrintersSupported" minOccurs="0"/>
+				<xs:element ref="PdlOverrideSupported" minOccurs="0"/>
+				<xs:element ref="PrinterDetailedStatusMessages" minOccurs="0"/>
+				<xs:element ref="PrinterSettableElementsSupported" minOccurs="0"/>
+				<xs:element ref="PwgRasterDocumentSheetBack" minOccurs="0"/>
+				<xs:element ref="PwgRasterDocumentResolutionSupported" minOccurs="0"/>
+				<xs:element ref="PwgRasterDocumentTypeSupported" minOccurs="0"/>
+				<xs:element ref="ReferenceUriSchemesSupported" minOccurs="0"/>
+				<xs:element ref="RepertoiresSupported" minOccurs="0"/>
+				<xs:element ref="SubordinatePrintersSupported" minOccurs="0"/>
+				<xs:element ref="UserDefinedValuesSupported" minOccurs="0"/>
+				<xs:sequence>
+					<xs:annotation>
+						<xs:documentation>JPS3 elements</xs:documentation>
+					</xs:annotation>
+					<xs:element ref="IdentifyActionsDefault" minOccurs="0"/>
+					<xs:element ref="IdentifyActionsSupported" minOccurs="0"/>
+					<xs:element name="JobConstraintsSupported" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>JPS3</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="JobConstraint">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="ResolverName"/>
+											<xs:element name="JobTicketElements" type="ImagingServiceCapabilitiesType"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="JobPreferredElementsSupported" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>JPS3</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="PreferredElements" minOccurs="0" maxOccurs="unbounded">
+									<xs:simpleType>
+										<xs:restriction base="xs:NMTOKEN">
+											<xs:maxLength value="255"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="JobResolversSupported" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>JPS3</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="JobResolver">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="ResolverName"/>
+											<xs:element name="JobTicketElements" type="ImagingServiceCapabilitiesType"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="LimitElementsSupported">
+						<xs:annotation>
+							<xs:documentation>JPS3</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="LimitElements" minOccurs="0" maxOccurs="unbounded">
+									<xs:simpleType>
+										<xs:restriction base="xs:NMTOKEN">
+											<xs:maxLength value="255"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="LimitOperationsSupported">
+						<xs:annotation>
+							<xs:documentation>JPS3</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="Operation" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="MediaBottomMarginSupported">
+						<xs:annotation>
+							<xs:documentation>JPS3</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="MediaBottomMargin" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="MediaLeftMarginSupported">
+						<xs:annotation>
+							<xs:documentation>JPS3</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="MediaLeftMargin" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="MediaRightMarginSupported">
+						<xs:annotation>
+							<xs:documentation>JPS3</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="MediaRightMargin" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="MediaSourceSupported">
+						<xs:annotation>
+							<xs:documentation>JPS3</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="MediaSource" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="MediaTopMarginSupported">
+						<xs:annotation>
+							<xs:documentation>JPS3</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="MediaTopMargin" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element ref="MultipleOperationTimeoutAction" minOccurs="0"/>
+					<xs:element name="ServiceDescriptiionChangeDateTime" type="xs:dateTime" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>JPS3, Name change  for MFD preferred</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ServiceDescriptiionChangeTime" type="xs:int" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>JPS3, Name change  for MFD preferred</xs:documentation>
+						</xs:annotation>
+					</xs:element>
+					<xs:element name="ServiceGetElementsSupported" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>JPS3</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="GetElement" type="xs:NMTOKEN" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="ServiceIccProfiles" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>JPS3</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="ServiceIccProfile" maxOccurs="unbounded">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="ProfileUri" type="xs:anyURI"/>
+											<xs:element name="JobTicketElements" minOccurs="0">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="JobTicketElement" type="xs:NMTOKEN" maxOccurs="unbounded"/>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="ServiceIcons" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>JPS3</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="IconUri" type="xs:anyURI" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="ServiceMandatoryJobElements" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>JPS3, Name change  for MFD preferred</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="JobElement" type="xs:NMTOKEN" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ServiceSpecificServiceStatus">
+		<xs:annotation>
+			<xs:documentation>Example</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:choice>
+					<xs:element ref="ImagesCompleted"/>
+					<xs:element ref="ImpressionsCompleted"/>
+					<xs:element ref="KOctetsProcessed"/>
+				</xs:choice>
+				<xs:choice>
+					<xs:element ref="IsAcceptingJobs"/>
+					<xs:element ref="IsAcceptingResources"/>
+				</xs:choice>
+				<xs:element ref="QueuedJobCount" minOccurs="0"/>
+				<xs:element name="ServiceSpecificCounters" minOccurs="0">
+					<xs:complexType>
+						<xs:choice/>
+					</xs:complexType>
+				</xs:element>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:annotation>
+		<xs:documentation>Abstract Base Classes for Services</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ImagingMetrics">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ImagingServiceAvailableJobTicket">
+		<xs:annotation>
+			<xs:documentation>AbstractBaseClass</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ImagingServiceAvailableJobTicketEntry" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="ImagingMetrics"/>
+							<xs:element ref="ImagingJobTicket"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ImagingServiceDescription">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ImagingServiceDescriptionType">
+					<xs:sequence>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ImagingServiceDescriptionExtension" type="ImagingServiceDescriptionExtensionType">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class Extension</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ImagingServiceCapabilitiesType">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="ImagingServiceDocumentTicketCapabilities" type="ImagingServiceDocumentTicketCapabilitiesType" minOccurs="0"/>
+			<xs:element name="ImagingServiceJobTicketCapabilities" type="ImagingServiceJobTicketCapabilitiesType" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- ServiceProcessingSupported - group -->
+	</xs:complexType>
+	<xs:complexType name="ImagingServiceJobTicketCapabilitiesType">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="ImagingDocumentProcessingCapabilities" minOccurs="0"/>
+			<xs:element ref="ImagingJobDescriptionCapabilities" minOccurs="0"/>
+			<xs:element ref="ImagingJobProcessingCapabilities" minOccurs="0"/>
+			<xs:sequence>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- ServiceProcessingSupported - group -->
+	</xs:complexType>
+	<xs:complexType name="ImagingServiceDocumentTicketCapabilitiesType">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="ImagingDocumentProcessingCapabilities" minOccurs="0"/>
+			<xs:element ref="ImagingDocumentDescriptionCapabilities" minOccurs="0"/>
+			<xs:sequence>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- ServiceProcessingSupported - group -->
+	</xs:complexType>
+	<xs:element name="ImagingServiceCapabilities" type="ImagingServiceCapabilitiesType">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ImagingServiceCapabilitiesReady" type="ImagingServiceCapabilitiesType">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ImagingServiceConfiguration" type="SubunitsType">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ImagingServiceDefaults">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ImagingServiceDefaultDocumentTicket" minOccurs="0"/>
+				<xs:element ref="ImagingServiceDefaultJobTicket" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ImagingServiceStatus">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ImagingServiceStatusType">
+					<xs:sequence>
+						<xs:choice>
+							<xs:element ref="ImagesCompleted"/>
+							<xs:element ref="ImpressionsCompleted"/>
+							<xs:element ref="KOctetsProcessed"/>
+						</xs:choice>
+						<xs:choice>
+							<xs:element ref="IsAcceptingJobs"/>
+							<xs:element ref="IsAcceptingResources"/>
+						</xs:choice>
+						<xs:element ref="QueuedJobCount" minOccurs="1"/>
+						<xs:element ref="ServiceSpecificCounters"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ImagingServiceDefaultJobTicket" type="ImagingJobTicketType">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ImagingServiceDefaultDocumentTicket" type="ImagingDocumentTicketType">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ImagingServiceType">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="ImagingServiceAvailableJobTicket" minOccurs="0"/>
+			<xs:element ref="ImagingServiceCapabilities" minOccurs="0"/>
+			<xs:element ref="ImagingServiceCapabilitiesReady" minOccurs="0"/>
+			<xs:element ref="ImagingServiceConfiguration" minOccurs="0"/>
+			<xs:element ref="ImagingServiceDefaults" minOccurs="0"/>
+			<xs:element ref="ImagingServiceDescription"/>
+			<xs:element ref="ImagingServiceStatus"/>
+			<xs:sequence>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:element name="ImagingService">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ImagingServiceType">
+					<xs:sequence>
+						<xs:element name="ImagingJobTable">
+							<xs:annotation>
+								<xs:documentation>Abstract Base Class</xs:documentation>
+							</xs:annotation>
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="ActiveImagingJobs" type="ImagingJobsType">
+										<xs:annotation>
+											<xs:documentation>Abstract Base Class</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+									<xs:element name="ImagingJobHistory" type="ImagingJobsType" minOccurs="0">
+										<xs:annotation>
+											<xs:documentation>Abstract Base Class</xs:documentation>
+										</xs:annotation>
+									</xs:element>
+								</xs:sequence>
+								<xs:anyAttribute namespace="##other"/>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

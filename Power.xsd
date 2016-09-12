@@ -1,0 +1,258 @@
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="PwgWellKnownValues.xsd"/>
+	<xs:include schemaLocation="PwgCommon.xsd"/>
+	<!--03/31/11 PJZ  PFixed spelling error (Thrursday)-->
+	<!--12/19/10 PJZ  PowerTimeoutEntry is now optional and unbounded-->
+	<!--10/19/10 PJZ  Removed MaxXXX-->
+	<!--09/23/10 PJZ  PowerCounters are lifetime only-->
+	<!--09/21/10 IEM  Added missing elements in PowerGeneral and PowerSupport -->
+	<!--09/15/10 PJZ  Removed name from calendar and timeout-->
+	<!--08/19/10 PJZ  Added Persistance to PowerCounters and multiple entries for persistance-->
+	<!--08/19/10 PJZ  Added missing elements in Power element, fixrd PowerTomeout name-->
+	<!--01/11/10 PJZ  Updates per 01/08/10 POW spec-->
+	<!--10/07/09  PJZ  initial version-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">Editor: Peter Zehler</xs:documentation>
+	</xs:annotation>
+	<!--Common Power elements-->
+	<xs:element name="Name" type="xs:string"/>
+	<xs:element name="PowerComponentType">
+		<xs:simpleType>
+			<xs:union memberTypes="SubunitTypeWKV KeywordNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="PowerState" type="PowerStateWKV"/>
+	<xs:element name="PowerStateDateAndTime" type="xs:dateTime"/>
+	<xs:element name="PowerStateMessage" type="xs:string"/>
+	<xs:element name="RequestPowerState" type="PowerStateWKV"/>
+	<xs:element name="StartPowerState" type="PowerStateWKV"/>
+	<!--Collection of all power elements-->
+	<xs:element name="Power">
+		<xs:annotation>
+			<xs:documentation>Abstract Class</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PowerCalendar"/>
+				<xs:element ref="PowerCounters"/>
+				<xs:element ref="PowerEvent"/>
+				<xs:element ref="PowerGeneral"/>
+				<xs:element ref="PowerLog"/>
+				<xs:element ref="PowerMeters"/>
+				<xs:element ref="PowerMonitor"/>
+				<xs:element ref="PowerSupport"/>
+				<xs:element ref="PowerTimeout"/>
+				<xs:element ref="PowerTransition"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!--Power Element Groups-->
+	<xs:element name="PowerCalendar">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CalendarEntry" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="Id"/>
+							<xs:element ref="RequestPowerState"/>
+							<xs:element name="CalendarRunOnce" type="xs:boolean"/>
+							<xs:sequence>
+								<xs:element name="CalendarDayOfWeek">
+									<xs:simpleType>
+										<xs:restriction base="xs:NMTOKEN">
+											<xs:enumeration value="Monday"/>
+											<xs:enumeration value="Tuesday"/>
+											<xs:enumeration value="Wednesday"/>
+											<xs:enumeration value="Thursday"/>
+											<xs:enumeration value="Friday"/>
+											<xs:enumeration value="Saturday"/>
+											<xs:enumeration value="Sunday"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="CalendarMonth" type="xs:gMonth"/>
+								<xs:element name="CalendarDay" type="xs:gDay"/>
+								<xs:element name="CalendarHour">
+									<xs:simpleType>
+										<xs:restriction base="xs:int">
+											<xs:minInclusive value="0"/>
+											<xs:maxInclusive value="23"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+								<xs:element name="CalendarMinute">
+									<xs:simpleType>
+										<xs:restriction base="xs:int">
+											<xs:minInclusive value="0"/>
+											<xs:maxInclusive value="59"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+							<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PowerCounters">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="HibernateTransitions" type="xs:int"/>
+				<xs:element name="OnTransitions" type="xs:int"/>
+				<xs:element name="StandbyTransitions" type="xs:int"/>
+				<xs:element name="SuspendTransitions" type="xs:int"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PowerEvent">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="EventEntry" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="Id"/>
+							<xs:element name="EventName" type="xs:string"/>
+							<xs:element ref="RequestPowerState"/>
+							<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PowerGeneral">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CanRequestPowerStates" type="xs:string"/>
+				<xs:element name="PowerUsageIsRMSWatts" type="xs:boolean"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PowerLog">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="LogEntry" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="Id"/>
+							<xs:element name="PowerComponentReferenceId" type="xs:int" minOccurs="0"/>
+							<xs:element ref="PowerComponentType"/>
+							<xs:element ref="PowerState"/>
+							<xs:element ref="PowerStateDateAndTime"/>
+							<xs:element ref="PowerStateMessage"/>
+							<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PowerMeters">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="PowerMetersAreActual" type="xs:boolean"/>
+				<xs:element name="PowerCurrentWatts" type="xs:int"/>
+				<xs:element name="PowerPeakWatts" type="xs:int"/>
+				<xs:element name="PowerCurrentMonthKWH" type="xs:int"/>
+				<xs:element name="PowerPreviousMonthKWH" type="xs:int"/>
+				<xs:element name="PowerLifetimeKWH" type="xs:int"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PowerMonitor">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PowerState"/>
+				<xs:element ref="PowerStateMessage"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PowerSupport">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SupportEntry" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="CanAcceptJobs" type="xs:boolean"/>
+							<xs:element name="CanProcessJobs" type="xs:boolean"/>
+							<xs:element name="CanRequestPowerState" type="xs:boolean"/>
+							<xs:element name="CanUseInterfaces" type="xs:string"/>
+							<xs:element name="PowerActiveWatts" type="xs:int"/>
+							<xs:element name="PowerInactiveWatts" type="xs:int"/>
+							<xs:element name="PowerPeakWatts" type="xs:int"/>
+							<xs:element ref="PowerState"/>
+							<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PowerTimeout">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="TimeoutEntry" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="Id"/>
+							<xs:element ref="RequestPowerState"/>
+							<xs:element ref="StartPowerState"/>
+							<xs:element name="TimeoutSeconds" type="xs:int"/>
+							<xs:element name="TimeoutPredicate" type="TimeoutPredicateWKV"/>
+							<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PowerTransition">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="TransitionEntry" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="EndPowerState" type="PowerStateWKV"/>
+							<xs:element ref="StartPowerState"/>
+							<xs:element name="StateChangeSeconds" type="xs:int"/>
+							<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:annotation>
+		<xs:documentation>Request should not be added to the schema, these elements are part of an operation</xs:documentation>
+	</xs:annotation>
+	<xs:element name="PowerRequestGroup">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="RequestEntry" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="RequestPowerState"/>
+							<xs:element name="RequestStatus" type="PowerRequestStatusWKV"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

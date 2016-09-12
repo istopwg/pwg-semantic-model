@@ -1,0 +1,113 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   PWG Semantic Model v2   
+
+Copyright 2011, IEEE Industry Standards and Technology Organization/CopyService Working Group. 
+All rights reserved  
+
+Editors:  Joe Murdock, Peter Zehler, Ira McDonald 
+-->
+<!--07/30/2011 JBM Initial Version-->
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:sm="http://www.pwg.org/schemas/2016/01/sm" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" xmlns:ns="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:ns1="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" xmlns:ns2="http://purl.org/dc/elements/1.1/" xmlns:ns3="http://purl.org/dc/terms/" xmlns:ns4="http://www.w3.org/2000/09/xmldsig#" xmlns:ns5="http://www.w3.org/2001/04/xmlenc#" xmlns:ns6="urn:oasis:names:tc:SAML:2.0:assertion" xmlns:ns7="http://purl.org/dc/dcmitype/" targetNamespace="http://www.pwg.org/schemas/2016/01/sm">
+	<types>
+		<xs:schema xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" elementFormDefault="qualified" targetNamespace="http://schemas.xmlsoap.org/ws/2004/08/addressing">
+			<xs:include schemaLocation="addressing.xsd"/>
+		</xs:schema>
+		<xs:schema xmlns:sm="http://www.pwg.org/schemas/2016/01/sm" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905" targetNamespace="http://www.pwg.org/schemas/2016/01/sm">
+			<xs:include schemaLocation="PwgSecurityOpMsg.xsd"/>
+			<xs:import namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing" schemaLocation="addressing.xsd"/>
+		</xs:schema>
+	</types>
+	<message name="GetSecurityElementsRequestMsg">
+		<part name="body" element="sm:GetSecurityElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetSecurityElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetSecurityElementsResponse"/>
+	</message>
+	<message name="RequestSecurityElementsRequestMsg">
+		<part name="body" element="sm:RequestSecurityElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="RequestSecurityElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:RequestSecurityElementsResponse"/>
+	</message>
+	<portType name="PwgSecurityPort">
+		<operation name="GetSecurityElements">
+			<input message="sm:GetSecurityElementsRequestMsg"/>
+			<output message="sm:GetSecurityElementsResponseMsg"/>
+		</operation>
+		<operation name="RequestSecurityElements">
+			<input message="sm:RequestSecurityElementsRequestMsg"/>
+			<output message="sm:RequestSecurityElementsResponseMsg"/>
+		</operation>
+	</portType>
+	<binding name="PwgSecurityBinding" type="sm:PwgSecurityPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="GetSecurityElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelJob"/>
+			<input>
+				<soap:header message="sm:GetSecurityElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetSecurityElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetSecurityElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetSecurityElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetSecurityElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetSecurityElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetSecurityElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetSecurityElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetSecurityElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="RequestSecurityElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelCopyJobs"/>
+			<input>
+				<soap:header message="sm:RequestSecurityElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RequestSecurityElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:RequestSecurityElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:RequestSecurityElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:RequestSecurityElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RequestSecurityElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:RequestSecurityElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:RequestSecurityElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:RequestSecurityElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="PwgSecurity">
+		<port name="PwgSecurityPort" binding="sm:PwgSecurityBinding">
+			<soap:address location="http://localhost:53106/PwgSystemControlService"/>
+			<soap:address location="http://localhost:53101/PwgCopyService"/>
+			<soap:address location="http://localhost:53101/PwgScanService"/>
+			<soap:address location="http://localhost:53102/PwgResourceService"/>
+			<soap:address location="http://localhost:53100/PwgPrintService"/>
+			<soap:address location="http://localhost:53103/PwgFaxOutService"/>
+		</port>
+	</service>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">Assume that all services can have their own security Elements</xs:documentation>
+	</xs:annotation>
+</definitions>

@@ -1,0 +1,2541 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="PwgCommon.xsd"/>
+	<xs:include schemaLocation="Power.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<!--11/30/11 PJZ Made Added missing InputTray elements-->
+	<!--08/03/11 PJZ Made Status optional to accomodate operation mode of add-->
+	<!--08/03/11 PJZ Made Status optional to accomodate operation mode of add-->
+	<!--07/18/11 PJZMoved read only MIB elements to Status and Read/Write to Description,  moved contained elements from status to peer of status, added missing element, Created associated xxxSetType ComplexTypes toallow schema enforcement of Set operation-->
+	<!--05/26/11 PJZ Fixed MarkerColorant-->
+	<!--10/25/10 PJZ Fixed Cover, Interpretter, Input, and Output Subunits.(removed Power entries), added "type" to all complex types, Fixed names of Scanner{Poweron|Life]Count-->
+	<!--04/19/10 PJZ Fixed Power entries-->
+	<!--04/1/10 PJZ added "Type" suffix to ComplexTypes-->
+	<!--12/08/09 PJZ Added Power-->
+	<!--11/13/09 PJZ Fixed CoverStatus-->
+	<!--10/23/09 PJZ Fixed Storage-->
+	<!--04/16/09 PJZ Made instances of subunit element consistant-->
+	<!--04/14/09 PJZ Updated Namespace-->
+	<!--01/20/09 PJZ Reordered Interface, added hig and normal interface speed, adjusted CoverState-->
+	<!--01/19/09 PJZ Made InterpreterLanguage extensible-->
+	<!--05/31/08 PJZ Move back to ##Other-->
+	<!--05/30/08 PJZ Move back to single namespace-->
+	<!--05/21/08 PJZ Partial alignment with WS-Scan-->
+	<!--04/01/08 PJZ Moved Subunit WKV's to PwgWellKnownValues.xsd-->
+	<!--03/31/08 PJZ added ScanMediaPath-->
+	<!--03/27/08 PJZ added attribute to identify  key elements-->
+	<!--12/12/07 PJZ Implemented Configuration view-->
+	<!--10/18/06 PJZ Changed all occurances of xxxFeedAddressability to xxxAddressabilityFeed (& CrossFeed)-->
+	<!--10/08/06 PJZ Reworked dependencies and removed Chameleon-->
+	<!--08/08/06 PJZ Changed namespace-->
+	<!--070606  PJZ Added core namespace-->
+	<!--                                  -->
+	<!--vendor-supplied description -->
+	<!-- (in locale specified by SystemNaturalLanguage) -->
+	<!-- e.g. prtScanMediaPathDescription in [RFC3805] -->
+	<xs:element name="Description" type="xs:string"/>
+	<!--See rfc2790 hrDeviceID-->
+	<xs:element name="ProductID" type="xs:string"/>
+	<!-- subunit type definitions -->
+	<!-- see PrtSubUnitStatusTC in [RFC3805] -->
+	<xs:complexType name="SubunitStates">
+		<xs:sequence>
+			<xs:element name="SubunitState" type="SubunitStateWKV" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- subunit states and conditions -->
+		<!-- see PrtSubUnitStatusTC (bit-mask) in [RFC3805] -->
+	</xs:complexType>
+	<xs:element name="SubunitStates" type="SubunitStates"/>
+	<!-- subunit usage counter unit -->
+	<!-- see prtMarkerCounterUnit in [RFC3805] -->
+	<xs:element name="SubunitCounterUnit" type="SubunitCounterUnitWKV"/>
+	<!-- subunit usage over subunit lifetime -->
+	<!-- see prtMarkerLifeCount in [RFC3805] -->
+	<xs:element name="SubunitLifeCount" type="xs:int"/>
+	<!-- subunit usage since last power on -->
+	<!-- see prtMarkerPowerOnCount in [RFC3805] -->
+	<xs:element name="SubunitPowerOnCount" type="xs:int"/>
+	<!--Subunit Status base class-->
+	<xs:complexType name="SubunitStatus">
+		<xs:sequence>
+			<!-- local unique integer key  REQUIRED - MUST be single-valued -->
+			<!--Object state  REQUIRED - MUST be single-valued  see printer-state - section 4.4.11 [RFC2911] -->
+			<!-- Object's  state messages  OPTIONAL - MAY be multi-valued  see printer-state-message - section 4.4.13 [RFC2911] -->
+			<!-- vCard/3.0 (based on ITU-T X.520) for owner of this   OPTIONAL - MUST be single-valued   see vCard/3.0 - vCard MIME Directory Profile [RFC2426] -->
+			<!-- object's  access permissions REQUIRED - MAY be multi-valued  see 'chmod' - POSIX System Interfaces [ISO9945]  see 'sys/stat.h' - POSIX System Interfaces [ISO9945]-->
+			<!-- date and time when this object was created   REQUIRED - MUST be single-valued -->
+			<!-- natural language for object's  text elements  OPTIONAL - MUST be single-valued  see IETF 'Tags for the Identification of Languages' [RFC3066] -->
+			<xs:element name="DeviceErrors" type="xs:int" minOccurs="0"/>
+			<xs:element ref="Id"/>
+			<xs:element ref="PowerCounters" minOccurs="0"/>
+			<xs:element ref="PowerMeters" minOccurs="0"/>
+			<xs:element ref="PowerMonitor" minOccurs="0"/>
+			<xs:element ref="PowerSupport" minOccurs="0"/>
+			<xs:element ref="PowerTransition" minOccurs="0"/>
+			<xs:element ref="ProductID" minOccurs="0"/>
+			<xs:element ref="SubunitStates"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<!--Subunit Description base class-->
+	<xs:complexType name="SubunitDescription">
+		<xs:sequence>
+			<!-- local unique integer key  REQUIRED - MUST be single-valued -->
+			<!--Object state  REQUIRED - MUST be single-valued  see printer-state - section 4.4.11 [RFC2911] -->
+			<!-- Object's  state messages  OPTIONAL - MAY be multi-valued  see printer-state-message - section 4.4.13 [RFC2911] -->
+			<!-- vCard/3.0 (based on ITU-T X.520) for owner of this   OPTIONAL - MUST be single-valued   see vCard/3.0 - vCard MIME Directory Profile [RFC2426] -->
+			<!-- object's  access permissions REQUIRED - MAY be multi-valued  see 'chmod' - POSIX System Interfaces [ISO9945]  see 'sys/stat.h' - POSIX System Interfaces [ISO9945]-->
+			<!-- date and time when this object was created   REQUIRED - MUST be single-valued -->
+			<!-- natural language for object's  text elements  OPTIONAL - MUST be single-valued  see IETF 'Tags for the Identification of Languages' [RFC3066] -->
+			<xs:element ref="Description" minOccurs="0"/>
+			<xs:element ref="PowerCalendar" minOccurs="0"/>
+			<xs:element ref="PowerEvent" minOccurs="0"/>
+			<xs:element ref="PowerTimeout" minOccurs="0"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<!--                             -->
+	<!-- subunit element definitions -->
+	<!--                             -->
+	<xs:complexType name="ConsoleDisplayBufferType">
+		<xs:sequence>
+			<xs:element name="ConsoleDisplayText" type="ObjectStringLongType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- console display buffer -->
+		<!-- see prtConsoleDisplayBufferTable in [RFC3805] -->
+	</xs:complexType>
+	<xs:complexType name="ConsoleLightsType">
+		<xs:sequence>
+			<xs:element name="ConsoleLight" type="ConsoleLightType" minOccurs="1" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- console lights -->
+		<!-- see prtConsoleLightTable in [RFC3805] -->
+	</xs:complexType>
+	<xs:complexType name="ConsoleLightType">
+		<xs:sequence>
+			<xs:element ref="ConsoleLightOnTime" minOccurs="0"/>
+			<xs:element ref="ConsoleLightOffTime" minOccurs="0"/>
+			<xs:element ref="ConsoleLightColor" minOccurs="0"/>
+			<xs:element ref="ConsoleLightInfo" minOccurs="0"/>
+		</xs:sequence>
+		<!-- console light -->
+		<!-- see prtConsoleLightEntry in [RFC3805] -->
+	</xs:complexType>
+	<!-- console natural language for text -->
+	<!-- see IETF Tags for the Identification of Languages [RFC3066] -->
+	<!-- see prtConsoleLocalization in [RFC3805] -->
+	<xs:element name="ConsoleNaturalLanguage" type="ObjectStringShortType"/>
+	<!-- console number of display lines or zero -->
+	<!-- see prtConsoleNumberOfDisplayLines in [RFC3805] -->
+	<xs:element name="ConsoleNumberOfDisplayLines" type="xs:int"/>
+	<!-- console number of display characters per line or zero -->
+	<!-- see prtConsoleNumberOfDisplayChars in [RFC3805] -->
+	<xs:element name="ConsoleNumberOfDisplayChars" type="xs:int"/>
+	<!-- console disable input from operator -->
+	<!-- see PrtConsoleDisableTC in [RFC3805] -->
+	<!-- see prtConsoleDisable in (boolean) [RFC3805] -->
+	<xs:element name="ConsoleDisable" type="xs:boolean"/>
+	<!-- console display buffer -->
+	<!-- see prtConsoleDisplayBufferTable in [RFC3805] -->
+	<xs:element name="ConsoleDisplayBuffer" type="ConsoleDisplayBufferType"/>
+	<!-- console display buffer text (one line) -->
+	<!-- see prtConsoleDisplayBufferText in [RFC3805] -->
+	<xs:element name="ConsoleDisplayBufferText" type="ObjectStringLongType"/>
+	<!-- console lights -->
+	<!-- see prtConsoleLightTable in [RFC3805] -->
+	<xs:element name="ConsoleLights" type="ConsoleLightsType"/>
+	<!-- console light on time (in milliseconds) or zero -->
+	<!-- see prtConsoleOnTime in [RFC3805] -->
+	<xs:element name="ConsoleLightOnTime" type="xs:int"/>
+	<!-- console light off time (in milliseconds) or zero -->
+	<!-- see prtConsoleOffTime in [RFC3805] -->
+	<xs:element name="ConsoleLightOffTime" type="xs:int"/>
+	<!-- console light color -->
+	<!-- see prtConsoleColor in [RFC3805] -->
+	<xs:element name="ConsoleLightColor" type="ConsoleLightColorWKV"/>
+	<!-- console light vendor-supplied description -->
+	<!-- (in locale specified by ConsoleNaturalLanguage) -->
+	<!-- see prtConsoleDescription in [RFC3805] -->
+	<xs:element name="ConsoleLightInfo" type="ObjectStringLongType"/>
+	<xs:element name="FaxModemStates" type="SubunitStates"/>
+	<!-- finisher local unique integer key -->
+	<!-- see finDeviceIndex in [RFC3806] -->
+	<xs:element name="FinisherId" type="ObjectIdentifier16Type"/>
+	<!-- finisher states and conditions -->
+	<!-- see PrtSubUnitStatusTC in [RFC3805] -->
+	<!-- see finDeviceStatus (bit-mask) in [RFC3806] -->
+	<xs:element name="FinisherStates" type="SubunitStates"/>
+	<!-- finisher present/on/off -->
+	<!-- see PresentOnOff in [RFC3805] and [IANA-PRT] -->
+	<!-- see finDevicePresentOnOff in [RFC3806] -->
+	<xs:element name="FinisherPresentOnOff" type="SubunitPresentOnOffWKV"/>
+	<!-- finisher capacity/level unit -->
+	<!-- see finDeviceCapacityUnit in [RFC3806] -->
+	<!-- see PrtCapacityUnitTC in [RFC3805] -->
+	<xs:element name="FinisherCapacityUnit" type="SubunitCapacityUnitWKV"/>
+	<!-- finisher maximum capacity basis (i.e., accuracy) -->
+	<!-- see finDeviceMaxCapacity in [RFC3806] -->
+	<xs:element name="FinisherMaxCapacityBasis" type="ObjectCounterBasisWKV"/>
+	<!-- finisher maximum capacity -->
+	<!-- (in units specified by FinisherCapacityUnit) -->
+	<!-- see finDeviceMaxCapacity in [RFC3806] -->
+	<xs:element name="FinisherMaxCapacity" type="xs:int"/>
+	<!-- see finDeviceCurrentCapacity in [RFC3806] -->
+	<!-- finisher maximum capacity basis (i.e., accuracy) -->
+	<!-- see finDeviceMaxCapacity in [RFC3806] -->
+	<xs:element name="FinisherCurrentCapacityBasis" type="ObjectCounterBasisWKV"/>
+	<!-- finisher current capacity -->
+	<!-- (in units specified by FinisherCapacityUnit) -->
+	<xs:element name="FinisherCurrentCapacity" type="xs:int"/>
+	<!-- finisher associated media paths -->
+	<!-- (bit-mask of values of MediaPathId) -->
+	<!-- see finDeviceAssociatedMediaPaths (bit-mask) in [RFC3806] -->
+	<xs:element name="FinisherAssociatedMediaPaths">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MediaPath" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- finisher associated output trays -->
+	<!-- (bit-mask of values of OutputTrayId) -->
+	<!-- see finDeviceAssociatedOutputs (bit-mask) in [RFC3806] -->
+	<xs:element name="FinisherAssociatedOutputTrays">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="OutputTray" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- finisher type -->
+	<!-- see FinDeviceTypeTC in [RFC3806] and [IANA-FIN] -->
+	<!-- see finDeviceType in [RFC3806] -->
+	<xs:element name="FinisherType" type="FinisherTypeWKV"/>
+	<!-- finisher supply current level basis (i.e., accuracy) -->
+	<!-- see finSupplyCurrentLevel in [RFC3806] -->
+	<xs:element name="FinisherSupplyCurrentLevelBasis" type="ObjectCounterBasisWKV"/>
+	<!-- finisher supply current level -->
+	<!-- (in units specified by FinisherSupplyCapacityUnit) -->
+	<!-- see finSupplyCurrentLevel in [RFC3806] -->
+	<xs:element name="FinisherSupplyCurrentLevel" type="xs:int"/>
+	<!-- finisher supply class -->
+	<!-- see PrtMarkerSuppliesClassTC in [RFC3805] -->
+	<!-- see finSupplyClass in [RFC3806] -->
+	<xs:element name="FinisherSupplyClass" type="MarkerSupplyClassWKV"/>
+	<!-- finisher supply type -->
+	<!-- see PrtMarkerSuppliesTypeTC in [RFC3805] -->
+	<!-- see finSupplyType in [RFC3806] -->
+	<xs:element name="FinisherSupplyType" type="MarkerSupplyTypeWKV"/>
+	<!-- finisher supply vendor-supplied description -->
+	<!-- (in locale specified by SystemNaturalLanguage) -->
+	<!-- see finSupplyDescription in [RFC3806] -->
+	<xs:element name="FinisherSupplyInfo" type="ObjectStringLongType"/>
+	<!-- finisher supply vendor-supplied color name -->
+	<!-- see Media Color Names section 4 in [PWG5101.1] -->
+	<!-- see finSupplyColorName in [RFC3806] -->
+	<xs:element name="FinisherSupplyColorName" type="ObjectStringLongType"/>
+	<!-- finisher supply capacity/level unit -->
+	<!-- see PrtMarkerSuppliesSupplyUnitTC in [RFC3805] -->
+	<!-- see finSupplyUnit in [RFC3806] -->
+	<xs:element name="FinisherSupplyCapacityUnit" type="MarkerSupplyCapacityUnitWKV"/>
+	<!-- finisher supply maximum capacity basis (i.e., accuracy) -->
+	<!-- see finSupplyMaxCapacity in [RFC3806] -->
+	<xs:element name="FinisherSupplyMaxCapacityBasis" type="ObjectCounterBasisWKV"/>
+	<!-- finisher supply maximum capacity -->
+	<!-- (in units specified by MarkerSupplyCapacityUnit) -->
+	<!-- see finSupplyMaxCapacity in [RFC3806] -->
+	<xs:element name="FinisherSupplyMaxCapacity" type="xs:int"/>
+	<!-- finisher supply media input security present/on/off -->
+	<!-- see PresentOnOff in [RFC3805] -->
+	<!-- see finSupplyMediaInputSecurity (PresentOnOff) in [RFC3806] -->
+	<xs:element name="FinisherSupplyMediaInputSecurity" type="SubunitPresentOnOffWKV"/>
+	<!-- finisher supply media input states and conditions -->
+	<!-- see PrtSubUnitStatusTC in [RFC3805] -->
+	<!-- see finSupplyMediaInputStatus (bit-mask) in [RFC3806] -->
+	<xs:element name="FinisherSupplyMediaInputStates" type="SubunitStates"/>
+	<!-- finisher supply media input current media size name -->
+	<!-- see Media Size Self-Describing Names section 5 in [PWG5101.1] -->
+	<!-- see finSupplyMediaInputMediaName in [RFC3806] -->
+	<!-- see finSupplyMediaInputDimUnit in [RFC3806] -->
+	<!-- see finSupplyMediaInputMediaDimFeedDir in [RFC3806] -->
+	<!-- see finSupplyMediaInputMediaDimXFeedDir in [RFC3806] -->
+	<xs:element name="FinisherSupplyMediaInputMediaSizeName" type="Media"/>
+	<!-- finisher supply media input current media type -->
+	<!-- see finSupplyMediaInputMediaThickness in [RFC3806] -->
+	<xs:element name="FinisherSupplyMediaInputMediaThickness" type="MediaTypeType"/>
+	<!-- finisher supply media input current media type -->
+	<!-- see Media Type Names section 3 in [PWG5101.1] -->
+	<!-- see finSupplyMediaInputMediaType in [RFC3806] -->
+	<xs:element name="FinisherSupplyMediaInputMediaType" type="MediaTypeType"/>
+	<!-- finisher supply media input current media type -->
+	<!-- see finSupplyMediaInputMediaWeight in [RFC3806] -->
+	<xs:element name="FinisherSupplyMediaInputMediaWeight" type="MediaTypeType"/>
+	<!-- finisher supply media input vendor-supplied description -->
+	<!-- (in locale specified by SystemNaturalLanguage) -->
+	<!-- see finSupplyMediaInputDescription in [RFC3806] -->
+	<xs:element name="FinisherSupplyMediaInputInfo" type="ObjectStringLongType"/>
+	<!-- finisher supply media input current media info (weight, etc.) -->
+	<!-- see Media Type Names section 3 in [PWG5101.1] -->
+	<!-- see finSupplyMediaInputMediaWeight in [RFC3806] -->
+	<!-- see finSupplyMediaInputMediaThickness in [RFC3806] -->
+	<xs:element name="FinisherSupplyMediaInputMediaInfo" type="ObjectStringLongType"/>
+	<!-- finisher supply media input tray type -->
+	<!-- see PrtInputTypeTC in [RFC3805] -->
+	<!-- see finSupplyMediaInputType in [RFC3806] -->
+	<xs:element name="FinisherSupplyMediaInputType" type="InputTrayTypeWKV"/>
+	<!-- finisher supply media input local name for management -->
+	<!-- see finSupplyMediaInputName in [RFC3806] -->
+	<xs:element name="FinisherSupplyMediaInputName" type="ObjectStringShortType"/>
+	<!-- input channel is accepting jobs (if true) -->
+	<!-- see PrtChannelStateTC in [RFC3805] -->
+	<!-- see prtChannelState (boolean) in [RFC3805] -->
+	<xs:element name="InputChannelIsAcceptingJobs" type="xs:boolean"/>
+	<!-- input channel network interface ID or zero -->
+	<!-- see InterfaceIndexOrZero in [RFC2863] -->
+	<!-- see prtChannelIfIndex in [RFC3805] -->
+	<xs:element name="InputChannelInterface" type="InterfaceType"/>
+	<!-- input channel job control language interpreter ID or zero -->
+	<!-- see prtChannelCurrentJobCntlLangIndex in [RFC3805] -->
+	<xs:element name="InputChannelDefaultJobControlLanguage" type="InterpreterType"/>
+	<!-- input channel PDL interpreter ID or zero -->
+	<!-- see prtChannelDefaultPageDescLangIndex in [RFC3805] -->
+	<xs:element name="InputChannelDefaultPageDescriptionLanguage" type="InterpreterType"/>
+	<!-- input channel type -->
+	<!-- see PrtChannelTypeTC in [RFC3805] and [IANA-PRT] -->
+	<!-- see prtChannelType in [RFC3805] -->
+	<xs:element name="InputChannelType" type="InputChannelTypeWKV"/>
+	<!-- input channel protocol version (refines InputChannelType) -->
+	<!-- see prtChannelProtocolVersion in [RFC3805] -->
+	<xs:element name="InputChannelProtocolVersion" type="ObjectStringShortType"/>
+	<!-- input channel auxiliary information in a structured string -->
+	<!-- see PrtChannelTypeTC in [RFC3805] and [IANA-PRT] -->
+	<!-- see prtChannelInformation in [RFC3805] -->
+	<xs:element name="InputChannelAuxInfo" type="ObjectStringLongType"/>
+	<!-- input tray security present/on/off -->
+	<!-- see PresentOnOff in [RFC3805] -->
+	<!-- see prtInputSecurity (PresentOnOff) in [RFC3805] -->
+	<xs:element name="InputTraySecurity" type="SubunitPresentOnOffWKV"/>
+	<!-- input tray current media size name -->
+	<!-- see Media Size Self-Describing Names section 5 in [PWG5101.1] -->
+	<!-- see prtInputMediaName in [RFC3805] -->
+	<!-- see prtInputDimUnit in [RFC3805] -->
+	<!-- see prtInputMediaDimFeedDirDeclared in [RFC3805] -->
+	<!-- see prtInputMediaDimXFeedDirDeclared in [RFC3805] -->
+	<!-- see prtInputMediaDimFeedDirChosen in [RFC3805] -->
+	<!-- see prtInputMediaDimXFeedDirChosen in [RFC3805] -->
+	<xs:element name="InputTrayMediaSizeName" type="MediaSizeNameType"/>
+	<!-- input tray current media type -->
+	<!-- see Media Type Names section 3 in [PWG5101.1] -->
+	<!-- see prtInputMediaType in [RFC3805] -->
+	<xs:element name="InputTrayMediaType" type="ObjectStringShortType"/>
+	<!-- input tray current media info (weight, color, etc.) -->
+	<!-- see Media Type Names section 3 in [PWG5101.1] -->
+	<!-- see prtInputMediaWeight in [RFC3805] -->
+	<!-- see prtInputMediaColor in [RFC3805] -->
+	<!-- see prtInputMediaFormParts in [RFC3805] -->
+	<xs:element name="InputTrayMediaInfo" type="ObjectStringLongType"/>
+	<!-- input tray current level basis (i.e., accuracy) -->
+	<!-- see prtInputCurrentLevel in [RFC3805] -->
+	<xs:element name="InputTrayCurrentLevelBasis" type="ObjectCounterBasisWKV"/>
+	<!-- input tray current level -->
+	<!-- (in units specified by InputTrayCapacityUnit) -->
+	<!-- see prtInputCurrentLevel in [RFC3805] -->
+	<xs:element name="InputTrayCurrentLevel" type="xs:int"/>
+	<!-- input tray media load timeout basis (i.e., accuracy) -->
+	<!-- see prtInputMediaLoadTimeout in [RFC3805] -->
+	<xs:element name="InputTrayMediaLoadTimeoutBasis" type="ObjectCounterBasisWKV"/>
+	<!-- input tray media load timeout (in seconds) -->
+	<!-- see prtInputMediaLoadTimeout in [RFC3805] -->
+	<xs:element name="InputTrayMediaLoadTimeout" type="xs:int"/>
+	<!-- input tray next input tray basis (i.e., accuracy) -->
+	<!-- see prtInputNextIndex in [RFC3805] -->
+	<xs:element name="InputTrayNextInputTrayIdBasis" type="ObjectPointerBasisWKV"/>
+	<!-- input tray next input tray (after media load timeout) -->
+	<!-- (a value of '0' means 'None', i.e., no input switching) -->
+	<!-- see prtInputNextIndex in [RFC3805] -->
+	<xs:element name="InputTrayNextInputTrayId" type="xs:int"/>
+	<!-- input tray type -->
+	<!-- see PrtInputTypeTC in [RFC3805] -->
+	<!-- see prtInputType in [RFC3805] -->
+	<xs:element name="InputTrayType" type="InputTrayTypeWKV"/>
+	<!-- input tray local name for management -->
+	<!-- see prtInputName in [RFC3805] -->
+	<xs:element name="InputTrayName" type="ObjectStringShortType"/>
+	<!-- input tray vendor-supplied name of subunit -->
+	<!-- see prtInputVendorName in [RFC3805] -->
+	<xs:element name="InputTrayVendorName" type="ObjectStringShortType"/>
+	<!-- input tray vendor-supplied model of subunit -->
+	<!-- see prtInputModel in [RFC3805] -->
+	<xs:element name="InputTrayModel" type="ObjectStringShortType"/>
+	<!-- input tray vendor-supplied version -->
+	<!-- see prtInputVersion in [RFC3805] -->
+	<xs:element name="InputTrayVersion" type="ObjectStringShortType"/>
+	<!-- input tray vendor-supplied serial number of subunit -->
+	<!-- see prtInputSerialNumber in [RFC3805] -->
+	<xs:element name="InputTraySerialNumber" type="ObjectStringShortType"/>
+	<!-- input tray capacity/level unit -->
+	<!-- see PrtCapacityUnitTC in [RFC3805] -->
+	<!-- see prtInputCapacityUnit in [RFC3805] -->
+	<xs:element name="InputTrayCapacityUnit" type="SubunitCapacityUnitWKV"/>
+	<!-- input tray maximum capacity basis (i.e., accuracy) -->
+	<!-- see prtInputMaxCapacity in [RFC3805] -->
+	<xs:element name="InputTrayMaxCapacityBasis" type="ObjectCounterBasisWKV"/>
+	<!-- input tray maximum capacity -->
+	<!-- (in units specified by InputTrayCapacityUnit) -->
+	<!-- see prtInputMaxCapacity in [RFC3805] -->
+	<xs:element name="InputTrayMaxCapacity" type="xs:int"/>
+	<!-- interface high speed mode > 4Gbs (count multiplied by 1,000,000) -->
+	<!-- see ifHighSpeed in [RFC2863] -->
+	<xs:element name="InterfaceHighSpeed" type="xs:int"/>
+	<!-- interface speed mode <4Gbs-->
+	<!-- see ifSpeed in [RFC2863] -->
+	<xs:element name="InterfaceSpeed" type="xs:int"/>
+	<!-- interface admin state (desired) -->
+	<!-- see ifAdminStatus in [RFC2863] -->
+	<xs:element name="InterfaceAdminState" type="InterfaceAdminStateWKV"/>
+	<!-- interface operational state (current) -->
+	<!-- see ifOperStatus in [RFC2863] -->
+	<xs:element name="InterfaceOperState" type="InterfaceOperStateWKV"/>
+	<!-- interface last operational state change date and time -->
+	<!-- see ifLastChange in [RFC2863] -->
+	<xs:element name="InterfaceLastChangeDate" type="xs:dateTime"/>
+	<!-- interface physical address in text format -->
+	<!-- see PhysAddress in [RFC2579] -->
+	<!-- see ifPhysAddress in [RFC2863] -->
+	<xs:element name="InterfacePhysicalAddress" type="ObjectStringLongType"/>
+	<!-- interface input traffic (in octets) -->
+	<!-- see ifInOctets in [RFC2863] -->
+	<xs:element name="InterfaceInOctets" type="xs:int"/>
+	<!-- interface input traffic (in unicast packets) -->
+	<!-- see ifInUcastPkts in [RFC2863] -->
+	<xs:element name="InterfaceInUnicastPackets" type="xs:int"/>
+	<!-- interface input packet discards -->
+	<!-- see ifInDiscards in [RFC2863] -->
+	<xs:element name="InterfaceInDiscards" type="xs:int"/>
+	<!-- interface input errors -->
+	<!-- see ifInErrors in [RFC2863] -->
+	<xs:element name="InterfaceInErrors" type="xs:int"/>
+	<!-- interface input unknown protocol packets -->
+	<!-- see ifInUnknownProtos in [RFC2863] -->
+	<xs:element name="InterfaceInUnknownProtocols" type="xs:int"/>
+	<!-- interface output traffic (in octets) -->
+	<!-- see IfOutOctets in [RFC2863] -->
+	<xs:element name="InterfaceOutOctets" type="xs:int"/>
+	<!-- interface output traffic (in unicast packets) -->
+	<!-- see IfOutUcastPkts in [RFC2863] -->
+	<xs:element name="InterfaceOutUnicastPackets" type="xs:int"/>
+	<!-- interface output packet discards -->
+	<!-- see IfOutDiscards in [RFC2863] -->
+	<xs:element name="InterfaceOutDiscards" type="xs:int"/>
+	<!-- interface output errors -->
+	<!-- see IfOutErrors in [RFC2863] -->
+	<xs:element name="InterfaceOutErrors" type="xs:int"/>
+	<!-- interface type -->
+	<!-- see IANAifType in [RFC2863] and IANA Registry -->
+	<!-- see ifType in [RFC2863] -->
+	<xs:element name="InterfaceType" type="xs:int"/>
+	<!-- interface local name for management -->
+	<!-- see ifName in [RFC2863] -->
+	<xs:element name="InterfaceName" type="ObjectStringLongType"/>
+	<!-- interface maximum packet size (in octets) -->
+	<!-- see ifMtu in [RFC2863] -->
+	<xs:element name="InterfaceMaxPacketSize" type="xs:int"/>
+	<!-- interpreter page orientation default (portrait or landscape) -->
+	<!-- see PrtPrintOrientationTC in [RFC3805] -->
+	<!-- see prtInterpreterDefaultOrientation in [RFC3805] -->
+	<xs:element name="InterpreterDefaultOrientation" type="InterpreterPageOrientationWKV"/>
+	<!-- interpreter addressability unit -->
+	<!-- (missing element in Printer MIB v2 [RFC3805]) -->
+	<!-- see PrtMarkerAddressabilityUnitTC in [RFC3805] -->
+	<!-- see prtMarkerAddressabilityUnit in [RFC3805] -->
+	<xs:element name="InterpreterAddressabilityUnit" type="SubunitAddressabilityUnitWKV"/>
+	<!-- interpreter addressability basis (i.e., accuracy) -->
+	<!-- see prtInterpreterFeedAddressability in [RFC3805] -->
+	<xs:element name="InterpreterAddressabilityBasis" type="ObjectCounterBasisWKV"/>
+	<!-- interpreter feed addressability -->
+	<!-- see prtInterpreterFeedAddressability in [RFC3805] -->
+	<xs:element name="InterpreterAddressabilityFeed" type="xs:int"/>
+	<!-- interpreter crossfeed addressability -->
+	<!-- see prtInterpreterXFeedAddressability in [RFC3805] -->
+	<xs:element name="InterpreterAddressabilityCrossFeed" type="xs:int"/>
+	<!-- interpreter default charset for input characters -->
+	<!-- see prtInterpreterDefaultCharSetIn in [RFC3805] -->
+	<xs:element name="InterpreterDefaultCharsetIn" type="ObjectStringShortType"/>
+	<!-- interpreter default charset for output characters -->
+	<!-- see prtInterpreterDefaultCharSetOut in [RFC3805] -->
+	<xs:element name="InterpreterDefaultCharsetOut" type="ObjectStringShortType"/>
+	<!-- interpreter is two way with back input channel (if true) -->
+	<!-- see prtInterpreterTwoWay in [RFC3805] -->
+	<xs:element name="InterpreterIsTwoWay" type="xs:boolean"/>
+	<!-- interpreter PDL language family -->
+	<!-- see PrtInterpreterLangFamilyTC in [RFC3805] -->
+	<!-- see prtInterpreterLangFamily in [RFC3805] -->
+	<xs:element name="InterpreterLanguageFamily">
+		<xs:simpleType>
+			<xs:union memberTypes="pwg:InterpreterLanguageFamilyWKV pwg:KeywordNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<!-- interpreter PDL language format (MIME type) -->
+	<!-- see prtInterpreterLangFamily in [RFC3805] -->
+	<xs:element name="InterpreterLanguageSupported" type="InterpreterLanguageSupportedType"/>
+	<!-- interpreter PDL language level (e.g., '5e' for PCL) -->
+	<!-- see prtInterpreterLangLevel in [RFC3805] -->
+	<xs:element name="InterpreterLanguageLevel" type="ObjectStringShortType"/>
+	<!-- interpreter PDL language date code or version -->
+	<!-- see prtInterpreterLangVersion in [RFC3805] -->
+	<xs:element name="InterpreterLanguageVersion" type="ObjectStringShortType"/>
+	<!-- interpreter vendor-supplied version -->
+	<!-- see prtInterpreterVersion in [RFC3805] -->
+	<xs:element name="InterpreterVersion" type="ObjectStringShortType"/>
+	<xs:complexType name="InterpreterLanguageSupportedType">
+		<xs:sequence>
+			<xs:element name="InterpreterLanguage" type="InterpreterLanguageFamilyWKV" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- list of interpeter PDL lanaguage families supported -->
+	</xs:complexType>
+	<!-- marker usage counter unit -->
+	<!-- see prtMarkerCounterUnit in [RFC3805] -->
+	<xs:element name="MarkerCounterUnit" type="SubunitCounterUnitWKV"/>
+	<!-- marker usage over subunit lifetime -->
+	<!-- see prtMarkerLifeCount in [RFC3805] -->
+	<xs:element name="MarkerCounterLife" type="xs:int"/>
+	<!-- marker usage since last power on -->
+	<!-- see prtMarkerPowerOnCount in [RFC3805] -->
+	<xs:element name="MarkerCounterPowerOn" type="xs:int"/>
+	<!-- marker addressability unit -->
+	<!-- see PrtMarkerAddressabilityUnitTC in [RFC3805] -->
+	<!-- see prtMarkerAddressabilityUnit in [RFC3805] -->
+	<xs:element name="MarkerAddressabilityUnit" type="SubunitAddressabilityUnitWKV"/>
+	<!-- marker addressability basis (i.e., accuracy) -->
+	<!-- see prtMarkerFeedAddressability in [RFC3805] -->
+	<xs:element name="MarkerAddressabilityBasis" type="ObjectCounterBasisWKV"/>
+	<!-- marker feed addressability -->
+	<!-- see prtMarkerFeedAddressability in [RFC3805] -->
+	<xs:element name="MarkerAddressabilityFeed" type="xs:int"/>
+	<!-- marker crossfeed addressability -->
+	<!-- see prtMarkerXFeedAddressability in [RFC3805] -->
+	<xs:element name="MarkerAddressabilityCrossFeed" type="xs:int"/>
+	<!-- marker margin basis (i.e., accuracy) -->
+	<!-- see prtMarkerNorthMargin in [RFC3805] -->
+	<xs:element name="MarkerMarginBasis" type="ObjectCounterBasisWKV"/>
+	<!-- marker north margin in addressability units -->
+	<!-- see prtMarkerNorthMargin in [RFC3805] -->
+	<xs:element name="MarkerNorthMargin" type="xs:int"/>
+	<!-- marker south margin in addressability units -->
+	<!-- see prtMarkerSouthMargin in [RFC3805] -->
+	<xs:element name="MarkerSouthMargin" type="xs:int"/>
+	<!-- marker west margin in addressability units -->
+	<!-- see prtMarkerWestMargin in [RFC3805] -->
+	<xs:element name="MarkerWestMargin" type="xs:int"/>
+	<!-- marker east margin in addressability units -->
+	<!-- see prtMarkerEastMargin in [RFC3805] -->
+	<xs:element name="MarkerEastMargin" type="xs:int"/>
+	<!-- marking technology for this marker subunit -->
+	<!-- see PrtMarkerMarkTechTC in [RFC3805] -->
+	<!-- see prtMarkerMarkTech in [RFC3805] -->
+	<xs:element name="MarkerTechnology" type="MarkerTechnologyWKV"/>
+	<!-- marker process colorants -->
+	<!-- see prtMarkerProcessColorants in [RFC3805] -->
+	<xs:element name="MarkerProcessColorants" type="xs:int"/>
+	<!-- marker spot colorants -->
+	<!-- see prtMarkerSpotColorants in [RFC3805] -->
+	<xs:element name="MarkerSpotColorants" type="xs:int"/>
+	<!-- marker colorant role (process, spot, etc.) -->
+	<!-- see PrtMarkerColorantRoleTC in [RFC3805] -->
+	<!-- see prtMarkerColorantRole in [RFC3805] -->
+	<xs:element name="MarkerColorantRole" type="MarkerColorantRoleWKV"/>
+	<!-- marker colorant standard name -->
+	<!-- see Media Color Names section 4 in [PWG5101.1] -->
+	<!-- see prtMarkerColorantValue in [RFC3805] -->
+	<xs:element name="MarkerColorantName">
+		<xs:simpleType>
+			<xs:union memberTypes="ColorantWKV KeywordNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<!-- marker colorant distinct levels of tonality -->
+	<!-- (levels of tonal difference available for rendering) -->
+	<!-- see prtMarkerColorantTonality in [RFC3805] -->
+	<xs:element name="MarkerColorantTonality" type="xs:int"/>
+	<!-- marker supply associated marker colorant ID or zero -->
+	<!-- see prtMarkerSuppliesColorantIndex in [RFC3805] -->
+	<xs:element name="MarkerSupplyColorantId" type="xs:int"/>
+	<!-- marker supply current level basis (i.e., accuracy) -->
+	<!-- see prtMarkerSuppliesLevel in [RFC3805] -->
+	<xs:element name="MarkerSupplyCurrentLevelBasis" type="ObjectCounterBasisWKV"/>
+	<!-- marker supply current level -->
+	<!-- (in units specified by MarkerSupplyCapacityUnit) -->
+	<!-- see prtMarkerSuppliesLevel in [RFC3805] -->
+	<xs:element name="MarkerSupplyCurrentLevel" type="xs:int"/>
+	<!-- marker supply class -->
+	<!-- see PrtMarkerSuppliesClassTC in [RFC3805] -->
+	<!-- see prtMarkerSuppliesClass in [RFC3805] -->
+	<xs:element name="MarkerSupplyClass" type="MarkerSupplyClassWKV"/>
+	<!-- marker supply type -->
+	<!-- see PrtMarkerSuppliesTypeTC in [RFC3805] -->
+	<!-- see prtMarkerSuppliesType in [RFC3805] -->
+	<xs:element name="MarkerSupplyType" type="MarkerSupplyTypeWKV"/>
+	<!-- marker supply vendor-supplied description -->
+	<!-- (in locale specified by SystemNaturalLanguage) -->
+	<!-- see prtMarkerSuppliesDescription in [RFC3805] -->
+	<xs:element name="MarkerSupplyInfo" type="ObjectStringLongType"/>
+	<!-- marker supply capacity/level unit -->
+	<!-- see PrtMarkerSuppliesSupplyUnitTC in [RFC3805] -->
+	<!-- see prtMarkerSuppliesSupplyUnit in [RFC3805] -->
+	<xs:element name="MarkerSupplyCapacityUnit" type="MarkerSupplyCapacityUnitWKV"/>
+	<!-- marker supply maximum capacity basis (i.e., accuracy) -->
+	<!-- see prtMarkerSuppliesMaxCapacity in [RFC3805] -->
+	<xs:element name="MarkerSupplyMaxCapacityBasis" type="ObjectCounterBasisWKV"/>
+	<!-- marker supply maximum capacity -->
+	<!-- (in units specified by MarkerSupplyCapacityUnit) -->
+	<!-- see prtMarkerSuppliesMaxCapacity in [RFC3805] -->
+	<xs:element name="MarkerSupplyMaxCapacity" type="xs:int"/>
+	<!-- media path type -->
+	<!-- see PrtMediaPathTypeTC in [RFC3805] -->
+	<!-- see prtMediaPathType in [RFC3805] -->
+	<xs:element name="MediaPathType" type="MediaPathTypeWKV"/>
+	<!-- media path maximum speed unit -->
+	<!-- see PrtMediaPathMaxSpeedPrintUnitTC in [RFC3805] -->
+	<!-- see prtMediaPathMaxSpeedPrintUnit in [RFC3805] -->
+	<xs:element name="MediaPathMaxSpeedUnit" type="MediaPathMaxSpeedUnitWKV"/>
+	<!-- media path maximum speed -->
+	<!-- (in units specified by MediaPathMaxSpeedUnit) -->
+	<!-- see prtMediaPathMaxSpeed in [RFC3805] -->
+	<xs:element name="MediaPathMaxSpeed" type="xs:int"/>
+	<!-- media path maximum media size name -->
+	<!-- see Media Size Self-Describing Names section 5 in [PWG5101.1] -->
+	<!-- see prtMediaPathMediaSizeUnit in [RFC3805] -->
+	<!-- see prtMediaPathMaxMediaFeedDir in [RFC3805] -->
+	<!-- see prtMediaPathMaxMediaXFeedDir in [RFC3805] -->
+	<xs:element name="MediaPathMaxMediaSizeName" type="ObjectStringShortType"/>
+	<!-- media path minimum media size name -->
+	<!-- see Media Size Self-Describing Names section 5 in [PWG5101.1] -->
+	<!-- see prtMediaPathMediaSizeUnit in [RFC3805] -->
+	<!-- see prtMediaPathMinMediaFeedDir in [RFC3805] -->
+	<!-- see prtMediaPathMinMediaXFeedDir in [RFC3805] -->
+	<xs:element name="MediaPathMinMediaSizeName" type="ObjectStringShortType"/>
+	<!-- output channel is enabled (if true) -->
+	<!-- see PrtChannelStateTC in [RFC3805] -->
+	<!-- see prtChannelState (boolean) in [RFC3805] -->
+	<xs:element name="OutputChannelIsEnabled" type="xs:boolean"/>
+	<!-- output channel network interface ID or zero -->
+	<!-- see InterfaceIndexOrZero in [RFC2863] -->
+	<!-- see prtChannelIfIndex in [RFC3805] -->
+	<xs:element name="OutputChannelInterface" type="InterfaceType"/>
+	<!-- output channel job control language interpreter ID or zero -->
+	<!-- see prtChannelCurrentJobCntlLangIndex in [RFC3805] -->
+	<xs:element name="OutputChannelDefaultJobControlLanguage" type="InterpreterType"/>
+	<!-- output channel type -->
+	<!-- see PrtChannelTypeTC in [RFC3805] and [IANA-PRT] -->
+	<!-- see prtChannelType in [RFC3805] -->
+	<xs:element name="OutputChannelType" type="OutputChannelTypeWKV"/>
+	<!-- output channel protocol version (refines OutputChannelType) -->
+	<!-- see prtChannelProtocolVersion in [RFC3805] -->
+	<xs:element name="OutputChannelProtocolVersion" type="ObjectStringShortType"/>
+	<!-- output channel auxiliary information in a structured string -->
+	<!-- see PrtChannelTypeTC in [RFC3805] and [IANA-PRT] -->
+	<!-- see prtChannelInformation in [RFC3805] -->
+	<xs:element name="OutputChannelAuxInfo" type="ObjectStringLongType"/>
+	<!-- output tray states and conditions -->
+	<!-- see PrtSubUnitStatusTC in [RFC3805] -->
+	<!-- see prtOutputStatus (bit-mask) in [RFC3805] -->
+	<xs:element name="OutputTrayStates" type="SubunitStates"/>
+	<!-- output tray security present/on/off -->
+	<!-- see PresentOnOff in [RFC3805] -->
+	<!-- see prtOutputSecurity (PresentOnOff) in [RFC3805] -->
+	<xs:element name="OutputTraySecurity" type="SubunitPresentOnOffWKV"/>
+	<!-- output tray remaining capacity basis (i.e., accuracy) -->
+	<!-- see prtOutputRemainingCapacity in [RFC3805] -->
+	<xs:element name="OutputTrayRemainingCapacityBasis" type="ObjectCounterBasisWKV"/>
+	<!-- output tray remaining capacity -->
+	<!-- (in units specified by OutputTrayCapacityUnit) -->
+	<!-- see prtOutputRemainingCapacity in [RFC3805] -->
+	<xs:element name="OutputTrayRemainingCapacity" type="xs:int"/>
+	<!-- output tray stacking order (first to last, etc.) -->
+	<!-- see PrtOutputStackingOrderTC in [RFC3805] -->
+	<!-- see prtOutputStackingOrder in [RFC3805] -->
+	<xs:element name="OutputTrayStackingOrder" type="OutputTrayStackingOrderWKV"/>
+	<!-- output tray page delivery orientation (face up, etc.) -->
+	<!-- see PrtOutputPageDeliveryOrientationTC in [RFC3805] -->
+	<!-- see prtOutputPageDeliveryOrientation in [RFC3805] -->
+	<xs:element name="OutputTrayPageDeliveryOrientation" type="OutputTrayPageDeliveryOrientationWKV"/>
+	<!-- output tray security present/on/off -->
+	<!-- see PresentOnOff in [RFC3805] -->
+	<!-- see prtOutputBursting (PresentOnOff) in [RFC3805] -->
+	<xs:element name="OutputTrayBursting" type="SubunitPresentOnOffWKV"/>
+	<!-- output tray security present/on/off -->
+	<!-- see PresentOnOff in [RFC3805] -->
+	<!-- see prtOutputDecollating (PresentOnOff) in [RFC3805] -->
+	<xs:element name="OutputTrayDecollating" type="SubunitPresentOnOffWKV"/>
+	<!-- output tray security present/on/off -->
+	<!-- see PresentOnOff in [RFC3805] -->
+	<!-- see prtOutputPageCollated (PresentOnOff) in [RFC3805] -->
+	<xs:element name="OutputTrayPageCollated" type="SubunitPresentOnOffWKV"/>
+	<!-- output tray security present/on/off -->
+	<!-- see PresentOnOff in [RFC3805] -->
+	<!-- see prtOutputOffsetStacking (PresentOnOff) in [RFC3805] -->
+	<xs:element name="OutputTrayOffsetStacking" type="SubunitPresentOnOffWKV"/>
+	<!-- output tray type -->
+	<!-- see PrtOutputTypeTC in [RFC3805] -->
+	<!-- see prtOutputType in [RFC3805] -->
+	<xs:element name="OutputTrayType" type="OutputTrayTypeWKV"/>
+	<!-- output tray local name for management -->
+	<!-- see prtOutputName in [RFC3805] -->
+	<xs:element name="OutputTrayName" type="ObjectStringShortType"/>
+	<!-- output tray vendor-supplied name of subunit -->
+	<!-- see prtOutputVendorName in [RFC3805] -->
+	<xs:element name="OutputTrayVendorName" type="ObjectStringShortType"/>
+	<!-- output tray vendor-supplied model of subunit -->
+	<!-- see prtOutputModel in [RFC3805] -->
+	<xs:element name="OutputTrayModel" type="ObjectStringShortType"/>
+	<!-- output tray vendor-supplied version -->
+	<!-- see prtOutputVersion in [RFC3805] -->
+	<xs:element name="OutputTrayVersion" type="ObjectStringShortType"/>
+	<!-- output tray vendor-supplied serial number of subunit -->
+	<!-- see prtOutputSerialNumber in [RFC3805] -->
+	<xs:element name="OutputTraySerialNumber" type="ObjectStringShortType"/>
+	<!-- output tray capacity/level unit -->
+	<!-- see PrtCapacityUnitTC in [RFC3805] -->
+	<!-- see prtOutputCapacityUnit in [RFC3805] -->
+	<xs:element name="OutputTrayCapacityUnit" type="SubunitCapacityUnitWKV"/>
+	<!-- output tray maximum capacity basis (i.e., accuracy) -->
+	<!-- see prtOutputMaxCapacity in [RFC3805] -->
+	<xs:element name="OutputTrayMaxCapacityBasis" type="ObjectCounterBasisWKV"/>
+	<!-- output tray maximum capacity -->
+	<!-- (in units specified by OutputTrayCapacityUnit) -->
+	<!-- see prtOutputMaxCapacity in [RFC3805] -->
+	<xs:element name="OutputTrayMaxCapacity" type="xs:int"/>
+	<!-- output tray maximum media size name -->
+	<!-- see Media Size Self-Describing Names section 5 in [PWG5101.1] -->
+	<!-- see prtOutputDimUnit in [RFC3805] -->
+	<!-- see prtOutputMaxDimFeedDir in [RFC3805] -->
+	<!-- see prtOutputMaxDimXFeedDir in [RFC3805] -->
+	<xs:element name="OutputTrayMaxMediaSizeName" type="ObjectStringShortType"/>
+	<!-- output tray minimum media size name -->
+	<!-- see Media Size Self-Describing Names section 5 in [PWG5101.1] -->
+	<!-- see prtOutputDimUnit in [RFC3805] -->
+	<!-- see prtOutputMinDimFeedDir in [RFC3805] -->
+	<!-- see prtOutputMinDimXFeedDir in [RFC3805] -->
+	<xs:element name="OutputTrayMinMediaSizeName" type="ObjectStringShortType"/>
+	<!-- ScanMediaPath element  -->
+	<xs:element name="Recirculating" type="xs:boolean"/>
+	<!--scan  media path type -->
+	<!-- see PrtMediaPathTypeTC in [RFC3805] -->
+	<!-- see prtMediaPathType in [RFC3805] -->
+	<xs:element name="ScanMediaPathType" type="ScanMediaPathTypeWKV"/>
+	<!-- media path maximum speed unit -->
+	<!-- see PrtScanMediaPathMaxSpeedPrintUnitTC in [RFC3805] -->
+	<!-- see prtScanMediaPathMaxSpeedPrintUnit in [RFC3805] -->
+	<xs:element name="ScanMediaPathMaxSpeedUnit" type="MediaPathMaxSpeedUnitWKV"/>
+	<!-- media path maximum speed -->
+	<!-- (in units specified by ScanMediaPathMaxSpeedUnit) -->
+	<!-- see prtScanMediaPathMaxSpeed in [RFC3805] -->
+	<xs:element name="ScanMediaPathMaxSpeed" type="xs:int"/>
+	<!-- media path maximum media size name -->
+	<!-- see Media Size Self-Describing Names section 5 in [PWG5101.1] -->
+	<!-- see prtScanMediaPathMediaSizeUnit in [RFC3805] -->
+	<!-- see prtScanMediaPathMaxMediaFeedDir in [RFC3805] -->
+	<!-- see prtScanMediaPathMaxMediaXFeedDir in [RFC3805] -->
+	<xs:element name="ScanMediaPathMaxMediaSizeName" type="MediaSizeNameType"/>
+	<!-- media path minimum media size name -->
+	<!-- see Media Size Self-Describing Names section 5 in [PWG5101.1] -->
+	<!-- see prtScanMediaPathMediaSizeUnit in [RFC3805] -->
+	<!-- see prtScanMediaPathMinMediaFeedDir in [RFC3805] -->
+	<!-- see prtScanMediaPathMinMediaXFeedDir in [RFC3805] -->
+	<xs:element name="ScanMediaPathMinMediaSizeName" type="MediaSizeNameType"/>
+	<!-- scanner usage counter unit -->
+	<!-- see prtMarkerCounterUnit in [RFC3805] -->
+	<xs:element name="ScannerCounterUnit" type="SubunitCounterUnitWKV"/>
+	<!-- scanner usage over subunit lifetime -->
+	<!-- see prtMarkerLifeCount in [RFC3805] -->
+	<xs:element name="ScannerLifeCount" type="xs:int"/>
+	<!-- scanner usage since last power on -->
+	<!-- see prtMarkerPowerOnCount in [RFC3805] -->
+	<xs:element name="ScannerPowerOnCount" type="xs:int"/>
+	<!-- scanner addressability unit -->
+	<!-- see PrtMarkerAddressabilityUnitTC in [RFC3805] -->
+	<!-- see prtMarkerAddressabilityUnit in [RFC3805] -->
+	<xs:element name="ScannerAddressabilityUnit" type="SubunitAddressabilityUnitWKV"/>
+	<!-- scanner addressability basis (i.e., accuracy) -->
+	<!-- see prtMarkerFeedAddressability in [RFC3805] -->
+	<xs:element name="ScannerAddressabilityBasis" type="ObjectCounterBasisWKV"/>
+	<!-- scanner feed addressability -->
+	<!-- see prtMarkerFeedAddressability in [RFC3805] -->
+	<xs:element name="ScannerAddressabilityFeed" type="xs:int"/>
+	<!-- scanner crossfeed addressability -->
+	<!-- see prtMarkerXFeedAddressability in [RFC3805] -->
+	<xs:element name="ScannerAddressabilityCrossFeed" type="xs:int"/>
+	<!-- scanner margin basis (i.e., accuracy) -->
+	<!-- see prtMarkerNorthMargin in [RFC3805] -->
+	<xs:element name="ScannerMarginBasis" type="ObjectCounterBasisWKV"/>
+	<!-- scanner north margin in addressability units -->
+	<!-- see prtMarkerNorthMargin in [RFC3805] -->
+	<xs:element name="ScannerNorthMargin" type="xs:int"/>
+	<!-- scanner south margin in addressability units -->
+	<!-- see prtMarkerSouthMargin in [RFC3805] -->
+	<xs:element name="ScannerSouthMargin" type="xs:int"/>
+	<!-- scanner west margin in addressability units -->
+	<!-- see prtMarkerWestMargin in [RFC3805] -->
+	<xs:element name="ScannerWestMargin" type="xs:int"/>
+	<!-- marker east margin in addressability units -->
+	<!-- see prtMarkerEastMargin in [RFC3805] -->
+	<xs:element name="ScannerEastMargin" type="xs:int"/>
+	<!-- ScanMediaPath element  -->
+	<!-- subunit states and conditions -->
+	<!-- see PrtSubUnitStatusTC in [RFC3805] -->
+	<!-- see prtMarkerStatus (bit-mask) in [RFC3805] -->
+	<xs:element name="ScannerBitsPerPixel" type="xs:int"/>
+	<xs:element name="ScannerColorPlanes" type="xs:int"/>
+	<!--                           -->
+	<!-- Consoles - set of consoles -->
+	<xs:complexType name="ConsoleStatusType">
+		<xs:complexContent>
+			<xs:extension base="SubunitStatus">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ConsoleStatus" type="ConsoleStatusType">
+		<!-- ConsoleStatus - group -->
+	</xs:element>
+	<xs:complexType name="ConsoleDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="SubunitDescription">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:element ref="ConsoleNumberOfDisplayChars" minOccurs="0"/>
+					<xs:element ref="ConsoleNumberOfDisplayLines" minOccurs="0"/>
+					<xs:element ref="ConsoleDisable"/>
+					<xs:element ref="ConsoleDisplayBuffer" minOccurs="0"/>
+					<xs:element ref="ConsoleLights" minOccurs="0"/>
+					<xs:element ref="ConsoleNaturalLanguage" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:complexType name="ConsoleDescriptionSetType">
+		<xs:complexContent>
+			<xs:extension base="SubunitDescription">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:element ref="ConsoleNumberOfDisplayChars" minOccurs="0"/>
+					<xs:element ref="ConsoleNumberOfDisplayLines" minOccurs="0"/>
+					<xs:element ref="ConsoleDisable" minOccurs="0"/>
+					<xs:element ref="ConsoleDisplayBuffer" minOccurs="0"/>
+					<xs:element ref="ConsoleLights" minOccurs="0"/>
+					<xs:element ref="ConsoleNaturalLanguage" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ConsoleDescription" type="ConsoleDescriptionSetType">
+		<!-- ConsoleDescription - group -->
+	</xs:element>
+	<xs:complexType name="ConsolesType">
+		<xs:sequence>
+			<xs:element ref="Console" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- Consoles - set of consoles -->
+	</xs:complexType>
+	<xs:complexType name="ConsolesSetType">
+		<xs:sequence>
+			<xs:element name="Console" type="ConsoleSetType"/>
+		</xs:sequence>
+		<!-- Consoles - set of consoles -->
+	</xs:complexType>
+	<xs:complexType name="ConsoleType">
+		<xs:sequence>
+			<xs:element ref="ConsoleDescription"/>
+			<xs:element ref="ConsoleStatus"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- see prtCover in [RFC3805] -->
+	</xs:complexType>
+	<xs:complexType name="ConsoleSetType">
+		<xs:sequence>
+			<xs:element ref="ConsoleDescription" minOccurs="0"/>
+			<xs:element name="ConsoleStatus" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="ConsoleId"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- see prtCover in [RFC3805] -->
+	</xs:complexType>
+	<xs:element name="Consoles" type="ConsolesType"/>
+	<!-- Console - subunit -->
+	<xs:element name="Console" type="ConsoleType"/>
+	<!-- Covers - set of covers -->
+	<!-- see prtCoverTable in [RFC3805] -->
+	<xs:complexType name="CoverStatusType">
+		<xs:sequence>
+			<!-- SM/1.0 Printer group import -->
+			<xs:element name="CoverIsOpen" type="xs:boolean"/>
+			<xs:element name="CoverSubunitType" type="CoverSubunitTypeWKV"/>
+			<xs:element name="DeviceErrors" type="xs:int" minOccurs="0"/>
+			<xs:element ref="Id"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CoverStatus" type="CoverStatusType">
+		<!-- CoverStatus - group -->
+	</xs:element>
+	<xs:complexType name="CoverDescriptionType">
+		<xs:sequence>
+			<xs:element ref="Description" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other"/>
+	</xs:complexType>
+	<xs:element name="CoverDescription" type="CoverDescriptionType">
+		<!-- CoverDescription - group -->
+	</xs:element>
+	<xs:complexType name="CoversType">
+		<xs:sequence>
+			<xs:element ref="Cover" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- Covers - set of covers -->
+	</xs:complexType>
+	<xs:complexType name="CoversSetType">
+		<xs:sequence>
+			<xs:element name="Cover" type="CoverSetType"/>
+		</xs:sequence>
+		<!-- Covers - set of covers -->
+	</xs:complexType>
+	<xs:complexType name="CoverType">
+		<xs:sequence>
+			<xs:element ref="CoverDescription" minOccurs="0"/>
+			<xs:element ref="CoverStatus"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- Cover - type -->
+	</xs:complexType>
+	<xs:complexType name="CoverSetType">
+		<xs:sequence>
+			<xs:element ref="CoverDescription" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="CoverStatus" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Id"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<!-- Cover - type -->
+	</xs:complexType>
+	<xs:element name="Covers" type="CoversType"/>
+	<!-- Cover - subunit -->
+	<!-- see prtCoverEntry in [RFC3805] -->
+	<xs:element name="Cover" type="CoverType"/>
+	<!--FaxModem - subunit -->
+	<!-- see mdmIDEntry in [RFC1696] -->
+	<xs:complexType name="LineCapabilitiesType">
+		<xs:sequence>
+			<xs:element name="LineCapability" type="LineCapabilityWKV" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- subunit states and conditions -->
+		<!-- see PrtSubUnitStatusTC (bit-mask) in [RFC3805] -->
+	</xs:complexType>
+	<xs:element name="Configuration" type="pwg:SubunitsType"/>
+	<xs:element name="FaxModemInfo" type="ObjectStringLongType"/>
+	<xs:element name="FaxModemName" type="ObjectStringShortType"/>
+	<xs:element name="FaxModemModel" type="ObjectStringShortType"/>
+	<xs:element name="FaxModemVersion" type="ObjectStringShortType"/>
+	<xs:element name="FaxModemSerialNumber" type="ObjectStringShortType"/>
+	<xs:element name="FaxModemVendorName" type="ObjectStringShortType"/>
+	<xs:element name="LineCarrierLossTime" type="xs:int"/>
+	<xs:element name="FaxModemLineCapabilities" type="LineCapabilitiesType"/>
+	<xs:element name="FaxModemDTROnToOff" type="DTRToOffWKV"/>
+	<xs:element name="FaxModemDTROffToOn" type="DTRToOnWKV"/>
+	<xs:element name="DTESyncTimingSource" type="DTESynchWKV"/>
+	<xs:element name="DTESyncAsyncMode" type="DTESynchModeWKV"/>
+	<xs:element name="DTEInactivityTimeout" type="xs:int"/>
+	<xs:element name="RingsBeforeAnswer" type="xs:int"/>
+	<xs:element name="CallSetUpFailTimer" type="xs:int"/>
+	<xs:element name="EscapeAction" type="CCEscapeActionWKV"/>
+	<xs:element name="ConnectionFailReason" type="ConnectionFailReasonWKV"/>
+	<xs:element name="CurrentLineTransmitRate" type="xs:int"/>
+	<xs:element name="CurrentLineReceiveRate" type="xs:int"/>
+	<xs:element name="ErrorControlUsed" type="ErrorControlWKV">
+		<xs:annotation>
+			<xs:documentation>Need ITU V.58 Tokens checked</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="CompressionTypeUsed" type="CompressionType">
+		<xs:annotation>
+			<xs:documentation>Need tokens added  to CompressionType checked</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ModulationSchemeUsed">
+		<xs:annotation>
+			<xs:documentation>Need ITU V.58 Tokens checked</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:union memberTypes="ModulationWKV ItuStandardWKV"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:complexType name="FaxModemStatusType">
+		<xs:complexContent>
+			<xs:extension base="SubunitStatus">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:element ref="CompressionTypeUsed" minOccurs="0"/>
+					<xs:element ref="ConnectionFailReason" minOccurs="0"/>
+					<xs:element ref="CurrentLineReceiveRate" minOccurs="0"/>
+					<xs:element ref="CurrentLineTransmitRate" minOccurs="0"/>
+					<xs:element ref="ErrorControlUsed" minOccurs="0"/>
+					<xs:element ref="FaxModemModel" minOccurs="0"/>
+					<xs:element ref="FaxModemSerialNumber" minOccurs="0"/>
+					<xs:element ref="FaxModemVendorName" minOccurs="0"/>
+					<xs:element ref="FaxModemVersion" minOccurs="0"/>
+					<xs:element ref="LineCarrierLossTime" minOccurs="0"/>
+					<xs:element ref="ModulationSchemeUsed" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FaxModemStatus" type="FaxModemStatusType"/>
+	<xs:complexType name="FaxModemDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="SubunitDescription">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:element ref="AudioVolume" minOccurs="0"/>
+					<xs:element ref="CallSetUpFailTimer" minOccurs="0"/>
+					<xs:element ref="DialingMethod" minOccurs="0"/>
+					<xs:element ref="DTEInactivityTimeout" minOccurs="0"/>
+					<xs:element ref="DTESyncAsyncMode" minOccurs="0"/>
+					<xs:element ref="DTESyncTimingSource" minOccurs="0"/>
+					<xs:element ref="EscapeAction" minOccurs="0"/>
+					<xs:element ref="FaxModemInfo" minOccurs="0"/>
+					<xs:element ref="FaxModemName" minOccurs="0"/>
+					<xs:element ref="FaxModemLineCapabilities" minOccurs="0"/>
+					<xs:element ref="FaxModemDTROnToOff" minOccurs="0"/>
+					<xs:element ref="FaxModemDTROffToOn" minOccurs="0"/>
+					<xs:element ref="NumberOfRetries" minOccurs="0"/>
+					<xs:element ref="RingsBeforeAnswer" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FaxModemDescription" type="FaxModemDescriptionType"/>
+	<xs:complexType name="FaxModemType">
+		<xs:sequence>
+			<xs:element ref="FaxModemDescription" minOccurs="0"/>
+			<xs:element ref="FaxModemStatus"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FaxModemSetType">
+		<xs:sequence>
+			<xs:element ref="FaxModemDescription"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:element name="FaxModemStatus" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Id"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FaxModemsType">
+		<xs:sequence>
+			<xs:element ref="FaxModem" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FaxModemsSetType">
+		<xs:sequence>
+			<xs:element name="FaxModem" type="FaxModemSetType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="FaxModem" type="FaxModemType"/>
+	<xs:element name="FaxModems" type="FaxModemsType"/>
+	<!-- FinisherSupplyMediaInputs - set of fin supply media inputs -->
+	<!-- see finSupplyMediaInputTable in [RFC3806] -->
+	<xs:element name="FinisherSupplyMediaInputStatus">
+		<!-- FinisherSupplyMediaInputStatus - group -->
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Id"/>
+				<xs:element ref="FinisherSupplyMediaInputStates"/>
+				<xs:element ref="FinisherSupplyMediaInputType"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FinisherSupplyMediaInputDescription">
+		<!-- FinisherSupplyMediaInputDescription - group -->
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="FinisherSupplyMediaInputInfo" minOccurs="0"/>
+				<xs:element ref="FinisherSupplyMediaInputMediaInfo" minOccurs="0"/>
+				<xs:element ref="FinisherSupplyMediaInputMediaSizeName" minOccurs="0"/>
+				<xs:element ref="FinisherSupplyMediaInputMediaThickness" minOccurs="0"/>
+				<xs:element ref="FinisherSupplyMediaInputMediaType" minOccurs="0"/>
+				<xs:element ref="FinisherSupplyMediaInputMediaWeight" minOccurs="0"/>
+				<xs:element ref="FinisherSupplyMediaInputName" minOccurs="0"/>
+				<xs:element ref="FinisherSupplyMediaInputSecurity" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="FinisherSupplyMediaInputsType">
+		<xs:sequence>
+			<xs:element ref="FinisherSupplyMediaInput" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- FinisherSupplyMediaInputs - set of fin supply media inputs -->
+	</xs:complexType>
+	<xs:complexType name="FinisherSupplyMediaInputsSetType">
+		<xs:sequence>
+			<xs:element name="FinisherSupplyMediaInput" type="FinisherSupplyMediaInputSetType" minOccurs="0"/>
+		</xs:sequence>
+		<!-- FinisherSupplyMediaInputs - set of fin supply media inputs -->
+	</xs:complexType>
+	<xs:complexType name="FinisherSupplyMediaInputType">
+		<xs:sequence>
+			<xs:element ref="FinisherSupplyMediaInputDescription" minOccurs="0"/>
+			<xs:element ref="FinisherSupplyMediaInputStatus"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- FinisherSupplyMediaInput - type -->
+	</xs:complexType>
+	<xs:complexType name="FinisherSupplyMediaInputSetType">
+		<xs:sequence>
+			<xs:element ref="FinisherSupplyMediaInputDescription" minOccurs="0"/>
+			<xs:element name="FinisherSupplyMediaInputStatus" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Id"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- FinisherSupplyMediaInput - type -->
+	</xs:complexType>
+	<xs:element name="FinisherSupplyMediaInputs" type="FinisherSupplyMediaInputsType"/>
+	<!-- FinisherSupplyMediaInput - component -->
+	<!-- see finSupplyMediaInputEntry in [RFC3806] -->
+	<xs:element name="FinisherSupplyMediaInput" type="FinisherSupplyMediaInputType"/>
+	<!-- FinisherSupplies - set of finisher supplies -->
+	<!-- see finSupplyTable in [RFC3806] -->
+	<xs:element name="FinisherSupplyStatus">
+		<!-- FinisherSupplyStatus - group -->
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Id"/>
+				<xs:element ref="FinisherSupplyCapacityUnit" minOccurs="0"/>
+				<xs:element ref="FinisherSupplyColorName" minOccurs="0"/>
+				<xs:element ref="FinisherSupplyInfo" minOccurs="0"/>
+				<xs:element ref="FinisherSupplyType"/>
+				<xs:element ref="FinisherSupplyClass"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FinisherSupplyDescription">
+		<!-- FinisherSupplyDescription - group -->
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="FinisherSupplyCurrentLevel" minOccurs="0"/>
+				<xs:element ref="FinisherSupplyCurrentLevelBasis" minOccurs="0"/>
+				<xs:element ref="FinisherSupplyMaxCapacity" minOccurs="0"/>
+				<xs:element ref="FinisherSupplyMaxCapacityBasis" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="FinisherSuppliesType">
+		<xs:sequence>
+			<xs:element ref="FinisherSupply" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- FinisherSupplies - set of finisher supplies -->
+	</xs:complexType>
+	<xs:complexType name="FinisherSuppliesSetType">
+		<xs:sequence>
+			<xs:element name="FinisherSupply" type="FinisherSupplySetType" minOccurs="0"/>
+		</xs:sequence>
+		<!-- FinisherSupplies - set of finisher supplies -->
+	</xs:complexType>
+	<xs:complexType name="FinisherSupplyType">
+		<xs:sequence>
+			<xs:element ref="FinisherSupplyDescription" minOccurs="0"/>
+			<xs:element ref="FinisherSupplyStatus"/>
+			<xs:element ref="FinisherSupplyMediaInputs" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- FinisherSupply - type -->
+	</xs:complexType>
+	<xs:complexType name="FinisherSupplySetType">
+		<xs:sequence>
+			<xs:element name="FinisherSupplyStatus" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Id"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:choice>
+				<xs:element ref="FinisherSupplyDescription" minOccurs="0"/>
+				<xs:element name="FinisherSupplyMediaInputs" type="FinisherSupplyMediaInputsSetType" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:choice>
+		</xs:sequence>
+		<!-- FinisherSupply - type -->
+	</xs:complexType>
+	<xs:element name="FinisherSupplies" type="FinisherSuppliesType"/>
+	<!-- FinisherSupply - component -->
+	<!-- see finSupplyEntry in [RFC3806] -->
+	<xs:element name="FinisherSupply" type="FinisherSupplyType"/>
+	<xs:complexType name="FinisherStatusType">
+		<xs:complexContent>
+			<xs:extension base="SubunitStatus">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:element ref="FinisherCapacityUnit" minOccurs="0"/>
+					<xs:element ref="FinisherPresentOnOff"/>
+					<xs:element ref="FinisherAssociatedMediaPaths" minOccurs="0"/>
+					<xs:element ref="FinisherAssociatedOutputTrays" minOccurs="0"/>
+					<xs:element ref="FinisherType"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FinisherStatus" type="FinisherStatusType">
+		<!-- FinisherStatus - group -->
+	</xs:element>
+	<!-- Finishers - set of finishers -->
+	<!-- see finDeviceTable in [RFC3806] -->
+	<xs:complexType name="FinisherDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="SubunitDescription">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:element ref="FinisherCurrentCapacity" minOccurs="0"/>
+					<xs:element ref="FinisherCurrentCapacityBasis" minOccurs="0"/>
+					<xs:element ref="FinisherMaxCapacity" minOccurs="0"/>
+					<xs:element ref="FinisherMaxCapacityBasis" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="FinisherDescription" type="FinisherDescriptionType">
+		<!-- FinisherDescription - group -->
+	</xs:element>
+	<xs:complexType name="FinishersType">
+		<xs:sequence>
+			<xs:element ref="Finisher" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- Finishers - set of finishers -->
+	</xs:complexType>
+	<xs:complexType name="FinishersSetType">
+		<xs:sequence>
+			<xs:element name="Finisher" type="FinisherSetType"/>
+		</xs:sequence>
+		<!-- Finishers - set of finishers -->
+	</xs:complexType>
+	<xs:complexType name="FinisherType">
+		<xs:sequence>
+			<xs:element ref="FinisherDescription" minOccurs="0"/>
+			<xs:element ref="FinisherStatus"/>
+			<xs:element ref="FinisherSupplies" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- Finisher - type -->
+	</xs:complexType>
+	<xs:complexType name="FinisherSetType">
+		<xs:sequence>
+			<xs:element name="FinisherStatus" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Id"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:choice>
+				<xs:element ref="FinisherDescription" minOccurs="0"/>
+				<xs:element name="FinisherSupplies" type="FinisherSuppliesSetType" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:choice>
+		</xs:sequence>
+		<!-- Finisher - type -->
+	</xs:complexType>
+	<xs:element name="Finishers" type="FinishersType"/>
+	<!-- Finisher - subunit -->
+	<!-- see finDeviceEntry in [RFC3806] -->
+	<xs:element name="Finisher" type="FinisherType"/>
+	<!-- InputChannels - set of input channels -->
+	<!-- see prtChannelTable in [RFC3805] -->
+	<xs:complexType name="InputChannelStatusType">
+		<xs:sequence>
+			<!-- SM/1.0 Printer group import -->
+			<xs:element name="DeviceErrors" type="xs:int" minOccurs="0"/>
+			<xs:element ref="Id"/>
+			<xs:element ref="InputChannelAuxInfo" minOccurs="0"/>
+			<xs:element ref="InputChannelProtocolVersion" minOccurs="0"/>
+			<xs:element ref="InputChannelType"/>
+			<xs:element ref="ProductID" minOccurs="0"/>
+			<xs:element ref="SubunitStates"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other"/>
+	</xs:complexType>
+	<xs:element name="InputChannelStatus" type="InputChannelStatusType">
+		<!-- InputChannelStatus - group -->
+	</xs:element>
+	<xs:complexType name="InputChannelDescriptionType">
+		<xs:sequence>
+			<!-- SM/1.0 Printer group import -->
+			<xs:element ref="Description" minOccurs="0"/>
+			<xs:element ref="InputChannelIsAcceptingJobs"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other"/>
+	</xs:complexType>
+	<xs:complexType name="InputChannelDescriptionSetType">
+		<xs:sequence>
+			<!-- SM/1.0 Printer group import -->
+			<xs:element ref="Description" minOccurs="0"/>
+			<xs:element ref="InputChannelIsAcceptingJobs" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other"/>
+	</xs:complexType>
+	<xs:element name="InputChannelDescription" type="InputChannelDescriptionType">
+		<!-- InputChannelDescription - group -->
+	</xs:element>
+	<xs:complexType name="InputChannelsType">
+		<xs:sequence>
+			<xs:element ref="InputChannel" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- InputChannels - set of input channels -->
+	</xs:complexType>
+	<xs:complexType name="InputChannelsSetType">
+		<xs:sequence>
+			<xs:element name="InputChannel" type="InputChannelSetType"/>
+		</xs:sequence>
+		<!-- InputChannels - set of input channels -->
+	</xs:complexType>
+	<xs:complexType name="InputChannelType">
+		<xs:sequence>
+			<xs:element ref="InputChannelDescription" minOccurs="0"/>
+			<xs:element ref="InputChannelStatus"/>
+			<xs:element ref="InputChannelInterface" minOccurs="0"/>
+			<xs:element ref="InputChannelDefaultJobControlLanguage" minOccurs="0"/>
+			<xs:element ref="InputChannelDefaultPageDescriptionLanguage" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- InputChannel - type -->
+	</xs:complexType>
+	<xs:complexType name="InputChannelSetType">
+		<xs:sequence>
+			<xs:element ref="InputChannelDescription" minOccurs="0"/>
+			<xs:element name="InputChannelInterfaceId" type="xs:int" minOccurs="0"/>
+			<xs:element name="InputChannelDefaultJobControlLanguageId" type="xs:int" minOccurs="0"/>
+			<xs:element name="InputChannelDefaultPageDescriptionLanguageId" type="xs:int" minOccurs="0"/>
+			<xs:element name="InputChannelStatus" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Id"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- InputChannel - type -->
+	</xs:complexType>
+	<xs:element name="InputChannels" type="InputChannelsType"/>
+	<!-- InputChannel - subunit -->
+	<!-- see prtChannelEntry in [RFC3805] -->
+	<xs:element name="InputChannel" type="InputChannelType"/>
+	<!-- InputTrays - set of input trays -->
+	<!-- see prtInputTable in [RFC3805] -->
+	<xs:complexType name="InputTrayStatusType">
+		<xs:complexContent>
+			<xs:extension base="SubunitStatus">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:element name="FeedDirection" type="FeedOrientationWKV" minOccurs="0"/>
+					<xs:element ref="InputTrayCapacityUnit" minOccurs="0"/>
+					<xs:element ref="InputTrayModel" minOccurs="0"/>
+					<xs:element ref="InputTraySerialNumber" minOccurs="0"/>
+					<xs:element ref="InputTrayType"/>
+					<xs:element ref="InputTrayVendorName" minOccurs="0"/>
+					<xs:element ref="InputTrayVersion" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="InputTrayStatus" type="InputTrayStatusType">
+		<!-- InputTrayStatus - group -->
+	</xs:element>
+	<xs:complexType name="InputTrayDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="SubunitDescription">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:element ref="InputTrayCurrentLevel" minOccurs="0"/>
+					<xs:element ref="InputTrayCurrentLevelBasis" minOccurs="0"/>
+					<xs:element ref="InputTrayName" minOccurs="0"/>
+					<xs:element ref="InputTrayMaxCapacity" minOccurs="0"/>
+					<xs:element ref="InputTrayMaxCapacityBasis" minOccurs="0"/>
+					<xs:element name="InputTrayMediaColor" type="MediaColorType" minOccurs="0"/>
+					<xs:element name="InputTrayMediaFormParts" type="xs:int" minOccurs="0"/>
+					<xs:element ref="InputTrayMediaInfo" minOccurs="0"/>
+					<xs:element name="InputTrayMediaSize" type="mediaSize" minOccurs="0"/>
+					<xs:element ref="InputTrayMediaSizeName" minOccurs="0"/>
+					<xs:element ref="InputTrayMediaLoadTimeout" minOccurs="0"/>
+					<xs:element ref="InputTrayMediaLoadTimeoutBasis" minOccurs="0"/>
+					<xs:element ref="InputTrayMediaType" minOccurs="0"/>
+					<xs:element ref="InputTrayMediaWeightMetric" minOccurs="0"/>
+					<xs:element ref="InputTrayNextInputTrayId" minOccurs="0"/>
+					<xs:element ref="InputTrayNextInputTrayIdBasis" minOccurs="0"/>
+					<xs:element ref="InputTraySecurity" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="InputTrayDescription" type="InputTrayDescriptionType">
+		<!-- InputTrayDescription - group -->
+	</xs:element>
+	<xs:complexType name="InputTraysType">
+		<xs:sequence>
+			<xs:element ref="InputTray" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- InputTrays - set of input trays -->
+	</xs:complexType>
+	<xs:complexType name="InputTraysSetType">
+		<xs:sequence>
+			<xs:element name="InputTray" type="InputTraySetType"/>
+		</xs:sequence>
+		<!-- InputTrays - set of input trays -->
+	</xs:complexType>
+	<xs:complexType name="InputTrayType">
+		<xs:sequence>
+			<xs:element ref="InputTrayDescription" minOccurs="0"/>
+			<xs:element ref="InputTrayStatus"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- InputTray - type -->
+	</xs:complexType>
+	<xs:complexType name="InputTraySetType">
+		<xs:sequence>
+			<xs:element ref="InputTrayDescription" minOccurs="0"/>
+			<xs:element name="InputTrayStatus" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Id"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- InputTray - type -->
+	</xs:complexType>
+	<xs:element name="InputTrays" type="InputTraysType"/>
+	<!-- InputTray - subunit -->
+	<!-- see prtInputEntry in [RFC3805] -->
+	<xs:element name="InputTray" type="InputTrayType"/>
+	<!-- Interfaces - set of interfaces -->
+	<!-- see ifTable in [RFC2863] -->
+	<xs:complexType name="InterfaceStatusType">
+		<xs:complexContent>
+			<xs:extension base="SubunitStatus">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:element ref="InterfaceAdminState"/>
+					<xs:element ref="InterfaceHighSpeed" minOccurs="0"/>
+					<xs:element ref="InterfaceInDiscards" minOccurs="0"/>
+					<xs:element ref="InterfaceInErrors" minOccurs="0"/>
+					<xs:element ref="InterfaceInOctets" minOccurs="0"/>
+					<xs:element ref="InterfaceInUnicastPackets" minOccurs="0"/>
+					<xs:element ref="InterfaceInUnknownProtocols" minOccurs="0"/>
+					<xs:element ref="InterfaceLastChangeDate" minOccurs="0"/>
+					<xs:element ref="InterfaceMaxPacketSize" minOccurs="0"/>
+					<xs:element ref="InterfaceOperState"/>
+					<xs:element ref="InterfaceOutDiscards" minOccurs="0"/>
+					<xs:element ref="InterfaceOutErrors" minOccurs="0"/>
+					<xs:element ref="InterfaceOutUnicastPackets" minOccurs="0"/>
+					<xs:element ref="InterfaceOutOctets" minOccurs="0"/>
+					<xs:element ref="InterfacePhysicalAddress" minOccurs="0"/>
+					<xs:element ref="InterfaceSpeed"/>
+					<xs:element ref="InterfaceType"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="InterfaceStatus" type="InterfaceStatusType">
+		<!-- InterfaceStatus - group -->
+	</xs:element>
+	<xs:complexType name="InterfaceDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="SubunitDescription">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:element ref="InterfaceName" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="InterfaceDescription" type="InterfaceDescriptionType">
+		<!-- InterfaceDescription - group -->
+	</xs:element>
+	<xs:complexType name="InterfacesType">
+		<xs:sequence>
+			<xs:element ref="Interface" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- Interfaces - set of interfaces -->
+	</xs:complexType>
+	<xs:complexType name="InterfacesSetType">
+		<xs:sequence>
+			<xs:element name="Interface" type="InterfaceSetType"/>
+		</xs:sequence>
+		<!-- Interfaces - set of interfaces -->
+	</xs:complexType>
+	<xs:complexType name="InterfaceType">
+		<xs:sequence>
+			<xs:element ref="InterfaceDescription" minOccurs="0"/>
+			<xs:element ref="InterfaceStatus"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- Interface - type -->
+	</xs:complexType>
+	<xs:complexType name="InterfaceSetType">
+		<xs:sequence>
+			<xs:element ref="InterfaceDescription" minOccurs="0"/>
+			<xs:element name="InterfaceStatus" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Id"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- Interface - type -->
+	</xs:complexType>
+	<xs:element name="Interfaces" type="InterfacesType"/>
+	<!-- Interface - subunit -->
+	<!-- see ifEntry in [RFC2863] -->
+	<xs:element name="Interface" type="InterfaceType"/>
+	<!-- Interpreters - set of interpreters -->
+	<!-- see prtInterpreterTable in [RFC3805] -->
+	<xs:complexType name="InterpreterStatusType">
+		<xs:sequence>
+			<!-- SM/1.0 Printer group import -->
+			<xs:element name="DeviceErrors" type="xs:int" minOccurs="0"/>
+			<xs:element ref="Id"/>
+			<xs:element ref="InterpreterLanguageLevel" minOccurs="0"/>
+			<xs:element ref="InterpreterLanguageSupported" minOccurs="0"/>
+			<xs:element ref="InterpreterLanguageVersion" minOccurs="0"/>
+			<xs:element ref="InterpreterVersion" minOccurs="0"/>
+			<xs:element ref="InterpreterLanguageFamily" minOccurs="0"/>
+			<xs:element ref="InterpreterAddressabilityUnit" minOccurs="0"/>
+			<xs:element ref="InterpreterAddressabilityBasis" minOccurs="0"/>
+			<xs:element ref="InterpreterAddressabilityCrossFeed" minOccurs="0"/>
+			<xs:element ref="InterpreterAddressabilityFeed" minOccurs="0"/>
+			<xs:element ref="InterpreterIsTwoWay" minOccurs="0"/>
+			<xs:element ref="ProductID" minOccurs="0"/>
+			<xs:element ref="SubunitStates"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other"/>
+	</xs:complexType>
+	<xs:element name="InterpreterStatus" type="InterpreterStatusType">
+		<!-- InterpreterStatus - group -->
+	</xs:element>
+	<xs:complexType name="InterpreterDescriptionType">
+		<xs:sequence>
+			<!-- SM/1.0 Printer group import -->
+			<xs:element ref="Description" minOccurs="0"/>
+			<xs:element ref="InterpreterDefaultOrientation" minOccurs="0"/>
+			<xs:element ref="InterpreterDefaultCharsetIn" minOccurs="0"/>
+			<xs:element ref="InterpreterDefaultCharsetOut" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other"/>
+	</xs:complexType>
+	<xs:element name="InterpreterDescription" type="InterpreterDescriptionType">
+		<!-- InterpreterDescription - group -->
+	</xs:element>
+	<xs:complexType name="InterpretersType">
+		<xs:sequence>
+			<xs:element ref="Interpreter" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- Interpreters - set of interpreters -->
+	</xs:complexType>
+	<xs:complexType name="InterpretersSetType">
+		<xs:sequence>
+			<xs:element name="Interpreter" type="InterpreterSetType"/>
+		</xs:sequence>
+		<!-- Interpreters - set of interpreters -->
+	</xs:complexType>
+	<xs:complexType name="InterpreterType">
+		<xs:sequence>
+			<xs:element ref="InterpreterDescription" minOccurs="0"/>
+			<xs:element ref="InterpreterStatus"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- Interpreter - type -->
+	</xs:complexType>
+	<xs:complexType name="InterpreterSetType">
+		<xs:sequence>
+			<xs:element ref="InterpreterDescription" minOccurs="0"/>
+			<xs:element name="InterpreterStatus" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Id"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- Interpreter - type -->
+	</xs:complexType>
+	<xs:element name="Interpreters" type="InterpretersType"/>
+	<!-- Interpreter - subunit -->
+	<!-- see prtInterpreterEntry in [RFC3805] -->
+	<xs:element name="Interpreter" type="InterpreterType"/>
+	<!-- MarkerColorants - set of marker colorants -->
+	<!-- see prtMarkerColorantTable in [RFC3805] -->
+	<xs:element name="MarkerColorantStatus">
+		<!-- MarkerColorantStatus - group -->
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Description" minOccurs="0"/>
+				<xs:element ref="Id"/>
+				<xs:element ref="MarkerColorantName" minOccurs="0"/>
+				<xs:element ref="MarkerColorantRole" minOccurs="0"/>
+				<xs:element ref="MarkerColorantTonality" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MarkerColorantDescription">
+		<!-- MarkerColorantDescription - group -->
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="MarkerColorantsType">
+		<xs:sequence>
+			<xs:element ref="MarkerColorant" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- MarkerColorants - set of marker colorants -->
+	</xs:complexType>
+	<xs:complexType name="MarkerColorantsSetType">
+		<xs:sequence>
+			<xs:element name="MarkerColorant" type="MarkerColorantSetType" minOccurs="0"/>
+		</xs:sequence>
+		<!-- MarkerColorants - set of marker colorants -->
+	</xs:complexType>
+	<xs:complexType name="MarkerColorantType">
+		<xs:sequence>
+			<xs:element ref="MarkerColorantDescription" minOccurs="0"/>
+			<xs:element ref="MarkerColorantStatus"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- MarkerColorant - type -->
+	</xs:complexType>
+	<xs:complexType name="MarkerColorantSetType">
+		<xs:sequence>
+			<xs:element ref="MarkerColorantDescription" minOccurs="0"/>
+			<xs:element name="MarkerColorantStatus" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Id"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- MarkerColorant - type -->
+	</xs:complexType>
+	<xs:element name="MarkerColorants" type="MarkerColorantsType"/>
+	<!-- MarkerColorant - component -->
+	<!-- see prtMarkerColorantEntry in [RFC3805] -->
+	<xs:element name="MarkerColorant" type="MarkerColorantType"/>
+	<!-- MarkerSupplies - set of marker supplies -->
+	<!-- see prtMarkerSuppliesTable in [RFC3805] -->
+	<xs:element name="MarkerSupplyStatus">
+		<!-- MarkerSupplyStatus - group -->
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Id"/>
+				<xs:element ref="MarkerSupplyCapacityUnit" minOccurs="0"/>
+				<xs:element ref="MarkerSupplyClass"/>
+				<xs:element ref="MarkerSupplyInfo" minOccurs="0"/>
+				<xs:element ref="MarkerSupplyType"/>
+				<xs:element ref="MarkerSupplyColorantId" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MarkerSupplyDescription">
+		<!-- MarkerSupplyDescription - group -->
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="MarkerSupplyCurrentLevel" minOccurs="0"/>
+				<xs:element ref="MarkerSupplyCurrentLevelBasis" minOccurs="0"/>
+				<xs:element ref="MarkerSupplyMaxCapacity" minOccurs="0"/>
+				<xs:element ref="MarkerSupplyMaxCapacityBasis" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="MarkerSuppliesType">
+		<xs:sequence>
+			<xs:element ref="MarkerSupply" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- MarkerSupplies - set of marker supplies -->
+	</xs:complexType>
+	<xs:complexType name="MarkerSuppliesSetType">
+		<xs:sequence>
+			<xs:element name="MarkerSupply" type="MarkerSupplySetType" minOccurs="0"/>
+		</xs:sequence>
+		<!-- MarkerSupplies - set of marker supplies -->
+	</xs:complexType>
+	<xs:complexType name="MarkerSupplyType">
+		<xs:sequence>
+			<xs:element ref="MarkerSupplyDescription" minOccurs="0"/>
+			<xs:element ref="MarkerSupplyStatus"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- MarkerSupply - type -->
+	</xs:complexType>
+	<xs:complexType name="MarkerSupplySetType">
+		<xs:sequence>
+			<xs:element ref="MarkerSupplyDescription" minOccurs="0"/>
+			<xs:element name="MarkerSupplyStatus" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Id"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- MarkerSupply - type -->
+	</xs:complexType>
+	<xs:element name="MarkerSupplies" type="MarkerSuppliesType"/>
+	<!-- MarkerSupply - component -->
+	<!-- see prtMarkerSuppliesEntry in [RFC3805] -->
+	<xs:element name="MarkerSupply" type="MarkerSupplyType"/>
+	<!-- Markers - set of markers -->
+	<!-- see prtMarkerTable in [RFC3805] -->
+	<xs:complexType name="MarkerStatusType">
+		<xs:complexContent>
+			<xs:extension base="SubunitStatus">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:element name="MarkerAddressability" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="MarkerAddressabilityBasis" minOccurs="0"/>
+								<xs:element ref="MarkerAddressabilityCrossFeed" minOccurs="0"/>
+								<xs:element ref="MarkerAddressabilityFeed" minOccurs="0"/>
+								<xs:element ref="MarkerAddressabilityUnit" minOccurs="0"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element ref="MarkerCounterLife" minOccurs="0"/>
+					<xs:element ref="MarkerCounterPowerOn" minOccurs="0"/>
+					<xs:element ref="MarkerCounterUnit" minOccurs="0"/>
+					<xs:element name="MarkerMargins" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="MarkerEastMargin" minOccurs="0"/>
+								<xs:element ref="MarkerMarginBasis" minOccurs="0"/>
+								<xs:element ref="MarkerNorthMargin" minOccurs="0"/>
+								<xs:element ref="MarkerSouthMargin" minOccurs="0"/>
+								<xs:element ref="MarkerWestMargin" minOccurs="0"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element ref="MarkerProcessColorants" minOccurs="0"/>
+					<xs:element ref="MarkerSpotColorants" minOccurs="0"/>
+					<xs:element ref="MarkerTechnology"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="MarkerStatus" type="MarkerStatusType">
+		<!-- MarkerStatus - group -->
+	</xs:element>
+	<xs:complexType name="MarkerDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="SubunitDescription">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="MarkerDescription" type="MarkerDescriptionType">
+		<!-- MarkerDescription - group -->
+	</xs:element>
+	<xs:complexType name="MarkersType">
+		<xs:sequence>
+			<xs:element ref="Marker" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- Markers - set of markers -->
+	</xs:complexType>
+	<xs:complexType name="MarkersSetType">
+		<xs:sequence>
+			<xs:element name="Marker" type="MarkerSetType"/>
+		</xs:sequence>
+		<!-- Markers - set of markers -->
+	</xs:complexType>
+	<xs:complexType name="MarkerType">
+		<xs:sequence>
+			<xs:element ref="MarkerDescription" minOccurs="0"/>
+			<xs:element ref="MarkerStatus"/>
+			<xs:element ref="MarkerColorants" minOccurs="0"/>
+			<xs:element ref="MarkerSupplies" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- Marker - type -->
+	</xs:complexType>
+	<xs:complexType name="MarkerSetType">
+		<xs:sequence>
+			<xs:element name="MarkerStatus" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Id"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:choice>
+				<xs:element ref="MarkerDescription" minOccurs="0"/>
+				<xs:element name="MarkerColorants" type="MarkerColorantsSetType" minOccurs="0"/>
+				<xs:element name="MarkerSupplies" type="MarkerSuppliesSetType" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:choice>
+		</xs:sequence>
+		<!-- Marker - type -->
+	</xs:complexType>
+	<xs:element name="Markers" type="MarkersType"/>
+	<!-- Marker - subunit -->
+	<!-- see prtMarkerEntry in [RFC3805] -->
+	<xs:element name="Marker" type="MarkerType"/>
+	<!-- MediaPaths - set of media paths -->
+	<!-- see prtMediaPathTable in [RFC3805] -->
+	<xs:complexType name="MediaPathStatusType">
+		<xs:complexContent>
+			<xs:extension base="SubunitStatus">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:element ref="MediaPathMaxSpeed" minOccurs="0"/>
+					<xs:element ref="MediaPathMaxSpeedUnit" minOccurs="0"/>
+					<xs:element ref="MediaPathMaxMediaSizeName" minOccurs="0"/>
+					<xs:element ref="MediaPathMinMediaSizeName" minOccurs="0"/>
+					<xs:element ref="MediaPathType"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="MediaPathStatus" type="MediaPathStatusType">
+		<!-- MediaPathStatus - group -->
+	</xs:element>
+	<xs:complexType name="MediaPathDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="SubunitDescription">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:element name="mediaTypesSupported" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValues">
+									<xs:simpleType>
+										<xs:union memberTypes="MediaTypeWKV MediaTypeExtensionPattern"/>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="MediaPathDescription" type="MediaPathDescriptionType">
+		<!-- MediaPathDescription - group -->
+	</xs:element>
+	<xs:complexType name="MediaPathsType">
+		<xs:sequence>
+			<xs:element ref="MediaPath" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- MediaPaths - set of media paths -->
+	</xs:complexType>
+	<xs:complexType name="MediaPathsSetType">
+		<xs:sequence>
+			<xs:element name="MediaPath" type="MediaPathSetType"/>
+		</xs:sequence>
+		<!-- MediaPaths - set of media paths -->
+	</xs:complexType>
+	<xs:complexType name="MediaPathType">
+		<xs:sequence>
+			<xs:element ref="MediaPathDescription" minOccurs="0"/>
+			<xs:element ref="MediaPathStatus"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- MediaPath - type -->
+	</xs:complexType>
+	<xs:complexType name="MediaPathSetType">
+		<xs:sequence>
+			<xs:element ref="MediaPathDescription" minOccurs="0"/>
+			<xs:element name="MediaPathStatus" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Id"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- MediaPath - type -->
+	</xs:complexType>
+	<xs:element name="MediaPaths" type="MediaPathsType"/>
+	<!-- MediaPath - subunit -->
+	<!-- see prtMediaPathEntry in [RFC3805] -->
+	<xs:element name="MediaPath" type="MediaPathType"/>
+	<!-- OutputChannels - set of input channels -->
+	<!-- see prtChannelTable in [RFC3805] -->
+	<xs:complexType name="OutputChannelStatusType">
+		<xs:sequence>
+			<!-- SM/1.0 Printer group import -->
+			<xs:element name="DeviceErrors" type="xs:int" minOccurs="0"/>
+			<xs:element ref="Id"/>
+			<xs:element ref="OutputChannelAuxInfo" minOccurs="0"/>
+			<xs:element ref="OutputChannelProtocolVersion" minOccurs="0"/>
+			<xs:element ref="OutputChannelType"/>
+			<xs:element ref="ProductID" minOccurs="0"/>
+			<xs:element ref="SubunitStates"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other"/>
+	</xs:complexType>
+	<xs:element name="OutputChannelStatus" type="OutputChannelStatusType">
+		<!-- OutputChannelStatus - group -->
+	</xs:element>
+	<xs:complexType name="OutputChannelDescriptionType">
+		<xs:sequence>
+			<!-- SM/1.0 Printer group import -->
+			<xs:element ref="Description" minOccurs="0"/>
+			<xs:element ref="OutputChannelIsEnabled"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other"/>
+	</xs:complexType>
+	<xs:complexType name="OutputChannelDescriptionSetType">
+		<xs:sequence>
+			<!-- SM/1.0 Printer group import -->
+			<xs:element ref="Description" minOccurs="0"/>
+			<xs:element ref="OutputChannelIsEnabled" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other"/>
+	</xs:complexType>
+	<xs:element name="OutputChannelDescription" type="OutputChannelDescriptionType">
+		<!-- OutputChannelDescription - group -->
+	</xs:element>
+	<xs:complexType name="OutputChannelsType">
+		<xs:sequence>
+			<xs:element ref="OutputChannel" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- OutputChannels - set of input channels -->
+	</xs:complexType>
+	<xs:complexType name="OutputChannelsSetType">
+		<xs:sequence>
+			<xs:element name="OutputChannel" type="OutputChannelSetType"/>
+		</xs:sequence>
+		<!-- OutputChannels - set of input channels -->
+	</xs:complexType>
+	<xs:complexType name="OutputChannelType">
+		<xs:sequence>
+			<xs:element ref="OutputChannelDescription" minOccurs="0"/>
+			<xs:element ref="OutputChannelStatus"/>
+			<xs:element ref="OutputChannelDefaultJobControlLanguage" minOccurs="0"/>
+			<xs:element ref="OutputChannelInterface" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- OutputChannel - type -->
+	</xs:complexType>
+	<xs:complexType name="OutputChannelSetType">
+		<xs:sequence>
+			<xs:element name="OutputChannelDescription" type="OutputChannelDescriptionSetType" minOccurs="0"/>
+			<xs:element name="OutputChannelDefaultJobControlLanguageId" type="xs:int" minOccurs="0"/>
+			<xs:element name="OutputChannelInterfaceId" type="xs:int" minOccurs="0"/>
+			<xs:element name="OutputChannelStatus" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Id"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- OutputChannel - type -->
+	</xs:complexType>
+	<xs:element name="OutputChannels" type="OutputChannelsType"/>
+	<!-- OutputChannel - subunit -->
+	<!-- see prtChannelEntry in [RFC3805] -->
+	<xs:element name="OutputChannel" type="OutputChannelType"/>
+	<!-- OutputTrays - set of output trays -->
+	<!-- see prtOutputTable in [RFC3805] -->
+	<xs:complexType name="OutputTrayStatusType">
+		<xs:complexContent>
+			<xs:extension base="SubunitStatus">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:element ref="OutputTrayCapacityUnit" minOccurs="0"/>
+					<xs:element ref="OutputTrayModel" minOccurs="0"/>
+					<xs:element ref="OutputTraySerialNumber" minOccurs="0"/>
+					<xs:element ref="OutputTrayType"/>
+					<xs:element ref="OutputTrayVendorName" minOccurs="0"/>
+					<xs:element ref="OutputTrayVersion" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="OutputTrayStatus" type="OutputTrayStatusType">
+		<!-- OutputTrayStatus - group -->
+	</xs:element>
+	<xs:complexType name="OutputTrayDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="SubunitDescription">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:element ref="OutputTrayBursting" minOccurs="0"/>
+					<xs:element ref="OutputTrayMaxCapacity" minOccurs="0"/>
+					<xs:element ref="OutputTrayMaxCapacityBasis" minOccurs="0"/>
+					<xs:element ref="OutputTrayDecollating" minOccurs="0"/>
+					<xs:element ref="OutputTrayMaxMediaSizeName" minOccurs="0"/>
+					<xs:element ref="OutputTrayMinMediaSizeName" minOccurs="0"/>
+					<xs:element ref="OutputTrayName" minOccurs="0"/>
+					<xs:element ref="OutputTrayOffsetStacking" minOccurs="0"/>
+					<xs:element ref="OutputTrayPageCollated" minOccurs="0"/>
+					<xs:element ref="OutputTrayPageDeliveryOrientation" minOccurs="0"/>
+					<xs:element ref="OutputTrayRemainingCapacity" minOccurs="0"/>
+					<xs:element ref="OutputTrayRemainingCapacityBasis" minOccurs="0"/>
+					<xs:element ref="OutputTraySecurity" minOccurs="0"/>
+					<xs:element ref="OutputTrayStackingOrder" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="OutputTrayDescription" type="OutputTrayDescriptionType">
+		<!-- OutputTrayDescription - group -->
+	</xs:element>
+	<xs:complexType name="OutputTraysType">
+		<xs:sequence>
+			<xs:element ref="OutputTray" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- OutputTrays - set of output trays -->
+	</xs:complexType>
+	<xs:complexType name="OutputTraysSetType">
+		<xs:sequence>
+			<xs:element name="OutputTray" type="OutputTraySetType"/>
+		</xs:sequence>
+		<!-- OutputTrays - set of output trays -->
+	</xs:complexType>
+	<xs:complexType name="OutputTrayType">
+		<xs:sequence>
+			<xs:element ref="OutputTrayDescription" minOccurs="0"/>
+			<xs:element ref="OutputTrayStatus"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- OutputTray - type -->
+	</xs:complexType>
+	<xs:complexType name="OutputTraySetType">
+		<xs:sequence>
+			<xs:element ref="OutputTrayDescription" minOccurs="0"/>
+			<xs:element name="OutputTrayStatus" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Id"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- OutputTray - type -->
+	</xs:complexType>
+	<xs:element name="OutputTrays" type="OutputTraysType"/>
+	<!-- OutputTray - subunit -->
+	<!-- see prtOutputEntry in [RFC3805] -->
+	<xs:element name="OutputTray" type="OutputTrayType"/>
+	<!--Processor - subunit -->
+	<xs:complexType name="ProcessorsType">
+		<xs:sequence>
+			<xs:element ref="Processor" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProcessorsSetType">
+		<xs:sequence>
+			<xs:element name="Processor" type="ProcessorSetType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProcessorType">
+		<xs:sequence>
+			<xs:element ref="ProcessorDescription" minOccurs="0"/>
+			<xs:element ref="ProcessorStatus"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProcessorSetType">
+		<xs:sequence>
+			<xs:element ref="ProcessorDescription" minOccurs="0"/>
+			<xs:element name="ProcessorStatus" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Id"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ProcessorStatusType">
+		<xs:complexContent>
+			<xs:extension base="SubunitStatus">
+				<xs:sequence>
+					<xs:element ref="ProcessorFirmwareID" minOccurs="0"/>
+					<xs:element ref="ProcessorLoad" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ProcessorStatus" type="ProcessorStatusType"/>
+	<xs:complexType name="ProcessorDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="SubunitDescription">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ProcessorDescription" type="ProcessorDescriptionType"/>
+	<xs:element name="ProcessorFirmwareID" type="xs:string"/>
+	<xs:element name="ProcessorLoad"/>
+	<xs:element name="Processors" type="ProcessorsType"/>
+	<xs:element name="Processor" type="ProcessorType"/>
+	<!-- ScanMediaPaths - set of Scan specific (e.g. Scan, FaxOut, Copy)  media paths -->
+	<xs:complexType name="ScanMediaPathStatus">
+		<xs:complexContent>
+			<xs:extension base="SubunitStatus">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:element ref="Recirculating" minOccurs="0"/>
+					<xs:element ref="ScanMediaPathMaxSpeed" minOccurs="0"/>
+					<xs:element ref="ScanMediaPathMaxSpeedUnit" minOccurs="0"/>
+					<xs:element ref="ScanMediaPathType" minOccurs="0"/>
+					<xs:element ref="SheetsCompleted" minOccurs="0"/>
+					<xs:element name="Sides" type="SidesType" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ScanMediaPathStatus" type="ScanMediaPathStatus">
+		<!-- ScanMediaPathStatus - group -->
+	</xs:element>
+	<xs:complexType name="ScanMediaPathDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="SubunitDescription">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:element ref="ScanMediaPathMaxMediaSizeName" minOccurs="0"/>
+					<xs:element ref="ScanMediaPathMinMediaSizeName" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ScanMediaPathDescription" type="ScanMediaPathDescriptionType">
+		<!-- ScanMediaPathDescription - group -->
+	</xs:element>
+	<xs:complexType name="ScanMediaPathsType">
+		<xs:sequence>
+			<xs:element ref="ScanMediaPath" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- ScanMediaPaths - set of media paths -->
+	</xs:complexType>
+	<xs:complexType name="ScanMediaPathsSetType">
+		<xs:sequence>
+			<xs:element name="ScanMediaPath" type="ScanMediaPathSetType"/>
+		</xs:sequence>
+		<!-- ScanMediaPaths - set of media paths -->
+	</xs:complexType>
+	<xs:complexType name="ScanMediaPathType">
+		<xs:sequence>
+			<xs:element ref="ScanMediaPathDescription" minOccurs="0"/>
+			<xs:element ref="ScanMediaPathStatus"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- ScanMediaPath - type -->
+	</xs:complexType>
+	<xs:complexType name="ScanMediaPathSetType">
+		<xs:sequence>
+			<xs:element ref="ScanMediaPathDescription" minOccurs="0"/>
+			<xs:element name="ScanMediaPathStatus" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Id"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- ScanMediaPath - type -->
+	</xs:complexType>
+	<xs:element name="ScanMediaPaths" type="ScanMediaPathsType"/>
+	<!-- ScanMediaPath - subunit -->
+	<xs:element name="ScanMediaPath" type="ScanMediaPathType"/>
+	<!-- Scanners - set of scanners -->
+	<xs:complexType name="ScannerStatusType">
+		<xs:complexContent>
+			<xs:extension base="SubunitStatus">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:element name="ScannerAddressabilities" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="ScannerAddressability" maxOccurs="unbounded">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element ref="ScannerAddressabilityBasis" minOccurs="0"/>
+											<xs:element ref="ScannerAddressabilityCrossFeed" minOccurs="0"/>
+											<xs:element ref="ScannerAddressabilityFeed" minOccurs="0"/>
+											<xs:element ref="ScannerAddressabilityUnit" minOccurs="0"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element ref="ScannerBitsPerPixel" minOccurs="0"/>
+					<xs:element ref="ScannerColorPlanes" minOccurs="0"/>
+					<xs:element ref="ScannerCounterUnit" minOccurs="0"/>
+					<xs:element ref="ScannerLifeCount" minOccurs="0"/>
+					<xs:element name="ScannerMargin">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="ScannerMarginBasis" minOccurs="0"/>
+								<xs:element ref="ScannerNorthMargin" minOccurs="0"/>
+								<xs:element ref="ScannerSouthMargin" minOccurs="0"/>
+								<xs:element ref="ScannerWestMargin" minOccurs="0"/>
+								<xs:element ref="ScannerEastMargin" minOccurs="0"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element ref="ScannerPowerOnCount" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ScannerStatus" type="ScannerStatusType">
+		<!-- ScannerStatus - group -->
+	</xs:element>
+	<xs:complexType name="ScannerDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="SubunitDescription">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ScannerDescription" type="ScannerDescriptionType">
+		<!-- ScannerDescription - group -->
+	</xs:element>
+	<xs:complexType name="ScannersType">
+		<xs:sequence>
+			<xs:element ref="Scanner" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- Scanners - set of scanners -->
+	</xs:complexType>
+	<xs:complexType name="ScannersSetType">
+		<xs:sequence>
+			<xs:element name="Scanner" type="ScannerSetType"/>
+		</xs:sequence>
+		<!-- Scanners - set of scanners -->
+	</xs:complexType>
+	<xs:complexType name="ScannerType">
+		<xs:sequence>
+			<xs:element ref="ScannerDescription" minOccurs="0"/>
+			<xs:element ref="ScannerStatus"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- Scanner - type -->
+	</xs:complexType>
+	<xs:complexType name="ScannerSetType">
+		<xs:sequence>
+			<xs:element ref="ScannerDescription" minOccurs="0"/>
+			<xs:element name="ScannerStatus" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Id"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- Scanner - type -->
+	</xs:complexType>
+	<xs:element name="Scanners" type="ScannersType"/>
+	<!-- Scanner - subunit -->
+	<xs:element name="Scanner" type="ScannerType"/>
+	<!--Storage - subunit -->
+	<xs:element name="StorageDataEncryption" type="xs:boolean"/>
+	<xs:element name="StorageFree" type="xs:int"/>
+	<xs:element name="StorageId">
+		<xs:complexType>
+			<xs:attribute ref="Key"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="StorageIsRemovable" type="xs:boolean"/>
+	<xs:element name="StorageMakeAndModel" type="xs:string"/>
+	<xs:element name="StorageName" type="xs:string"/>
+	<xs:element name="StorageSize" type="xs:int"/>
+	<xs:element name="StorageType" type="StorageTypeWKV"/>
+	<xs:element name="StorageUri" type="xs:anyURI"/>
+	<xs:complexType name="StorageStatusType">
+		<xs:complexContent>
+			<xs:extension base="SubunitStatus">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:element ref="StorageDataEncryption" minOccurs="0"/>
+					<xs:element ref="StorageFree" minOccurs="0"/>
+					<xs:element ref="StorageIsRemovable" minOccurs="0"/>
+					<xs:element ref="StorageMakeAndModel" minOccurs="0"/>
+					<xs:element ref="StorageSize" minOccurs="0"/>
+					<xs:element ref="StorageType" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="StorageStatus" type="StorageStatusType"/>
+	<xs:complexType name="StorageDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="SubunitDescription">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:element ref="StorageName" minOccurs="0"/>
+					<xs:element ref="StorageUri" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="StorageDescription" type="StorageDescriptionType"/>
+	<xs:complexType name="StoragesType">
+		<xs:sequence>
+			<xs:element ref="Storage" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StoragesSetType">
+		<xs:sequence>
+			<xs:element name="Storage" type="StorageSetType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Storages" type="StoragesType"/>
+	<xs:complexType name="StorageType">
+		<xs:sequence>
+			<xs:element ref="StorageDescription" minOccurs="0"/>
+			<xs:element ref="StorageStatus"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StorageSetType">
+		<xs:sequence>
+			<xs:element ref="StorageDescription" minOccurs="0"/>
+			<xs:element name="StorageStatus" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Id"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="Storage" type="StorageType"/>
+	<!-- VendorSubunits - set of vendor subunits -->
+	<xs:complexType name="VendorSubunitStatusType">
+		<xs:complexContent>
+			<xs:extension base="SubunitStatus">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:element ref="SubunitCounterUnit" minOccurs="0"/>
+					<xs:element ref="SubunitLifeCount" minOccurs="0"/>
+					<xs:element ref="SubunitPowerOnCount" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="VendorSubunitStatus" type="VendorSubunitStatusType">
+		<!-- VendorSubunitStatus - group -->
+	</xs:element>
+	<xs:complexType name="VendorSubunitDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="SubunitDescription">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="VendorSubunitDescription" type="VendorSubunitDescriptionType">
+		<!-- VendorSubunitDescription - group -->
+	</xs:element>
+	<xs:complexType name="VendorSubunitsType">
+		<xs:sequence>
+			<xs:element ref="VendorSubunit" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- VendorSubunits - set of vendor subunits -->
+	</xs:complexType>
+	<xs:complexType name="VendorSubunitsSetType">
+		<xs:sequence>
+			<xs:element name="VendorSubunit" type="VendorSubunitSetType"/>
+		</xs:sequence>
+		<!-- VendorSubunits - set of vendor subunits -->
+	</xs:complexType>
+	<xs:complexType name="VendorSubunitType">
+		<xs:sequence>
+			<xs:element ref="VendorSubunitDescription" minOccurs="0"/>
+			<xs:element ref="VendorSubunitStatus"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- VendorSubunit - type -->
+	</xs:complexType>
+	<xs:complexType name="VendorSubunitSetType">
+		<xs:sequence>
+			<xs:element ref="VendorSubunitDescription" minOccurs="0"/>
+			<xs:element name="VendorSubunitStatus" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Id"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- VendorSubunit - type -->
+	</xs:complexType>
+	<xs:element name="VendorSubunits" type="VendorSubunitsType"/>
+	<!-- VendorSubunit - subunit -->
+	<xs:element name="VendorSubunit" type="VendorSubunitType"/>
+	<!-- Subunits - set of subunits on system -->
+	<xs:complexType name="SubunitsType">
+		<xs:sequence>
+			<xs:element ref="Consoles" minOccurs="0"/>
+			<xs:element ref="Covers" minOccurs="0"/>
+			<xs:element ref="FaxModems" minOccurs="0"/>
+			<xs:element ref="Finishers" minOccurs="0"/>
+			<xs:element ref="InputChannels" minOccurs="0"/>
+			<xs:element ref="InputTrays" minOccurs="0"/>
+			<xs:element ref="Interfaces" minOccurs="0"/>
+			<xs:element ref="Interpreters" minOccurs="0"/>
+			<xs:element ref="Markers" minOccurs="0"/>
+			<xs:element ref="MediaPaths" minOccurs="0"/>
+			<xs:element ref="OutputChannels" minOccurs="0"/>
+			<xs:element ref="OutputTrays" minOccurs="0"/>
+			<xs:element ref="Processors" minOccurs="0"/>
+			<xs:element ref="ScanMediaPaths" minOccurs="0"/>
+			<xs:element ref="Scanners" minOccurs="0"/>
+			<xs:element ref="Storages" minOccurs="0"/>
+			<xs:element ref="VendorSubunits" minOccurs="0"/>
+		</xs:sequence>
+		<!-- Subunits - type -->
+	</xs:complexType>
+	<xs:complexType name="SubunitsSetType">
+		<xs:choice>
+			<xs:element name="Consoles" type="ConsolesSetType" minOccurs="0"/>
+			<xs:element name="Covers" type="CoversSetType" minOccurs="0"/>
+			<xs:element name="FaxModems" type="FaxModemsSetType" minOccurs="0"/>
+			<xs:element name="Finishers" type="FinishersSetType" minOccurs="0"/>
+			<xs:element name="InputChannels" type="InputChannelsSetType" minOccurs="0"/>
+			<xs:element name="InputTrays" type="InputTraysSetType" minOccurs="0"/>
+			<xs:element name="Interfaces" type="InterfacesSetType" minOccurs="0"/>
+			<xs:element name="Interpreters" type="InterpretersSetType" minOccurs="0"/>
+			<xs:element name="Markers" type="MarkersSetType" minOccurs="0"/>
+			<xs:element name="MediaPaths" type="MediaPathsSetType" minOccurs="0"/>
+			<xs:element name="OutputChannels" type="OutputChannelsSetType" minOccurs="0"/>
+			<xs:element name="OutputTrays" type="OutputTraysSetType" minOccurs="0"/>
+			<xs:element name="Processors" type="ProcessorsSetType" minOccurs="0"/>
+			<xs:element name="ScanMediaPaths" type="ScanMediaPathsSetType" minOccurs="0"/>
+			<xs:element name="Scanners" type="ScannersSetType" minOccurs="0"/>
+			<xs:element name="Storages" type="StoragesSetType" minOccurs="0"/>
+			<xs:element name="VendorSubunits" type="VendorSubunitsSetType" minOccurs="0"/>
+		</xs:choice>
+		<!-- Subunits - type -->
+	</xs:complexType>
+	<xs:complexType name="SubunitType">
+		<xs:choice minOccurs="0">
+			<xs:element ref="Console" minOccurs="0"/>
+			<xs:element ref="Cover" minOccurs="0"/>
+			<xs:element ref="FaxModem" minOccurs="0"/>
+			<xs:element ref="Finisher" minOccurs="0"/>
+			<xs:element ref="InputChannel" minOccurs="0"/>
+			<xs:element ref="InputTray" minOccurs="0"/>
+			<xs:element ref="Interface" minOccurs="0"/>
+			<xs:element ref="Interpreter" minOccurs="0"/>
+			<xs:element ref="Marker" minOccurs="0"/>
+			<xs:element ref="MediaPath" minOccurs="0"/>
+			<xs:element ref="OutputChannel" minOccurs="0"/>
+			<xs:element ref="OutputTray" minOccurs="0"/>
+			<xs:element ref="Processor" minOccurs="0"/>
+			<xs:element ref="ScanMediaPath" minOccurs="0"/>
+			<xs:element ref="Scanner" minOccurs="0"/>
+			<xs:element ref="Storage" minOccurs="0"/>
+			<xs:element ref="VendorSubunit" minOccurs="0"/>
+		</xs:choice>
+		<!-- Subunit - type -->
+	</xs:complexType>
+	<xs:element name="Subunits" type="SubunitsType"/>
+	<!-- Subunit - single subunit on system -->
+	<xs:element name="Subunit" type="SubunitType"/>
+	<xs:element name="InputTrayMediaWeightMetric" type="xs:int"/>
+</xs:schema>

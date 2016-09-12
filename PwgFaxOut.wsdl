@@ -1,0 +1,1397 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   PWG Semantic Model v2   
+
+Copyright 2002-2009, IEEE Industry Standards and Technology Organization/FaxOutService Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+-->
+<!--05/02/11 PJZ Removed Startup operation-->
+<!--03/01/10 PJZ Added CloseJob back in-->
+<!--02/05/10 PJZ Fixed operation names-->
+<!--01/19/10 PJZ Made all service interfaces homogenous (as much as possible)-->
+<!--11/23/09 PJZ Fixed ValidateFaxOutJobTicket-->
+<!--10/23/09 PJZ Updates per October face to face-->
+<!--04/14/09 PJZ Updated Namespace-->
+<!--02/20/09 PJZ Reordered body in request messages for WSI compliance-->
+<!--02/16/09 PJZ Removed invalid attributes from definitions-->
+<!--11/13/08 PJZ Added capability to fax hardcopy documents-->
+<!--05/30/08 PJZ Move back to single namespace-->
+<!--05/21/08 PJZ Partial alignment with WS-FaxOut-->
+<definitions xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:sm="http://www.pwg.org/schemas/2016/01/sm" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" targetNamespace="http://www.pwg.org/schemas/2016/01/sm">
+	<types>
+		<xs:schema xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" elementFormDefault="qualified" targetNamespace="http://schemas.xmlsoap.org/ws/2004/08/addressing">
+			<xs:include schemaLocation="addressing.xsd"/>
+		</xs:schema>
+		<xs:schema xmlns="http://schemas.xmlsoap.org/wsdl/" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:soap="http://schemas.xmlsoap.org/wsdl/soap/" xmlns:mime="http://schemas.xmlsoap.org/wsdl/mime/" xmlns:http="http://schemas.xmlsoap.org/wsdl/http/" xmlns:soapenc="http://schemas.xmlsoap.org/soap/encoding/" xmlns:wsa="http://schemas.xmlsoap.org/ws/2004/08/addressing" xmlns:sm="http://www.pwg.org/schemas/2016/01/sm" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+			<xs:include schemaLocation="PwgFaxOutOpMsg.xsd"/>
+			<xs:import namespace="http://schemas.xmlsoap.org/ws/2004/08/addressing" schemaLocation="addressing.xsd"/>
+			<xs:include schemaLocation="PwgSemanticModel.xsd"/>
+			<xs:element name="BinaryData" type="xs:base64Binary"/>
+			<xs:element name="RequestedElement" type="xs:QName"/>
+		</xs:schema>
+	</types>
+	<message name="AddFaxOutHardcopyDocumentRequestMsg">
+		<part name="body" element="sm:AddFaxOutHardcopyDocumentRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="AddFaxOutHardcopyDocumentResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:AddFaxOutHardcopyDocumentResponse"/>
+	</message>
+	<message name="CancelCurrentFaxOutJobRequestMsg">
+		<message name="CancelFaxOutJobResponseMsg">
+			<part name="MessageID" element="wsa:MessageID"/>
+			<part name="RelatesTo" element="wsa:RelatesTo"/>
+			<part name="To" element="wsa:To"/>
+			<part name="From" element="wsa:From"/>
+			<part name="Action" element="wsa:Action"/>
+			<part name="body" element="sm:CancelFaxOutJobResponse"/>
+		</message>
+		<part name="body" element="sm:CancelCurrentFaxOutJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CancelCurrentFaxOutJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CancelCurrentFaxOutJobResponse"/>
+	</message>
+	<message name="CancelFaxOutDocumentRequestMsg">
+		<part name="body" element="sm:CancelFaxOutDocumentRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CancelFaxOutDocumentResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CancelFaxOutDocumentResponse"/>
+	</message>
+	<message name="CancelFaxOutJobRequestMsg">
+		<part name="body" element="sm:CancelFaxOutJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CancelFaxOutJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CancelFaxOutJobResponse"/>
+	</message>
+	<message name="CancelMyFaxOutJobsRequestMsg">
+		<part name="body" element="sm:CancelMyFaxOutJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CancelMyFaxOutJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CancelMyFaxOutJobsResponse"/>
+	</message>
+	<message name="CancelFaxOutJobsRequestMsg">
+		<part name="body" element="sm:CancelFaxOutJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CancelFaxOutJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CancelFaxOutJobsResponse"/>
+	</message>
+	<message name="CloseFaxOutJobRequestMsg">
+		<part name="body" element="sm:CloseFaxOutJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CloseFaxOutJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CloseFaxOutJobResponse"/>
+	</message>
+	<message name="CreateFaxOutJobRequestMsg">
+		<part name="body" element="sm:CreateFaxOutJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="CreateFaxOutJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:CreateFaxOutJobResponse"/>
+	</message>
+	<message name="DisableFaxOutServiceRequestMsg">
+		<part name="body" element="sm:DisableFaxOutServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="DisableFaxOutServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:DisableFaxOutServiceResponse"/>
+	</message>
+	<message name="EnableFaxOutServiceRequestMsg">
+		<part name="body" element="sm:EnableFaxOutServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="EnableFaxOutServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:EnableFaxOutServiceResponse"/>
+	</message>
+	<message name="GetActiveFaxOutJobsRequestMsg">
+		<part name="body" element="sm:GetActiveFaxOutJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetActiveFaxOutJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetActiveFaxOutJobsResponse"/>
+	</message>
+	<message name="GetFaxOutDocumentElementsRequestMsg">
+		<part name="body" element="sm:GetFaxOutDocumentElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetFaxOutDocumentElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetFaxOutDocumentElementsResponse"/>
+	</message>
+	<message name="GetFaxOutDocumentsRequestMsg">
+		<part name="body" element="sm:GetFaxOutDocumentsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetFaxOutDocumentsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetFaxOutDocumentsResponse"/>
+	</message>
+	<message name="GetFaxOutJobElementsRequestMsg">
+		<part name="body" element="sm:GetFaxOutJobElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetFaxOutJobElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetFaxOutJobElementsResponse"/>
+	</message>
+	<message name="GetFaxOutJobHistoryRequestMsg">
+		<part name="body" element="sm:GetFaxOutJobHistoryRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetFaxOutJobHistoryResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetFaxOutJobHistoryResponse"/>
+	</message>
+	<message name="GetFaxOutServiceElementsRequestMsg">
+		<part name="body" element="sm:GetFaxOutServiceElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="GetFaxOutServiceElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:GetFaxOutServiceElementsResponse"/>
+	</message>
+	<message name="HoldFaxOutJobRequestMsg">
+		<part name="body" element="sm:HoldFaxOutJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="HoldFaxOutJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:HoldFaxOutJobResponse"/>
+	</message>
+	<message name="HoldNewFaxOutJobsRequestMsg">
+		<part name="body" element="sm:HoldNewFaxOutJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="HoldNewFaxOutJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:HoldNewFaxOutJobsResponse"/>
+	</message>
+	<message name="PauseFaxOutServiceAfterCurrentJobRequestMsg">
+		<part name="body" element="sm:PauseFaxOutServiceAfterCurrentJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="PauseFaxOutServiceAfterCurrentJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:PauseFaxOutServiceAfterCurrentJobResponse"/>
+	</message>
+	<message name="PauseFaxOutServiceRequestMsg">
+		<part name="body" element="sm:PauseFaxOutServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="PauseFaxOutServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:PauseFaxOutServiceResponse"/>
+	</message>
+	<message name="PromoteFaxOutJobRequestMsg">
+		<part name="body" element="sm:PromoteFaxOutJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="PromoteFaxOutJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:PromoteFaxOutJobResponse"/>
+	</message>
+	<message name="ReleaseFaxOutJobRequestMsg">
+		<part name="body" element="sm:ReleaseFaxOutJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ReleaseFaxOutJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ReleaseFaxOutJobResponse"/>
+	</message>
+	<message name="ReleaseNewFaxOutJobsRequestMsg">
+		<part name="body" element="sm:ReleaseNewFaxOutJobsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ReleaseNewFaxOutJobsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ReleaseNewFaxOutJobsResponse"/>
+	</message>
+	<message name="RestartFaxOutServiceRequestMsg">
+		<part name="body" element="sm:RestartFaxOutServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="RestartFaxOutServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:RestartFaxOutServiceResponse"/>
+	</message>
+	<message name="ResubmitFaxOutJobRequestMsg">
+		<part name="body" element="sm:ResubmitFaxOutJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ResubmitFaxOutJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ResubmitFaxOutJobResponse"/>
+	</message>
+	<message name="ResumeFaxOutJobRequestMsg">
+		<part name="body" element="sm:ResumeFaxOutJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ResumeFaxOutJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ResumeFaxOutJobResponse"/>
+	</message>
+	<message name="ResumeFaxOutServiceRequestMsg">
+		<part name="body" element="sm:ResumeFaxOutServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ResumeFaxOutServiceResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ResumeFaxOutServiceResponse"/>
+	</message>
+	<message name="SendFaxOutDocumentRequestMsg">
+		<part name="body" element="sm:SendFaxOutDocumentRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="DocumentStream" element="sm:BinaryData"/>
+	</message>
+	<message name="SendFaxOutDocumentResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SendFaxOutDocumentResponse"/>
+	</message>
+	<message name="SendFaxOutUriRequestMsg">
+		<part name="body" element="sm:SendFaxOutUriRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SendFaxOutUriResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SendFaxOutUriResponse"/>
+	</message>
+	<message name="SetFaxOutDocumentElementsRequestMsg">
+		<part name="body" element="sm:SetFaxOutDocumentElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SetFaxOutDocumentElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SetFaxOutDocumentElementsResponse"/>
+	</message>
+	<message name="SetFaxOutJobElementsRequestMsg">
+		<part name="body" element="sm:SetFaxOutJobElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SetFaxOutJobElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SetFaxOutJobElementsResponse"/>
+	</message>
+	<message name="SetFaxOutServiceElementsRequestMsg">
+		<part name="body" element="sm:SetFaxOutServiceElementsRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SetFaxOutServiceElementsResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SetFaxOutServiceElementsResponse"/>
+	</message>
+	<message name="ShutdownFaxOutServiceRequestMsg">
+		<part name="body" element="sm:ShutdownFaxOutServiceRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ShutdownFaxOutServiceResponseMsg">
+		<part name="body" element="sm:ShutdownFaxOutServiceResponse"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SuspendCurrentFaxOutJobRequestMsg">
+		<part name="body" element="sm:SuspendCurrentFaxOutJobRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="SuspendCurrentFaxOutJobResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:SuspendCurrentFaxOutJobResponse"/>
+	</message>
+	<message name="ValidateFaxOutDocumentTicketRequestMsg">
+		<part name="body" element="sm:ValidateFaxOutDocumentTicketRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ValidateFaxOutDocumentTicketResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ValidateFaxOutDocumentTicketResponse"/>
+	</message>
+	<message name="ValidateFaxOutJobTicketRequestMsg">
+		<part name="body" element="sm:ValidateFaxOutJobTicketRequest"/>
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+	</message>
+	<message name="ValidateFaxOutJobTicketResponseMsg">
+		<part name="MessageID" element="wsa:MessageID"/>
+		<part name="RelatesTo" element="wsa:RelatesTo"/>
+		<part name="To" element="wsa:To"/>
+		<part name="From" element="wsa:From"/>
+		<part name="Action" element="wsa:Action"/>
+		<part name="body" element="sm:ValidateFaxOutJobTicketResponse"/>
+	</message>
+	<portType name="PwgFaxOutPort">
+		<operation name="AddFaxOutHardcopyDocument">
+			<input message="sm:AddFaxOutHardcopyDocumentRequestMsg"/>
+			<output message="sm:AddFaxOutHardcopyDocumentResponseMsg"/>
+		</operation>
+		<operation name="CancelCurrentFaxOutJob">
+			<input message="sm:CancelCurrentFaxOutJobRequestMsg"/>
+			<output message="sm:CancelCurrentFaxOutJobResponseMsg"/>
+		</operation>
+		<operation name="CancelFaxOutDocument">
+			<input message="sm:CancelFaxOutDocumentRequestMsg"/>
+			<output message="sm:CancelFaxOutDocumentResponseMsg"/>
+		</operation>
+		<operation name="CancelFaxOutJob">
+			<input message="sm:CancelFaxOutJobRequestMsg"/>
+			<output message="sm:CancelFaxOutJobResponseMsg"/>
+		</operation>
+		<operation name="CancelFaxOutJobs">
+			<input message="sm:CancelFaxOutJobsRequestMsg"/>
+			<output message="sm:CancelFaxOutJobsResponseMsg"/>
+		</operation>
+		<operation name="CancelMyFaxOutJobs">
+			<input message="sm:CancelMyFaxOutJobsRequestMsg"/>
+			<output message="sm:CancelMyFaxOutJobsResponseMsg"/>
+		</operation>
+		<operation name="CloseFaxOutJob">
+			<input message="sm:CloseFaxOutJobRequestMsg"/>
+			<output message="sm:CloseFaxOutJobResponseMsg"/>
+		</operation>
+		<operation name="CreateFaxOutJob">
+			<input message="sm:CreateFaxOutJobRequestMsg"/>
+			<output message="sm:CreateFaxOutJobResponseMsg"/>
+		</operation>
+		<operation name="DisableFaxOutService">
+			<input message="sm:DisableFaxOutServiceRequestMsg"/>
+			<output message="sm:DisableFaxOutServiceResponseMsg"/>
+		</operation>
+		<operation name="EnableFaxOutService">
+			<input message="sm:EnableFaxOutServiceRequestMsg"/>
+			<output message="sm:EnableFaxOutServiceResponseMsg"/>
+		</operation>
+		<operation name="GetActiveFaxOutJobs">
+			<input message="sm:GetActiveFaxOutJobsRequestMsg"/>
+			<output message="sm:GetActiveFaxOutJobsResponseMsg"/>
+		</operation>
+		<operation name="GetFaxOutDocumentElements">
+			<input message="sm:GetFaxOutDocumentElementsRequestMsg"/>
+			<output message="sm:GetFaxOutDocumentElementsResponseMsg"/>
+		</operation>
+		<operation name="GetFaxOutDocuments">
+			<input message="sm:GetFaxOutDocumentsRequestMsg"/>
+			<output message="sm:GetFaxOutDocumentsResponseMsg"/>
+		</operation>
+		<operation name="GetFaxOutJobElements">
+			<input message="sm:GetFaxOutJobElementsRequestMsg"/>
+			<output message="sm:GetFaxOutJobElementsResponseMsg"/>
+		</operation>
+		<operation name="GetFaxOutJobHistory">
+			<input message="sm:GetFaxOutJobHistoryRequestMsg"/>
+			<output message="sm:GetFaxOutJobHistoryResponseMsg"/>
+		</operation>
+		<operation name="GetFaxOutServiceElements">
+			<input message="sm:GetFaxOutServiceElementsRequestMsg"/>
+			<output message="sm:GetFaxOutServiceElementsResponseMsg"/>
+		</operation>
+		<operation name="HoldFaxOutJob">
+			<input message="sm:HoldFaxOutJobRequestMsg"/>
+			<output message="sm:HoldFaxOutJobResponseMsg"/>
+		</operation>
+		<operation name="HoldNewFaxOutJobs">
+			<input message="sm:HoldNewFaxOutJobsRequestMsg"/>
+			<output message="sm:HoldNewFaxOutJobsResponseMsg"/>
+		</operation>
+		<operation name="PauseFaxOutService">
+			<input message="sm:PauseFaxOutServiceRequestMsg"/>
+			<output message="sm:PauseFaxOutServiceResponseMsg"/>
+		</operation>
+		<operation name="PauseFaxOutServiceAfterCurrentJob">
+			<input message="sm:PauseFaxOutServiceAfterCurrentJobRequestMsg"/>
+			<output message="sm:PauseFaxOutServiceAfterCurrentJobResponseMsg"/>
+		</operation>
+		<operation name="PromoteFaxOutJob">
+			<input message="sm:PromoteFaxOutJobRequestMsg"/>
+			<output message="sm:PromoteFaxOutJobResponseMsg"/>
+		</operation>
+		<operation name="ReleaseFaxOutJob">
+			<input message="sm:ReleaseFaxOutJobRequestMsg"/>
+			<output message="sm:ReleaseFaxOutJobResponseMsg"/>
+		</operation>
+		<operation name="ReleaseNewFaxOutJobs">
+			<input message="sm:ReleaseNewFaxOutJobsRequestMsg"/>
+			<output message="sm:ReleaseNewFaxOutJobsResponseMsg"/>
+		</operation>
+		<operation name="RestartFaxOutService">
+			<input message="sm:RestartFaxOutServiceRequestMsg"/>
+			<output message="sm:RestartFaxOutServiceResponseMsg"/>
+		</operation>
+		<operation name="ResubmitFaxOutJob">
+			<input message="sm:ResubmitFaxOutJobRequestMsg"/>
+			<output message="sm:ResubmitFaxOutJobResponseMsg"/>
+		</operation>
+		<operation name="ResumeFaxOutJob">
+			<input message="sm:ResumeFaxOutJobRequestMsg"/>
+			<output message="sm:ResumeFaxOutJobResponseMsg"/>
+		</operation>
+		<operation name="ResumeFaxOutService">
+			<input message="sm:ResumeFaxOutServiceRequestMsg"/>
+			<output message="sm:ResumeFaxOutServiceResponseMsg"/>
+		</operation>
+		<operation name="SendFaxOutDocument">
+			<input message="sm:SendFaxOutDocumentRequestMsg"/>
+			<output message="sm:SendFaxOutDocumentResponseMsg"/>
+		</operation>
+		<operation name="SendFaxOutUri">
+			<input message="sm:SendFaxOutUriRequestMsg"/>
+			<output message="sm:SendFaxOutUriResponseMsg"/>
+		</operation>
+		<operation name="SetFaxOutDocumentElements">
+			<input message="sm:SetFaxOutDocumentElementsRequestMsg"/>
+			<output message="sm:SetFaxOutDocumentElementsResponseMsg"/>
+		</operation>
+		<operation name="SetFaxOutJobElements">
+			<input message="sm:SetFaxOutJobElementsRequestMsg"/>
+			<output message="sm:SetFaxOutJobElementsResponseMsg"/>
+		</operation>
+		<operation name="SetFaxOutServiceElements">
+			<input message="sm:SetFaxOutServiceElementsRequestMsg"/>
+			<output message="sm:SetFaxOutServiceElementsResponseMsg"/>
+		</operation>
+		<operation name="ShutdownFaxOutService">
+			<input message="sm:ShutdownFaxOutServiceRequestMsg"/>
+			<output message="sm:ShutdownFaxOutServiceResponseMsg"/>
+		</operation>
+		<operation name="SuspendCurrentFaxOutJob">
+			<input message="sm:SuspendCurrentFaxOutJobRequestMsg"/>
+			<output message="sm:SuspendCurrentFaxOutJobResponseMsg"/>
+		</operation>
+		<operation name="ValidateFaxOutDocumentTicket">
+			<input message="sm:ValidateFaxOutDocumentTicketRequestMsg"/>
+			<output message="sm:ValidateFaxOutDocumentTicketResponseMsg"/>
+		</operation>
+		<operation name="ValidateFaxOutJobTicket">
+			<input message="sm:ValidateFaxOutJobTicketRequestMsg"/>
+			<output message="sm:ValidateFaxOutJobTicketResponseMsg"/>
+		</operation>
+	</portType>
+	<binding name="PwgFaxOutBinding" type="sm:PwgFaxOutPort">
+		<soap:binding style="document" transport="http://schemas.xmlsoap.org/soap/http"/>
+		<operation name="AddFaxOutHardcopyDocument">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/AddFaxOutHardcopyDocument"/>
+			<input>
+				<soap:header message="sm:AddFaxOutHardcopyDocumentRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:AddFaxOutHardcopyDocumentRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:AddFaxOutHardcopyDocumentRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:AddFaxOutHardcopyDocumentRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:AddFaxOutHardcopyDocumentResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:AddFaxOutHardcopyDocumentResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:AddFaxOutHardcopyDocumentResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:AddFaxOutHardcopyDocumentResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:AddFaxOutHardcopyDocumentResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="CancelCurrentFaxOutJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelCurrentFaxOutJob"/>
+			<input>
+				<soap:header message="sm:CancelCurrentFaxOutJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelCurrentFaxOutJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelCurrentFaxOutJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelCurrentFaxOutJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CancelCurrentFaxOutJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelCurrentFaxOutJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CancelCurrentFaxOutJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelCurrentFaxOutJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelCurrentFaxOutJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="CancelFaxOutDocument">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelFaxOutDocument"/>
+			<input>
+				<soap:header message="sm:CancelFaxOutDocumentRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelFaxOutDocumentRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelFaxOutDocumentRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelFaxOutDocumentRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CancelFaxOutDocumentResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelFaxOutDocumentResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CancelFaxOutDocumentResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelFaxOutDocumentResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelFaxOutDocumentResponseMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="CancelFaxOutJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelFaxOutJob"/>
+			<input>
+				<soap:header message="sm:CancelFaxOutJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelFaxOutJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelFaxOutJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelFaxOutJobRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CancelFaxOutJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelFaxOutJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CancelFaxOutJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelFaxOutJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelFaxOutJobResponseMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="CancelFaxOutJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelFaxOutJobs"/>
+			<input>
+				<soap:header message="sm:CancelFaxOutJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelFaxOutJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelFaxOutJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelFaxOutJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CancelFaxOutJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelFaxOutJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CancelFaxOutJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelFaxOutJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelFaxOutJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="CancelMyFaxOutJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CancelMyFaxOutJobs"/>
+			<input>
+				<soap:header message="sm:CancelMyFaxOutJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelMyFaxOutJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelMyFaxOutJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelMyFaxOutJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CancelMyFaxOutJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CancelMyFaxOutJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CancelMyFaxOutJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CancelMyFaxOutJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CancelMyFaxOutJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="CloseFaxOutJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CloseFaxOutJob"/>
+			<input>
+				<soap:header message="sm:CloseFaxOutJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CloseFaxOutJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CloseFaxOutJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CloseFaxOutJobRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CloseFaxOutJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CloseFaxOutJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CloseFaxOutJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CloseFaxOutJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CloseFaxOutJobResponseMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="CreateFaxOutJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/CreateFaxOutJob"/>
+			<input>
+				<soap:header message="sm:CreateFaxOutJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CreateFaxOutJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:CreateFaxOutJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:CreateFaxOutJobRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:CreateFaxOutJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:CreateFaxOutJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:CreateFaxOutJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:CreateFaxOutJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:CreateFaxOutJobResponseMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="DisableFaxOutService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/DisableFaxOutService"/>
+			<input>
+				<soap:header message="sm:DisableFaxOutServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:DisableFaxOutServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:DisableFaxOutServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:DisableFaxOutServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:DisableFaxOutServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:DisableFaxOutServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:DisableFaxOutServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:DisableFaxOutServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:DisableFaxOutServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="EnableFaxOutService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/EnableFaxOutService"/>
+			<input>
+				<soap:header message="sm:EnableFaxOutServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:EnableFaxOutServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:EnableFaxOutServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:EnableFaxOutServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:EnableFaxOutServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:EnableFaxOutServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:EnableFaxOutServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:EnableFaxOutServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:EnableFaxOutServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetActiveFaxOutJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetActiveJobs"/>
+			<input>
+				<soap:header message="sm:GetActiveFaxOutJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetActiveFaxOutJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetActiveFaxOutJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetActiveFaxOutJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetActiveFaxOutJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetActiveFaxOutJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetActiveFaxOutJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetActiveFaxOutJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetActiveFaxOutJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetFaxOutDocumentElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetFaxOutDocumentElements"/>
+			<input>
+				<soap:header message="sm:GetFaxOutDocumentElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetFaxOutDocumentElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetFaxOutDocumentElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetFaxOutDocumentElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetFaxOutDocumentElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetFaxOutDocumentElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetFaxOutDocumentElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetFaxOutDocumentElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetFaxOutDocumentElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetFaxOutDocuments">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetDocuments"/>
+			<input>
+				<soap:header message="sm:GetFaxOutDocumentsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetFaxOutDocumentsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetFaxOutDocumentsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetFaxOutDocumentsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetFaxOutDocumentsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetFaxOutDocumentsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetFaxOutDocumentsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetFaxOutDocumentsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetFaxOutDocumentsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetFaxOutJobElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetFaxOutJobElements"/>
+			<input>
+				<soap:header message="sm:GetFaxOutJobElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetFaxOutJobElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetFaxOutJobElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetFaxOutJobElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetFaxOutJobElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetFaxOutJobElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetFaxOutJobElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetFaxOutJobElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetFaxOutJobElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetFaxOutJobHistory">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetJobHistory"/>
+			<input>
+				<soap:header message="sm:GetFaxOutJobHistoryRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetFaxOutJobHistoryRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetFaxOutJobHistoryRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetFaxOutJobHistoryRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetFaxOutJobHistoryResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetFaxOutJobHistoryResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetFaxOutJobHistoryResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetFaxOutJobHistoryResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetFaxOutJobHistoryResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="GetFaxOutServiceElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/GetFaxOutServiceElements"/>
+			<input>
+				<soap:header message="sm:GetFaxOutServiceElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetFaxOutServiceElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetFaxOutServiceElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetFaxOutServiceElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:GetFaxOutServiceElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:GetFaxOutServiceElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:GetFaxOutServiceElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:GetFaxOutServiceElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:GetFaxOutServiceElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</output>
+		</operation>
+		<operation name="HoldFaxOutJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/HoldJob"/>
+			<input>
+				<soap:header message="sm:HoldFaxOutJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:HoldFaxOutJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:HoldFaxOutJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:HoldFaxOutJobRequestMsg" part="Action" use="literal"/>
+				<soap:body use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:HoldFaxOutJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:HoldFaxOutJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:HoldFaxOutJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:HoldFaxOutJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:HoldFaxOutJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="HoldNewFaxOutJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/HoldNewFaxOutJobs"/>
+			<input>
+				<soap:header message="sm:HoldNewFaxOutJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:HoldNewFaxOutJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:HoldNewFaxOutJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:HoldNewFaxOutJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:HoldNewFaxOutJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:HoldNewFaxOutJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:HoldNewFaxOutJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:HoldNewFaxOutJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:HoldNewFaxOutJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="PauseFaxOutService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/PauseFaxOutService"/>
+			<input>
+				<soap:header message="sm:PauseFaxOutServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PauseFaxOutServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:PauseFaxOutServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:PauseFaxOutServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:PauseFaxOutServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PauseFaxOutServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:PauseFaxOutServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:PauseFaxOutServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:PauseFaxOutServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="PauseFaxOutServiceAfterCurrentJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/PauseFaxOutServiceAfterCurrentJob"/>
+			<input>
+				<soap:header message="sm:PauseFaxOutServiceAfterCurrentJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PauseFaxOutServiceAfterCurrentJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:PauseFaxOutServiceAfterCurrentJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:PauseFaxOutServiceAfterCurrentJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:PauseFaxOutServiceAfterCurrentJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PauseFaxOutServiceAfterCurrentJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:PauseFaxOutServiceAfterCurrentJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:PauseFaxOutServiceAfterCurrentJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:PauseFaxOutServiceAfterCurrentJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="PromoteFaxOutJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/PromoteFaxOutJob"/>
+			<input>
+				<soap:header message="sm:PromoteFaxOutJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PromoteFaxOutJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:PromoteFaxOutJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:PromoteFaxOutJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:PromoteFaxOutJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:PromoteFaxOutJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:PromoteFaxOutJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:PromoteFaxOutJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:PromoteFaxOutJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ReleaseFaxOutJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ReleaseJob"/>
+			<input>
+				<soap:header message="sm:ReleaseFaxOutJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ReleaseFaxOutJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ReleaseFaxOutJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ReleaseFaxOutJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ReleaseFaxOutJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ReleaseFaxOutJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ReleaseFaxOutJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ReleaseFaxOutJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ReleaseFaxOutJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ReleaseNewFaxOutJobs">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ReleaseNewFaxOutJobs"/>
+			<input>
+				<soap:header message="sm:ReleaseNewFaxOutJobsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ReleaseNewFaxOutJobsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ReleaseNewFaxOutJobsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ReleaseNewFaxOutJobsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ReleaseNewFaxOutJobsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ReleaseNewFaxOutJobsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ReleaseNewFaxOutJobsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ReleaseNewFaxOutJobsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ReleaseNewFaxOutJobsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="RestartFaxOutService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/RestartFaxOutService"/>
+			<input>
+				<soap:header message="sm:RestartFaxOutServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RestartFaxOutServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:RestartFaxOutServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:RestartFaxOutServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:RestartFaxOutServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:RestartFaxOutServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:RestartFaxOutServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:RestartFaxOutServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:RestartFaxOutServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ResubmitFaxOutJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ResubmitFaxOutJob"/>
+			<input>
+				<soap:header message="sm:ResubmitFaxOutJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResubmitFaxOutJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResubmitFaxOutJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResubmitFaxOutJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ResubmitFaxOutJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResubmitFaxOutJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ResubmitFaxOutJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResubmitFaxOutJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResubmitFaxOutJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ResumeFaxOutJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ResumeFaxOutJob"/>
+			<input>
+				<soap:header message="sm:ResumeFaxOutJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResumeFaxOutJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResumeFaxOutJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResumeFaxOutJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ResumeFaxOutJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResumeFaxOutJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ResumeFaxOutJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResumeFaxOutJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResumeFaxOutJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ResumeFaxOutService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ResumeFaxOutService"/>
+			<input>
+				<soap:header message="sm:ResumeFaxOutServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResumeFaxOutServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResumeFaxOutServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResumeFaxOutServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ResumeFaxOutServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ResumeFaxOutServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ResumeFaxOutServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ResumeFaxOutServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ResumeFaxOutServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SendFaxOutDocument">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/SendFaxOutDocument"/>
+			<input>
+				<soap:header message="sm:SendFaxOutDocumentRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SendFaxOutDocumentRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SendFaxOutDocumentRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SendFaxOutDocumentRequestMsg" part="Action" use="literal"/>
+				<!-- Omitted for .NET compatibility - gSOAP doesn't actually use this anyway -->
+				<!--<mime:multipartRelated>
+					<mime:part>
+						<soap:body parts="body" use="literal"/>
+					</mime:part>
+					<mime:part>
+						<mime:content part="DocumentStream" type="application/octetstream"/>
+					</mime:part>
+				</mime:multipartRelated>-->
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SendFaxOutDocumentResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SendFaxOutDocumentResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SendFaxOutDocumentResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SendFaxOutDocumentResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SendFaxOutDocumentResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SendFaxOutUri">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/SendFaxOutUri"/>
+			<input>
+				<soap:header message="sm:SendFaxOutUriRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SendFaxOutUriRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SendFaxOutUriRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SendFaxOutUriRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SendFaxOutUriResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SendFaxOutUriResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SendFaxOutUriResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SendFaxOutUriResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SendFaxOutUriResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SetFaxOutDocumentElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/SetFaxOutDocumentElements"/>
+			<input>
+				<soap:header message="sm:SetFaxOutDocumentElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetFaxOutDocumentElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetFaxOutDocumentElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetFaxOutDocumentElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SetFaxOutDocumentElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetFaxOutDocumentElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SetFaxOutDocumentElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetFaxOutDocumentElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetFaxOutDocumentElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SetFaxOutJobElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/SetFaxOutJobElements"/>
+			<input>
+				<soap:header message="sm:SetFaxOutJobElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetFaxOutJobElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetFaxOutJobElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetFaxOutJobElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SetFaxOutJobElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetFaxOutJobElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SetFaxOutJobElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetFaxOutJobElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetFaxOutJobElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SetFaxOutServiceElements">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/SetFaxOutServiceElements"/>
+			<input>
+				<soap:header message="sm:SetFaxOutServiceElementsRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetFaxOutServiceElementsRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetFaxOutServiceElementsRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetFaxOutServiceElementsRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SetFaxOutServiceElementsResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SetFaxOutServiceElementsResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SetFaxOutServiceElementsResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SetFaxOutServiceElementsResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SetFaxOutServiceElementsResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ShutdownFaxOutService">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ShutdownFaxOutService"/>
+			<input>
+				<soap:header message="sm:ShutdownFaxOutServiceRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ShutdownFaxOutServiceRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ShutdownFaxOutServiceRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ShutdownFaxOutServiceRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ShutdownFaxOutServiceResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ShutdownFaxOutServiceResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ShutdownFaxOutServiceResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ShutdownFaxOutServiceResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ShutdownFaxOutServiceResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="SuspendCurrentFaxOutJob">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/SuspendCurrentFaxOutJob"/>
+			<input>
+				<soap:header message="sm:SuspendCurrentFaxOutJobRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SuspendCurrentFaxOutJobRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:SuspendCurrentFaxOutJobRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:SuspendCurrentFaxOutJobRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:SuspendCurrentFaxOutJobResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:SuspendCurrentFaxOutJobResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:SuspendCurrentFaxOutJobResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:SuspendCurrentFaxOutJobResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:SuspendCurrentFaxOutJobResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ValidateFaxOutDocumentTicket">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ValidateFaxOutDocumentTicket"/>
+			<input>
+				<soap:header message="sm:ValidateFaxOutDocumentTicketRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ValidateFaxOutDocumentTicketRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ValidateFaxOutDocumentTicketRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ValidateFaxOutDocumentTicketRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ValidateFaxOutDocumentTicketResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ValidateFaxOutDocumentTicketResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ValidateFaxOutDocumentTicketResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ValidateFaxOutDocumentTicketResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ValidateFaxOutDocumentTicketResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+		<operation name="ValidateFaxOutJobTicket">
+			<soap:operation soapAction="http://www.pwg.org/schemas/2009/8/ValidateFaxOutJobTicket"/>
+			<input>
+				<soap:header message="sm:ValidateFaxOutJobTicketRequestMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ValidateFaxOutJobTicketRequestMsg" part="To" use="literal"/>
+				<soap:header message="sm:ValidateFaxOutJobTicketRequestMsg" part="From" use="literal"/>
+				<soap:header message="sm:ValidateFaxOutJobTicketRequestMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</input>
+			<output>
+				<soap:header message="sm:ValidateFaxOutJobTicketResponseMsg" part="MessageID" use="literal"/>
+				<soap:header message="sm:ValidateFaxOutJobTicketResponseMsg" part="RelatesTo" use="literal"/>
+				<soap:header message="sm:ValidateFaxOutJobTicketResponseMsg" part="To" use="literal"/>
+				<soap:header message="sm:ValidateFaxOutJobTicketResponseMsg" part="From" use="literal"/>
+				<soap:header message="sm:ValidateFaxOutJobTicketResponseMsg" part="Action" use="literal"/>
+				<soap:body parts="body" use="literal"/>
+			</output>
+		</operation>
+	</binding>
+	<service name="PwgFaxOutService">
+		<port name="PwgFaxOutPort" binding="sm:PwgFaxOutBinding">
+			<soap:address location="http://localhost:53103/PwgFaxOutService"/>
+		</port>
+	</service>
+	<!--End User operation messages-->
+	<!--Administrative operation messages-->
+</definitions>

@@ -1,0 +1,311 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<xs:schema xmlns:ds="http://www.w3.org/2000/09/xmldsig#" xmlns:wsse="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" xmlns:xenc="http://www.w3.org/2001/04/xmlenc#" xmlns:saml="urn:oasis:names:tc:SAML:2.0:assertion" xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="PwgCommon.xsd"/>
+	<xs:import namespace="http://www.w3.org/2001/04/xmlenc#" schemaLocation="xenc-schema.xsd"/>
+	<xs:import namespace="http://www.w3.org/2000/09/xmldsig#" schemaLocation="xmldsig-core-schema.xsd"/>
+	<xs:import namespace="urn:oasis:names:tc:SAML:2.0:assertion" schemaLocation="saml-schema-assertion-2.0.xsd"/>
+	<xs:import namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-utility-1.0.xsd" schemaLocation="oasis-200401-wss-wssecurity-utility-1.0.xsd"/>
+	<xs:import namespace="http://docs.oasis-open.org/wss/2004/01/oasis-200401-wss-wssecurity-secext-1.0.xsd" schemaLocation="oasis-200401-wss-wssecurity-secext-1.0.xsd"/>
+	<!--01/25/16  DWM Added Joe Murdock's security.xsd-->
+	<!--05/26/11  PJZ Added Joe Murdock's ids-security-20110402.xsd-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v3   
+
+Copyright 2002-2016, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald, Joe Murdock, Daniel Manchala 
+</xs:documentation>
+	</xs:annotation>
+	<!--                                 -->
+	<!---->
+	<xs:element name="SecurityTicket" type="SecurityTicketType"/>
+	<xs:complexType name="SecurityTicketType">
+		<xs:annotation>
+			<xs:documentation>Core security ticket defintion for PWG services </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Signature" type="ds:SignatureType" minOccurs="1" maxOccurs="1"/>
+			<xs:element name="SecurityOwner" type="SecurityIdentificationType"/>
+			<xs:element name="SecurityElements" type="SecurityElementsType"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SecurityIdentificationType">
+		<xs:annotation>
+			<xs:documentation>
+            Generic container typef or identification
+            </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UserIdentification" type="UserIdentificationType" minOccurs="0"/>
+			<xs:element name="DeviceIdentification" type="DeviceIdentificationType" minOccurs="0"/>
+			<xs:element name="ClientIdentification" type="ClientIdentificationType" minOccurs="0"/>
+			<xs:element name="ServiceIdentification" type="ServiceIdentificationType" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SecurityElementsType">
+		<xs:annotation>
+			<xs:documentation>
+            Generic container type for current security attributes
+            </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="SecurityDescription" type="SecurityDescriptionType" minOccurs="1"/>
+			<xs:element name="UserSecurity" type="UserSecurityType" minOccurs="0"/>
+			<xs:element name="DeviceSecurity" type="DeviceSecurityType" minOccurs="0"/>
+			<xs:element name="ClientSecurity" type="ClientSecurityType" minOccurs="0"/>
+			<xs:element name="ServiceSecurity" type="ServiceSecurityType" minOccurs="0"/>
+			<xs:element name="JobSecurity" type="JobSecurityType" minOccurs="0"/>
+			<xs:element name="DocumentSecurity" type="DocumentSecurityType" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="UserSecurity" type="UserSecurityType"/>
+	<xs:complexType name="UserSecurityType">
+		<xs:sequence>
+			<xs:element name="UserIdentification" type="UserIdentificationType" maxOccurs="1"/>
+			<xs:element name="UserAuthentication" type="AuthenticationInfoType" minOccurs="0"/>
+			<xs:element name="UserAuthorization" type="AuthorizationInfoType" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="DeviceSecurity" type="DeviceSecurityType"/>
+	<xs:complexType name="DeviceSecurityType">
+		<xs:sequence>
+			<xs:element name="DeviceIdentification" type="DeviceIdentificationType" maxOccurs="1"/>
+			<xs:element name="DeviceAuthentication" type="AuthenticationInfoType" minOccurs="0"/>
+			<xs:element name="DeviceAuthorization" type="AuthorizationInfoType" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ClientSecurity" type="ClientSecurityType"/>
+	<xs:complexType name="ClientSecurityType">
+		<xs:sequence>
+			<xs:element name="ClientIdentification" type="ClientIdentificationType" maxOccurs="1"/>
+			<xs:element name="ClientAuthentication" type="AuthenticationInfoType" minOccurs="0"/>
+			<xs:element name="ClientAuthorization" type="AuthorizationInfoType" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ServiceSecurity" type="ServiceSecurityType"/>
+	<xs:complexType name="ServiceSecurityType">
+		<xs:sequence>
+			<xs:element name="ServiceIdentification" type="ServiceIdentificationType" maxOccurs="1"/>
+			<xs:element name="ServiceAuthentication" type="AuthenticationInfoType" minOccurs="0"/>
+			<xs:element name="ServiceAuthorization" type="AuthorizationInfoType" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="JobSecurity" type="JobSecurityType"/>
+	<xs:complexType name="JobSecurityType">
+		<xs:sequence>
+			<xs:element name="JobAuthentication" type="AuthenticationInfoType" minOccurs="0"/>
+			<xs:element name="JobAuthorization" type="AuthorizationInfoType" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="DocumentSecurity" type="DocumentSecurityType"/>
+	<xs:complexType name="DocumentSecurityType">
+		<xs:sequence>
+			<xs:element name="DocumentAuthentication" type="AuthenticationInfoType" minOccurs="0"/>
+			<xs:element name="DocumentRights" type="DocumentRightsType" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="DocumentRights" type="DocumentRightsType"/>
+	<xs:complexType name="DocumentRightsType">
+		<xs:sequence>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SecurityDescriptionType">
+		<xs:annotation>
+			<xs:documentation>
+            Describes and define all the various security requirements - requested or actually used
+            </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="AuthenticationAvailable" type="AuthenticationTypeType" minOccurs="0"/>
+			<xs:element name="EncryptionAvailable" type="EncryptionTypeType" minOccurs="0"/>
+			<xs:element name="AuthenticationUsed" type="AuthenticationInfoType" minOccurs="0"/>
+			<xs:element name="EncryptionUsed" type="EncryptionInfoType" minOccurs="0"/>
+			<xs:element name="SecurityClasificationLevel" type="xs:string" minOccurs="0"/>
+			<xs:element name="CertificateAuthority" type="xs:string" minOccurs="0"/>
+			<xs:element name="Federation" type="xs:string" minOccurs="0"/>
+			<xs:element name="LocationString" type="LocalizedStringType" minOccurs="0"/>
+			<xs:element name="GeoLocation" type="xs:anyURI" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute name="mustHonor" type="xs:boolean" use="optional"/>
+	</xs:complexType>
+	<xs:complexType name="AuthenticationInfoType">
+		<xs:annotation>
+			<xs:documentation>
+            Authentication information. Includes tokens used, federation lists, etc.
+            </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<!-- <xs:element name="AuthenticationType" type="AuthenticationTypeType"/> -->
+			<!-- extend the AuthenticationTypeType values to include federations, etc... -->
+			<xs:choice>
+				<xs:element name="Token" type="xs:base64Binary"/>
+				<xs:element name="Certificate" type="xs:base64Binary"/>
+				<xs:element name="AuthenticationUri" type="xs:anyURI"/>
+				<xs:element name="AuthenticationString" type="xs:string"/>
+				<xs:element name="UsernamePassword" type="UserNamePasswordType"/>
+				<xs:element name="KeyInfo" type="SecurityKeyType" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EncryptionInfoType">
+		<xs:annotation>
+			<xs:documentation>
+            Encryption information. Includes tokens used, federation lists, etc.
+            </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="EncryptionType" type="EncryptionTypeType"/>
+			<xs:choice>
+				<xs:element name="xmlEncryptionInfo" type="xenc:EncryptedType"/>
+				<xs:element name="samlEncryptionInfo" type="saml:EncryptedElementType"/>
+				<xs:element name="pwgEncryptionInfo" type="JobPasswordEncryptionType"/>
+				<!-- add other encryption info element (xacml, saml, etc.) -->
+			</xs:choice>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AuthorizationInfoCollectionType">
+		<xs:annotation>
+			<xs:documentation>
+            Authorization information used
+            </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="UserAuthorization" type="AuthorizationInfoType" maxOccurs="1"/>
+			<xs:element name="DeviceAuthorization" type="AuthorizationInfoType" maxOccurs="1"/>
+			<xs:element name="ClientAuthorization" type="AuthorizationInfoType" maxOccurs="1"/>
+			<xs:element name="ServiceAuthorization" type="AuthorizationInfoType" maxOccurs="1"/>
+			<xs:element name="JobAuthorization" type="AuthorizationInfoType" maxOccurs="1"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="UserIdentificationType">
+		<xs:sequence>
+			<xs:element name="UserUuid" type="Uuid" minOccurs="1"/>
+			<xs:element name="UsernameToken" type="wsse:UsernameTokenType" minOccurs="0"/>
+			<xs:element name="UserID" type="xs:string" minOccurs="0"/>
+			<xs:element name="UserUri" type="xs:string" minOccurs="0"/>
+			<xs:element name="UserVCard" type="xs:string" minOccurs="0"/>
+			<xs:element name="UserSecurityKey" type="SecurityKeyType" minOccurs="0"/>
+			<xs:element name="UserRole" type="UserRoleWKV" minOccurs="0"/>
+			<xs:element name="UserGroup" type="xs:string" minOccurs="0"/>
+			<xs:element name="LocationString" type="LocalizedStringType" minOccurs="0"/>
+			<xs:element name="GeoLocation" type="xs:anyURI" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeviceIdentificationType">
+		<xs:sequence>
+			<xs:element name="DeviceUuid" type="UrnUuid" minOccurs="1"/>
+			<xs:element name="DNSName" type="xs:string" minOccurs="0"/>
+			<xs:element name="DeviceUri" type="xs:string" minOccurs="0"/>
+			<xs:element name="IPAddr" type="xs:string" minOccurs="0"/>
+			<xs:element name="DeviceSecurityKey" type="SecurityKeyType" minOccurs="0"/>
+			<xs:element name="DeviceType" type="DeviceTypesWKV" minOccurs="1"/>
+			<xs:element name="LocationString" type="LocalizedStringType" minOccurs="0"/>
+			<xs:element name="GeoLocation" type="xs:anyURI" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ClientIdentificationType">
+		<xs:sequence>
+			<xs:element name="ClientUuid" type="UrnUuid" minOccurs="1"/>
+			<xs:element name="ClientUri" type="xs:string" minOccurs="0"/>
+			<xs:element name="ClientSecurityKey" type="SecurityKeyType" minOccurs="0"/>
+			<xs:element name="ClientRole" type="ClientRoleWKV" minOccurs="1"/>
+			<xs:element name="LocationString" type="LocalizedStringType" minOccurs="0"/>
+			<xs:element name="GeoLocation" type="xs:anyURI" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ServiceIdentificationType">
+		<xs:sequence>
+			<xs:element name="ServiceUuid" type="UrnUuid" minOccurs="1"/>
+			<xs:element name="DNSName" type="xs:string" minOccurs="0"/>
+			<xs:element name="ServiceUri" type="xs:string" minOccurs="0"/>
+			<xs:element name="ServiceSecurityKey" type="SecurityKeyType" minOccurs="0"/>
+			<xs:element name="ServiceType" type="SecurityServiceTypes" minOccurs="1"/>
+			<xs:element name="LocationString" type="LocalizedStringType" minOccurs="0"/>
+			<xs:element name="GeoLocation" type="xs:anyURI" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="AuthorizationInfoType">
+		<xs:sequence>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SecurityKeyType">
+		<xs:annotation>
+			<xs:documentation>
+            Security key specifications from various oither standards inlcude XML DigitalSignature and WS-Security.
+            </xs:documentation>
+		</xs:annotation>
+		<xs:choice>
+			<xs:element name="dsKeyInfo" type="ds:KeyInfoType" minOccurs="0"/>
+			<xs:element name="BinarySecurityToken" type="wsse:BinarySecurityTokenType" minOccurs="0"/>
+			<xs:any namespace="##other" processContents="lax" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:choice>
+	</xs:complexType>
+	<xs:complexType name="UserNamePasswordType">
+		<xs:annotation>
+			<xs:documentation>
+            Username nd password combination.
+            </xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element name="Username" type="wsse:UsernameTokenType"/>
+			<xs:element name="UserPassword" type="wsse:PasswordString"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!-- move the uuid defintions to pwgCommon? -->
+	<xs:simpleType name="Uuid">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UrnUuid">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="urn:uuid:[a-f0-9]{8}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{4}-[a-f0-9]{12}"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="EncryptionTypeType">
+		<xs:union memberTypes="pwg:JobPasswordEncryptionWKV pwg:KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="SecurityServiceTypes">
+		<xs:union memberTypes="SecurityServiceTypeWKV ServiceTypeWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="SecurityServiceTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Client"/>
+			<xs:enumeration value="Server"/>
+			<xs:enumeration value="Identification"/>
+			<xs:enumeration value="KeyDistribution"/>
+			<xs:enumeration value="Authentication"/>
+			<xs:enumeration value="Authorization"/>
+		</xs:restriction>
+		<!-- service type (function of this service object) -->
+		<!-- see WIMS Object Model - section 4 [WIMS-PRO] -->
+	</xs:simpleType>
+	<xs:complexType name="LocalizedStringType">
+		<xs:simpleContent>
+			<xs:extension base="xs:string">
+				<xs:attribute name="lang" type="NaturalLanguageType" use="required"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,452 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<!--02/24/11 PJZ Added password operational elements-->
+	<!--01/18/12 PJZ Aligned with latest JPS3 and Raster specs-->
+	<!--07/19/11 PJZ Completed fixes for Set operation-->
+	<!--05/02/11 PJZ Removed Startup operation-->
+	<!--01/10/12 PJZ Aligned with latest JPS3 and Raster specs-->
+	<!--06/04/10 PJZ Reworked Set Service Elements input parameters-->
+	<!--05/13/10 PJZ Removed extension point from operation signatures-->
+	<!--04/22/10 PJZ added "Message parameter and made all operations extensible-->
+	<!--03/01/10 PJZ Added CloseJob back in-->
+	<!--02/05/10 PJZ Fixed operation names-->
+	<!--01/19/10 PJZ Made all service interfaces homogenous (as much as possible)-->
+	<!--01/02/10 PJZ Gets/Sets now contain NaturalLanguage(declarative) and ElementsNaturalLanguageRequested(request) as appropriate-->
+	<!--10/23/09 PJZ Fixed ValidatFaxOutJobTicket-->
+	<!--10/23/09 PJZ Updates per October face to face-->
+	<!--04/14/09 PJZ Updated Namespace-->
+	<!--11/13/08 PJZ Added capability to fax hardcopy documents-->
+	<!--05/30/08 PJZ Move back to single namespace-->
+	<!--05/21/08 PJZ Partial alignment with WS-Scan-->
+	<!--PJZ 01/16/07    Initial version-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<xs:include schemaLocation="PwgCommon.xsd"/>
+	<xs:include schemaLocation="Subunits.xsd"/>
+	<xs:include schemaLocation="PwgCommon.xsd"/>
+	<xs:include schemaLocation="PwgWellKnownValues.xsd"/>
+	<xs:include schemaLocation="FaxOutService.xsd"/>
+	<xs:include schemaLocation="PwgCommonOpMsg.xsd"/>
+	<xs:import namespace="http://www.w3.org/2004/08/xop/include" schemaLocation="include.xsd"/>
+	<xs:import namespace="http://www.w3.org/2005/05/xmlmime" schemaLocation="xmlmime.xsd"/>
+	<!--WSDL specific complex types-->
+	<xs:complexType name="FaxOutElementsType">
+		<xs:sequence>
+			<xs:element ref="FaxOutServiceCapabilities" minOccurs="0"/>
+			<xs:element ref="FaxOutServiceConfiguration" minOccurs="0"/>
+			<xs:element ref="FaxOutServiceDescription" minOccurs="0"/>
+			<xs:element ref="FaxOutServiceStatus" minOccurs="0"/>
+			<xs:element ref="DefaultFaxOutJobTicket" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="FaxOutDocumentElementDataType">
+		<xs:sequence>
+			<xs:element ref="FaxOutDocumentReceipt" minOccurs="0"/>
+			<xs:element ref="FaxOutDocumentStatus" minOccurs="0"/>
+			<xs:element ref="FaxOutDocumentTicket" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="FaxOutDocumentElementsType">
+		<xs:sequence>
+			<xs:element ref="FaxOutJobReceipt" minOccurs="0"/>
+			<xs:element ref="FaxOutJobStatus" minOccurs="0"/>
+			<xs:element ref="FaxOutJobTicket" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ListOfFaxOutDocumentSummarysType">
+		<xs:sequence>
+			<xs:element name="DocumentSummary" type="FaxOutDocumentSummaryType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="FaxOutDocumentSummaryType">
+		<xs:sequence>
+			<xs:element ref="DocumentNumber"/>
+			<xs:element ref="DocumentState"/>
+			<xs:element ref="DocumentStateReasons" minOccurs="0"/>
+			<xs:element ref="ImagesCompleted"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="FaxOutJobElementsType">
+		<xs:sequence>
+			<xs:element ref="FaxOutJobReceipt" minOccurs="0"/>
+			<xs:element ref="FaxOutJobStatus" minOccurs="0"/>
+			<xs:element ref="FaxOutJobTicket" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="FaxOutJobSummaryType">
+		<xs:sequence>
+			<xs:element ref="ImagesCompleted"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="JobName"/>
+			<xs:element ref="JobOriginatingUserName"/>
+			<xs:element ref="JobState"/>
+			<xs:element ref="JobStateReasons" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ListOfFaxOutJobSummarysType">
+		<xs:sequence>
+			<xs:element name="JobSummary" type="FaxOutJobSummaryType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<!--End User operation messages-->
+	<xs:complexType name="AddFaxOutHardcopyDocumentRequestType">
+		<xs:sequence>
+			<xs:element ref="InputSource"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="FaxOutDocumentTicket" minOccurs="0"/>
+			<xs:element ref="LastDocument" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AddFaxOutHardcopyDocumentRequest" type="AddFaxOutHardcopyDocumentRequestType"/>
+	<xs:complexType name="AddFaxOutHardcopyDocumentResponseType">
+		<xs:sequence>
+			<xs:element ref="DocumentNumber"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="AddFaxOutHardcopyDocumentResponse" type="AddFaxOutHardcopyDocumentResponseType"/>
+	<xs:element name="CancelCurrentFaxOutJobRequest" type="CancelCurrentJobRequestType"/>
+	<xs:element name="CancelCurrentFaxOutJobResponse" type="CancelCurrentJobResponseType"/>
+	<xs:element name="CancelFaxOutDocumentRequest" type="CancelDocumentRequestType"/>
+	<xs:element name="CancelFaxOutDocumentResponse" type="CancelDocumentResponseType"/>
+	<xs:element name="CancelFaxOutJobRequest" type="CancelJobRequestType"/>
+	<xs:element name="CancelFaxOutJobResponse" type="CancelJobResponseType"/>
+	<xs:element name="CancelFaxOutJobsRequest" type="CancelJobsRequestType"/>
+	<xs:element name="CancelFaxOutJobsResponse" type="CancelJobsResponseType"/>
+	<xs:element name="CancelMyFaxOutJobsRequest" type="CancelMyJobsRequestType"/>
+	<xs:element name="CancelMyFaxOutJobsResponse" type="CancelMyJobsResponseType"/>
+	<xs:element name="CloseFaxOutJobRequest" type="CloseJobRequestType"/>
+	<xs:element name="CloseFaxOutJobResponse" type="CloseJobResponseType"/>
+	<xs:complexType name="CreateFaxOutJobRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentPassword" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="FaxOutJobTicket" minOccurs="0"/>
+			<xs:element ref="JobPasswordEncryption" minOccurs="0"/>
+			<xs:element ref="JobPassword" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CreateFaxOutJobRequest" type="CreateFaxOutJobRequestType"/>
+	<xs:complexType name="CreateFaxOutJobResponseType">
+		<xs:sequence>
+			<xs:element ref="JobId"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CreateFaxOutJobResponse" type="CreateFaxOutJobResponseType"/>
+	<xs:element name="GetFaxOutDocumentsRequest" type="GetDocumentsRequestType"/>
+	<xs:complexType name="GetFaxOutDocumentsResponseType">
+		<xs:sequence>
+			<xs:element name="Documents" type="ListOfFaxOutDocumentSummarysType"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="JobName"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetFaxOutDocumentsResponse" type="GetFaxOutDocumentsResponseType"/>
+	<xs:element name="GetActiveFaxOutJobsRequest" type="GetJobsRequestType"/>
+	<xs:complexType name="GetActiveFaxOutJobsResponseType">
+		<xs:sequence>
+			<xs:element name="ActiveJobs" type="ListOfFaxOutJobSummarysType"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetActiveFaxOutJobsResponse" type="GetActiveFaxOutJobsResponseType"/>
+	<xs:complexType name="GetFaxOutDocumentElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentNumber"/>
+			<xs:element ref="ElementsNaturalLanguageRequested" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="RequestedElements" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetFaxOutDocumentElementsRequest" type="GetFaxOutDocumentElementsRequestType"/>
+	<xs:complexType name="GetFaxOutDocumentElementsResponseType">
+		<xs:sequence>
+			<xs:element name="FaxOutDocumentElements" type="FaxOutDocumentElementsType" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetFaxOutDocumentElementsResponse" type="GetFaxOutDocumentElementsResponseType"/>
+	<xs:complexType name="GetFaxOutJobElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguageRequested" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="RequestedElements" minOccurs="0"/>
+			<xs:element ref="RequestingUserUri"/>
+			<xs:element ref="RequestingUserName" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetFaxOutJobElementsRequest" type="GetFaxOutJobElementsRequestType"/>
+	<xs:complexType name="GetFaxOutJobElementsResponseType">
+		<xs:sequence>
+			<xs:element name="FaxOutJobElements" type="FaxOutJobElementsType" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetFaxOutJobElementsResponse" type="GetFaxOutJobElementsResponseType"/>
+	<xs:element name="GetFaxOutJobHistoryRequest" type="GetJobsRequestType"/>
+	<xs:complexType name="GetFaxOutJobHistoryResponseType">
+		<xs:sequence>
+			<xs:element name="JobHistory" type="ListOfFaxOutJobSummarysType"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetFaxOutJobHistoryResponse" type="GetFaxOutJobHistoryResponseType"/>
+	<xs:complexType name="GetFaxOutServiceElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguageRequested" minOccurs="0"/>
+			<xs:element ref="RequestedElements" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetFaxOutServiceElementsRequest" type="GetFaxOutServiceElementsRequestType"/>
+	<xs:complexType name="GetFaxOutServiceElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element name="FaxOutServiceElements" type="FaxOutElementsType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetFaxOutServiceElementsResponse" type="GetFaxOutServiceElementsResponseType"/>
+	<xs:complexType name="SendFaxOutDocumentRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentPassword" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="FaxOutDocumentTicket" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="LastDocument" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element name="DocumentData">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="xop:Include"/>
+					</xs:sequence>
+					<xs:attribute ref="xmime:contentType"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SendFaxOutDocumentRequest" type="SendFaxOutDocumentRequestType"/>
+	<xs:complexType name="SendFaxOutDocumentResponseType">
+		<xs:sequence>
+			<xs:element ref="DocumentNumber"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SendFaxOutDocumentResponse" type="SendFaxOutDocumentResponseType"/>
+	<xs:complexType name="SendFaxOutUriRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentPassword" minOccurs="0"/>
+			<xs:element ref="DocumentUri"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="FaxOutDocumentTicket" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="LastDocument" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SendFaxOutUriRequest" type="SendFaxOutUriRequestType"/>
+	<xs:complexType name="SendFaxOutUriResponseType">
+		<xs:sequence>
+			<xs:element ref="DocumentNumber"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SendFaxOutUriResponse" type="SendFaxOutUriResponseType"/>
+	<xs:complexType name="ValidateFaxOutDocumentTicketRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentPassword" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="FaxOutDocumentTicket"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ValidateFaxOutDocumentTicketRequest" type="ValidateFaxOutDocumentTicketRequestType"/>
+	<xs:complexType name="ValidateFaxOutDocumentTicketResponseType">
+		<xs:sequence>
+			<xs:element ref="PreferredElements" minOccurs="0"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ValidateFaxOutDocumentTicketResponse" type="ValidateFaxOutDocumentTicketResponseType"/>
+	<xs:complexType name="ValidateFaxOutJobTicketRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentPassword" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="FaxOutJobTicket"/>
+			<xs:element ref="JobPasswordEncryption" minOccurs="0"/>
+			<xs:element ref="JobPassword" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ValidateFaxOutJobTicketRequest" type="ValidateFaxOutJobTicketRequestType"/>
+	<xs:complexType name="ValidateFaxOutJobTicketResponseType">
+		<xs:sequence>
+			<xs:element ref="PreferredElements" minOccurs="0"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ValidateFaxOutJobTicketResponse" type="ValidateFaxOutJobTicketResponseType"/>
+	<!--Administrative operation messages-->
+	<xs:element name="DisableFaxOutServiceRequest" type="DisableServiceRequestType"/>
+	<xs:element name="DisableFaxOutServiceResponse" type="DisableServiceResponseType"/>
+	<xs:element name="EnableFaxOutServiceRequest" type="EnableServiceRequestType"/>
+	<xs:element name="EnableFaxOutServiceResponse" type="EnableServiceResponseType"/>
+	<xs:element name="HoldFaxOutJobRequest" type="HoldJobRequestType"/>
+	<xs:element name="HoldFaxOutJobResponse" type="HoldJobResponseType"/>
+	<xs:element name="HoldNewFaxOutJobsRequest" type="HoldNewJobsRequestType"/>
+	<xs:element name="HoldNewFaxOutJobsResponse" type="HoldNewJobsResponseType"/>
+	<xs:element name="PauseFaxOutServiceAfterCurrentJobRequest" type="PauseServiceAfterCurrentJobRequestType"/>
+	<xs:element name="PauseFaxOutServiceAfterCurrentJobResponse" type="PauseServiceAfterCurrentJobResponseType"/>
+	<xs:element name="PauseFaxOutServiceRequest" type="PauseServiceRequestType"/>
+	<xs:element name="PauseFaxOutServiceResponse" type="PauseServiceResponseType"/>
+	<xs:element name="PromoteFaxOutJobRequest" type="PromoteJobRequestType"/>
+	<xs:element name="PromoteFaxOutJobResponse" type="PromoteJobResponseType"/>
+	<xs:element name="ReleaseFaxOutJobRequest" type="ReleaseJobRequestType"/>
+	<xs:element name="ReleaseFaxOutJobResponse" type="ReleaseJobResponseType"/>
+	<xs:element name="ReleaseNewFaxOutJobsRequest" type="ReleaseNewJobsRequestType"/>
+	<xs:element name="ReleaseNewFaxOutJobsResponse" type="ReleaseNewJobsResponseType"/>
+	<xs:element name="RestartFaxOutServiceRequest" type="RestartServiceRequestType"/>
+	<xs:element name="RestartFaxOutServiceResponse" type="RestartServiceResponseType"/>
+	<xs:complexType name="ResubmitFaxOutJobRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="FaxOutJobTicket" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ResubmitFaxOutJobRequest" type="ResubmitFaxOutJobRequestType"/>
+	<xs:complexType name="ResubmitFaxOutJobResponseType">
+		<xs:sequence>
+			<xs:element ref="JobId"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ResubmitFaxOutJobResponse" type="ResubmitFaxOutJobResponseType"/>
+	<xs:element name="ResumeFaxOutJobRequest" type="ResumeJobRequestType"/>
+	<xs:element name="ResumeFaxOutJobResponse" type="ResumeJobResponseType"/>
+	<xs:element name="ResumeFaxOutServiceRequest" type="ResumeServiceRequestType"/>
+	<xs:element name="ResumeFaxOutServiceResponse" type="ResumeServiceResponseType"/>
+	<xs:complexType name="SetFaxOutDocumentElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentNumber"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="FaxOutDocumentTicket"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="OperationMode" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetFaxOutDocumentElementsRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="SetFaxOutDocumentElementsRequestType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="SetFaxOutDocumentElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetFaxOutDocumentElementsResponse" type="SetFaxOutDocumentElementsResponseType"/>
+	<xs:complexType name="SetFaxOutJobElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="FaxOutJobTicket"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="OperationMode" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetFaxOutJobElementsRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="SetFaxOutJobElementsRequestType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="SetFaxOutJobElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetFaxOutJobElementsResponse" type="SetFaxOutJobElementsResponseType"/>
+	<xs:complexType name="SetFaxOutServiceElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element name="FaxOutServiceElements">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="DefaultFaxOutJobTicket" minOccurs="0"/>
+						<xs:element ref="FaxOutServiceCapabilities" minOccurs="0"/>
+						<xs:element ref="FaxOutServiceCapabilitiesReady" minOccurs="0"/>
+						<xs:element ref="FaxOutServiceDescription" minOccurs="0"/>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="OperationMode" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetFaxOutServiceElementsRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="SetFaxOutServiceElementsRequestType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="SetFaxOutServiceElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetFaxOutServiceElementsResponse" type="SetFaxOutServiceElementsResponseType"/>
+	<xs:element name="ShutdownFaxOutServiceRequest" type="ShutdownServiceRequestType"/>
+	<xs:element name="ShutdownFaxOutServiceResponse" type="ShutdownServiceResponseType"/>
+	<xs:element name="SuspendCurrentFaxOutJobRequest" type="SuspendCurrentJobRequestType"/>
+	<xs:element name="SuspendCurrentFaxOutJobResponse" type="SuspendCurrentJobResponseType"/>
+</xs:schema>

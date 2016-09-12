@@ -1,0 +1,347 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!--
+   PWG Semantic Model v2   
+
+Copyright 2002-2012, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler
+-->
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<!--PJZ 12/02/12    Initial version-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<xs:include schemaLocation="PwgCommon.xsd"/>
+	<xs:include schemaLocation="PwgWellKnownValues.xsd"/>
+	<xs:include schemaLocation="PrintService.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">Complex types and elements specific to operations</xs:documentation>
+	</xs:annotation>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">Operation and Response messages</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="CreateJobSubscriptionsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="NotifyJobUuid"/>
+			<xs:element ref="NotifyServiceUuid"/>
+			<xs:element ref="SubscriptionTickets"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CreateJobSubscriptionsRequest" type="CreateJobSubscriptionsRequestType"/>
+	<xs:complexType name="CreateJobSubscriptionsResponseType">
+		<xs:sequence>
+			<xs:element name="SubscriptionReceipts" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="SubscriptionReceipt" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element ref="NotifyStatusCode"/>
+									<xs:element ref="NotifyText"/>
+									<xs:element ref="NotifySubscriptionUuid"/>
+									<xs:element ref="NotifyLeaseDuration"/>
+									<xs:element ref="UnsupportedElements" minOccurs="0"/>
+									<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CreateJobSubscriptionsResponse" type="CreateJobSubscriptionsResponseType"/>
+	<xs:complexType name="CreateServiceSubscriptionsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="NotifyServiceUuid"/>
+			<xs:element ref="SubscriptionTickets"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CreateServiceSubscriptionsRequest" type="CreateServiceSubscriptionsRequestType"/>
+	<xs:complexType name="CreateServiceSubscriptionsResponseType">
+		<xs:sequence>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+			<xs:element name="SubscriptionReceipts" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="SubscriptionReceipt" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element ref="NotifyStatusCode"/>
+									<xs:element ref="NotifyText"/>
+									<xs:element ref="NotifySubscriptionUuid"/>
+									<xs:element ref="NotifyLeaseDuration"/>
+									<xs:element ref="UnsupportedElements" minOccurs="0"/>
+									<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CreateServiceSubscriptionsResponse" type="CreateJobSubscriptionsResponseType"/>
+	<xs:complexType name="GetSubscriptionElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="NotifyServiceUuid"/>
+			<xs:element ref="NotifySubscriptionUuid"/>
+			<xs:element ref="RequestedElements"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetSubscriptionElementsRequest" type="GetSubscriptionElementsRequestType"/>
+	<xs:complexType name="GetSubscriptionElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+			<xs:element ref="Subscription"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetSubscriptionElementsResponse" type="GetSubscriptionElementsResponseType"/>
+	<xs:complexType name="GetSubscriptionsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Limit" minOccurs="0"/>
+			<xs:element ref="MySubscriptions" minOccurs="0"/>
+			<xs:element ref="NotifyJobUuid" minOccurs="0"/>
+			<xs:element ref="NotifyServiceUuid"/>
+			<xs:element ref="RequestedElements" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetSubscriptionsRequest" type="GetSubscriptionsRequestType"/>
+	<xs:complexType name="GetSubscriptionsResponseType">
+		<xs:sequence>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+			<xs:element name="Subscriptions" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Subscription" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetSubscriptionsResponse" type="GetSubscriptionsResponseType"/>
+	<xs:complexType name="RenewSubscriptionRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="NotifyLeaseDuration"/>
+			<xs:element ref="NotifyServiceUuid"/>
+			<xs:element ref="NotifySubscriptionUuid"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="RenewSubscriptionRequest" type="RenewSubscriptionRequestType"/>
+	<xs:complexType name="RenewSubscriptionResponseType">
+		<xs:sequence>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+			<xs:element ref="NotifyLeaseDuration"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="RenewSubscriptionResponse" type="RenewSubscriptionResponseType"/>
+	<xs:complexType name="CancelSubscriptionRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="NotifyServiceUuid"/>
+			<xs:element ref="NotifySubscriptionUuid"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CancelSubscriptionRequest" type="CancelSubscriptionRequestType"/>
+	<xs:complexType name="CancelSubscriptionResponseType">
+		<xs:sequence>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+			<xs:element ref="NotifyStatusCode"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CancelSubscriptionResponse" type="CancelSubscriptionResponseType"/>
+	<!--Notify Service specific elements-->
+	<!--Types-->
+	<xs:simpleType name="LeaseDuration">
+		<xs:restriction base="xs:int"/>
+	</xs:simpleType>
+	<xs:simpleType name="NotifyEventsType">
+		<xs:union memberTypes="NotifyEventsWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="NotifyPullMethodType">
+		<xs:union memberTypes="NotifyPullMethodlWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="TimeInterval">
+		<xs:restriction base="xs:int"/>
+	</xs:simpleType>
+	<xs:complexType name="SubscriptionTicketType">
+		<xs:sequence>
+			<xs:element ref="SubscriptionDescription"/>
+			<xs:element ref="SubscriptionProcessing"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="NotificationType">
+		<xs:sequence>
+			<xs:element ref="CurrentTime" minOccurs="0"/>
+			<xs:element ref="NotifyCharset" minOccurs="0"/>
+			<xs:element ref="NotifyElements" minOccurs="0"/>
+			<xs:element ref="NotifyNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="NotifyServiceUri"/>
+			<xs:element ref="NotifySubscribedEvent"/>
+			<xs:element ref="NotifySubscriptionUuid"/>
+			<xs:element ref="NotifySequenceNumber" minOccurs="0"/>
+			<xs:element ref="NotifyUserData" minOccurs="0"/>
+			<xs:element ref="UpTime"/>
+			<xs:element ref="NotifyText" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:sequence>
+					<xs:element ref="ImpressionsCompleted"/>
+					<xs:element ref="JobUuid"/>
+					<xs:element ref="JobState"/>
+					<xs:element ref="JobStateReasons"/>
+				</xs:sequence>
+				<xs:sequence>
+					<xs:element ref="IsAcceptingJobs"/>
+					<xs:element ref="State"/>
+					<xs:element ref="StateReasons"/>
+				</xs:sequence>
+			</xs:choice>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!--Well Known Values-->
+	<xs:simpleType name="NotifyElementGroupslWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="SubscriptionTicket"/>
+			<xs:enumeration value="SubscriptionDescription"/>
+			<xs:enumeration value="SubscriptionStatus"/>
+			<xs:enumeration value="All"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NotifyEventsWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="ServiceStateChanged"/>
+			<xs:enumeration value="ServiceRestarted"/>
+			<xs:enumeration value="ServiceShutdown"/>
+			<xs:enumeration value="ServiceStopped"/>
+			<xs:enumeration value="ServiceConfigChanged"/>
+			<xs:enumeration value="ServiceMediaChanged"/>
+			<xs:enumeration value="ServiceFinishingsChanged"/>
+			<xs:enumeration value="ServiceQueueOrderChanged"/>
+			<xs:enumeration value="JobStateChanged"/>
+			<xs:enumeration value="JobCreated"/>
+			<xs:enumeration value="JobCompleted"/>
+			<xs:enumeration value="JobStopped"/>
+			<xs:enumeration value="JobConfigChanged"/>
+			<xs:enumeration value="JobProgress"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NotifyPullMethodlWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Ippget"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--Elements-->
+	<xs:element name="NotifyCharset" type="CharsetType"/>
+	<xs:element name="NotifyElements">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:any namespace="##any" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NotifyEvents">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="NotifyEvent" type="NotifyEventsType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NotifyJobUuid" type="UuidType"/>
+	<xs:element name="NotifyLeaseExpirationTime" type="xs:int"/>
+	<xs:element name="NotifyLeaseDuration" type="LeaseDuration"/>
+	<xs:element name="NotifyNaturalLanguage" type="NaturalLanguageType"/>
+	<xs:element name="NotifyPullMethod" type="NotifyPullMethodType"/>
+	<xs:element name="NotifyRecipientUri" type="xs:anyURI"/>
+	<xs:element name="NotifySequenceNumber" type="xs:int"/>
+	<xs:element name="NotifyServiceUri" type="xs:anyURI"/>
+	<xs:element name="NotifyServiceUuid" type="UuidType"/>
+	<xs:element name="NotifyStatusCode"/>
+	<xs:element name="NotifySubscribedEvent" type="NotifyEventsType"/>
+	<xs:element name="NotifySubscriberUserName" type="xs:string"/>
+	<xs:element name="NotifySubscriptionUuid" type="UuidType"/>
+	<xs:element name="NotifyText" type="xs:string"/>
+	<xs:element name="NotifyTimeInterval" type="TimeInterval"/>
+	<xs:element name="NotifyUserData" type="xs:base64Binary"/>
+	<xs:element name="SubscriptionTicket" type="SubscriptionTicketType"/>
+	<xs:element name="SubscriptionTickets">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="SubscriptionTicket" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Subscription">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="SubscriptionTicket"/>
+				<xs:element name="SubscriptionStatus" type="SubscriptionStatusType"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SubscriptionDescription">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="NotifyCharset" minOccurs="0"/>
+				<xs:element ref="NotifyNaturalLanguage" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SubscriptionProcessing">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="NotifyElements" minOccurs="0"/>
+				<xs:element ref="NotifyEvents" minOccurs="0"/>
+				<xs:element ref="NotifyLeaseDuration" minOccurs="0"/>
+				<xs:element ref="NotifyPullMethod" minOccurs="0"/>
+				<xs:element ref="NotifyRecipientUri" minOccurs="0"/>
+				<xs:element ref="NotifyTimeInterval" minOccurs="0"/>
+				<xs:element ref="NotifyUserData" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="SubscriptionStatusType">
+		<xs:sequence>
+			<xs:element ref="JobUuid" minOccurs="0"/>
+			<xs:element ref="NotifyLeaseExpirationTime"/>
+			<xs:element ref="NotifySequenceNumber"/>
+			<xs:element ref="NotifyServiceUri"/>
+			<xs:element ref="NotifySubscriberUserName"/>
+			<xs:element ref="NotifySubscriptionUuid"/>
+			<xs:element ref="UpTime"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="MySubscriptions" type="xs:boolean"/>
+</xs:schema>

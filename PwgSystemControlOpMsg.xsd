@@ -1,0 +1,171 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<!--01/10/12 PJZ Aligned with latest JPS3 and Raster specs-->
+	<!--09/20/10 PJZ Removed Agent Manager and Device-->
+	<!--07/19/11 PJZ Completed fixes for Set operation-->
+	<!--06/03/11 PJZ Fixes from May Face to Face-->
+	<!--04/21/11 PJZ Fixed SystemControlService name-->
+	<!--12/20/10 PJZ Added RestartSystemService-->
+	<!--12/19/10 PJZ Removed System from Service operations-->
+	<!--09/10/10 PJZ Removed SystemCapabilities & moved contained Power elements-->
+	<!--07/26/10 PJZ Added listing of services-->
+	<!--07/23/10 PJZ Changed name from MFD to System, Changed filename-->
+	<!--06/04/10 PJZ Reworked Set MFDElements input parameters-->
+	<!--06/04/10 PJZ Updates for upcoming Face to Face-->
+	<!--05/13/10 PJZ Removed extension point from operation signatures-->
+	<!--04/22/10 PJZ added "Message parameter and made all operations extensible-->
+	<!--01/02/10 PJZ Gets/Sets now contain NaturalLanguage(declarative) and ElementsNaturalLanguageRequested(request) as appropriate-->
+	<!--PJZ 07/09/09    Initial version-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2011, IEEE Industry Standards and Technology Organization/PWG - System Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<xs:include schemaLocation="Subunits.xsd"/>
+	<xs:include schemaLocation="System.xsd"/>
+	<xs:include schemaLocation="PwgCommon.xsd"/>
+	<xs:include schemaLocation="PwgWellKnownValues.xsd"/>
+	<xs:include schemaLocation="PwgSemanticModel.xsd"/>
+	<xs:include schemaLocation="PwgCommonOpMsg.xsd"/>
+	<xs:complexType name="SystemElements">
+		<xs:sequence>
+			<xs:element ref="Services" minOccurs="0"/>
+			<xs:element ref="SystemConfiguration" minOccurs="0"/>
+			<xs:element ref="SystemDescription" minOccurs="0"/>
+			<xs:element ref="SystemStatus" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- System - object -->
+	</xs:complexType>
+	<xs:complexType name="DeleteServiceRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Id"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="ServiceType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="DeleteServiceRequest" type="DeleteServiceRequestType"/>
+	<xs:complexType name="DeleteServiceResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:element name="DeleteServiceResponse" type="DeleteServiceResponseType"/>
+	<xs:element name="DisableAllServicesRequest" type="DisableServiceRequestType"/>
+	<xs:element name="DisableAllServicesResponse" type="DisableServiceResponseType"/>
+	<xs:element name="EnableAllServicesRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="EnableServiceRequestType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="EnableAllServicesResponse" type="EnableServiceResponseType"/>
+	<xs:complexType name="GetSystemElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguageRequested" minOccurs="0"/>
+			<xs:element ref="RequestedElements"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetSystemElementsRequest" type="GetSystemElementsRequestType"/>
+	<xs:complexType name="GetSystemElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element name="System" type="SystemElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetSystemElementsResponse" type="GetSystemElementsResponseType"/>
+	<xs:complexType name="ListAllServicesRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguageRequested" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ListAllServicesRequest" type="ListAllServicesRequestType"/>
+	<xs:complexType name="ListAllServicesResponseType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="ServiceSummaries"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ListAllServicesResponse" type="ListAllServicesResponseType"/>
+	<xs:element name="PauseAllServicesRequest" type="PauseServiceRequestType"/>
+	<xs:element name="PauseAllServicesResponse" type="PauseServiceResponseType"/>
+	<xs:element name="PauseAllServicesAfterCurrentJobRequest" type="PauseServiceAfterCurrentJobRequestType"/>
+	<xs:element name="PauseAllServicesAfterCurrentJobResponse" type="PauseServiceAfterCurrentJobResponseType"/>
+	<xs:element name="RestartAllServicesRequest" type="RestartAllServiceRequestType"/>
+	<xs:element name="RestartAllServicesResponse" type="RestartAllServiceResponseType"/>
+	<xs:complexType name="RestartServiceRequestControlType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Id"/>
+			<xs:choice minOccurs="0">
+				<xs:element ref="IsAcceptingJobs" minOccurs="0"/>
+				<xs:element ref="IsAcceptingResources" minOccurs="0"/>
+			</xs:choice>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="ServiceType"/>
+			<xs:element ref="StartServicePaused" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="RestartServiceRequest" type="RestartServiceRequestControlType"/>
+	<xs:element name="RestartServiceResponse" type="RestartServiceResponseType"/>
+	<xs:element name="ResumeAllServicesRequest" type="ResumeServiceRequestType"/>
+	<xs:element name="ResumeAllServicesResponse" type="ResumeServiceResponseType"/>
+	<xs:complexType name="SetSystemElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element name="SystemElements">
+				<xs:complexType>
+					<xs:choice>
+						<xs:element name="SystemControlServiceDescription" type="SystemControlServiceDescriptionSetType" minOccurs="0"/>
+						<xs:element name="SystemConfiguration" type="SubunitsSetType" minOccurs="0"/>
+						<xs:element ref="SystemDescription" minOccurs="0"/>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="OperationMode" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetSystemElementsRequest" type="SetSystemElementsRequestType"/>
+	<xs:complexType name="SetSystemElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetSystemElementsResponse" type="SetSystemElementsResponseType"/>
+	<xs:element name="ShutdownAllServicesRequest" type="ShutdownAllServicesRequestType"/>
+	<xs:element name="ShutdownAllServicesResponse" type="ShutdownAllServicesResponseType"/>
+	<xs:complexType name="ShutdownServiceRequestControlType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Id"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="ServiceType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ShutdownServiceRequest" type="ShutdownServiceRequestControlType"/>
+	<xs:element name="ShutdownServiceResponse" type="ShutdownServiceResponseType"/>
+	<xs:element name="StartupAllServicesRequest" type="StartupAllServiceRequestType"/>
+	<xs:element name="StartupAllServicesResponse" type="StartupAllServiceResponseType"/>
+	<xs:element name="StartupServiceRequest" type="StartupServiceRequestType"/>
+	<xs:element name="StartupServiceResponse" type="StartupServiceResponseType"/>
+</xs:schema>

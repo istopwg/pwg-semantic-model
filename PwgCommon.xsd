@@ -1,0 +1,2898 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="MediaElements.xsd"/>
+	<xs:include schemaLocation="PwgWellKnownValues.xsd"/>
+	<xs:include schemaLocation="qualifieddc.xsd"/>
+	<!--12/06/12 PJZ Began adding MustHonors and ##Other attributes to processing elements-->
+	<!--12/05/12 PJZ Fixed FinishingsCol type-->
+	<!--12/03/12 PJZ Fixed CharsetSupported and NaturalLanguageSupported, Added NMTOKEN to RequestedElements.Name union-->
+	<!--07/16/12 PJZ Final JPS3 Fixed cardinality of PagesPerSubset and Overrides elements (Pages mandatory ), ProofPrint fixed to reference ProofPrintCopies-->
+	<!--06/06/12 PJZ Final JPS3 update-->
+	<!--03/12/12 PJZ Aligned with  Raster Last Call-->
+	<!--03/01/12 PJZ Fixed PWGRasterDocumentSheetBackWKV name-->
+	<!--02/08/12 PJZ Added SetOfRangeOfIntType-->
+	<!--02/08/12 PJZ Fixed DocumentPassword -->
+	<!--02/02/12 PJZ Fixed DocumentPassword & DocumentPasswordSupported-->
+	<!--01/10/12 PJZ Aligned with latest JPS3 and Raster specs-->
+	<!--01/06/12 PJZ Fixed InsertSheets, Changed name of ContentRegionUnits to RegionUnits, Made Rotation extensible-->
+	<!--12/18/11 PJZ Removed unneeded namespace tags-->
+	<!--12/06/11 PJZ Removed DocumentCopies, limited UUID to 45 characters, Added ServiceChargeInfo-->
+	<!--11/30/11 PJZ Aded  Metric elements-->
+	<!--11/02/11 PJZ Fixed ResourceSummary-->
+	<!--10/05/11 PJZ frixed mandatory elements in DocumentFormatDetails-->
+	<!--09/20/11 PJZ Moved ResourceSummary & Type to here from PwgResourceOpMsg-->
+	<!--09/12/10 PJZ Removed DevicesSupported due to no clean mapping to PWG5104.2-->
+	<!--09/09/11 PJZ FixedServiceXriSupported name-->
+	<!--08/23/11 PJZ Fixed location of Media, MediaType and MediaSource, Added PWG Raster-->
+	<!--08/19/11 PJZ Added MediaSource as a choice everywhere Media is located-->
+	<!--08/10/11 PJZ Fixed ImpositionTemplate, PdlInitFiles, SaveInfo, ProofPrint, added missing MustHonor and/orr AnnyAttribute attributes-->
+	<!--06/30/11 PJZ Added operation element required for Add/Modify/Delete on SetOperation-->
+	<!--05/26/11 PJZ Added all state reasons to ConditionName-->
+	<!--05/05/11 PJZ Added JPS3 elements-->
+	<!--03/28/11 PJZ Added JPS3 elements, fix NaturalLanguageSupported data type-->
+	<!--03/04/11 PJZ fixed SheetsCompletedCopyNumber and SheetsCompletedDocumentNumber names-->
+	<!--03/03/11 PJZ Changed JobInformation to MoreJobInfo-->
+	<!--03/02/11 PJZ Added PdlInitFile, Fixed Overrides-->
+	<!--03/01/11 PJZ Fixed DocumentFormatDetailsSupportedType-->
+	<!--02/28/11 PJZ Added missing OverridingElements to Override-->
+	<!--02/27/11 PJZ Removed MediaMaterial-->
+	<!--02/01/11 PJZ Added some Service elements for Cloud-->
+	<!--01/20/11 PJZ Added print color mode-->
+	<!--12/08/10 PJZ Added SystemGeoLocation, Fixed SystemUuid spelling, changed hexBinary to base64Binary-->
+	<!--12/02/10 PJZ Normalized representation of sheets-->
+	<!--12/02/10 PJZ Remove counter persistence-->
+	<!--10/26/10 PJZ Use RFC5870 for ServiceGeoLocation-->
+	<!--10/25/10 PJZ Commented out ColorWKV placeholder to publish version for MFD Overall-->
+	<!--10/19/10 PJZ Changed URI to Uri-->
+	<!--09/23/10 PJZ Fixed capabilitiers and defaults-->
+	<!--09/23/10 PJZ Fixed DocumentFormat/Compression Supported-->
+	<!--09/10/10 PJZ Moved CounterPersistance to PwgCommon.xsd from Counter.xsd-->
+	<!--08/19/10 PJZ Split out DestinationUri, created new simple types for reuse-->
+	<!--07/27/10 PJZ Added  elements to control service state on startup and restart-->
+	<!--07/22/10 PJZ Added  Document UUID and missing DocumentUri-->
+	<!--07/16/10 PJZ Added GeoLocation and Printer/Job UUID, added complex type to adorn key elements with the Key attribute-->
+	<!--06/14/10 PJZ Removed IsHoldingNewJobs-->
+	<!--05/26/10 PJZ split out dial strings and T33 subaddress from rfc3966 compliant destination URI-->
+	<!--04/04/10 PJZ corrected MustHonor attribute type-->
+	<!--04/1/10 PJZ added "Type" suffix to ComplexTypes-->
+	<!--01/11/10 PJZ changed Delay* to JobDelay*-->
+	<!--12/30/09 PJZ Generalized PrintQuality to Quality-->
+	<!--12/28/09 PJZ Generalized JobHoldUntil to HoldUntil, added missing HustHonor attributes-->
+	<!--11/06/09 PJZ Updated Media representation-->
+	<!--10/21/09 PJZ Made some more elements common-->
+	<!--09/09/09 PJZ Made some more Print Service elements common-->
+	<!--06/17/09 PJZ Reworked NaturalLanguage-->
+	<!--06/16/09 PJZ Changed Region to ContentRegion, Made simple types for some of the elements containing a union-->
+	<!--04/14/09 PJZ Updated Namespace-->
+	<!--01/19/09 PJZ Made Units global element-->
+	<!--11/13/08 PJZ Changed phone number representation to URI, added destinations for transmission and clarified destination is for storage and -->
+	<!--10/09/08 PJZ Added FaxOut, Extended Destination to accomodate WS-Scan-->
+	<!--07/22/08 PJZ Limit Requested elements to specific values-->
+	<!--06/12/08 PJZ Added Scan and Condition related entries-->
+	<!--06/01/08 PJZ Added  anyAttribute extension point-->
+	<!--05/31/08 PJZ Move back to ##Other-->
+	<!--05/30/08 PJZ Move back to single namespace-->
+	<!--05/21/08 PJZ Partial alignment with WS-Scan-->
+	<!--03/31/08 PJZ added ScanMediaPath-->
+	<!--03/27/08 PJZ added attribute to identify  key elements-->
+	<!--12/16/07 PJZ added Tempate elements, reworked comments, Merged processing elements-->
+	<!--11/21/07 PJZ added scan specific elements and types-->
+	<!--10/12/07 PJZ Reworked default and supported, make finishing global element-->
+	<!--09/13/07 PJZ Reworked default and supported-->
+	<!--10/08/06 PJZ Reworked dependencies and removed Chameleon-->
+	<!--08/08/06  PJZ Changed namespace-->
+	<!--070606  PJZ Added media namespace, moved VendorExtension element to PwgCore-->
+	<!--070506  PJZ  Added VendorExtension element-->
+	<!--040506  PJZ  modified from ver 1.0 to prepare for SM editing work-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<!---->
+	<xs:annotation>
+		<xs:documentation>Semantic elements used in more than one sub-schema or used directly in an interface</xs:documentation>
+	</xs:annotation>
+	<xs:element name="AccessModes" type="ObjectAccessModesType"/>
+	<xs:element name="AudioVolume">
+		<xs:simpleType>
+			<xs:restriction base="xs:int">
+				<xs:maxInclusive value="100"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="AutoExposure">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:boolean">
+					<xs:attribute ref="pwg:MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="AutoSkewCorrection">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:boolean">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="BatchMode">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:boolean">
+					<xs:attribute ref="pwg:MustHonor"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="BitDepth" type="xs:int"/>
+	<!--gSOAP does not like -100 for minIncl-->
+	<xs:element name="Brightness">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="BrightnessType">
+					<xs:attribute ref="pwg:MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Charset" type="CharsetType"/>
+	<xs:element name="CharsetConfigured" type="CharsetType"/>
+	<xs:element name="CharsetSupported">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Charset" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ClearTime" type="xs:int"/>
+	<xs:element name="ColorEntry">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="ColorEntryType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ColorMode">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="PrintColorModeType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ColorSpace">
+		<xs:simpleType>
+			<xs:union memberTypes="pwg:ColorSpaceWKV pwg:KeywordNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ColorSupported" type="xs:boolean"/>
+	<xs:element name="CompanyName" type="xs:string"/>
+	<xs:element name="Compression" type="CompressionType"/>
+	<xs:element name="CompressionQualityFactor">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:int">
+					<xs:attribute ref="pwg:MustHonor"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<!--gSOAP does not like -100 for minIncl-->
+	<xs:element name="CompressionDefault" type="CompressionType"/>
+	<xs:element name="CompressionDetected" type="CompressionType"/>
+	<xs:element name="CompressionSupplied" type="CompressionType"/>
+	<xs:element name="CompressionSupported" type="CompressionSupportedType"/>
+	<xs:element name="ConditionId">
+		<xs:simpleType>
+			<xs:restriction base="xs:int">
+				<xs:minInclusive value="1"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ConfirmationSheetPrint" type="xs:boolean"/>
+	<xs:element name="Contrast">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="ContrastType">
+					<xs:attribute ref="pwg:MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RegionUnits" type="ContentRegionUnitsType"/>
+	<xs:element name="ContentType">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="ContentTypeType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Copies">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:int">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CoverBack" type="CoverColType"/>
+	<xs:element name="CoverFront" type="CoverColType"/>
+	<xs:element name="CoverType">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="CoverTypeType">
+					<xs:attribute ref="MustHonor"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="CreateDate" type="xs:dateTime"/>
+	<xs:element name="CurrentTime" type="xs:dateTime"/>
+	<xs:element name="CurrentPageOrder">
+		<xs:simpleType>
+			<xs:union memberTypes="CurrentPageOrderWKV KeywordNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="DateTime" type="xs:dateTime"/>
+	<xs:element name="DateTimeAtCompleted" type="xs:dateTime"/>
+	<xs:element name="DateTimeAtCreation" type="xs:dateTime"/>
+	<xs:element name="DateTimeAtLastUpdate" type="xs:dateTime"/>
+	<xs:element name="DateTimeAtProcessing" type="xs:dateTime"/>
+	<xs:element name="DateTimeOfExpiration" type="xs:dateTime"/>
+	<xs:element name="Destination" type="DestinationType">
+		<xs:annotation>
+			<xs:documentation>Simple storage (e.g. scan to)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DestinationUri" type="xs:anyURI">
+		<xs:annotation>
+			<xs:documentation>Recipient (e.g. mailto)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DestinationUris" type="DestinationsType">
+		<xs:annotation>
+			<xs:documentation>Recipients list (e.g. Fax to)</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DestinationUrisEntry" type="DestinationEntryType"/>
+	<xs:element name="DetailedStatusMessages">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="DetailedStatusMessage" type="xs:string" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DeviceId">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="1023"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="DeviceServiceCount" type="xs:int"/>
+	<xs:element name="DeviceType">
+		<xs:simpleType>
+			<xs:union memberTypes="DeviceTypeWKV KeywordNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="DialingMethod" type="DialingMethodType"/>
+	<xs:element name="DocumentAccessErrors">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="DocumentAccessError" type="xs:string" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DocumentCharset" type="CharsetType"/>
+	<xs:element name="DocumentCharsetSupplied" type="CharsetType"/>
+	<xs:element name="DocumentCharsetSupported" type="DocumentCharsetSupportedType"/>
+	<xs:element name="DocumentDigitalSignature" type="DocumentDigitalSignatureType"/>
+	<xs:element name="DocumentDigitalSignatureSupplied" type="DocumentDigitalSignatureType"/>
+	<xs:element name="DocumentDigitalSignatureSupported" type="xs:boolean"/>
+	<xs:element name="DocumentFormat" type="DocumentFormatType"/>
+	<xs:element name="DocumentFormatDefault" type="DocumentFormatType"/>
+	<xs:element name="DocumentFormatDetected" type="DocumentFormatType"/>
+	<xs:element name="DocumentFormatSupplied" type="DocumentFormatType"/>
+	<xs:element name="DocumentFormatSupported" type="DocumentFormatSupportedType"/>
+	<xs:element name="DocumentFormatDetails" type="DocumentFormatDetailsType"/>
+	<xs:element name="DocumentFormatDetailsDefault" type="DocumentFormatDetailsType"/>
+	<xs:element name="DocumentFormatDetailsDetected" type="DocumentFormatDetailsType"/>
+	<xs:element name="DocumentFormatDetailsSupplied" type="DocumentFormatDetailsType"/>
+	<xs:element name="DocumentFormatDetailsSupported" type="DocumentFormatDetailsSupportedType"/>
+	<xs:element name="DocumentFormatDeviceId">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="127"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="DocumentFormatVersion" type="xs:string"/>
+	<xs:element name="DocumentFormatVersionDefault">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="127"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="DocumentFormatVersionDetected">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="127"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="DocumentFormatVersionSupplied">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="127"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="DocumentFormatVersionSupported" type="DocumentFormatVersionSupportedType"/>
+	<xs:element name="DocumentMessage">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="1023"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="DocumentMessageSupplied">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="1023"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="DocumentMetadata">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="qualifieddc"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DocumentName">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="255"/>
+				<xs:whiteSpace value="preserve"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="DocumentNameSupplied">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="255"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="DocumentNaturalLanguage" type="NaturalLanguageType"/>
+	<xs:element name="DocumentNaturalLanguageSupplied" type="NaturalLanguageType"/>
+	<xs:element name="DocumentNumber" type="IdType">
+		<xs:annotation>
+			<xs:documentation>Local ID</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DocumentOutputMode" type="DocumentOutputModeType"/>
+	<xs:element name="DocumentPages" type="xs:int"/>
+	<xs:element name="DocumentPagesCompleted" type="xs:int"/>
+	<xs:element name="DocumentPagesCompletedCurrentCopy" type="xs:int"/>
+	<xs:element name="DocumentPassword">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:base64Binary">
+				<xs:maxLength value="43690"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="DocumentPasswordSupported" type="xs:int">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DocumentSizeAutoDetect">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:boolean">
+					<xs:attribute ref="MustHonor"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DocumentSourceApplicationName" type="xs:string"/>
+	<xs:element name="DocumentSourceApplicationVersion" type="xs:string"/>
+	<xs:element name="DocumentSourceOsName">
+		<xs:simpleType>
+			<xs:union memberTypes="OperatingSystemNameWKV OperatingSystemNameExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="DocumentSourceOsVersion" type="xs:string"/>
+	<xs:element name="DocumentState" type="DocumentStateWKV"/>
+	<xs:element name="DocumentStateMessage">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="1023"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="DocumentStateReasons">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="DocumentStateReason" maxOccurs="unbounded">
+					<xs:simpleType>
+						<xs:union memberTypes="DocumentStateReasonsWKV KeywordNsExtensionPattern"/>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DocumentUuid">
+		<xs:annotation>
+			<xs:documentation>Global ID</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:restriction base="UuidType">
+					<xs:maxLength value="45"/>
+				</xs:restriction>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="DocumentUri" type="xs:anyURI"/>
+	<xs:element name="ElementsCharset" type="CharsetType"/>
+	<xs:element name="ElementsNaturalLanguage" type="NaturalLanguageType"/>
+	<xs:element name="ElementsNaturalLanguageRequested" type="NaturalLanguageType"/>
+	<xs:element name="ErrorsCount" type="xs:int"/>
+	<xs:element name="Exposure">
+		<xs:complexType>
+			<xs:choice minOccurs="0">
+				<xs:element ref="AutoExposure" minOccurs="0"/>
+				<xs:sequence minOccurs="0">
+					<xs:element ref="Brightness" minOccurs="0"/>
+					<xs:element ref="Contrast" minOccurs="0"/>
+					<xs:element ref="Sharpness" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:choice>
+			<xs:attribute ref="MustHonor"/>
+			<xs:anyAttribute namespace="##other"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FaxLogUri" type="xs:anyURI"/>
+	<xs:element name="Feature" type="FinishingsType"/>
+	<xs:element name="FeaturesSupported">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Feature"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FeedOrientation">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="FeedOrientationType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FilmScanMode">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="pwg:FilmScanModeType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Finishing">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="FinishingType">
+					<xs:attribute ref="MustHonor"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FinishingsCol" type="FinishingsColType"/>
+	<xs:element name="Finishings" type="FinishingsType"/>
+	<xs:element name="FinishingTemplate" type="xs:string"/>
+	<xs:element name="FirstIndex">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:int">
+				<xs:minInclusive value="0"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="FirstSubscriptionId">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:int">
+				<xs:minInclusive value="0"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="FontNameRequested">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:string">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FontSizeRequested">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:int">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ForceFrontSide" type="ForceFrontSideType"/>
+	<xs:element name="From" type="xs:string"/>
+	<xs:element name="GetEventLife">
+		<xs:simpleType>
+			<xs:restriction base="xs:int">
+				<xs:minInclusive value="15"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Group">
+		<xs:simpleType>
+			<xs:union memberTypes="pwg:ComponetNameWKVs pwg:KeywordNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="CoverSheetInfo">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CompanyName" minOccurs="0"/>
+				<xs:element ref="DateTime" minOccurs="0"/>
+				<xs:element ref="From" minOccurs="0"/>
+				<xs:element ref="Logo" minOccurs="0"/>
+				<xs:element ref="Message" minOccurs="0"/>
+				<xs:element ref="Subject" minOccurs="0"/>
+				<xs:element ref="To" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0"/>
+			</xs:sequence>
+			<xs:attribute ref="MustHonor"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="HeaderPrint">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="HeaderPrintType">
+					<xs:attribute ref="MustHonor"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Height" type="xs:int"/>
+	<xs:element name="Id" type="IdType">
+		<xs:annotation>
+			<xs:documentation>Local ID</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="IdentifyActions" type="IdentifyActionsType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="IdentifyAction">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:union memberTypes="IdentifyActionWKV KeywordNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="IdentifyActionsDefault" type="IdentifyActionsType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="IdentifyActionsSupported" type="IdentifyActionsType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ImageBox" type="ContentRegionType"/>
+	<xs:element name="ImageCroppingPolicy" type="ImageCroppingPolicyType"/>
+	<xs:element name="ImagesCompleted" type="xs:int"/>
+	<xs:element name="ImagesToTransfer">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:restriction base="ImagesToTransferType">
+					<xs:minInclusive value="0"/>
+				</xs:restriction>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ImpositionTemplate">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="ImpositionType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Impressions" type="xs:int"/>
+	<xs:element name="ImpressionsCompleted" type="xs:int"/>
+	<xs:element name="ImpressionsCompletedCurrentCopy" type="xs:int"/>
+	<xs:element name="ImpressionsSupported" type="xs:int"/>
+	<xs:element name="InputSource">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="InputSourceType">
+					<xs:attribute ref="pwg:MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="InsertAfterPageNumber" type="xs:int"/>
+	<xs:element name="InsertCount" type="xs:int"/>
+	<xs:element name="InsertSheet" type="InsertSheetType"/>
+	<xs:element name="InsertSheets" type="InsertSheetsType"/>
+	<xs:element name="IsAcceptingJobs" type="xs:boolean"/>
+	<xs:element name="IsAcceptingResources" type="xs:boolean"/>
+	<xs:element name="JobAccountingID">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="1023"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="JobAccountingOutputBin" type="JobAccountingOutputBinType"/>
+	<xs:element name="JobAccountingSheets" type="JobAccountingSheetsType"/>
+	<xs:element name="JobAccountingSheetsType" type="JobAccountingSheetsTypeType"/>
+	<xs:element name="JobAccountingUserID">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="1023"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ISDNSubAddress" type="xs:string"/>
+	<xs:element name="JobCollationType">
+		<xs:simpleType>
+			<xs:union memberTypes="JobCollationTypeWKV KeywordNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="JobCopies">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:int">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="JobCoverBack" type="CoverColType"/>
+	<xs:element name="JobCoverFront" type="CoverColType"/>
+	<xs:element name="JobCreationElementsSupported">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CreationElements" minOccurs="0" maxOccurs="unbounded">
+					<xs:simpleType>
+						<xs:restriction base="xs:NMTOKEN">
+							<xs:maxLength value="255"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="JobErrorAction" type="JobErrorActionType"/>
+	<xs:element name="JobErrorSheet" type="JobErrorSheetType"/>
+	<xs:element name="JobErrorSheetType" type="JobErrorSheetTypeType"/>
+	<xs:element name="JobErrorSheetWhen" type="JobErrorSheetWhenType"/>
+	<xs:element name="JobFinishings" type="FinishingsType"/>
+	<xs:element name="JobFinishingsCol" type="FinishingsColType"/>
+	<xs:element name="JobDelayOutputUntil">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="HoldUntilType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="JobDelayOutputUntilTime">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:dateTime">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="JobHoldUntil">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="HoldUntilType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="JobHoldUntilTime">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:dateTime">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="JobId" type="IdType">
+		<xs:annotation>
+			<xs:documentation>Local ID</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="JobMandatoryElements">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="JobMandatoryElement" type="xs:NMTOKEN" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="JobMessageFromOperator">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="127"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="JobMessageToOperator">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="JobMessageToOperatorType"/>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="JobMoreInfo" type="xs:anyURI"/>
+	<xs:element name="JobName">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="255"/>
+				<xs:whiteSpace value="preserve"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="JobOriginatingUserAuthenticationInfo">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="AuthenticationType" type="AuthenticationTypeType"/>
+				<xs:choice>
+					<xs:element name="Token" type="xs:base64Binary"/>
+					<xs:element name="Cert" type="xs:base64Binary"/>
+					<xs:element name="AuthUri" type="xs:anyURI"/>
+					<xs:element name="AuthString" type="xs:string"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:choice>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="JobOriginatingUserName">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="255"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="JobOriginatingUserUri" type="xs:anyURI"/>
+	<xs:element name="JobPages" type="xs:int"/>
+	<xs:element name="JobPagesCompleted" type="xs:int"/>
+	<xs:element name="JobPagesCompletedCurrentCopy" type="xs:int"/>
+	<xs:element name="JobPassword">
+		<xs:simpleType>
+			<xs:restriction base="xs:base64Binary">
+				<xs:maxLength value="340"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="JobPasswordEncryption" type="JobPasswordEncryptionType"/>
+	<xs:element name="JobPasswordEncryptionSupported">
+		<xs:simpleType>
+			<xs:union memberTypes="pwg:JobPasswordEncryptionWKV pwg:KeywordNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="JobPasswordSupported" type="xs:int"/>
+	<xs:element name="JobPhoneNumber">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:anyURI">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="JobPrinterMakeAndModel">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="127"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="JobPrinterUri">
+		<xs:simpleType>
+			<xs:restriction base="xs:anyURI">
+				<xs:maxLength value="1023"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="JobPriority">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="JobPriorityType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="JobRecipientName">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="JobRecipientNameType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="JobReceivingUri" type="xs:anyURI"/>
+	<xs:element name="JobRequestingUserName">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="255"/>
+				<xs:whiteSpace value="preserve"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="JobSaveDisposition" type="JobSaveDispositionType"/>
+	<xs:element name="JobSendingUri" type="xs:anyURI"/>
+	<xs:element name="JobSettableElementsSupported">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SettableElements" minOccurs="0" maxOccurs="unbounded">
+					<xs:simpleType>
+						<xs:restriction base="xs:NMTOKEN">
+							<xs:maxLength value="255"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="JobSheetMessage">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="JobSheetMessageType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="JobSheets">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="JobSheetsType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="JobSheetsCol" type="JobSheetsColType"/>
+	<xs:element name="JobSpoolingSupported">
+		<xs:simpleType>
+			<xs:union memberTypes="pwg:JobSpoolingWKV pwg:KeywordNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="JobState">
+		<xs:simpleType>
+			<xs:restriction base="JobStateWKV"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="JobStateMessage">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="1023"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="JobStateReasons">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="JobStateReason" minOccurs="0" maxOccurs="unbounded">
+					<xs:simpleType>
+						<xs:union memberTypes="JobStateReasonsWKV KeywordNsExtensionPattern"/>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="JobUri">
+		<xs:simpleType>
+			<xs:restriction base="xs:anyURI">
+				<xs:maxLength value="1023"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="JobUuid">
+		<xs:annotation>
+			<xs:documentation>Global ID</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:restriction base="UuidType">
+					<xs:maxLength value="45"/>
+				</xs:restriction>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="KOctets" type="xs:int"/>
+	<xs:element name="KOctetsProcessed" type="xs:int"/>
+	<xs:element name="KOctetsSupported" type="xs:int"/>
+	<xs:element name="LastDocument" type="xs:boolean"/>
+	<xs:element name="Limit" type="xs:int"/>
+	<xs:element name="Logo" type="xs:anyURI"/>
+	<xs:element name="MakeAndModel">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="127"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MaxSaveInfoSupported" type="xs:int"/>
+	<xs:element name="MaxStitchingLocationsSupported" type="xs:int"/>
+	<xs:element name="MediaBox">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ImageBox"/>
+				<xs:element ref="pwg:ImageCroppingPolicy"/>
+				<xs:element ref="MediaSizeName"/>
+				<xs:element ref="OrientationRequested"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute ref="pwg:MustHonor"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MediaInputTrayCheck">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="MediaInputTrayCheckType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MediaSheets" type="xs:int"/>
+	<xs:element name="MediaSheetsCompleted" type="xs:int"/>
+	<xs:element name="MediaSheetsSupported" type="pwg:RangeOfIntType"/>
+	<xs:element name="Message">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="127"/>
+				<xs:whiteSpace value="preserve"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MessageDateTime" type="xs:dateTime"/>
+	<xs:element name="MessageFromOperator">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="127"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MessageTime" type="xs:int"/>
+	<xs:element name="MoreInfo" type="xs:string"/>
+	<xs:element name="MoreInfoUri" type="xs:anyURI"/>
+	<xs:element name="MoreInfoManufacturerUri" type="xs:anyURI"/>
+	<xs:element name="MultipleDocumentsHandling">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="MultipleDocumentsHandlingType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="MultipleDocumentJobsSupported" type="xs:boolean"/>
+	<xs:element name="MultipleOperationTimeout" type="xs:int"/>
+	<xs:element name="MultipleOperationTimeoutAction" type="MultipleOperationTimeoutActionType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="MultipleSetOriginal" type="xs:boolean"/>
+	<xs:element name="MyJobs" type="xs:boolean"/>
+	<xs:element name="NaturalLanguage" type="NaturalLanguageType"/>
+	<xs:element name="NaturalLanguageConfigured" type="NaturalLanguageType"/>
+	<xs:element name="NaturalLanguageSupported">
+		<xs:complexType>
+			<xs:annotation>
+				<xs:documentation xml:lang="en">See RFC 5646, section 2.1 syntax  or later version for the ABNF notation that yields the complete set of natural languages supported.</xs:documentation>
+			</xs:annotation>
+			<xs:sequence>
+				<xs:element ref="NaturalLanguage" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NumberOfDocuments" type="xs:int"/>
+	<xs:element name="NumberOfInterveningJobs" type="xs:int"/>
+	<xs:element name="NumberOfRetries">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:int"/>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="NumberUp">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:int">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Operation">
+		<xs:simpleType>
+			<xs:union memberTypes="OperationsSupportedWKV OperationsSupportedLegacyIppWKV KeywordNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="OperationMode" type="OperationModeWKV"/>
+	<xs:element name="OperationsSupported">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="pwg:Operation" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OrientationRequested">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="OrientationRequestedType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OutputBin">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="OutputBinType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OutputDevice">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="OutputDeviceType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="OutputDeviceAssigned">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="127"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Overrides" type="OverridesType"/>
+	<xs:element name="OwnerUri" type="xs:anyURI">
+		<!--  legacy or WIMS manager URI for owner of this object REQUIRED - MUST be single-valued -->
+	</xs:element>
+	<xs:element name="OwnerVCard" type="ObjectStringMaxType"/>
+	<xs:element name="PageDelivery">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="PageDeliveryType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PageNumber" type="xs:int"/>
+	<xs:element name="PageOrderReceived" type="PageOrderReceivedType"/>
+	<xs:element name="PagesPerMinute" type="xs:int"/>
+	<xs:element name="PagesPerMinuteColor" type="xs:int"/>
+	<xs:element name="PagesPerSubset">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="NumberOfPagesInSubset" type="xs:int" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute ref="MustHonor"/>
+			<xs:anyAttribute namespace="##other"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PageRanges" type="PageRangesType"/>
+	<xs:element name="ParentPrintersSupported">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Printer" type="xs:anyURI" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PdlInitFiles">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="PdlInitFilesType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PdlOverrideSupported">
+		<xs:simpleType>
+			<xs:union memberTypes="pwg:PdlOverrideSupportedWKV pwg:KeywordNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="PreferredElements" type="UnsupportedElementsType">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PreferredElementsSupported" type="xs:boolean"/>
+	<xs:element name="PresentationDirectionNumberUp">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="PresentationDirectionNumberUpType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PrintColorMode">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="PrintColorModeType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PrintContentOptimize">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="PrintContentOptimizeType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PrinterDetailedStatusMessages">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="DetailedStatusMessage" minOccurs="0" maxOccurs="unbounded">
+					<xs:simpleType>
+						<xs:restriction base="xs:string">
+							<xs:maxLength value="1023"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PrintRenderingIntent">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="PrintRenderingIntentType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PrinterSettableElementsSupported">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SettableElements" minOccurs="0" maxOccurs="unbounded">
+					<xs:simpleType>
+						<xs:restriction base="xs:NMTOKEN">
+							<xs:maxLength value="255"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ProofPrint" type="ProofPrintType"/>
+	<xs:element name="ProofPrintCopies" type="xs:int"/>
+	<xs:element name="PwgRasterDocumentSheetBack">
+		<xs:simpleType>
+			<xs:union memberTypes="PWGRasterDocumentSheetBackWKV KeywordNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="PwgRasterDocumentResolutionSupported">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CrossFeedDir">
+					<xs:simpleType>
+						<xs:restriction base="xs:int">
+							<xs:minInclusive value="1"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+				<xs:element name="FeedDir">
+					<xs:simpleType>
+						<xs:restriction base="xs:int">
+							<xs:minInclusive value="1"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PwgRasterDocumentType">
+		<xs:simpleType>
+			<xs:union memberTypes="PwgRasterDocumentTypeWKV KeywordNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="PwgRasterDocumentTypeSupported">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PwgRasterDocumentType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Quality">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="QualityType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="QueuedJobCount" type="xs:int"/>
+	<xs:element name="ReferenceUriSchemesSupported">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ReferenceUriScheme" minOccurs="0" maxOccurs="unbounded">
+					<xs:simpleType>
+						<xs:union memberTypes="pwg:ReferenceUriSchemesWKV pwg:StringNsExtensionPattern"/>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RepertoiresSupported">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Repertoire" type="CharsetType" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="RequestingUserName">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="255"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="RequestingUserUri" type="xs:anyURI"/>
+	<xs:element name="RequestedElements">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Name" maxOccurs="unbounded">
+					<xs:simpleType>
+						<xs:union memberTypes="xs:NMTOKEN KeywordNsExtensionPattern"/>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Resolution" type="pwg:ResolutionType"/>
+	<xs:element name="ResourceCategory" type="ResourceCategoryType"/>
+	<xs:element name="ResourceCreatorUserName" type="xs:string"/>
+	<xs:element name="ResourceId" type="ObjectIdentifier32Type"/>
+	<xs:element name="ResourceInfo" type="ObjectStringLongType"/>
+	<xs:element name="ResourceName" type="ObjectStringLongType"/>
+	<xs:element name="ResourceNamespace" type="xs:anyURI"/>
+	<xs:element name="ResourceSourceUri" type="xs:anyURI"/>
+	<xs:element name="ResourceSummary" type="ResourceSummaryType"/>
+	<xs:element name="ResourceType" type="ResourceTypeType"/>
+	<xs:element name="RetryInfo">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="NumberOfRetries" minOccurs="0"/>
+				<xs:element name="RetryInterval" type="xs:int" minOccurs="0"/>
+				<xs:element name="RetryTimeOut" type="xs:int" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Rotation">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="RotationType">
+					<xs:attribute ref="pwg:MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SamplesPerPixel">
+		<xs:simpleType>
+			<xs:restriction base="xs:int">
+				<xs:minInclusive value="1"/>
+				<xs:maxInclusive value="4"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="SaveDisposition" type="SaveDispositionType"/>
+	<xs:element name="SaveDocumentFormat">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="SaveDocumentFormatType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SaveInfo" type="SaveInfoType"/>
+	<xs:element name="SaveLocation" type="xs:anyURI"/>
+	<xs:element name="SaveName" type="xs:string"/>
+	<xs:element name="Scaling" type="ScalingType"/>
+	<xs:element name="ScanRegion" type="ContentRegionType"/>
+	<xs:element name="ScanRegions">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ScanRegion" maxOccurs="unbounded"/>
+			</xs:sequence>
+			<xs:attribute ref="pwg:MustHonor"/>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SeparatorSheets" type="SeparatorSheetsType"/>
+	<xs:element name="SeparatorSheetsType">
+		<xs:simpleType>
+			<xs:union memberTypes="SeparatorSheetsTypeWKV KeywordNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="SerialNumber" type="xs:string"/>
+	<xs:element name="ServiceChargeInfo">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="1023"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ServiceChargeInfoUri" type="xs:anyURI">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ServiceConfigChangeDateTime" type="xs:dateTime"/>
+	<xs:element name="ServiceConfigChangeTime" type="xs:int"/>
+	<xs:element name="ServiceGeoLocation" type="xs:anyURI"/>
+	<xs:element name="ServiceIccProfile">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ProfileUri" type="xs:anyURI"/>
+				<xs:element name="JobTicketElements" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="JobTicketElement" type="xs:NMTOKEN" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ServiceIccProfiles">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ServiceIccProfile" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="IconUri" type="xs:anyURI"/>
+	<xs:element name="ServiceIcons">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="IconUri" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ServiceInfo" type="ObjectStringLongType"/>
+	<xs:element name="ServiceLocation">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="127"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ServiceMandatoryJobElements">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="JobElement" type="xs:NMTOKEN"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ServiceName" type="ObjectStringLongType"/>
+	<xs:element name="ServiceOrganization" type="xs:string"/>
+	<xs:element name="ServiceOrganizationEntry" type="ServiceOrganizationEntryType"/>
+	<xs:element name="ServiceOrganizations">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ServiceOrganizationEntry" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ServiceOrganizationUnit" type="xs:string"/>
+	<xs:element name="ServicesSupported">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ServiceType" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ServiceType">
+		<xs:simpleType>
+			<xs:union memberTypes="ServiceTypeWKV KeywordNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ServiceUri" type="xs:anyURI"/>
+	<xs:element name="ServiceUuid">
+		<xs:annotation>
+			<xs:documentation>Global ID</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:restriction base="UuidType">
+					<xs:maxLength value="45"/>
+				</xs:restriction>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Severity" type="ConditionSeverityType"/>
+	<!--gSOAP does not like -100 for minIncl-->
+	<xs:element name="Sharpness">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="SharpnessType">
+					<xs:attribute ref="pwg:MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SheetCollate">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="SheetCollateType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SheetsCompleted" type="xs:int"/>
+	<xs:element name="SheetsCompletedCopyNumber" type="xs:int"/>
+	<xs:element name="SheetsCompletedDocumentNumber" type="xs:int"/>
+	<xs:element name="Sides">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="SidesType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="StartServicePaused" type="xs:boolean"/>
+	<xs:element name="State" type="ObjectStateWKV"/>
+	<xs:element name="StateMessages" type="ObjectStateMessagesType"/>
+	<xs:element name="StateReasons">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="StateReason" minOccurs="0" maxOccurs="unbounded">
+					<xs:simpleType>
+						<xs:union memberTypes="pwg:StateReasonsWKVs pwg:StateReasonsSubunitWKVs pwg:StateReasons2WKVs pwg:KeywordNsExtensionPattern"/>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="StatusMessage">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="255"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="StatusString" type="StatusStringType">
+		<xs:annotation>
+			<xs:documentation>Element for return value on Actions</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Stitching" type="StitchingType"/>
+	<xs:element name="StitchingLocations">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Location" type="xs:int" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="StitchingOffset" type="xs:int"/>
+	<xs:element name="StitchingReferenceEdge" type="StitchingReferenceEdgeType"/>
+	<xs:element name="Subject" type="xs:string"/>
+	<xs:element name="SubordinatePrintersSupported">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="SubordinatePrinter" type="xs:anyURI" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SubscriptionUuid">
+		<xs:annotation>
+			<xs:documentation/>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:restriction base="UuidType">
+					<xs:maxLength value="45"/>
+				</xs:restriction>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="SystemGeoLocation" type="xs:anyURI"/>
+	<xs:element name="SystemUuid">
+		<xs:annotation>
+			<xs:documentation>Global ID</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:restriction base="UuidType">
+					<xs:maxLength value="45"/>
+				</xs:restriction>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="T33SubAddress" type="xs:string"/>
+	<xs:element name="To" type="xs:string"/>
+	<xs:element name="Time" type="xs:dateTime"/>
+	<xs:element name="TimeAtCompleted" type="xs:int"/>
+	<xs:element name="TimeAtCreation" type="xs:int"/>
+	<xs:element name="TimeAtProcessing" type="xs:int"/>
+	<xs:element name="TimePeriod" type="HoldUntilType"/>
+	<xs:element name="TransformName" type="xs:string"/>
+	<xs:element name="UnsupportedElements" type="UnsupportedElementsType"/>
+	<xs:element name="Units">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="UnitsType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="UpTime" type="xs:int"/>
+	<xs:element name="UriSchemSupported" type="xs:string"/>
+	<xs:element name="UserDefinedValuesSupported">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="UserDefinedValues" minOccurs="0" maxOccurs="unbounded">
+					<xs:simpleType>
+						<xs:restriction base="xs:NMTOKEN">
+							<xs:maxLength value="255"/>
+						</xs:restriction>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Version">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:pattern value="[0-9]+\.[0-9]+"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="VersionsSupported">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="pwg:Version" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="WarningsCount" type="xs:int"/>
+	<xs:element name="WhichJobs">
+		<xs:simpleType>
+			<xs:union memberTypes="WhichJobsWKV KeywordNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="Width" type="xs:int"/>
+	<xs:element name="XImagePosition">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="XImagePositionType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="XImageShift">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:int">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="XOffset" type="xs:int"/>
+	<xs:element name="XSide1ImageShift">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:int">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="XSide2ImageShift">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:int">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ServiceXriSupported">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Xris" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="XriUri" type="xs:anyURI"/>
+							<xs:element name="XriAuthentication" minOccurs="0">
+								<xs:simpleType>
+									<xs:union memberTypes="pwg:UriAuthenticationWKV pwg:KeywordNsExtensionPattern"/>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="XriSecurity" minOccurs="0">
+								<xs:simpleType>
+									<xs:union memberTypes="pwg:UriSecurityWKV pwg:KeywordNsExtensionPattern"/>
+								</xs:simpleType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="YImagePosition">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="YImagePositionType">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="YImageShift">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:int">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="YOffset" type="xs:int"/>
+	<xs:element name="YSide1ImageShift">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:int">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="YSide2ImageShift">
+		<xs:complexType>
+			<xs:simpleContent>
+				<xs:extension base="xs:int">
+					<xs:attribute ref="MustHonor"/>
+					<xs:anyAttribute namespace="##other"/>
+				</xs:extension>
+			</xs:simpleContent>
+		</xs:complexType>
+	</xs:element>
+	<!--                                -->
+	<!--                                -->
+	<xs:annotation>
+		<xs:documentation>Job Description elements used by Job Template and Job Tickets created from Job Templates  </xs:documentation>
+	</xs:annotation>
+	<xs:element name="TemplateName" type="xs:string"/>
+	<xs:element name="TemplateCreatorUserName" type="xs:string"/>
+	<xs:element name="TemplateId" type="xs:anyURI"/>
+	<xs:element name="TemplateInfo">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="2047"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="TemplateType" type="TemplateTypeType"/>
+	<!---->
+	<xs:annotation>
+		<xs:documentation>Simple types used by semantic elements</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="AuthenticationTypeType">
+		<xs:union memberTypes="AuthenticationWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="BrightnessType">
+		<xs:restriction base="xs:int">
+			<xs:maxInclusive value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CharsetType">
+		<xs:annotation>
+			<xs:documentation xml:lang="en">The authoritative complete list of preferred MIME names of Charsets is in the IANA Charset Registry described in RFC 2978, section 2.3: Naming Requirements URL: www.iana.org/assignments/character-sets</xs:documentation>
+		</xs:annotation>
+		<xs:union memberTypes="CharsetWKV StringExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="ColorEntryType">
+		<xs:union memberTypes="ColorEntryWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="CompressionType">
+		<xs:union memberTypes="CompressionWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="ConditionSeverityType">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Informational"/>
+			<xs:enumeration value="Warning"/>
+			<xs:enumeration value="Critical"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ConditionNameType">
+		<xs:union memberTypes="StateReasonsWKVs StateReasonsSubunitWKVs StateReasons2WKVs KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="ContrastType">
+		<xs:restriction base="xs:int">
+			<xs:maxInclusive value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ContentRegionUnitsType">
+		<xs:union memberTypes="ContentRegionUnitWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="ContentTypeType">
+		<xs:union memberTypes="ContentTypeWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="CoverTypeType">
+		<xs:union memberTypes="CoverTypeWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="CrossFeedDirType">
+		<xs:restriction base="xs:int">
+			<xs:minInclusive value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DialingMethodType">
+		<xs:union memberTypes="DialingMethodWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="DialStringType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="64"/>
+			<xs:pattern value="([pw0-9A-D\*#\-\(\).'])*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DocumentDigitalSignatureType">
+		<xs:union memberTypes="DocumentDigitalSignatureWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="DocumentFormatType">
+		<xs:union memberTypes="DocumentFormatWKV MimeExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="DocumentOutputModeType">
+		<xs:union memberTypes="DocumentOutputModeWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="FeatureType">
+		<xs:union memberTypes="FeatureWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="FeedOrientationType">
+		<xs:union memberTypes="FeedOrientationWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="FeedDirType">
+		<xs:restriction base="xs:int">
+			<xs:minInclusive value="1"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FilmScanModeType">
+		<xs:union memberTypes="FilmScanModeWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="FinishingType">
+		<xs:union memberTypes="FinishingsWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="HeaderPrintType">
+		<xs:union memberTypes="HeaderPrintWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="HoldUntilType">
+		<xs:union memberTypes="HoldUntilWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="ImageCroppingPolicyType">
+		<xs:union memberTypes="ImageCroppingPolicyWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="InputSourceType">
+		<xs:union memberTypes="InputSourceWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:complexType name="InsertSheetsType">
+		<xs:sequence>
+			<xs:element ref="InsertSheet" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other"/>
+	</xs:complexType>
+	<xs:simpleType name="ImpositionType">
+		<xs:union memberTypes="ImpositionWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="JobAccountingOutputBinType">
+		<xs:union memberTypes="JobAccountingOutputBinWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="JobAccountingSheetsTypeType">
+		<xs:union memberTypes="JobAccountingSheetTypeWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="JobErrorActionType">
+		<xs:union memberTypes="JobErrorActionWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="JobErrorSheetTypeType">
+		<xs:union memberTypes="JobErrorSheetTypeWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="JobErrorSheetWhenType">
+		<xs:union memberTypes="JobErrorSheetWhenWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="JobMessageToOperatorType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="127"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JobPasswordEncryptionType">
+		<xs:union memberTypes="JobPasswordEncryptionWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="JobPriorityType">
+		<xs:restriction base="xs:int">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JobRecipientNameType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JobSheetMessageType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="1023"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JobSheetsType">
+		<xs:union memberTypes="JobSheetsWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="MediaInputTrayCheckType">
+		<xs:union memberTypes="MediaInputTrayWKV MediaNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="MultipleDocumentsHandlingType">
+		<xs:union memberTypes="MultipleDocumentsHandlingWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="MultipleOperationTimeoutActionType">
+		<xs:union memberTypes="MultipleOperationTimeoutActionWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="NaturalLanguageType">
+		<xs:union memberTypes="NaturalLanguageWKV NatLangExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="OrientationRequestedType">
+		<xs:union memberTypes="OrientationRequestedWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="OutputBinType">
+		<xs:union memberTypes="OutputBinWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="OutputDeviceType">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="127"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="QualityType">
+		<xs:union memberTypes="FaxQualityWKV PrintQualityWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="PageDeliveryType">
+		<xs:union memberTypes="PageDeliveryWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="PageOrderReceivedType">
+		<xs:union memberTypes="PageOrderReceivedWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="PresentationDirectionNumberUpType">
+		<xs:union memberTypes="PresentationDirectionNumberUpWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="PrintColorModeType">
+		<xs:union memberTypes="PrintColorModeWKV pwg:KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="PrintContentOptimizeType">
+		<xs:union memberTypes="PrintContentOptimizeWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="PrintRenderingIntentType">
+		<xs:union memberTypes="PrintRenderingIntentWKV pwg:KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="ResourceTypeType">
+		<xs:union memberTypes="TemplateTypeWKV StaticResourceTypeWKV ExecutableResourceTypeWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="ResourceCategoryType">
+		<xs:union memberTypes="ResourceCategoryWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="RotationType">
+		<xs:union memberTypes="RotationWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="SaveDocumentFormatType">
+		<xs:union memberTypes="DocumentFormatWKV StringNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="SaveDispositionType">
+		<xs:union memberTypes="SaveDispositionWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="ScalingRangeBaseType">
+		<xs:restriction base="xs:int">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="1000"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SharpnessType">
+		<xs:restriction base="xs:int">
+			<xs:maxInclusive value="100"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SheetCollateType">
+		<xs:union memberTypes="SheetCollateWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="SidesType">
+		<xs:union memberTypes="SidesWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="StatusStringType">
+		<xs:annotation>
+			<xs:documentation>Type for return value on Actions</xs:documentation>
+		</xs:annotation>
+		<xs:union memberTypes="StatusStringWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="StitchingReferenceEdgeType">
+		<xs:union memberTypes="StitchingReferenceEdgeWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="TemplateTypeType">
+		<xs:union memberTypes="TemplateTypeWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="UnitsType">
+		<xs:union memberTypes="UnitsWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="XImagePositionType">
+		<xs:union memberTypes="XImagePositionWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="YImagePositionType">
+		<xs:union memberTypes="YImagePositionWKV KeywordNsExtensionPattern"/>
+	</xs:simpleType>
+	<!---->
+	<xs:annotation>
+		<xs:documentation>Attributes used by semantic elements (MustHonor defined in MediaElements</xs:documentation>
+	</xs:annotation>
+	<xs:attribute name="Key" type="xs:boolean"/>
+	<!---->
+	<xs:annotation>
+		<xs:documentation>Complex types used by semantic elements</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="CompressionSupportedType">
+		<xs:sequence>
+			<xs:element name="AllowedValue" maxOccurs="unbounded">
+				<xs:simpleType>
+					<xs:union memberTypes="CompressionWKV KeywordNsExtensionPattern"/>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CoverColType">
+		<xs:sequence>
+			<xs:element ref="CoverType" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:sequence minOccurs="0">
+					<xs:element ref="Media" minOccurs="0"/>
+					<xs:element ref="MediaType" minOccurs="0"/>
+				</xs:sequence>
+				<xs:element ref="MediaCol" minOccurs="0"/>
+			</xs:choice>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="DestinationEntryType">
+		<xs:sequence>
+			<xs:element ref="DestinationUri"/>
+			<xs:element name="PreDialString" type="DialStringType" minOccurs="0"/>
+			<xs:element name="PostDialString" type="DialStringType" minOccurs="0"/>
+			<xs:element name="T33Subaddress" type="xs:int" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="DestinationType">
+		<xs:choice>
+			<xs:element name="Destination" type="xs:anyURI"/>
+			<xs:element name="DestinationDirectory" type="xs:anyURI"/>
+			<xs:any namespace="##other"/>
+		</xs:choice>
+		<xs:attribute ref="pwg:MustHonor"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="DestinationsType">
+		<xs:sequence>
+			<xs:element ref="DestinationUrisEntry" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentCharsetSupportedType">
+		<xs:sequence>
+			<xs:element ref="DocumentCharset" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentFormatDetailsType">
+		<xs:sequence>
+			<xs:element ref="DocumentFormat"/>
+			<xs:element ref="DocumentFormatDeviceId" minOccurs="0"/>
+			<xs:element ref="DocumentFormatVersion"/>
+			<xs:element ref="DocumentNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="DocumentSourceApplicationName" minOccurs="0"/>
+			<xs:element ref="DocumentSourceApplicationVersion" minOccurs="0"/>
+			<xs:element ref="DocumentSourceOsName" minOccurs="0"/>
+			<xs:element ref="DocumentSourceOsVersion" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="DocumentFormatDetailsSupportedType">
+		<xs:sequence>
+			<xs:element name="AllowedValue" type="DocumentFormatDetailsType" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="DocumentFormatSupportedType">
+		<xs:sequence>
+			<xs:element name="AllowedValue" maxOccurs="unbounded">
+				<xs:simpleType>
+					<xs:union memberTypes="DocumentFormatWKV KeywordNsExtensionPattern"/>
+				</xs:simpleType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DocumentFormatVersionSupportedType">
+		<xs:sequence>
+			<xs:element name="AllowedValue" type="xs:string" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="FinishingsType">
+		<xs:sequence>
+			<xs:element ref="Finishing" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="FinishingsColType">
+		<xs:sequence>
+			<xs:element ref="FinishingTemplate" minOccurs="0"/>
+			<xs:element ref="Stitching" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ForceFrontSideType">
+		<xs:sequence>
+			<xs:element name="ForceFront" type="xs:int" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other"/>
+	</xs:complexType>
+	<xs:complexType name="IdentifyActionsType">
+		<xs:sequence>
+			<xs:element ref="IdentifyAction" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ImagesToTransferType">
+		<xs:simpleContent>
+			<xs:extension base="xs:int">
+				<xs:attribute ref="pwg:MustHonor"/>
+				<xs:anyAttribute namespace="##other"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="InsertSheetType">
+		<xs:sequence>
+			<xs:element ref="InsertAfterPageNumber" minOccurs="0"/>
+			<xs:element ref="InsertCount" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:sequence minOccurs="0">
+					<xs:element ref="Media" minOccurs="0"/>
+					<xs:element ref="MediaType" minOccurs="0"/>
+				</xs:sequence>
+				<xs:element ref="MediaCol" minOccurs="0"/>
+			</xs:choice>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="JobAccountingSheetsType">
+		<xs:sequence>
+			<xs:element ref="JobAccountingSheetsType" minOccurs="0"/>
+			<xs:element ref="JobAccountingOutputBin" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:sequence minOccurs="0">
+					<xs:element ref="Media" minOccurs="0"/>
+					<xs:element ref="MediaType" minOccurs="0"/>
+				</xs:sequence>
+				<xs:element ref="MediaCol" minOccurs="0"/>
+			</xs:choice>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="JobErrorSheetType">
+		<xs:sequence>
+			<xs:element ref="JobErrorSheetType" minOccurs="0"/>
+			<xs:element ref="JobErrorSheetWhen" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:sequence minOccurs="0">
+					<xs:element ref="Media" minOccurs="0"/>
+					<xs:element ref="MediaType" minOccurs="0"/>
+				</xs:sequence>
+				<xs:element ref="MediaCol" minOccurs="0"/>
+			</xs:choice>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="JobSaveDispositionType">
+		<xs:sequence>
+			<xs:element ref="SaveDisposition" minOccurs="0"/>
+			<xs:element ref="SaveInfo" minOccurs="0" maxOccurs="unbounded"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="JobSheetsColType">
+		<xs:sequence>
+			<xs:element ref="JobSheets"/>
+			<xs:choice minOccurs="0">
+				<xs:sequence minOccurs="0">
+					<xs:element ref="Media" minOccurs="0"/>
+					<xs:element ref="MediaType" minOccurs="0"/>
+				</xs:sequence>
+				<xs:element ref="MediaCol" minOccurs="0"/>
+			</xs:choice>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="MediaColSupportedType">
+		<xs:sequence>
+			<xs:element name="MediaBackCoating" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AllowedValue" maxOccurs="unbounded">
+							<xs:simpleType>
+								<xs:union memberTypes="MediaCoatingWKV MediaColorExtensionPattern"/>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="MediaColor" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AllowedValue" maxOccurs="unbounded">
+							<xs:simpleType>
+								<xs:union memberTypes="MediaColorWKV MediaColorExtensionPattern"/>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="MediaFrontCoating" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AllowedValue" maxOccurs="unbounded">
+							<xs:simpleType>
+								<xs:union memberTypes="MediaCoatingWKV MediaNsExtensionPattern"/>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="MediaGrain" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AllowedValue" maxOccurs="unbounded">
+							<xs:simpleType>
+								<xs:union memberTypes="MediaGrainWKV MediaNsExtensionPattern"/>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="MediaHoleCount" type="pwg:RangeOfIntType" minOccurs="0"/>
+			<xs:element name="MediaInfo" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="MediaKey" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="MediaOrderCount" type="pwg:RangeOfIntType" minOccurs="0"/>
+			<xs:element name="MediaPreprinted" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AllowedValue" maxOccurs="unbounded">
+							<xs:simpleType>
+								<xs:union memberTypes="MediaPreprintedWKV MediaNsExtensionPattern"/>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="MediaRecycled" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AllowedValue" maxOccurs="unbounded">
+							<xs:simpleType>
+								<xs:union memberTypes="MediaRecycledWKV MediaNsExtensionPattern"/>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="MediaSize" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="XDimension" type="pwg:RangeOfIntType"/>
+						<xs:element name="YDimension" type="pwg:RangeOfIntType"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="MediaSizeName" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AllowedValue" maxOccurs="unbounded">
+							<xs:simpleType>
+								<xs:union memberTypes="MediaSizeNameWKV MediaSizeNameExtensionPattern"/>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="MediaThickness" type="pwg:RangeOfIntType" minOccurs="0"/>
+			<xs:element name="MediaTooth" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AllowedValue" maxOccurs="unbounded">
+							<xs:simpleType>
+								<xs:union memberTypes="MediaToothWKV MediaNsExtensionPattern"/>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="MediaType" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AllowedValue" maxOccurs="unbounded">
+							<xs:simpleType>
+								<xs:union memberTypes="MediaTypeWKV MediaTypeExtensionPattern"/>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="MediaWeightMetric" type="pwg:RangeOfIntType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="OverridesType">
+		<xs:sequence>
+			<xs:element name="Override" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="DocumentCopies" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="CopiesRange" type="RangeOfIntType" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="DocumentNumbers" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="NumberRange" type="RangeOfIntType" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="OverridingElements" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:any namespace="##any" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Pages">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="PageRange" type="RangeOfIntType" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="PdlInitFilesType">
+		<xs:sequence>
+			<xs:element name="PdlInitFile" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="PdlInitFileLocation" type="xs:anyURI" minOccurs="0"/>
+						<xs:element name="PdlInitFileName" type="xs:string"/>
+						<xs:element name="PdlInitFileEntry" type="xs:string" minOccurs="0"/>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other"/>
+	</xs:complexType>
+	<xs:complexType name="ProofPrintType">
+		<xs:sequence>
+			<xs:element ref="ProofPrintCopies" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:sequence minOccurs="0">
+					<xs:element ref="Media" minOccurs="0"/>
+					<xs:element ref="MediaType" minOccurs="0"/>
+				</xs:sequence>
+				<xs:element ref="MediaCol" minOccurs="0"/>
+			</xs:choice>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ContentRegionType">
+		<xs:sequence>
+			<xs:element ref="pwg:Height"/>
+			<xs:element ref="RegionUnits"/>
+			<xs:element ref="pwg:Width"/>
+			<xs:element ref="pwg:XOffset" minOccurs="0"/>
+			<xs:element ref="pwg:YOffset" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ResolutionType">
+		<xs:sequence>
+			<xs:element name="CrossFeedDir">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="CrossFeedDirType">
+							<xs:attribute ref="MustHonor"/>
+							<xs:anyAttribute namespace="##other"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="FeedDir">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="FeedDirType">
+							<xs:attribute ref="MustHonor"/>
+							<xs:anyAttribute namespace="##other"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="Units"/>
+		</xs:sequence>
+		<xs:attribute name="MustHonor" type="xs:boolean"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ResourceSummaryType">
+		<xs:sequence>
+			<xs:element ref="DateTimeAtLastUpdate" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="ResourceCategory" minOccurs="0"/>
+			<xs:element name="ResourceFormat" minOccurs="0">
+				<xs:complexType>
+					<xs:choice>
+						<xs:element ref="ResourceNamespace"/>
+						<xs:element ref="DocumentFormat"/>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="ResourceId"/>
+			<xs:element ref="ResourceName"/>
+			<xs:element ref="ResourceSourceUri" minOccurs="0"/>
+			<xs:element ref="ResourceType"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ScalingRangeType">
+		<xs:simpleContent>
+			<xs:extension base="ScalingRangeBaseType"/>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ScalingType">
+		<xs:choice>
+			<xs:element name="AutoScaling">
+				<xs:complexType>
+					<xs:simpleContent>
+						<xs:extension base="xs:boolean">
+							<xs:attribute ref="MustHonor"/>
+							<xs:anyAttribute namespace="##other"/>
+						</xs:extension>
+					</xs:simpleContent>
+				</xs:complexType>
+			</xs:element>
+			<xs:sequence>
+				<xs:element name="ScalingHeight">
+					<xs:complexType>
+						<xs:complexContent>
+							<xs:extension base="ScalingRangeType">
+								<xs:attribute ref="MustHonor"/>
+								<xs:anyAttribute namespace="##other"/>
+							</xs:extension>
+						</xs:complexContent>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ScalingWidth" type="ScalingRangeType"/>
+			</xs:sequence>
+		</xs:choice>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="SaveInfoType">
+		<xs:sequence>
+			<xs:element ref="SaveDocumentFormat" minOccurs="0"/>
+			<xs:element ref="SaveLocation" minOccurs="0"/>
+			<xs:element ref="SaveName" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="SeparatorSheetsType">
+		<xs:sequence>
+			<xs:element ref="SeparatorSheetsType" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:sequence minOccurs="0">
+					<xs:element ref="Media" minOccurs="0"/>
+					<xs:element ref="MediaType" minOccurs="0"/>
+				</xs:sequence>
+				<xs:element ref="MediaCol" minOccurs="0"/>
+			</xs:choice>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ServiceOrganizationEntryType">
+		<xs:sequence>
+			<xs:element ref="ServiceOrganization" minOccurs="0"/>
+			<xs:element ref="ServiceOrganizationUnit" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- CopyServices - set of Copy services -->
+	</xs:complexType>
+	<xs:complexType name="StitchingType">
+		<xs:sequence>
+			<xs:element ref="StitchingLocations" minOccurs="0"/>
+			<xs:element ref="StitchingOffset" minOccurs="0"/>
+			<xs:element ref="StitchingReferenceEdge" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<!---->
+	<xs:annotation>
+		<xs:documentation>base types used by semantic elements</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="IdType">
+		<xs:simpleContent>
+			<xs:extension base="xs:int">
+				<xs:attribute ref="Key"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<xs:complexType name="ObjectDeviceReferenceType">
+		<xs:sequence>
+			<xs:element name="ObjectDeviceIdentifier" type="ObjectIdentifier32Type" minOccurs="0"/>
+			<xs:element name="ObjectDeviceName" type="ObjectStringLongType" minOccurs="0"/>
+			<xs:element name="ObjectDeviceUri" type="xs:anyURI" minOccurs="0"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- see output-device-assigned - section 4.3.13 [RFC2911] -->
+	</xs:complexType>
+	<xs:complexType name="ObjectDeviceReferencesType">
+		<xs:sequence>
+			<xs:element name="ObjectDeviceReference" type="ObjectDeviceReferenceType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ObjectDeviceSupportedType">
+		<xs:sequence>
+			<xs:element name="ObjectDeviceReference" type="ObjectDeviceReferenceType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:simpleType name="ObjectDocumentFormatType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+			<xs:maxLength value="63"/>
+		</xs:restriction>
+		<!-- document format -->
+	</xs:simpleType>
+	<xs:complexType name="ObjectDocumentFormatSupportedType">
+		<xs:sequence>
+			<xs:element name="ObjectDocumentFormat" type="ObjectDocumentFormatType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ObjectJobReferenceType">
+		<xs:sequence>
+			<xs:element name="ObjectJobSetId" type="ObjectIdentifier32Type" minOccurs="0"/>
+			<xs:element name="ObjectJobId" type="ObjectIdentifier32Type" minOccurs="0"/>
+			<xs:element name="ObjectJobName" type="ObjectStringLongType" minOccurs="0"/>
+			<xs:element name="ObjectJobUri" type="xs:anyURI" minOccurs="0"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- see job-id - section 4.3.2 [RFC2911] -->
+		<!-- see job-name - section 4.3.5 [RFC2911] -->
+		<!-- see job-uri - section 4.3.1 [RFC2911] -->
+	</xs:complexType>
+	<xs:complexType name="ObjectJobReferencesType">
+		<xs:sequence>
+			<xs:element name="ObjectJobReference" type="ObjectJobReferenceType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ObjectResourceReferenceType">
+		<xs:sequence>
+			<xs:element name="ObjectResourceId" type="ObjectIdentifier32Type" minOccurs="0"/>
+			<xs:element name="ObjectResourceName" type="ObjectStringLongType" minOccurs="0"/>
+			<xs:element name="ObjectResourceUri" type="xs:anyURI" minOccurs="0"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- see ResourceId in Resource XML schema -->
+		<!-- see ResourceName in Resource XML schema -->
+		<!-- see ResourceURI in Resource XML schema -->
+	</xs:complexType>
+	<xs:complexType name="ObjectResourceReferencesType">
+		<xs:sequence>
+			<xs:element name="ObjectResourceReference" type="ObjectResourceReferenceType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ObjectStateMessagesType">
+		<xs:sequence>
+			<xs:element name="ObjectStateMessage" type="ObjectStringLongType" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ObjectServiceReferenceType">
+		<xs:sequence>
+			<xs:element name="ObjectServiceId" type="ObjectIdentifier32Type" minOccurs="0"/>
+			<xs:element name="ObjectServiceName" type="ObjectStringLongType" minOccurs="0"/>
+			<xs:element name="ObjectServiceUri" type="xs:anyURI" minOccurs="0"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- see printer-name - section 4.4.4 [RFC2911] -->
+		<!-- see printer-uri-supported - section 4.4.1 [RFC2911] -->
+	</xs:complexType>
+	<xs:complexType name="ObjectServiceReferencesType">
+		<xs:sequence>
+			<xs:element name="ObjectServiceReference" type="ObjectServiceReferenceType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ObjectServiceSupportedType">
+		<xs:sequence>
+			<xs:element name="ObjectServiceReference" type="ObjectServiceReferenceType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="PageRangesType">
+		<xs:sequence>
+			<xs:element name="PageRange" type="RangeOfIntType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other"/>
+	</xs:complexType>
+	<xs:complexType name="RangeOfIntType">
+		<xs:sequence>
+			<xs:element name="Lowerbound" type="xs:int"/>
+			<xs:element name="Upperbound" type="xs:int"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="SetOfRangeOfIntType">
+		<xs:sequence>
+			<xs:element name="Range" minOccurs="0" maxOccurs="unbounded">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Lowerbound" type="xs:int"/>
+						<xs:element name="Upperbound" type="xs:int"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="UnsupportedElementsType">
+		<xs:sequence>
+			<xs:any namespace="##any" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="UuidType">
+		<xs:simpleContent>
+			<xs:extension base="xs:anyURI">
+				<xs:attribute ref="Key"/>
+			</xs:extension>
+		</xs:simpleContent>
+	</xs:complexType>
+	<!---->
+	<xs:annotation>
+		<xs:documentation>Base types used by semantic elements</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="ObjectAccessModesType">
+		<xs:sequence>
+			<xs:element name="ObjectAccessMode" type="ObjectAccessModeWKV" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:simpleType name="ObjectCounterBasisWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="NotEmpty"/>
+			<xs:enumeration value="Actual"/>
+			<!-- unrestricted or infinite counter or gauge value -->
+			<!-- not instrumented counter or gauge value -->
+			<!-- not empty gauge value (i.e., at least one) -->
+			<!-- actual counter or gauge value -->
+		</xs:restriction>
+		<!-- object counter/gauge basis (i.e., accuracy) -->
+		<!-- see prtInputCurrentLevel in [RFC3805] -->
+	</xs:simpleType>
+	<xs:simpleType name="ObjectIdentifier16Type">
+		<xs:restriction base="xs:int">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="65535"/>
+		</xs:restriction>
+		<!-- object local unique integer key (within object type) -->
+	</xs:simpleType>
+	<xs:simpleType name="ObjectIdentifier32Type">
+		<xs:restriction base="xs:int">
+			<xs:minInclusive value="1"/>
+			<xs:maxInclusive value="2147483647"/>
+		</xs:restriction>
+		<!-- object local unique integer key (within object type) -->
+	</xs:simpleType>
+	<xs:simpleType name="ObjectPointerBasisWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="NotSupported"/>
+			<xs:enumeration value="Actual"/>
+			<!-- unrestricted or infinite pointer value -->
+			<!-- not instrumented pointer value -->
+			<!-- not supported pointer value -->
+			<!-- actual pointer value -->
+		</xs:restriction>
+		<!-- object pointer basis (i.e., accuracy) -->
+		<!-- see prtInputNextIndex in [RFC3805] -->
+	</xs:simpleType>
+	<xs:simpleType name="ObjectStringLongType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ObjectStringMaxType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+			<xs:maxLength value="1023"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ObjectStringShortType">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="0"/>
+			<xs:maxLength value="63"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:complexType name="ObjectUriSupportedType">
+		<xs:sequence>
+			<xs:element name="ObjectUri" type="xs:anyURI" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<!---->
+	<xs:annotation>
+		<xs:documentation>Subunit reference and the unique keys that identify the subunits</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ConsoleId" type="ObjectIdentifier16Type">
+		<xs:annotation>
+			<xs:documentation>missing element in Printer MIB v2 [RFC3805]</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="CoverId" type="ObjectIdentifier16Type">
+		<xs:annotation>
+			<xs:documentation>see prtCoverIndex in [RFC3805] </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="FaxModemId" type="ObjectIdentifier16Type">
+		<xs:annotation>
+			<xs:documentation>see mdmIndex in [RFC1696]</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="InputChannelId" type="ObjectIdentifier16Type">
+		<xs:annotation>
+			<xs:documentation>see prtChannelIndex in [RFC3805]</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="InputTrayId" type="ObjectIdentifier16Type">
+		<xs:annotation>
+			<xs:documentation>see prtInputIndex in [RFC3805] </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="InterfaceId" type="ObjectIdentifier32Type">
+		<xs:annotation>
+			<xs:documentation> see ifIndex in [RFC2863], prtChannelIfIndex in [RFC3805] </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="InterpreterId" type="ObjectIdentifier16Type">
+		<xs:annotation>
+			<xs:documentation>see prtInterpreterIndex in [RFC3805] </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="MarkerId" type="ObjectIdentifier16Type">
+		<xs:annotation>
+			<xs:documentation>see prtMarkerIndex in [RFC3805]</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="MediaPathId" type="ObjectIdentifier16Type">
+		<xs:annotation>
+			<xs:documentation>see prtMediaPathIndex in [RFC3805]</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="OutputChannelId" type="ObjectIdentifier16Type">
+		<xs:annotation>
+			<xs:documentation>similiar to prtChannelIndex in [RFC3805]</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="OutputTrayId" type="ObjectIdentifier16Type">
+		<xs:annotation>
+			<xs:documentation>see prtOutputIndex in [RFC3805] </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ScanMediaPathId" type="ObjectIdentifier16Type"/>
+	<xs:element name="ScannerId" type="ObjectIdentifier16Type">
+		<xs:annotation>
+			<xs:documentation>see prtMarkerIndex in [RFC3805] </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="SubunitId" type="ObjectIdentifier16Type">
+		<xs:annotation>
+			<xs:documentation>see prtMarkerIndex in [RFC3805] </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="SubunitReferencesType">
+		<xs:sequence>
+			<xs:element ref="SubunitReference" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- SubunitReferences - type -->
+	</xs:complexType>
+	<xs:complexType name="SubunitReferenceType">
+		<xs:choice minOccurs="0">
+			<xs:element ref="ConsoleId" minOccurs="0"/>
+			<xs:element ref="CoverId" minOccurs="0"/>
+			<xs:element ref="InputChannelId" minOccurs="0"/>
+			<xs:element ref="InputTrayId" minOccurs="0"/>
+			<xs:element ref="InterfaceId" minOccurs="0"/>
+			<xs:element ref="InterpreterId" minOccurs="0"/>
+			<xs:element ref="MarkerId" minOccurs="0"/>
+			<xs:element ref="MediaPathId" minOccurs="0"/>
+			<xs:element ref="OutputTrayId" minOccurs="0"/>
+			<xs:element ref="ScannerId" minOccurs="0"/>
+			<xs:element ref="SubunitId" minOccurs="0"/>
+		</xs:choice>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- SubunitReference - type -->
+	</xs:complexType>
+	<xs:element name="SubunitReferences" type="SubunitReferencesType"/>
+	<!-- SubunitReference - single subunit reference on system -->
+	<xs:element name="SubunitReference" type="SubunitReferenceType"/>
+</xs:schema>

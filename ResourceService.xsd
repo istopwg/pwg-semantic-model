@@ -1,0 +1,203 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="ScanService.xsd"/>
+	<xs:include schemaLocation="PrintService.xsd"/>
+	<xs:include schemaLocation="Counter.xsd"/>
+	<xs:include schemaLocation="PwgCommon.xsd"/>
+	<xs:include schemaLocation="ServiceTypes.xsd"/>
+	<xs:include schemaLocation="Subunits.xsd"/>
+	<!--12/14/11 PJZ Service Description is mandatory-->
+	<!--12/11/11 PJZ ServiceChargeInfoUri and ServiceOrganizations moved to base class-->
+	<!--11/02/11 PJZ Added ResourceSourceUri, removeed DocumentUri-->
+	<!--10/07/11 PJZ Added list of resources and uri for resource-->
+	<!--04/21/11 PJZ Added service charge stuff-->
+	<!--02/02/11 PJZ added some cloud elements to ServiceDescription-->
+	<!--12/06/10 PJZ added mandatory KOctetsProcessed to ServiceStatus-->
+	<!--09/23/10 PJZ Fixed capabilitiers and defaults-->
+	<!--04/1/10 PJZ added "Type" suffix to ComplexTypes-->
+	<!--010/22/09 PJZ Reworked concrete and abstract classes-->
+	<!--08/02/09 PJZ Modified configuration representation-->
+	<!--06/17/09 PJZ Reworked NaturalLanguage-->
+	<!--04/14/09 PJZ Updated Namespace-->
+	<!--01/30/09 PJZ Replaced IsAcceptingJobs with IsAcceptingResources-->
+	<!--01/16/09 PJZ Modied Storages-->
+	<!--11/06/08 PJZ Modied Capabilities-->
+	<!--07/11/08 PJZ Changed to ResourceService-->
+	<!--05/31/08 PJZ Move back to ##Other-->
+	<!--05/30/08 PJZ Move back to single namespace-->
+	<!--05/27/08 PJZ Created-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<!---->
+	<!---->
+	<!-- Resource - group -->
+	<xs:complexType name="ResourceStatusType">
+		<xs:sequence>
+			<xs:element ref="DateTimeAtCreation" minOccurs="0"/>
+			<xs:element ref="DateTimeAtLastUpdate" minOccurs="0"/>
+			<xs:element ref="DateTimeOfExpiration" minOccurs="0"/>
+			<xs:element ref="ResourceCounters" minOccurs="0"/>
+			<xs:element name="ResourceHasExpired" type="xs:boolean"/>
+			<xs:element ref="ResourceId"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ResourceStatus" type="ResourceStatusType"/>
+	<xs:complexType name="ResourceDescriptionType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="ResourceCategory"/>
+			<xs:element ref="ResourceCreatorUserName" minOccurs="0"/>
+			<xs:element name="ResourceFormat">
+				<xs:complexType>
+					<xs:choice>
+						<xs:element ref="ResourceNamespace"/>
+						<xs:element ref="DocumentFormat"/>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="ResourceInfo" minOccurs="0"/>
+			<xs:element ref="ResourceName"/>
+			<xs:element ref="ResourceSourceUri" minOccurs="0"/>
+			<xs:element ref="ResourceType"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ResourceDescription" type="ResourceDescriptionType"/>
+	<xs:complexType name="ResourceEntryType">
+		<xs:sequence>
+			<xs:element ref="ResourceDescription"/>
+			<xs:element ref="ResourceStatus"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:element name="ResourceEntry" type="ResourceEntryType"/>
+	<xs:complexType name="ResourceListType">
+		<xs:sequence>
+			<xs:element ref="ResourceEntry" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ResourceList" type="ResourceListType"/>
+	<!-- ResourceService - group -->
+	<!---->
+	<!-- ResourceServiceStatus - group -->
+	<xs:complexType name="ResourceServiceStatusType">
+		<xs:complexContent>
+			<xs:extension base="ImagingServiceStatusType">
+				<xs:sequence>
+					<xs:element ref="IsAcceptingResources"/>
+					<xs:element ref="KOctetsProcessed"/>
+					<xs:element ref="ResourceServiceCounters" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- ResourceServiceStatus - group -->
+	</xs:complexType>
+	<xs:element name="ResourceServiceStatus" type="ResourceServiceStatusType"/>
+	<!-- ResourceServiceDescription - group -->
+	<xs:complexType name="ResourceServiceDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="ImagingServiceDescriptionType">
+				<xs:sequence>
+					<!-- Resource service description references -->
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- ResourceServiceDescription - group -->
+	</xs:complexType>
+	<xs:element name="ResourceServiceDescription" type="ResourceServiceDescriptionType"/>
+	<xs:element name="ResourceServiceConfiguration">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Consoles" minOccurs="0"/>
+				<xs:element ref="Covers" minOccurs="0"/>
+				<xs:element ref="InputChannels" minOccurs="0"/>
+				<xs:element ref="Interfaces" minOccurs="0"/>
+				<xs:element ref="OutputChannels" minOccurs="0"/>
+				<xs:element ref="Storages" minOccurs="0"/>
+				<xs:element ref="VendorSubunits" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- ResourceService - object -->
+	<xs:complexType name="ResourceServicesType">
+		<xs:sequence>
+			<xs:element ref="ResourceService" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- ResourceServices - set of Resource services -->
+	</xs:complexType>
+	<xs:complexType name="ResourceServiceBaseType">
+		<xs:sequence>
+			<xs:element name="ResourceServiceCapability" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ResourceDescriptionCapabilities" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="ElementsNaturalLanguage" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="AllowedValue" type="NaturalLanguageType" maxOccurs="unbounded"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="DateTimeOfExpiration" type="xs:boolean" minOccurs="0"/>
+									<xs:element name="ResourceCategory" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="AllowedValue" maxOccurs="unbounded">
+													<xs:simpleType>
+														<xs:union memberTypes="ResourceCategoryWKV KeywordNsExtensionPattern"/>
+													</xs:simpleType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="ResourceCreatorUserName" type="xs:boolean" minOccurs="0"/>
+									<xs:element name="ResourceFormat" type="xs:boolean" minOccurs="0"/>
+									<xs:element name="ResourceInfo" type="xs:boolean" minOccurs="0"/>
+									<xs:element name="ResourceName" type="xs:boolean"/>
+									<xs:element name="ResourceType">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="AllowedValue" type="ResourceTypeType" maxOccurs="unbounded"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="ResourceServiceConfiguration" minOccurs="0"/>
+			<xs:element ref="ResourceServiceDescription"/>
+			<xs:element ref="ResourceServiceStatus"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- ResourceService - object -->
+	</xs:complexType>
+	<xs:complexType name="ResourceServiceType">
+		<xs:complexContent>
+			<xs:extension base="ResourceServiceBaseType">
+				<xs:sequence>
+					<xs:element ref="ResourceList"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ResourceServices" type="ResourceServicesType"/>
+	<xs:element name="ResourceService" type="ResourceServiceType"/>
+</xs:schema>

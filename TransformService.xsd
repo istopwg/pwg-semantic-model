@@ -1,0 +1,623 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="Counter.xsd"/>
+	<xs:include schemaLocation="DocumentTypes.xsd"/>
+	<xs:include schemaLocation="JobTypes.xsd"/>
+	<xs:include schemaLocation="ServiceTypes.xsd"/>
+	<xs:include schemaLocation="Subunits.xsd"/>
+	<!--04/16/12 PJZ Fixed some data types and made some elements global-->
+	<!--03/15/12 PJZ Updated Transform model-->
+	<!--03/12/12 PJZ Removed CapabilitiesReady & made other changes from 3/8 teleconference-->
+	<!--03/05/12 PJZ Fixed Document Processing-->
+	<!--03/03/12 PJZ Linked receipts into job and document-->
+	<!--03/01/12 PJZ Removed Covers subunit-->
+	<!--02/24/11 PJZ Added supported XXXPasswordXXXSupported ServiceDescription elements-->
+	<!--12/14/11 PJZ Service Description is mandatory-->
+	<!--12/11/11 PJZ ServiceChargeInfoUri and ServiceOrganizations moved to base class-->
+	<!--11/14/11 PJZ Added DestinationUris and associated elements-->
+	<!--11/08/11 PJZ Removed DefaultDocumentTicket & added extension point-->
+	<!--09/10/11 PJZ Added missing MustHonor and attribute extensions-->
+	<!--04/21/11 PJZ Added service charge stuff-->
+	<!--04/21/11 PJZ Fixed QueuedJobCount-->
+	<!--02/02/11 PJZ added some clous elements to ServiceDescription-->
+	<!--12/06/10 PJZ added mandatory ImagesCompleted to ServiceStatus-->
+	<!--12/02/10 PJZ ImagesCompleted mandatory for Jobs and Documents-->
+	<!--04/1/10 PJZ added "Type" suffix to ComplexTypes-->
+	<!--09/23/10 PJZ Fixed capabilitiers and defaults-->
+	<!--010/22/09 PJZ Reworked concrete and abstract classes-->
+	<!--08/02/09 PJZ Modified configuration representation-->
+	<!--04/14/09 PJZ Updated Namespace-->
+	<!--01/30/09 PJZ Made IsAcceptingJobs service specific-->
+	<!--05/31/08 PJZ Move back to ##Other-->
+	<!--05/30/08 PJZ Move back to single namespace-->
+	<!--05/21/08 PJZ Partial alignment with WS-Scan-->
+	<!--12/12/07 PJZ Reworked Capabilities-->
+	<!--12/12/07 PJZ Reworked Service/Job/Document counters-->
+	<!--09/13/07 PJZ Reworked default and supported-->
+	<!--10/08/06 PJZ Reworked dependencies and removed Chameleon-->
+	<!--10/04/06 PJZ Created-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2009, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<!---->
+	<!-- Transform specific elements and types-->
+	<!---->
+	<xs:element name="Transform" type="TransformType"/>
+	<xs:element name="TransformId" type="xs:int"/>
+	<xs:element name="TransformType" type="TransformTypeType"/>
+	<xs:element name="TransformUuid" type="xs:anyURI"/>
+	<xs:simpleType name="TransformTypeType">
+		<xs:union memberTypes="TransformTypeWKV MimeExtensionPattern"/>
+	</xs:simpleType>
+	<xs:complexType name="TransformType">
+		<xs:sequence>
+			<xs:element ref="MoreInfoUri" minOccurs="0"/>
+			<xs:element name="TransformInfo" minOccurs="0">
+				<xs:simpleType>
+					<xs:restriction base="xs:string">
+						<xs:maxLength value="255"/>
+					</xs:restriction>
+				</xs:simpleType>
+			</xs:element>
+			<xs:element ref="TransformName"/>
+			<xs:element ref="TransformType"/>
+			<xs:element ref="TransformId"/>
+			<xs:element ref="TransformUuid"/>
+		</xs:sequence>
+	</xs:complexType>
+	<!---->
+	<!-- TransformDocument - group -->
+	<!---->
+	<!-- TransformDocumentTicket - group -->
+	<xs:complexType name="TransformDocumentTicketType">
+		<xs:sequence>
+			<xs:element ref="TransformDocumentDescription" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Covers Input Document</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="TransformDocumentProcessing" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Covers Output Document</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TransformDocumentTicket" type="TransformDocumentTicketType"/>
+	<xs:element name="TransformDocumentReceipt" type="TransformDocumentTicketType"/>
+	<!-- TransformDocumentStatus - group -->
+	<xs:complexType name="TransformDocumentStatusType">
+		<xs:complexContent>
+			<xs:extension base="ImagingDocumentStatusType">
+				<xs:sequence>
+					<!-- Transform Document status references here -->
+					<!-- Transform Document counters from service counters definition -->
+					<xs:element name="DestinationsStatuses" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="DestinationsStatus" maxOccurs="unbounded">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="DestinationURI" type="xs:anyURI"/>
+											<xs:element name="TransmissionStatus" type="TransmissionStatusWKV"/>
+											<xs:element ref="ImagesCompleted"/>
+											<xs:any namespace="##other" minOccurs="0"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element ref="ImagesCompleted"/>
+					<xs:element ref="TransformDocumentCounters" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- TransformDocumentStatus - group -->
+	</xs:complexType>
+	<xs:element name="TransformDocumentStatus" type="TransformDocumentStatusType"/>
+	<!-- TransformDocumentDescription - group -->
+	<xs:complexType name="TransformDocumentDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="ImagingDocumentDescriptionType">
+				<xs:sequence>
+					<!-- Transform Document description references here -->
+					<xs:element ref="CompressionSupplied" minOccurs="0"/>
+					<xs:element ref="DocumentCharsetSupplied" minOccurs="0"/>
+					<xs:choice>
+						<xs:element ref="DocumentFormatDetailsSupplied"/>
+						<xs:sequence>
+							<xs:element ref="DocumentFormatSupplied"/>
+							<xs:element ref="DocumentFormatVersionSupplied" minOccurs="0"/>
+						</xs:sequence>
+					</xs:choice>
+					<xs:element ref="DocumentUri" minOccurs="0"/>
+					<xs:element ref="Images" minOccurs="0"/>
+					<xs:element ref="KOctets" minOccurs="0"/>
+					<xs:element ref="PageOrderReceived" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- TransformDocumentDescription - group -->
+	</xs:complexType>
+	<xs:element name="TransformDocumentDescription" type="TransformDocumentDescriptionType"/>
+	<!-- TransformDocumentProcessing - group -->
+	<xs:complexType name="TransformDocumentProcessingType">
+		<xs:complexContent>
+			<xs:extension base="ImagingDocumentProcessingType">
+				<xs:sequence>
+					<!-- Transform document processing references here -->
+					<xs:element ref="AutoSkewCorrection" minOccurs="0"/>
+					<xs:element ref="ColorEntry" minOccurs="0"/>
+					<xs:element ref="Compression" minOccurs="0"/>
+					<xs:element ref="CompressionQualityFactor" minOccurs="0"/>
+					<xs:element ref="ContentType" minOccurs="0"/>
+					<xs:element ref="Destination" minOccurs="0"/>
+					<xs:element ref="DestinationUris" minOccurs="0"/>
+					<xs:choice minOccurs="0">
+						<xs:sequence>
+							<xs:element ref="DocumentFormat" minOccurs="0"/>
+							<xs:element ref="DocumentFormatVersion" minOccurs="0"/>
+						</xs:sequence>
+						<xs:element ref="DocumentFormatDetails" minOccurs="0"/>
+					</xs:choice>
+					<xs:element ref="Resolution" minOccurs="0"/>
+					<xs:element ref="Rotation" minOccurs="0"/>
+					<xs:element ref="Scaling" minOccurs="0"/>
+					<xs:element ref="Transform"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- TransformDocumentProcessing - group -->
+	</xs:complexType>
+	<xs:element name="TransformDocumentProcessing" type="TransformDocumentProcessingType"/>
+	<!-- TransformDocuments - set of Transform Documents -->
+	<xs:complexType name="TransformDocumentsType">
+		<xs:sequence>
+			<xs:element ref="TransformDocument" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- TransformDocuments - set of Transform Documents -->
+	</xs:complexType>
+	<xs:element name="TransformDocuments" type="TransformDocumentsType"/>
+	<!-- TransformDocument - object -->
+	<xs:complexType name="TransformDocumentType">
+		<xs:sequence>
+			<xs:element ref="TransformDocumentReceipt" minOccurs="0"/>
+			<xs:element ref="TransformDocumentStatus"/>
+			<xs:element ref="TransformDocumentTicket" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- TransformDocument - object -->
+	</xs:complexType>
+	<xs:element name="TransformDocument" type="TransformDocumentType"/>
+	<!---->
+	<!---->
+	<!-- TransformJob - group -->
+	<!---->
+	<!-- TransformJobStatus - group -->
+	<xs:complexType name="TransformJobStatusType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobStatusType">
+				<xs:sequence>
+					<!-- Transform job status references here -->
+					<!-- Transform job counters from service counters definition -->
+					<xs:element name="DestinationsStatuses" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="DestinationsStatus" maxOccurs="unbounded">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="DestinationURI" type="xs:anyURI"/>
+											<xs:element name="TransmissionStatus" type="TransmissionStatusWKV"/>
+											<xs:element ref="ImagesCompleted"/>
+											<xs:any namespace="##other" minOccurs="0"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element ref="ImagesCompleted"/>
+					<xs:element ref="TransformJobCounters" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- TransformJobStatus - group -->
+	</xs:complexType>
+	<xs:element name="TransformJobStatus" type="TransformJobStatusType"/>
+	<!-- TransformJobTicket - group -->
+	<xs:complexType name="TransformJobTicketType">
+		<xs:sequence>
+			<xs:element ref="TransformDocumentDescription" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Covers Input Document</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="TransformDocumentProcessing" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Covers Output Document</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="TransformJobDescription" minOccurs="0"/>
+			<xs:element ref="TransformJobProcessing" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TransformJobTicket" type="TransformJobTicketType"/>
+	<xs:element name="TransformJobReceipt" type="TransformJobTicketType"/>
+	<!-- TransformJobDescription - group -->
+	<xs:complexType name="TransformJobDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobDescriptionType">
+				<xs:sequence>
+					<!-- Transform job description references here -->
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- TransformJobDescription - group -->
+	</xs:complexType>
+	<xs:element name="TransformJobDescription" type="TransformJobDescriptionType"/>
+	<!-- TransformJobProcessing - group -->
+	<xs:complexType name="TransformJobProcessingType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobProcessingType">
+				<xs:sequence>
+					<!-- Transform job processing references here -->
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- TransformJobProcessing - group -->
+	</xs:complexType>
+	<xs:element name="TransformJobProcessing" type="TransformJobProcessingType"/>
+	<!-- TransformJobs - set of Transform jobs -->
+	<xs:complexType name="TransformJobsType">
+		<xs:sequence>
+			<xs:element ref="TransformJob" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- TransformJobs - set of Transform jobs -->
+	</xs:complexType>
+	<xs:element name="TransformJobs" type="TransformJobsType"/>
+	<!-- TransformJob - object -->
+	<xs:complexType name="TransformJobType">
+		<xs:sequence>
+			<xs:element ref="TransformJobReceipt" minOccurs="0"/>
+			<xs:element ref="TransformJobStatus"/>
+			<xs:element ref="TransformJobTicket" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- TransformJob - object -->
+	</xs:complexType>
+	<xs:element name="TransformJob">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="TransformJobType">
+					<xs:sequence>
+						<xs:element ref="TransformDocument" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<!---->
+	<!-- TransformService - group -->
+	<!---->
+	<!-- TransformServiceStatus - group -->
+	<xs:complexType name="TransformServiceStatusType">
+		<xs:complexContent>
+			<xs:extension base="ImagingServiceStatusType">
+				<xs:sequence>
+					<xs:element ref="IsAcceptingJobs"/>
+					<xs:element ref="QueuedJobCount" minOccurs="1"/>
+					<xs:element ref="TransformServiceCounters" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- TransformServiceStatus - group -->
+	</xs:complexType>
+	<xs:element name="TransformServiceStatus" type="TransformServiceStatusType"/>
+	<!-- TransformServiceDescription - group -->
+	<xs:complexType name="TransformServiceDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="ImagingServiceDescriptionType">
+				<xs:sequence>
+					<!-- Transform service description references -->
+					<xs:element name="ConfiguredTransforms">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element ref="Transform" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element ref="DocumentPasswordSupported" minOccurs="0"/>
+					<xs:element ref="JobPasswordSupported" minOccurs="0"/>
+					<xs:element ref="JobPasswordEncryptionSupported" minOccurs="0"/>
+					<xs:element ref="MultipleOperationTimeout" minOccurs="0"/>
+					<xs:element ref="MultipleOperationTimeoutAction" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- TransformServiceDescription - group -->
+	</xs:complexType>
+	<xs:element name="TransformServiceDescription" type="TransformServiceDescriptionType"/>
+	<!-- TransformService Default Ticket - group -->
+	<xs:complexType name="TransformServiceDefaultsType">
+		<xs:sequence>
+			<xs:element ref="DefaultTransformJobTicket" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other"/>
+	</xs:complexType>
+	<xs:element name="TransformServiceDefaults" type="TransformServiceDefaultsType"/>
+	<xs:complexType name="DefaultTransformTicketType">
+		<xs:sequence>
+			<xs:element ref="TransformDocumentProcessing" minOccurs="0"/>
+			<xs:element ref="TransformJobDescription" minOccurs="0"/>
+			<xs:element ref="TransformJobProcessing" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other"/>
+	</xs:complexType>
+	<xs:element name="DefaultTransformJobTicket" type="DefaultTransformTicketType"/>
+	<!-- TransformService Capabilities - group -->
+	<xs:complexType name="TransformJobDescriptionCapabilitiesType">
+		<xs:complexContent>
+			<xs:extension base="pwg:ImagingJobDescriptionCapabilitiesType">
+				<xs:sequence>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="TransformJobDescriptionCapabilities" type="TransformJobDescriptionCapabilitiesType"/>
+	<xs:complexType name="TransformDocumentProcessingCapabilitiesType">
+		<xs:complexContent>
+			<xs:extension base="ImagingDocumentProcessingCapabilitiesType">
+				<xs:sequence>
+					<xs:element name="Compression" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" type="CompressionWKV" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="CompressionFactor" type="RangeOfIntType" minOccurs="0"/>
+					<xs:element name="ContentType" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" type="ContentTypeType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Destination" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="DestinationUriSchemes" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValues" type="xs:string" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="DestinationUris" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="DestinationUriSchemes" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValues" type="xs:string" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="PreDialString" type="xs:boolean" minOccurs="0"/>
+								<xs:element name="PostDialString" type="xs:boolean" minOccurs="0"/>
+								<xs:element name="T33Subaddress" type="xs:boolean" minOccurs="0"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="DocumentFormat" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" type="DocumentFormatWKV" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="OutputDocumentColor" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="BitDepth" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValue" type="xs:int" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="ColorEncoding" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValue" maxOccurs="unbounded">
+												<xs:simpleType>
+													<xs:union memberTypes="ColorEntryWKV KeywordNsExtensionPattern"/>
+												</xs:simpleType>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="ColorSpace" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValue" type="ColorSpaceWKV" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="SamplesPerPixel" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValue" type="xs:int" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="OutputDocumentSize" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Height" type="RangeOfIntType"/>
+								<xs:element name="Width" type="RangeOfIntType"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="PageRanges" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="Resolutions" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Resolution" maxOccurs="unbounded">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="CrossFeedDir">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="AllowedValue" type="xs:int"/>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="FeedDir">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="AllowedValue" type="xs:int"/>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element ref="Units"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Rotation" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" type="RotationWKV" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Scaling" minOccurs="0">
+						<xs:complexType>
+							<xs:choice>
+								<xs:sequence>
+									<xs:element name="ScalingHeight" type="RangeOfIntType"/>
+									<xs:element name="ScalingWidth" type="RangeOfIntType"/>
+								</xs:sequence>
+								<xs:element name="AutoScaling" type="xs:boolean"/>
+							</xs:choice>
+						</xs:complexType>
+					</xs:element>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="TransformDocumentProcessingCapabilities" type="TransformDocumentProcessingCapabilitiesType"/>
+	<xs:complexType name="TransformJobProcessingCapabilitiesType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobProcessingCapabilitiesType">
+				<xs:sequence>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="TransformJobProcessingCapabilities" type="TransformJobProcessingCapabilitiesType"/>
+	<xs:complexType name="TransformJobTicketCapabilitiesType">
+		<xs:sequence>
+			<xs:element ref="TransformDocumentProcessingCapabilities" minOccurs="0"/>
+			<xs:element ref="TransformJobDescriptionCapabilities" minOccurs="0"/>
+			<xs:element ref="TransformJobProcessingCapabilities" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other"/>
+	</xs:complexType>
+	<xs:element name="TransformJobTicketCapabilities" type="TransformJobTicketCapabilitiesType"/>
+	<xs:complexType name="TransformServiceCapabilitiesType">
+		<xs:sequence>
+			<xs:element ref="TransformJobTicketCapabilities" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="TransformServiceCapabilities" type="TransformServiceCapabilitiesType"/>
+	<xs:element name="TransformServicesCapabilitiesReady" type="TransformServiceCapabilitiesType"/>
+	<!-- TransformService Capabilities - group -->
+	<xs:element name="TransformServiceConfiguration">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Consoles" minOccurs="0"/>
+				<xs:element ref="InputChannels" minOccurs="0"/>
+				<xs:element ref="Interfaces" minOccurs="0"/>
+				<xs:element ref="Interpreters" minOccurs="0"/>
+				<xs:element ref="OutputChannels" minOccurs="0"/>
+				<xs:element ref="Processors" minOccurs="0"/>
+				<xs:element ref="Storages" minOccurs="0"/>
+				<xs:element ref="VendorSubunits" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- TransformServices - set of Transform services -->
+	<xs:complexType name="TransformServicesType">
+		<xs:sequence>
+			<xs:element ref="TransformService" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- TransformServices - set of Transform services -->
+	</xs:complexType>
+	<xs:element name="TransformServices" type="TransformServicesType"/>
+	<!-- TransformService - object -->
+	<xs:complexType name="TransformServiceBaseType">
+		<xs:sequence>
+			<xs:element ref="TransformServiceCapabilities" minOccurs="0"/>
+			<xs:element ref="TransformServiceConfiguration" minOccurs="0"/>
+			<xs:element ref="TransformServiceDefaults" minOccurs="0"/>
+			<xs:element ref="TransformServiceDescription"/>
+			<xs:element ref="TransformServiceStatus"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- TransformService - object -->
+	</xs:complexType>
+	<xs:complexType name="TransformServiceType">
+		<xs:complexContent>
+			<xs:extension base="TransformServiceBaseType">
+				<xs:sequence>
+					<xs:element name="JobTable">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="ActiveJobs" type="TransformJobsType"/>
+								<xs:element name="JobHistory" type="TransformJobsType" minOccurs="0"/>
+								<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="TransformService" type="TransformServiceType"/>
+</xs:schema>

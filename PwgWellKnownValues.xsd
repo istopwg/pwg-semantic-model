@@ -1,0 +1,3142 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<!--07/02/12 PJZ Fixed OutputBinWKV values-->
+	<!--06/06/12 PJZ Final JPS3 update-->
+	<!--05/24/12 PJZ Mime extension patterns is now of type xs:string-->
+	<!--03/15/12 PJZ Updated Transform model-->
+	<!--03/12/12 PJZ Aligned with  Raster Last Call-->
+	<!--03/01/12 PJZ Fixed PWGRasterDocumentSheetBackWKV name, added image/pwg-raster-->
+	<!--02/18/12 PJZ Added 'None' to OrientationRequestedWKV-->
+	<!--01/10/12 PJZ Aligned with latest JPS3 and Raster specs-->
+	<!--12/18/11 PJZ Fixed operating system extension pattern, Removed unused OutputBin pattern-->
+	<!--11/08/11 PJZ Added strawman Transform-->
+	<!--10/05/11 PJZ Changed case of OS values to lower-->
+	<!--09/16/11 PJZ Fixed case of some values-->
+	<!--08/23/11 PJZ Added PWG Raster-->
+	<!--08/10/11 PJZ added Imposition values-->
+	<!--06/30/11 PJZ Added operation element required for Add/Modify/Delete on SetOperation-->
+	<!--06/03/11 PJZ Fixes from May Face to Face, fixed spelling error-->
+	<!--05/05/11 PJZ Added more JPS3 WKVs-->
+	<!--03/28/11 PJZ Added JPS3 WKVs and missing print color mode enum value-->
+	<!--02/02/11 PJZ Added print color mode enum values-->
+	<!--01/20/11 PJZ Added print color mode-->
+	<!--10/25/10 PJZ Commented out ColorWKV placeholder to publish version for MFD Overall-->
+	<!--08/19/10 PJZ Added authentication type keywords-->
+	<!--04/15/10 PJZ Fixed PendingHeld-->
+	<!--02/26/10 PJZ Power, Cover updates-->
+	<!--12/30/09 PJZ Generalized PrintQuality to Quality-->
+	<!--12/28/09 PJZ Generalized JobHoldUntil to HoldUntil-->
+	<!--12/25/09 PJZ Updated StatusString from IANA registry-->
+	<!--07/20/09 PJZ Collapsed various Fax services excluding EMailIn and EmailOut-->
+	<!--06/17/09 PJZ Reworked NaturalLanguage and Charset-->
+	<!--04/14/09 PJZ Updated Namespace-->
+	<!--01/22/09 PJZ Changed Xmldsig to Xdsig (avoid xml character sequence in names)-->
+	<!--01/21/09 PJZ Added CoverStayeWKV-->
+	<!--01/16/09 PJZ Adjusted StorateTypeWKV-->
+	<!--11/13/08 PJZ Added FaxOut WKV-->
+	<!--09/01/08 PJZ Split out Resources into Templates, Static and Executable-->
+	<!--07/22/08 PJZ Limit Requested elements to specific values-->
+	<!--06/12/08 PJZ Added Scan and Condition related entries-->
+	<!--05/30/08 PJZ Move back to single namespace-->
+	<!--05/21/08 PJZ Partial alignment with WS-Scan-->
+	<!--04/01/08 PJZ Moved Subunit WKV's to here-->
+	<!--03/27/08 PJZ Added more Job Password Encryption, Original Type  enums-->
+	<!--12/12/07 PJZ Added Rotation WKV-->
+	<!--11/21/07 PJZ Added Scan specific types-->
+	<!--09/12/07 PJZ all NMTokens without max len restricted to 255-->
+	<!--10/08/06 PJZ Reworked dependencies and removed Chameleon-->
+	<!--08/08/06  PJZ  Changed namespace, added ObjectAccessWKV from WimsTypes-->
+	<!--040506  PJZ  modified from ver 1.0 to prepare for SM editing work-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v3   
+
+Copyright 2002-2014, IEEE Industry Standards and Technology Organization/PWG - SM Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<xs:annotation>
+		<xs:documentation>Well known values (i.e. keywords) used by semantic elements</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="AuthenticationWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Basic"/>
+			<xs:enumeration value="Certificate"/>
+			<xs:enumeration value="Digest"/>
+			<xs:enumeration value="Token"/>
+			<xs:enumeration value="KerberosToken"/>
+			<xs:enumeration value="RequestingUserName"/>
+			<xs:enumeration value="UsernamePassword"/>
+			<xs:enumeration value="None"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CCEscapeActionWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="ignoreEscape"/>
+			<xs:enumeration value="hangUp"/>
+			<xs:enumeration value="enterCommandMode"/>
+		</xs:restriction>
+		<!-- Line Capability -->
+		<!-- see mdmLineCapabilities in [RFC1696] -->
+	</xs:simpleType>
+	<xs:simpleType name="CharsetWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="63"/>
+			<xs:enumeration value="adobe-standard-encoding"/>
+			<xs:enumeration value="adobe-symbol-encoding"/>
+			<xs:enumeration value="ansi-x3-110-1983"/>
+			<xs:enumeration value="asmo-449"/>
+			<xs:enumeration value="big5"/>
+			<xs:enumeration value="big5-hkscs"/>
+			<xs:enumeration value="bocu-1"/>
+			<xs:enumeration value="bs-4730"/>
+			<xs:enumeration value="bs-viewdata"/>
+			<xs:enumeration value="cesu-8"/>
+			<xs:enumeration value="csa-z243-4-1985-1"/>
+			<xs:enumeration value="csa-z243-4-1985-2"/>
+			<xs:enumeration value="csa-z243-4-1985-gr"/>
+			<xs:enumeration value="csn-369103"/>
+			<xs:enumeration value="dec-mcs"/>
+			<xs:enumeration value="din-66003"/>
+			<xs:enumeration value="dk-us"/>
+			<xs:enumeration value="ds-2089"/>
+			<xs:enumeration value="ebcdic-at-de"/>
+			<xs:enumeration value="ebcdic-at-de-a"/>
+			<xs:enumeration value="ebcdic-ca-fr"/>
+			<xs:enumeration value="ebcdic-dk-no"/>
+			<xs:enumeration value="ebcdic-dk-no-a"/>
+			<xs:enumeration value="ebcdic-es"/>
+			<xs:enumeration value="ebcdic-es-a"/>
+			<xs:enumeration value="ebcdic-es-s"/>
+			<xs:enumeration value="ebcdic-fi-se"/>
+			<xs:enumeration value="ebcdic-fi-se-a"/>
+			<xs:enumeration value="ebcdic-fr"/>
+			<xs:enumeration value="ebcdic-it"/>
+			<xs:enumeration value="ebcdic-pt"/>
+			<xs:enumeration value="ebcdic-uk"/>
+			<xs:enumeration value="ebcdic-us"/>
+			<xs:enumeration value="ecma-cyrillic"/>
+			<xs:enumeration value="es"/>
+			<xs:enumeration value="es2"/>
+			<xs:enumeration value="euc-jp"/>
+			<xs:enumeration value="euc-kr"/>
+			<xs:enumeration value="extended-unix-code-fixed-width-for-japanese"/>
+			<xs:enumeration value="gb18030"/>
+			<xs:enumeration value="gb-1988-80"/>
+			<xs:enumeration value="gb2312"/>
+			<xs:enumeration value="gb-2312-80"/>
+			<xs:enumeration value="gbk"/>
+			<xs:enumeration value="gost-19768-74"/>
+			<xs:enumeration value="greek7"/>
+			<xs:enumeration value="greek7-old"/>
+			<xs:enumeration value="greek-ccitt"/>
+			<xs:enumeration value="hp-desktop"/>
+			<xs:enumeration value="hp-legal"/>
+			<xs:enumeration value="hp-math8"/>
+			<xs:enumeration value="hp-pi-font"/>
+			<xs:enumeration value="hp-roman8"/>
+			<xs:enumeration value="hz-gb-2312"/>
+			<xs:enumeration value="ibm00858"/>
+			<xs:enumeration value="ibm00924"/>
+			<xs:enumeration value="ibm01140"/>
+			<xs:enumeration value="ibm01141"/>
+			<xs:enumeration value="ibm01142"/>
+			<xs:enumeration value="ibm01143"/>
+			<xs:enumeration value="ibm01144"/>
+			<xs:enumeration value="ibm01145"/>
+			<xs:enumeration value="ibm01146"/>
+			<xs:enumeration value="ibm01147"/>
+			<xs:enumeration value="ibm01148"/>
+			<xs:enumeration value="ibm01149"/>
+			<xs:enumeration value="ibm037"/>
+			<xs:enumeration value="ibm038"/>
+			<xs:enumeration value="ibm1026"/>
+			<xs:enumeration value="ibm1047"/>
+			<xs:enumeration value="ibm273"/>
+			<xs:enumeration value="ibm274"/>
+			<xs:enumeration value="ibm275"/>
+			<xs:enumeration value="ibm277"/>
+			<xs:enumeration value="ibm278"/>
+			<xs:enumeration value="ibm280"/>
+			<xs:enumeration value="ibm281"/>
+			<xs:enumeration value="ibm284"/>
+			<xs:enumeration value="ibm285"/>
+			<xs:enumeration value="ibm290"/>
+			<xs:enumeration value="ibm297"/>
+			<xs:enumeration value="ibm420"/>
+			<xs:enumeration value="ibm423"/>
+			<xs:enumeration value="ibm424"/>
+			<xs:enumeration value="ibm437"/>
+			<xs:enumeration value="ibm500"/>
+			<xs:enumeration value="ibm775"/>
+			<xs:enumeration value="ibm850"/>
+			<xs:enumeration value="ibm851"/>
+			<xs:enumeration value="ibm852"/>
+			<xs:enumeration value="ibm855"/>
+			<xs:enumeration value="ibm857"/>
+			<xs:enumeration value="ibm860"/>
+			<xs:enumeration value="ibm861"/>
+			<xs:enumeration value="ibm862"/>
+			<xs:enumeration value="ibm863"/>
+			<xs:enumeration value="ibm864"/>
+			<xs:enumeration value="ibm865"/>
+			<xs:enumeration value="ibm866"/>
+			<xs:enumeration value="ibm868"/>
+			<xs:enumeration value="ibm869"/>
+			<xs:enumeration value="ibm870"/>
+			<xs:enumeration value="ibm871"/>
+			<xs:enumeration value="ibm880"/>
+			<xs:enumeration value="ibm891"/>
+			<xs:enumeration value="ibm903"/>
+			<xs:enumeration value="ibm904"/>
+			<xs:enumeration value="ibm905"/>
+			<xs:enumeration value="ibm918"/>
+			<xs:enumeration value="ibm-symbols"/>
+			<xs:enumeration value="ibm-thai"/>
+			<xs:enumeration value="iec-p27-1"/>
+			<xs:enumeration value="inis"/>
+			<xs:enumeration value="inis-8"/>
+			<xs:enumeration value="inis-cyrillic"/>
+			<xs:enumeration value="invariant"/>
+			<xs:enumeration value="iso-10367-box"/>
+			<xs:enumeration value="iso-10646-ucs-2"/>
+			<xs:enumeration value="iso-10646-ucs-4"/>
+			<xs:enumeration value="iso-10646-ucs-basic"/>
+			<xs:enumeration value="iso-10646-unicode-latin1"/>
+			<xs:enumeration value="iso-10646-utf-1"/>
+			<xs:enumeration value="iso-2022-cn"/>
+			<xs:enumeration value="iso-2022-cn-ext"/>
+			<xs:enumeration value="iso-2022-jp"/>
+			<xs:enumeration value="iso-2022-jp-2"/>
+			<xs:enumeration value="iso-2022-kr"/>
+			<xs:enumeration value="iso-2033-1983"/>
+			<xs:enumeration value="iso-5427"/>
+			<xs:enumeration value="iso-5427-1981"/>
+			<xs:enumeration value="iso-5428-1980"/>
+			<xs:enumeration value="iso-646-basic-1983"/>
+			<xs:enumeration value="iso-646-irv-1983"/>
+			<xs:enumeration value="iso-6937-2-25"/>
+			<xs:enumeration value="iso-6937-2-add"/>
+			<xs:enumeration value="iso-8859-1"/>
+			<xs:enumeration value="iso-8859-10"/>
+			<xs:enumeration value="iso-8859-13"/>
+			<xs:enumeration value="iso-8859-14"/>
+			<xs:enumeration value="iso-8859-15"/>
+			<xs:enumeration value="iso-8859-16"/>
+			<xs:enumeration value="iso-8859-1-windows-3-0-latin-1"/>
+			<xs:enumeration value="iso-8859-1-windows-3-1-latin-1"/>
+			<xs:enumeration value="iso-8859-2"/>
+			<xs:enumeration value="iso-8859-2-windows-latin-2"/>
+			<xs:enumeration value="iso-8859-3"/>
+			<xs:enumeration value="iso-8859-4"/>
+			<xs:enumeration value="iso-8859-5"/>
+			<xs:enumeration value="iso-8859-6"/>
+			<xs:enumeration value="iso-8859-6-e"/>
+			<xs:enumeration value="iso-8859-6-i"/>
+			<xs:enumeration value="iso-8859-7"/>
+			<xs:enumeration value="iso-8859-8"/>
+			<xs:enumeration value="iso-8859-8-e"/>
+			<xs:enumeration value="iso-8859-8-i"/>
+			<xs:enumeration value="iso-8859-9"/>
+			<xs:enumeration value="iso-8859-9-windows-latin-5"/>
+			<xs:enumeration value="iso-8859-supp"/>
+			<xs:enumeration value="iso-ir-90"/>
+			<xs:enumeration value="iso-unicode-ibm-1261"/>
+			<xs:enumeration value="iso-unicode-ibm-1264"/>
+			<xs:enumeration value="iso-unicode-ibm-1265"/>
+			<xs:enumeration value="iso-unicode-ibm-1268"/>
+			<xs:enumeration value="iso-unicode-ibm-1276"/>
+			<xs:enumeration value="it"/>
+			<xs:enumeration value="jis-c6220-1969-jp"/>
+			<xs:enumeration value="jis-c6220-1969-ro"/>
+			<xs:enumeration value="jis-c6226-1978"/>
+			<xs:enumeration value="jis-c6226-1983"/>
+			<xs:enumeration value="jis-c6229-1984-a"/>
+			<xs:enumeration value="jis-c6229-1984-b"/>
+			<xs:enumeration value="jis-c6229-1984-b-add"/>
+			<xs:enumeration value="jis-c6229-1984-hand"/>
+			<xs:enumeration value="jis-c6229-1984-hand-add"/>
+			<xs:enumeration value="jis-c6229-1984-kana"/>
+			<xs:enumeration value="jis-encoding"/>
+			<xs:enumeration value="jis-x0201"/>
+			<xs:enumeration value="jis-x0212-1990"/>
+			<xs:enumeration value="jus-i-b1-002"/>
+			<xs:enumeration value="jus-i-b1-003-mac"/>
+			<xs:enumeration value="jus-i-b1-003-serb"/>
+			<xs:enumeration value="koi8-r"/>
+			<xs:enumeration value="koi8-u"/>
+			<xs:enumeration value="ks-c-5601-1987"/>
+			<xs:enumeration value="ksc5636"/>
+			<xs:enumeration value="latin-greek"/>
+			<xs:enumeration value="latin-greek-1"/>
+			<xs:enumeration value="latin-lap"/>
+			<xs:enumeration value="macintosh"/>
+			<xs:enumeration value="microsoft-publishing"/>
+			<xs:enumeration value="mnem"/>
+			<xs:enumeration value="mnemonic"/>
+			<xs:enumeration value="msz-7795-3"/>
+			<xs:enumeration value="nats-dano"/>
+			<xs:enumeration value="nats-dano-add"/>
+			<xs:enumeration value="nats-sefi"/>
+			<xs:enumeration value="nats-sefi-add"/>
+			<xs:enumeration value="nc-nc00-10-81"/>
+			<xs:enumeration value="nf-z-62-010"/>
+			<xs:enumeration value="nf-z-62-010--1973-"/>
+			<xs:enumeration value="ns-4551-1"/>
+			<xs:enumeration value="ns-4551-2"/>
+			<xs:enumeration value="pc8-danish-norwegian"/>
+			<xs:enumeration value="pc8-turkish"/>
+			<xs:enumeration value="pt"/>
+			<xs:enumeration value="pt2"/>
+			<xs:enumeration value="ptcp154"/>
+			<xs:enumeration value="scsu"/>
+			<xs:enumeration value="sen-850200-b"/>
+			<xs:enumeration value="sen-850200-c"/>
+			<xs:enumeration value="shift-jis"/>
+			<xs:enumeration value="t-101-g2"/>
+			<xs:enumeration value="t-61-7bit"/>
+			<xs:enumeration value="t-61-8bit"/>
+			<xs:enumeration value="tis-620"/>
+			<xs:enumeration value="unicode-1-1"/>
+			<xs:enumeration value="unicode-1-1-utf-7"/>
+			<xs:enumeration value="unknown-8bit"/>
+			<xs:enumeration value="us-ascii"/>
+			<xs:enumeration value="us-dk"/>
+			<xs:enumeration value="utf-16"/>
+			<xs:enumeration value="utf-16be"/>
+			<xs:enumeration value="utf-16le"/>
+			<xs:enumeration value="utf-32"/>
+			<xs:enumeration value="utf-32be"/>
+			<xs:enumeration value="utf-32le"/>
+			<xs:enumeration value="utf-7"/>
+			<xs:enumeration value="utf-8"/>
+			<xs:enumeration value="ventura-international"/>
+			<xs:enumeration value="ventura-math"/>
+			<xs:enumeration value="ventura-us"/>
+			<xs:enumeration value="videotex-suppl"/>
+			<xs:enumeration value="viqr"/>
+			<xs:enumeration value="viscii"/>
+			<xs:enumeration value="windows-1250"/>
+			<xs:enumeration value="windows-1251"/>
+			<xs:enumeration value="windows-1252"/>
+			<xs:enumeration value="windows-1253"/>
+			<xs:enumeration value="windows-1254"/>
+			<xs:enumeration value="windows-1255"/>
+			<xs:enumeration value="windows-1256"/>
+			<xs:enumeration value="windows-1257"/>
+			<xs:enumeration value="windows-1258"/>
+			<xs:enumeration value="windows-31j"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ClientRoleWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Proxy"/>
+			<xs:enumeration value="User"/>
+			<xs:enumeration value="Vendor"/>
+		</xs:restriction>
+		<!-- client type (function of this client object) -->
+	</xs:simpleType>
+	<xs:simpleType name="ColorEntryWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="BlackAndWhite1"/>
+			<xs:enumeration value="Grayscale4"/>
+			<xs:enumeration value="Grayscale8"/>
+			<xs:enumeration value="Grayscale16"/>
+			<xs:enumeration value="RGB24"/>
+			<xs:enumeration value="RGB48"/>
+			<xs:enumeration value="RGBa32"/>
+			<xs:enumeration value="RGBa64"/>
+			<xs:enumeration value="CMYK32"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ColorSpaceWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="RGB"/>
+			<xs:enumeration value="sRGB"/>
+			<xs:enumeration value="scRGB"/>
+			<xs:enumeration value="CMY"/>
+			<xs:enumeration value="CMYK"/>
+			<xs:enumeration value="YCC"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!-- Color is Not part of official PWG Model Yet (See IPP Everywhere) 
+	<xs:simpleType name="ColorWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Auto"/>
+			<xs:enumeration value="BiLeval"/>
+			<xs:enumeration value="Color "/>
+			<xs:enumeration value="Highlight"/>
+			<xs:enumeration value="Monochrome"/>
+			<xs:enumeration value="ProcessBiLevel"/>
+			<xs:enumeration value="ProcessMonochrome"/>
+		</xs:restriction>
+	</xs:simpleType>
+-->
+	<xs:simpleType name="ColorantWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="Red"/>
+			<xs:enumeration value="Green"/>
+			<xs:enumeration value="Blue"/>
+			<xs:enumeration value="Cyan"/>
+			<xs:enumeration value="Magenta"/>
+			<xs:enumeration value="Yellow"/>
+			<xs:enumeration value="Black"/>
+			<xs:enumeration value="Orange"/>
+			<xs:enumeration value="White"/>
+		</xs:restriction>
+		<!-- console light color -->
+		<!-- see PrtConsoleColorTC in [RFC3805] -->
+	</xs:simpleType>
+	<xs:simpleType name="ComponetNameWKVs">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Console"/>
+			<xs:enumeration value="Finisher"/>
+			<xs:enumeration value="InputChannel"/>
+			<xs:enumeration value="InputTray"/>
+			<xs:enumeration value="Interface"/>
+			<xs:enumeration value="Interpreter"/>
+			<xs:enumeration value="Marker"/>
+			<xs:enumeration value="MediaPath"/>
+			<xs:enumeration value="OutputChannel"/>
+			<xs:enumeration value="OutputTray"/>
+			<xs:enumeration value="ScanMediaPath"/>
+			<xs:enumeration value="Scanner"/>
+			<xs:enumeration value="VendorSubunit"/>
+			<xs:enumeration value="CopyService"/>
+			<xs:enumeration value="EmailInService"/>
+			<xs:enumeration value="EmailOutService"/>
+			<xs:enumeration value="FaxInService"/>
+			<xs:enumeration value="FaxOutService"/>
+			<xs:enumeration value="NetFaxInService"/>
+			<xs:enumeration value="NetFaxOutService"/>
+			<xs:enumeration value="PrintService"/>
+			<xs:enumeration value="ScanService"/>
+			<xs:enumeration value="ResourceService"/>
+			<xs:enumeration value="TransformService"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CompressionWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Compress"/>
+			<xs:enumeration value="Deflate"/>
+			<xs:enumeration value="Gzip"/>
+			<xs:enumeration value="ModifiedHuffman"/>
+			<xs:enumeration value="ModifiedRead"/>
+			<xs:enumeration value="MatsushitaWhitelineSkip"/>
+			<xs:enumeration value="None"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ConnectionFailReasonWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="ManagementCommand"/>
+			<xs:enumeration value="InactivityTimeout"/>
+			<xs:enumeration value="MnpIncompatibility"/>
+			<xs:enumeration value="ProtocolError"/>
+			<xs:enumeration value="PowerLoss"/>
+			<xs:enumeration value="EquipmentFailure"/>
+			<xs:enumeration value="DtrDrop"/>
+			<xs:enumeration value="NoDialTone"/>
+			<xs:enumeration value="LineBusy"/>
+			<xs:enumeration value="NoAnswer"/>
+			<xs:enumeration value="VoiceDetected"/>
+			<xs:enumeration value="CarrierLost"/>
+			<xs:enumeration value="TrainingFailed"/>
+			<xs:enumeration value="FaxDetected"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ConsoleLightColorWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="White"/>
+			<xs:enumeration value="Red"/>
+			<xs:enumeration value="Green"/>
+			<xs:enumeration value="Blue"/>
+			<xs:enumeration value="Cyan"/>
+			<xs:enumeration value="Magenta"/>
+			<xs:enumeration value="Yellow"/>
+			<xs:enumeration value="Orange"/>
+		</xs:restriction>
+		<!-- console light color -->
+		<!-- see PrtConsoleColorTC in [RFC3805] -->
+	</xs:simpleType>
+	<xs:simpleType name="ContentRegionUnitWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="TenThousandthsOfInches"/>
+			<xs:enumeration value="Micrometers"/>
+			<xs:enumeration value="Pixels"/>
+			<xs:enumeration value="Percent"/>
+		</xs:restriction>
+		<!-- marker supply capacity/level unit -->
+		<!-- see PrtMarkerSuppliesSupplyUnitTC in [RFC3805] -->
+	</xs:simpleType>
+	<xs:simpleType name="ContentTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Auto"/>
+			<xs:enumeration value="Text"/>
+			<xs:enumeration value="Photo"/>
+			<xs:enumeration value="TextAndPhoto"/>
+			<xs:enumeration value="LineArt"/>
+			<xs:enumeration value="Magazine"/>
+			<xs:enumeration value="Halftone"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CoverSubunitTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Cover"/>
+			<xs:enumeration value="Interlock"/>
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CoverTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="NoCover"/>
+			<xs:enumeration value="PrintBack"/>
+			<xs:enumeration value="PrintBoth"/>
+			<xs:enumeration value="PrintFront"/>
+			<xs:enumeration value="PrintNone"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CoverColMemberWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="ColType"/>
+			<xs:enumeration value="Media"/>
+			<xs:enumeration value="MediaCol"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CurrentPageOrderWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="1ToNOrder"/>
+			<xs:enumeration value="NTo1Order"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DeviceRoleWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Client"/>
+			<xs:enumeration value="Server"/>
+			<xs:enumeration value="Authentication"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DeviceTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Copy"/>
+			<xs:enumeration value="Email"/>
+			<xs:enumeration value="Fax"/>
+			<xs:enumeration value="NetFax"/>
+			<xs:enumeration value="Print"/>
+			<xs:enumeration value="Scan"/>
+			<xs:enumeration value="Transform"/>
+			<xs:enumeration value="Vendor"/>
+		</xs:restriction>
+		<!-- WIMS device type (function of this device object) -->
+		<!-- see WIMS Object Model - section 4 [WIMS-PRO] -->
+	</xs:simpleType>
+	<xs:simpleType name="DeviceTypesWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="PC"/>
+			<xs:enumeration value="Tablet"/>
+			<xs:enumeration value="Server"/>
+		</xs:restriction>
+		<!-- WIMS device type (function of this device object) -->
+		<!-- see WIMS Object Model - section 4 [WIMS-PRO] -->
+	</xs:simpleType>
+	<xs:simpleType name="DialingMethodWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Pulse"/>
+			<xs:enumeration value="Tone"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DocumentDigitalSignatureWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Dss"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="Pgp"/>
+			<xs:enumeration value="Smime"/>
+			<xs:enumeration value="Xdsig"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DocumentFormatWKV">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="application/octet-stream"/>
+			<xs:enumeration value="application/pdf"/>
+			<xs:enumeration value="application/postscript"/>
+			<xs:enumeration value="application/vnd.pwg-xhtml-print+xml"/>
+			<xs:enumeration value="application/vnd.hp-PCL"/>
+			<xs:enumeration value="image/g3fax"/>
+			<xs:enumeration value="image/jpeg"/>
+			<xs:enumeration value="image/pwg-raster"/>
+			<xs:enumeration value="image/tiff"/>
+			<xs:enumeration value="image/tiff-fx"/>
+			<xs:enumeration value="text/html"/>
+			<xs:enumeration value="text/plain"/>
+			<xs:enumeration value="text/plain; charset=ISO-8859-1"/>
+			<xs:enumeration value="text/plain; charset=US-ASCII"/>
+			<xs:enumeration value="text/plain; charset=utf-8"/>
+			<xs:enumeration value="unknown"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DocumentOutputModeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="SingleDocumentSingleFile"/>
+			<xs:enumeration value="SingleDocumentMultipleFile"/>
+			<xs:enumeration value="MultipleDocumentSingleFile"/>
+			<xs:enumeration value="MultipleDocumentMultipleFile"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DocumentStateWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Aborted"/>
+			<xs:enumeration value="Canceled"/>
+			<xs:enumeration value="Completed"/>
+			<xs:enumeration value="Pending"/>
+			<xs:enumeration value="Processing"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DocumentStateReasonsWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="AbortedBySystem"/>
+			<xs:enumeration value="CanceledAtDevice"/>
+			<xs:enumeration value="CanceledByOperator"/>
+			<xs:enumeration value="CanceledByUser"/>
+			<xs:enumeration value="CompletedSuccessfully"/>
+			<xs:enumeration value="CompletedWithErrors"/>
+			<xs:enumeration value="CompletedWithWarnings"/>
+			<xs:enumeration value="CompressionError"/>
+			<xs:enumeration value="DocumentAccessError"/>
+			<xs:enumeration value="DocumentFormatError"/>
+			<xs:enumeration value="DocumentPasswordError"/>
+			<xs:enumeration value="DocumentPermissionError"/>
+			<xs:enumeration value="DocumentSecurityError"/>
+			<xs:enumeration value="DocumentUnprintableError"/>
+			<xs:enumeration value="Incoming"/>
+			<xs:enumeration value="Interpreting"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="Outgoing"/>
+			<xs:enumeration value="PrinterStopped"/>
+			<xs:enumeration value="PrinterStoppedPartly"/>
+			<xs:enumeration value="Printing"/>
+			<xs:enumeration value="ProcessingToStopPoint"/>
+			<xs:enumeration value="ProofPrintWait"/>
+			<xs:enumeration value="Queued"/>
+			<xs:enumeration value="QueuedForMarker"/>
+			<xs:enumeration value="QueuedInDevice"/>
+			<xs:enumeration value="ResourcesAreNotReady"/>
+			<xs:enumeration value="ResourcesAreNotSupported"/>
+			<xs:enumeration value="Scanning"/>
+			<xs:enumeration value="Spooling"/>
+			<xs:enumeration value="Streaming"/>
+			<xs:enumeration value="SubmissionInterupted"/>
+			<xs:enumeration value="Transforming"/>
+			<xs:enumeration value="UnsupportedCompression"/>
+			<xs:enumeration value="UnsupportedDocumentFormat"/>
+			<xs:enumeration value="WarningsDetected"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="DTESynchWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="internal"/>
+			<xs:enumeration value="external"/>
+			<xs:enumeration value="loopback"/>
+			<xs:enumeration value="network"/>
+		</xs:restriction>
+		<!-- Line Capability -->
+		<!-- see mdmLineCapabilities in [RFC1696] -->
+	</xs:simpleType>
+	<xs:simpleType name="DTESynchModeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="async"/>
+			<xs:enumeration value="sync"/>
+			<xs:enumeration value="syncAfterDial"/>
+		</xs:restriction>
+		<!-- Line Capability -->
+		<!-- see mdmLineCapabilities in [RFC1696] -->
+	</xs:simpleType>
+	<xs:simpleType name="DTRToOffWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="ignore"/>
+			<xs:enumeration value="enableDial"/>
+			<xs:enumeration value="autoAnswerEnable"/>
+			<xs:enumeration value="establishConnection"/>
+		</xs:restriction>
+		<!-- Line Capability -->
+		<!-- see mdmLineCapabilities in [RFC1696] -->
+	</xs:simpleType>
+	<xs:simpleType name="DTRToOnWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="ignore"/>
+			<xs:enumeration value="escapeToCommandMode"/>
+			<xs:enumeration value="disconnectCall"/>
+			<xs:enumeration value="resetModem"/>
+		</xs:restriction>
+		<!-- Line Capability -->
+		<!-- see mdmLineCapabilities in [RFC1696] -->
+	</xs:simpleType>
+	<xs:simpleType name="ErrorControlWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="origrqst-0"/>
+			<xs:enumeration value="origrqst-1"/>
+			<xs:enumeration value="origrqst-2"/>
+			<xs:enumeration value="origrqst-3"/>
+			<xs:enumeration value="origrqst-4"/>
+			<xs:enumeration value="origrqst-6"/>
+			<xs:enumeration value="origrqst-7"/>
+			<xs:enumeration value="origfbk-0"/>
+			<xs:enumeration value="origfbk-1"/>
+			<xs:enumeration value="origfbk-2"/>
+			<xs:enumeration value="origfbk-3"/>
+			<xs:enumeration value="origfbk-4"/>
+			<xs:enumeration value="ansfbk-0"/>
+			<xs:enumeration value="ansfbk-1"/>
+			<xs:enumeration value="ansfbk-2"/>
+			<xs:enumeration value="ansfbk-3"/>
+			<xs:enumeration value="ansfbk-4"/>
+			<xs:enumeration value="ansfbk-5"/>
+			<xs:enumeration value="ansfbk-6"/>
+			<xs:enumeration value="ansfbk-8"/>
+			<xs:enumeration value="ansfbk-9"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ExecutableResourceTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Firmware"/>
+			<xs:enumeration value="Software"/>
+		</xs:restriction>
+		<!-- service type (function of this service object) -->
+		<!-- see WIMS Object Model - section 4 [WIMS-PRO] -->
+	</xs:simpleType>
+	<xs:simpleType name="FaxQualityWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Fine"/>
+			<xs:enumeration value="Normal"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FeatureWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="DocumentObject"/>
+			<xs:enumeration value="JobSave"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="PageOverrides"/>
+			<xs:enumeration value="ProofPrint"/>
+			<xs:enumeration value="SubscriptionObject"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FeedOrientationWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="LongEdgeFirst"/>
+			<xs:enumeration value="ShortEdgeFirst"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FilmScanModeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="NotApplicable"/>
+			<xs:enumeration value="ColorSlideFilm"/>
+			<xs:enumeration value="ColorNegativeFilm"/>
+			<xs:enumeration value="BlackandWhiteNegativeFilm"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FinisherTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="Stitcher"/>
+			<xs:enumeration value="Folder"/>
+			<xs:enumeration value="Binder"/>
+			<xs:enumeration value="Trimmer"/>
+			<xs:enumeration value="DieCutter"/>
+			<xs:enumeration value="Puncher"/>
+			<xs:enumeration value="Perforater"/>
+			<xs:enumeration value="Slitter"/>
+			<xs:enumeration value="SeparationCutter"/>
+			<xs:enumeration value="Imprinter"/>
+			<xs:enumeration value="Wrapper"/>
+			<xs:enumeration value="Bander"/>
+			<xs:enumeration value="MakeEnvelope"/>
+			<xs:enumeration value="Stacker"/>
+			<xs:enumeration value="SheetRotator"/>
+			<xs:enumeration value="Inserter"/>
+		</xs:restriction>
+		<!-- finisher type -->
+		<!-- see FinDeviceTypeTC in [RFC3806] and [IANA-FIN] -->
+	</xs:simpleType>
+	<xs:simpleType name="FinishingsWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Bale"/>
+			<xs:enumeration value="Bind"/>
+			<xs:enumeration value="BindBottom"/>
+			<xs:enumeration value="BindLeft"/>
+			<xs:enumeration value="BindRight"/>
+			<xs:enumeration value="BindTop"/>
+			<xs:enumeration value="BookletMaker"/>
+			<xs:enumeration value="Cover"/>
+			<xs:enumeration value="EdgeStitch"/>
+			<xs:enumeration value="EdgeStitchBottom"/>
+			<xs:enumeration value="EdgeStitchLeft"/>
+			<xs:enumeration value="EdgeStichRight"/>
+			<xs:enumeration value="EdgeStitchTop"/>
+			<xs:enumeration value="Fold"/>
+			<xs:enumeration value="JogOffset"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="Punch"/>
+			<xs:enumeration value="SaddleStitch"/>
+			<xs:enumeration value="Staple"/>
+			<xs:enumeration value="StapleBottomLeft"/>
+			<xs:enumeration value="StapleBottomRight"/>
+			<xs:enumeration value="StapleDualBottom"/>
+			<xs:enumeration value="StapleDualLeft"/>
+			<xs:enumeration value="StapleDualRight"/>
+			<xs:enumeration value="StapleDualTop"/>
+			<xs:enumeration value="StapleTopLeft"/>
+			<xs:enumeration value="StapleTopRight"/>
+			<xs:enumeration value="Trim"/>
+			<xs:enumeration value="TrimAfterCopies"/>
+			<xs:enumeration value="TrimAfterDocuments"/>
+			<xs:enumeration value="TrimAfterJob"/>
+			<xs:enumeration value="TrimAfterPages"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FinishingsColMemberWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="FinishingTemplate"/>
+			<xs:enumeration value="Stitching"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HeaderPrintWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Inside"/>
+			<xs:enumeration value="Outside"/>
+			<xs:enumeration value="NoPrint"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="HoldUntilWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="DayTime"/>
+			<xs:enumeration value="Evening"/>
+			<xs:enumeration value="Indefinite"/>
+			<xs:enumeration value="Night"/>
+			<xs:enumeration value="NoHold"/>
+			<xs:enumeration value="SecondShift"/>
+			<xs:enumeration value="ThirdShift"/>
+			<xs:enumeration value="Weekend"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="IdentifyActionWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Display"/>
+			<xs:enumeration value="Flash"/>
+			<xs:enumeration value="Print"/>
+			<xs:enumeration value="Sound"/>
+			<xs:enumeration value="Speak"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImageCroppingPolicyWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Crop"/>
+			<xs:enumeration value="StretchIsomorphicMax"/>
+			<xs:enumeration value="StretchIsomorphicMin"/>
+			<xs:enumeration value="StretchNonIsomorphic"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ImpositionWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="Signature"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="InputChannelTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="SerialPort"/>
+			<xs:enumeration value="ParallelPort"/>
+			<xs:enumeration value="IEEE1284Port"/>
+			<xs:enumeration value="SCSIPort"/>
+			<xs:enumeration value="AppleTalkPAP"/>
+			<xs:enumeration value="LPDServer"/>
+			<xs:enumeration value="NetwareRPrinter"/>
+			<xs:enumeration value="NetwarePServer"/>
+			<xs:enumeration value="Port9100"/>
+			<xs:enumeration value="AppSocket"/>
+			<xs:enumeration value="FTP"/>
+			<xs:enumeration value="TFTP"/>
+			<xs:enumeration value="DLCLLCPort"/>
+			<xs:enumeration value="IBM3270"/>
+			<xs:enumeration value="IBM5250"/>
+			<xs:enumeration value="Fax"/>
+			<xs:enumeration value="IEEE1394"/>
+			<xs:enumeration value="Transport1"/>
+			<xs:enumeration value="CPAP"/>
+			<xs:enumeration value="DCERemoteProcCall"/>
+			<xs:enumeration value="ONCRemoteProcCall"/>
+			<xs:enumeration value="OLE"/>
+			<xs:enumeration value="NamedPipe"/>
+			<xs:enumeration value="PCPrint"/>
+			<xs:enumeration value="ServerMessageBlock"/>
+			<xs:enumeration value="DPMF"/>
+			<xs:enumeration value="DLLAPI"/>
+			<xs:enumeration value="VxDAPI"/>
+			<xs:enumeration value="SystemObjectManager"/>
+			<xs:enumeration value="DECLAT"/>
+			<xs:enumeration value="NPAP"/>
+			<xs:enumeration value="USB"/>
+			<xs:enumeration value="IRDA"/>
+			<xs:enumeration value="PrintXChange"/>
+			<xs:enumeration value="PortTCP"/>
+			<xs:enumeration value="BidirPortTCP"/>
+			<xs:enumeration value="UNPP"/>
+			<xs:enumeration value="AppleTalkADSP"/>
+			<xs:enumeration value="PortSPX"/>
+			<xs:enumeration value="PortHTTP"/>
+			<xs:enumeration value="NDPS"/>
+			<xs:enumeration value="IPP"/>
+			<xs:enumeration value="SMTP"/>
+		</xs:restriction>
+		<!-- input channel type (protocol) -->
+		<!-- see PrtChannelTypeTC in [RFC3805] and [IANA-PRT] -->
+	</xs:simpleType>
+	<xs:simpleType name="InputSourceWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="ADF"/>
+			<xs:enumeration value="FilmReader"/>
+			<xs:enumeration value="Platen"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="InputTrayTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="SheetFeedAutoRemovableTray"/>
+			<xs:enumeration value="SheetFeedAutoNonRemovableTray"/>
+			<xs:enumeration value="SheetFeedManual"/>
+			<xs:enumeration value="ContinuousRoll"/>
+			<xs:enumeration value="ContinuousFanFold"/>
+		</xs:restriction>
+		<!-- input tray type -->
+		<!-- see PrtInputTypeTC in [RFC3805] and [IANA-PRT] -->
+	</xs:simpleType>
+	<xs:simpleType name="InterfaceAdminStateWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Up"/>
+			<xs:enumeration value="Down"/>
+			<xs:enumeration value="Testing"/>
+		</xs:restriction>
+		<!-- interface admin state (desired) -->
+		<!-- see ifAdminStatus in [RFC2863] -->
+	</xs:simpleType>
+	<xs:simpleType name="InterfaceOperStateWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Up"/>
+			<xs:enumeration value="Down"/>
+			<xs:enumeration value="Testing"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="Dormant"/>
+			<xs:enumeration value="NotPresent"/>
+			<xs:enumeration value="LowerLayerDown"/>
+		</xs:restriction>
+		<!-- interface operational state (current) -->
+		<!-- see ifOperStatus in [RFC2863] -->
+	</xs:simpleType>
+	<xs:simpleType name="InterpreterLanguageFamilyWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="LangPCL"/>
+			<xs:enumeration value="LangHPGL"/>
+			<xs:enumeration value="LangPJL"/>
+			<xs:enumeration value="LangPS"/>
+			<xs:enumeration value="LangIPDS"/>
+			<xs:enumeration value="LangPPDS"/>
+			<xs:enumeration value="LangEscapeP"/>
+			<xs:enumeration value="LangEpson"/>
+			<xs:enumeration value="LangDDIF"/>
+			<xs:enumeration value="LangInterpress"/>
+			<xs:enumeration value="LangISO6429"/>
+			<xs:enumeration value="LangLineData"/>
+			<xs:enumeration value="LangMODCA"/>
+			<xs:enumeration value="LangREGIS"/>
+			<xs:enumeration value="LangSCS"/>
+			<xs:enumeration value="LangSPDL"/>
+			<xs:enumeration value="LangTEK4014"/>
+			<xs:enumeration value="LangPDS"/>
+			<xs:enumeration value="LangIGP"/>
+			<xs:enumeration value="LangCodeV"/>
+			<xs:enumeration value="LangDSCDSE"/>
+			<xs:enumeration value="LangWPS"/>
+			<xs:enumeration value="LangLN03"/>
+			<xs:enumeration value="LangCCITT"/>
+			<xs:enumeration value="LangQUIC"/>
+			<xs:enumeration value="LangCPAP"/>
+			<xs:enumeration value="LangDecPPL"/>
+			<xs:enumeration value="LangSimpleText"/>
+			<xs:enumeration value="LangNPAP"/>
+			<xs:enumeration value="LangDOC"/>
+			<xs:enumeration value="LangimPress"/>
+			<xs:enumeration value="LangPinwriter"/>
+			<xs:enumeration value="LangNPDL"/>
+			<xs:enumeration value="LangNEC201PL"/>
+			<xs:enumeration value="LangAutomatic"/>
+			<xs:enumeration value="LangPages"/>
+			<xs:enumeration value="LangLIPS"/>
+			<xs:enumeration value="LangTIFF"/>
+			<xs:enumeration value="LangDiagnostic"/>
+			<xs:enumeration value="LangPSPrinter"/>
+			<xs:enumeration value="LangCaPSL"/>
+			<xs:enumeration value="LangEXCL"/>
+			<xs:enumeration value="LangLCDS"/>
+			<xs:enumeration value="LangXES"/>
+			<xs:enumeration value="LangPCLXL"/>
+			<xs:enumeration value="LangART"/>
+			<xs:enumeration value="LangTIPSI"/>
+			<xs:enumeration value="LangPrescribe"/>
+			<xs:enumeration value="LangLinePrinter"/>
+			<xs:enumeration value="LangIDP"/>
+			<xs:enumeration value="LangXJCL"/>
+			<xs:enumeration value="LangPDF"/>
+			<xs:enumeration value="LangRPDL"/>
+			<xs:enumeration value="LangIntermecIPL"/>
+			<xs:enumeration value="LangUBIFingerprint"/>
+			<xs:enumeration value="LangUBIDirectProtocol"/>
+			<xs:enumeration value="LangFujitsu"/>
+			<xs:enumeration value="LangCGM"/>
+			<xs:enumeration value="LangJPEG"/>
+			<xs:enumeration value="LangCALS1"/>
+			<xs:enumeration value="LangCALS2"/>
+			<xs:enumeration value="LangNIRS"/>
+			<xs:enumeration value="LangC4"/>
+		</xs:restriction>
+		<!-- interpeter PDL lanaguage family -->
+		<!-- see PrtInterpreterLangFamilyTC in [RFC3805] and [IANA-PRT] -->
+	</xs:simpleType>
+	<xs:simpleType name="InterpreterPageOrientationWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="Portrait"/>
+			<xs:enumeration value="Landscape"/>
+		</xs:restriction>
+		<!-- interpreter page orientation default (portrait or landscape) -->
+		<!-- see PrtPrintOrientationTC in [RFC3805] -->
+	</xs:simpleType>
+	<xs:simpleType name="ItuStandardWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="bell103"/>
+			<xs:enumeration value="bell212"/>
+			<xs:enumeration value="v.17"/>
+			<xs:enumeration value="v.21"/>
+			<xs:enumeration value="v.22"/>
+			<xs:enumeration value="v.23"/>
+			<xs:enumeration value="v.27"/>
+			<xs:enumeration value="v.29"/>
+			<xs:enumeration value="v.32"/>
+			<xs:enumeration value="v.32bis"/>
+			<xs:enumeration value="v.34"/>
+			<xs:enumeration value="v.34bis"/>
+			<xs:enumeration value="k56flex"/>
+			<xs:enumeration value="v.90"/>
+			<xs:enumeration value="v.92downstream"/>
+			<xs:enumeration value="v.92upstream"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JobAccountingOutputBinWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Bottom"/>
+			<xs:enumeration value="Center"/>
+			<xs:enumeration value="FaceDown"/>
+			<xs:enumeration value="FaceUp"/>
+			<xs:enumeration value="LargeCapacity"/>
+			<xs:enumeration value="Left"/>
+			<xs:enumeration value="Middle"/>
+			<xs:enumeration value="MyMailbox"/>
+			<xs:enumeration value="Rear"/>
+			<xs:enumeration value="Right"/>
+			<xs:enumeration value="Side"/>
+			<xs:enumeration value="Top"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JobAccountingSheetTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="Standard"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JobCollationTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="CollatedDocuments"/>
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="UncollatedDocuments"/>
+			<xs:enumeration value="UncollatedSheets"/>
+			<xs:enumeration value="Unknown"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JobErrorActionWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="AborJob"/>
+			<xs:enumeration value="CancelJob"/>
+			<xs:enumeration value="ContinueJob"/>
+			<xs:enumeration value="SuspendJob"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JobErrorSheetMemberWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="JobErrorSheetType"/>
+			<xs:enumeration value="JobErrorSheetWhen"/>
+			<xs:enumeration value="Media"/>
+			<xs:enumeration value="MediaCol"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JobErrorSheetTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="Standard"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JobErrorSheetWhenWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Always"/>
+			<xs:enumeration value="OnError"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JobPasswordEncryptionWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="AES"/>
+			<xs:enumeration value="ECC"/>
+			<xs:enumeration value="Md2"/>
+			<xs:enumeration value="Md4"/>
+			<xs:enumeration value="Md5"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="Sha"/>
+			<xs:enumeration value="TripleDES"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JobSheetsMemberWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="JobSheets"/>
+			<xs:enumeration value="Media"/>
+			<xs:enumeration value="MediaCol"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JobSheetsWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="BothSheets"/>
+			<xs:enumeration value="EndSheet"/>
+			<xs:enumeration value="FirstPrintStreamPage"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="Standard"/>
+			<xs:enumeration value="StartSheet"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JobSpoolingWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Automatic"/>
+			<xs:enumeration value="Spool"/>
+			<xs:enumeration value="Stream"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JobStateWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Aborted"/>
+			<xs:enumeration value="Canceled"/>
+			<xs:enumeration value="Completed"/>
+			<xs:enumeration value="Pending"/>
+			<xs:enumeration value="PendingHeld"/>
+			<xs:enumeration value="Processing"/>
+			<xs:enumeration value="ProcessingStopped"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="JobStateReasonsWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="AbortedBySystem"/>
+			<xs:enumeration value="CompressionError"/>
+			<xs:enumeration value="DigitalSignatureDidNotVerify"/>
+			<xs:enumeration value="DigitalSignatureTypeNotSupported"/>
+			<xs:enumeration value="DocumentAccessError"/>
+			<xs:enumeration value="DocumentFormatError"/>
+			<xs:enumeration value="DocumentPasswordError"/>
+			<xs:enumeration value="DocumentPermissionError"/>
+			<xs:enumeration value="DocumentSecurityError"/>
+			<xs:enumeration value="DocumentUnprintableError"/>
+			<xs:enumeration value="ErrorsDetected"/>
+			<xs:enumeration value="InvalidScanTicket"/>
+			<xs:enumeration value="ImageTransferError"/>
+			<xs:enumeration value="JobCanceledAtDevice"/>
+			<xs:enumeration value="JobCanceledByOperator"/>
+			<xs:enumeration value="JobCanceledByUser"/>
+			<xs:enumeration value="JobCompletedSuccessfully"/>
+			<xs:enumeration value="JobCompletedWithErrors"/>
+			<xs:enumeration value="JobCompletedWithWarnings"/>
+			<xs:enumeration value="JobDataInsufficient"/>
+			<xs:enumeration value="JobDigitalSignatureWait"/>
+			<xs:enumeration value="JobDelaySpecified"/>
+			<xs:enumeration value="JobHeldByService"/>
+			<xs:enumeration value="JobHoldUntilSpecified"/>
+			<xs:enumeration value="JobIncoming"/>
+			<xs:enumeration value="JobInterpreting"/>
+			<xs:enumeration value="JobOutgoing"/>
+			<xs:enumeration value="JobPasswordWait"/>
+			<xs:enumeration value="JobPrinting"/>
+			<xs:enumeration value="JobQueued"/>
+			<xs:enumeration value="JobQueueForMarker"/>
+			<xs:enumeration value="JobRestartable"/>
+			<xs:enumeration value="JobResuming"/>
+			<xs:enumeration value="JobSavedSuccessfully"/>
+			<xs:enumeration value="JobSavedError"/>
+			<xs:enumeration value="JobSaving"/>
+			<xs:enumeration value="JobScanning"/>
+			<xs:enumeration value="JobScanningAndTransferring"/>
+			<xs:enumeration value="JobScheduling"/>
+			<xs:enumeration value="JobSpooling"/>
+			<xs:enumeration value="JobStreaming"/>
+			<xs:enumeration value="JobSuspended"/>
+			<xs:enumeration value="JobSuspendedByOperator"/>
+			<xs:enumeration value="JobSuspendedBySystem"/>
+			<xs:enumeration value="JobSuspendedByUser"/>
+			<xs:enumeration value="JobSuspending"/>
+			<xs:enumeration value="JobTimedOut"/>
+			<xs:enumeration value="JobTransferring "/>
+			<xs:enumeration value="JobTransforming"/>
+			<xs:enumeration value="JobWarningsDetected"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="PrinterStopped"/>
+			<xs:enumeration value="PrinterStoppedPartly"/>
+			<xs:enumeration value="ProcessingToStopPoint"/>
+			<xs:enumeration value="ProofPrintWait"/>
+			<xs:enumeration value="QueuedInDevice"/>
+			<xs:enumeration value="ResourcesAreNotReady"/>
+			<xs:enumeration value="ResourcesAreNotSupported"/>
+			<xs:enumeration value="ScannerStopped"/>
+			<xs:enumeration value="ServiceOffLine"/>
+			<xs:enumeration value="Stopped"/>
+			<xs:enumeration value="SubmissionInterupted"/>
+			<xs:enumeration value="UnsupportedCompression"/>
+			<xs:enumeration value="UnsupportedDocumentFormat"/>
+			<xs:enumeration value="WarningsDetected"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="LineCapabilityWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="ITUV21"/>
+			<xs:enumeration value="ITUV22"/>
+			<xs:enumeration value="ITUV22bis"/>
+			<xs:enumeration value="ITUV23CC"/>
+			<xs:enumeration value="ITUV23SC"/>
+			<xs:enumeration value="ITUV25bis"/>
+			<xs:enumeration value="ITUV26bis"/>
+			<xs:enumeration value="ITUV26ter"/>
+			<xs:enumeration value="ITUV27ter"/>
+			<xs:enumeration value="ITUV32"/>
+			<xs:enumeration value="ITUV32bis"/>
+			<xs:enumeration value="ITUV32terbo"/>
+			<xs:enumeration value="ITUVFC"/>
+			<xs:enumeration value="ITUV34"/>
+			<xs:enumeration value="ITUV42"/>
+			<xs:enumeration value="ITUV42bis"/>
+			<xs:enumeration value="MNP1"/>
+			<xs:enumeration value="MNP2"/>
+			<xs:enumeration value="MNP3"/>
+			<xs:enumeration value="MNP4"/>
+			<xs:enumeration value="MNP5"/>
+			<xs:enumeration value="MNP6"/>
+			<xs:enumeration value="MNP7"/>
+			<xs:enumeration value="MNP8"/>
+			<xs:enumeration value="MNP9"/>
+			<xs:enumeration value="MNP10"/>
+			<xs:enumeration value="ITUV29"/>
+			<xs:enumeration value="ITUV33"/>
+			<xs:enumeration value="Bell208"/>
+		</xs:restriction>
+		<!-- Line Capability -->
+		<!-- see mdmLineCapabilities in [RFC1696] -->
+	</xs:simpleType>
+	<xs:simpleType name="MarkerColorantRoleWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="Process"/>
+			<xs:enumeration value="Spot"/>
+		</xs:restriction>
+		<!-- marker colorant role (process, spot, etc.) -->
+		<!-- see PrtMarkerColorantRoleTC in [RFC3805] -->
+	</xs:simpleType>
+	<xs:simpleType name="MarkerSupplyCapacityUnitWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="TenThousandthsOfInches"/>
+			<xs:enumeration value="Micrometers"/>
+			<xs:enumeration value="Impressions"/>
+			<xs:enumeration value="Sheets"/>
+			<xs:enumeration value="Hours"/>
+			<xs:enumeration value="ThousandthsOfOunces"/>
+			<xs:enumeration value="TenthsOfGrams"/>
+			<xs:enumeration value="HundrethsOfFluidOunces"/>
+			<xs:enumeration value="TenthsOfMilliliters"/>
+			<xs:enumeration value="Feet"/>
+			<xs:enumeration value="Meters"/>
+			<xs:enumeration value="Items"/>
+			<xs:enumeration value="Percent"/>
+		</xs:restriction>
+		<!-- marker supply capacity/level unit -->
+		<!-- see PrtMarkerSuppliesSupplyUnitTC in [RFC3805] -->
+	</xs:simpleType>
+	<xs:simpleType name="MarkerSupplyClassWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="SupplyThatIsConsumed"/>
+			<xs:enumeration value="ReceptacleThatIsFilled"/>
+		</xs:restriction>
+		<!-- marker supply class -->
+		<!-- see PrtMarkerSuppliesClassTC in [RFC3805] -->
+	</xs:simpleType>
+	<xs:simpleType name="MarkerSupplyTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="Toner"/>
+			<xs:enumeration value="WasteToner"/>
+			<xs:enumeration value="Ink"/>
+			<xs:enumeration value="InkCartridge"/>
+			<xs:enumeration value="InkRibbon"/>
+			<xs:enumeration value="WasteInk"/>
+			<xs:enumeration value="Opc"/>
+			<xs:enumeration value="Developer"/>
+			<xs:enumeration value="FuserOil"/>
+			<xs:enumeration value="SolidWax"/>
+			<xs:enumeration value="RibbonWax"/>
+			<xs:enumeration value="WasteWax"/>
+			<xs:enumeration value="Fuser"/>
+			<xs:enumeration value="CoronaWire"/>
+			<xs:enumeration value="FuserOilWick"/>
+			<xs:enumeration value="CleanerUnit"/>
+			<xs:enumeration value="FuserCleaningPad"/>
+			<xs:enumeration value="TransferUnit"/>
+			<xs:enumeration value="TonerCartridge"/>
+			<xs:enumeration value="FuserOiler"/>
+			<xs:enumeration value="Water"/>
+			<xs:enumeration value="WasteWater"/>
+			<xs:enumeration value="GlueWaterAdditive"/>
+			<xs:enumeration value="WastePaper"/>
+			<xs:enumeration value="BindingSupply"/>
+			<xs:enumeration value="BandingSupply"/>
+			<xs:enumeration value="StitchingWire"/>
+			<xs:enumeration value="ShrinkWrap"/>
+			<xs:enumeration value="PaperWrap"/>
+			<xs:enumeration value="Staples"/>
+			<xs:enumeration value="Inserts"/>
+			<xs:enumeration value="Covers"/>
+		</xs:restriction>
+		<!-- marker supply type -->
+		<!-- see PrtMarkerSuppliesTypeTC in [RFC3805] and [IANA-PRT] -->
+	</xs:simpleType>
+	<xs:simpleType name="MarkerTechnologyWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="ElectrophotographicLED"/>
+			<xs:enumeration value="ElectrophotographicLaser"/>
+			<xs:enumeration value="ElectrophotographicOther"/>
+			<xs:enumeration value="ImpactMovingHeadDotMatrix9Pin"/>
+			<xs:enumeration value="ImpactMovingHeadDotMatrix24Pin"/>
+			<xs:enumeration value="ImpactMovingHeadDotMatrixOther"/>
+			<xs:enumeration value="ImpactMovingHeadFullyFormed"/>
+			<xs:enumeration value="ImpactBand"/>
+			<xs:enumeration value="ImpactOther"/>
+			<xs:enumeration value="InkjetAqueous"/>
+			<xs:enumeration value="InkjetSolid"/>
+			<xs:enumeration value="InkjetOther"/>
+			<xs:enumeration value="Pen"/>
+			<xs:enumeration value="ThermalTransfer"/>
+			<xs:enumeration value="ThermalSensitive"/>
+			<xs:enumeration value="ThermalDiffusion"/>
+			<xs:enumeration value="ThermalOther"/>
+			<xs:enumeration value="Electroerosion"/>
+			<xs:enumeration value="Electrostatic"/>
+			<xs:enumeration value="PhotographicMicrofiche"/>
+			<xs:enumeration value="PhotographicImagesetter"/>
+			<xs:enumeration value="PhotographicOther"/>
+			<xs:enumeration value="IonDeposition"/>
+			<xs:enumeration value="EBeam"/>
+			<xs:enumeration value="Typesetter"/>
+		</xs:restriction>
+		<!-- marking technology for this marker subunit -->
+		<!-- see PrtMarkerMarkTechTC in [RFC3805] and [IANA-PRT] -->
+	</xs:simpleType>
+	<xs:simpleType name="MediaPathMaxSpeedUnitWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="TenThousandthsOfInchesPerHour"/>
+			<xs:enumeration value="MicrometersPerHour"/>
+			<xs:enumeration value="CharactersPerHour"/>
+			<xs:enumeration value="LinesPerHour"/>
+			<xs:enumeration value="ImpressionsPerHour"/>
+			<xs:enumeration value="SheetsPerHour"/>
+			<xs:enumeration value="DotRowPerHour"/>
+			<xs:enumeration value="FeetPerHour"/>
+			<xs:enumeration value="MetersPerHour"/>
+		</xs:restriction>
+		<!-- media path maximum speed unit -->
+		<!-- see PrtMediaPathMaxSpeedPrintUnitTC in [RFC3805] -->
+	</xs:simpleType>
+	<xs:simpleType name="MediaPathTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="LongEdgeBindingDuplex"/>
+			<xs:enumeration value="ShortEdgeBindingDuplex"/>
+			<xs:enumeration value="Simplex"/>
+		</xs:restriction>
+		<!-- media path type -->
+		<!-- see PrtMediaPathTypeTC in [RFC3805] and [IANA-PRT] -->
+	</xs:simpleType>
+	<xs:simpleType name="ModulationWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="PhaseShiftKeying"/>
+			<xs:enumeration value="QuadratureAmplitudeModulation"/>
+			<xs:enumeration value="TrellisModulation"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MultipleDocumentsHandlingWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="SeparateDocumentsCollatedCopies"/>
+			<xs:enumeration value="SeparateDocumentsUncollatedCopies"/>
+			<xs:enumeration value="SingleDocument"/>
+			<xs:enumeration value="SingleDocumentNewSheet"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MultipleOperationTimeoutActionWKV">
+		<xs:annotation>
+			<xs:documentation>JPS3</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Abort"/>
+			<xs:enumeration value="Hold"/>
+			<xs:enumeration value="Process"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="NaturalLanguageWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="63"/>
+			<xs:enumeration value="ar"/>
+			<xs:enumeration value="de"/>
+			<xs:enumeration value="en"/>
+			<xs:enumeration value="en-us"/>
+			<xs:enumeration value="es"/>
+			<xs:enumeration value="fr"/>
+			<xs:enumeration value="hi"/>
+			<xs:enumeration value="it"/>
+			<xs:enumeration value="ja"/>
+			<xs:enumeration value="pt"/>
+			<xs:enumeration value="zh"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OperationsSupportedLegacyIppWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="ActivatePrinter"/>
+			<xs:enumeration value="CancelCurrentJob"/>
+			<xs:enumeration value="CancelDocument"/>
+			<xs:enumeration value="CancelJob"/>
+			<xs:enumeration value="CreateJob"/>
+			<xs:enumeration value="DeactivatePrinter"/>
+			<xs:enumeration value="DeleteDocument"/>
+			<xs:enumeration value="DisablePrinter"/>
+			<xs:enumeration value="EnablePrinter"/>
+			<xs:enumeration value="GetDocumentElements"/>
+			<xs:enumeration value="GetDocuments"/>
+			<xs:enumeration value="GetJobElements"/>
+			<xs:enumeration value="GetJobs"/>
+			<xs:enumeration value="GetPrinterElements"/>
+			<xs:enumeration value="GetPrinterSettableElementValues"/>
+			<xs:enumeration value="HoldJob"/>
+			<xs:enumeration value="HoldNewJobs"/>
+			<xs:enumeration value="IdentifyPrinter"/>
+			<xs:enumeration value="PausePrinter"/>
+			<xs:enumeration value="PausePrinterAfterCurrentJob"/>
+			<xs:enumeration value="PrintJob"/>
+			<xs:enumeration value="PrintUri"/>
+			<xs:enumeration value="PromoteJob"/>
+			<xs:enumeration value="PurgeJobs"/>
+			<xs:enumeration value="ReleaseHeldNewJobs"/>
+			<xs:enumeration value="RestartPrinter"/>
+			<xs:enumeration value="ResumePrinter"/>
+			<xs:enumeration value="SendDocument"/>
+			<xs:enumeration value="SendUri"/>
+			<xs:enumeration value="ReleaseJob"/>
+			<xs:enumeration value="ReprocessJob"/>
+			<xs:enumeration value="RestartJob"/>
+			<xs:enumeration value="ResumeJob"/>
+			<xs:enumeration value="ScheduleJobAfter"/>
+			<xs:enumeration value="SetDocumentElements"/>
+			<xs:enumeration value="SetJobElements"/>
+			<xs:enumeration value="SetPrinterElements"/>
+			<xs:enumeration value="ShutdownPrinter"/>
+			<xs:enumeration value="StartupPrinter"/>
+			<xs:enumeration value="SuspendCurrentJob"/>
+			<xs:enumeration value="ValidateDocument"/>
+			<xs:enumeration value="ValidateJob"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OperationsSupportedWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="AddFaxOutHardcopyDocument"/>
+			<xs:enumeration value="CancelCurrentCopyJob"/>
+			<xs:enumeration value="CancelCurrentFaxInJob"/>
+			<xs:enumeration value="CancelCurrentFaxOutJob"/>
+			<xs:enumeration value="CancelCurrentPrintJob"/>
+			<xs:enumeration value="CancelCurrentScanJob"/>
+			<xs:enumeration value="CancelFaxInDocument"/>
+			<xs:enumeration value="CancelFaxOutDocument"/>
+			<xs:enumeration value="CancelPrintDocument"/>
+			<xs:enumeration value="CancelScanDocument"/>
+			<xs:enumeration value="CancelCopyJob"/>
+			<xs:enumeration value="CancelFaxInJob"/>
+			<xs:enumeration value="CancelFaxOutJob"/>
+			<xs:enumeration value="CancelPrintJob"/>
+			<xs:enumeration value="CancelScanJob"/>
+			<xs:enumeration value="CancelCopyJobs"/>
+			<xs:enumeration value="CancelFaxInJobs"/>
+			<xs:enumeration value="CancelFaxOutJobs"/>
+			<xs:enumeration value="CancelPrintJobs"/>
+			<xs:enumeration value="CancelScanJobs"/>
+			<xs:enumeration value="CancelMyCopyJobs"/>
+			<xs:enumeration value="CancelMyFaxInJobs"/>
+			<xs:enumeration value="CancelMyFaxOutJobs"/>
+			<xs:enumeration value="CancelMyPrintJobs"/>
+			<xs:enumeration value="CancelMyScanJobs"/>
+			<xs:enumeration value="CreateCopyJob"/>
+			<xs:enumeration value="CreateFaxInJob"/>
+			<xs:enumeration value="CreateFaxOutJob"/>
+			<xs:enumeration value="CreatePrintJob"/>
+			<xs:enumeration value="CreateScanJob"/>
+			<xs:enumeration value="DeleteFaxInDocument"/>
+			<xs:enumeration value="DeleteFaxOutDocument"/>
+			<xs:enumeration value="DeletePrintDocument"/>
+			<xs:enumeration value="DeleteResource"/>
+			<xs:enumeration value="DeleteScanDocument"/>
+			<xs:enumeration value="DeleteService"/>
+			<xs:enumeration value="DisableAllServices"/>
+			<xs:enumeration value="DisableCopyService"/>
+			<xs:enumeration value="DisableFaxInService"/>
+			<xs:enumeration value="DisableFaxOutService"/>
+			<xs:enumeration value="DisablePrintService"/>
+			<xs:enumeration value="DisableScanService"/>
+			<xs:enumeration value="DisableResourceService"/>
+			<xs:enumeration value="EnableAllServices"/>
+			<xs:enumeration value="EnableCopyService"/>
+			<xs:enumeration value="EnableFaxInService"/>
+			<xs:enumeration value="EnableFaxOutService"/>
+			<xs:enumeration value="EnablePrintService"/>
+			<xs:enumeration value="EnableScanService"/>
+			<xs:enumeration value="EnableResourceService"/>
+			<xs:enumeration value="GetFaxInDocumentElements"/>
+			<xs:enumeration value="GetFaxOutDocumentElements"/>
+			<xs:enumeration value="GetPrintDocumentElements"/>
+			<xs:enumeration value="GetScanDocumentElements"/>
+			<xs:enumeration value="GetFaxInDocuments"/>
+			<xs:enumeration value="GetFaxOutDocuments"/>
+			<xs:enumeration value="GetPrintDocuments"/>
+			<xs:enumeration value="GetScanDocuments"/>
+			<xs:enumeration value="GetCopyJobElements"/>
+			<xs:enumeration value="GetFaxInJobElements"/>
+			<xs:enumeration value="GetFaxOutJobElements"/>
+			<xs:enumeration value="GetPrintJobElements"/>
+			<xs:enumeration value="GetScanJobElements"/>
+			<xs:enumeration value="GetActiveCopyJobs"/>
+			<xs:enumeration value="GetActiveFaxInJobs"/>
+			<xs:enumeration value="GetActiveFaxOutJobs"/>
+			<xs:enumeration value="GetActivePrintJobs"/>
+			<xs:enumeration value="GetActiveScanJobs"/>
+			<xs:enumeration value="GetCopyJobHistory"/>
+			<xs:enumeration value="GetFaxInJobHistory"/>
+			<xs:enumeration value="GetFaxOutJobHistory"/>
+			<xs:enumeration value="GetPrintJobHistory"/>
+			<xs:enumeration value="GetScanJobHistory"/>
+			<xs:enumeration value="GetCopyServiceElements"/>
+			<xs:enumeration value="GetFaxInServiceElements"/>
+			<xs:enumeration value="GetFaxOutServiceElements"/>
+			<xs:enumeration value="GetPrintServiceElements"/>
+			<xs:enumeration value="GetScanServiceElements"/>
+			<xs:enumeration value="GetResourceElements"/>
+			<xs:enumeration value="GetResourceServiceElements"/>
+			<xs:enumeration value="GetSystemElements"/>
+			<xs:enumeration value="HoldCopyJob"/>
+			<xs:enumeration value="HoldFaxInJob"/>
+			<xs:enumeration value="HoldFaxOutJob"/>
+			<xs:enumeration value="HoldPrintJob"/>
+			<xs:enumeration value="HoldScanJob"/>
+			<xs:enumeration value="HoldNewCopyJobs"/>
+			<xs:enumeration value="HoldNewFaxInJobs"/>
+			<xs:enumeration value="HoldNewFaxOutJobs"/>
+			<xs:enumeration value="HoldNewPrintJobs"/>
+			<xs:enumeration value="HoldNewScanJobs"/>
+			<xs:enumeration value="ListResources"/>
+			<xs:enumeration value="ListServices"/>
+			<xs:enumeration value="PauseCopyService"/>
+			<xs:enumeration value="PauseFaxInService"/>
+			<xs:enumeration value="PauseFaxOutService"/>
+			<xs:enumeration value="PausePrintService"/>
+			<xs:enumeration value="PauseScanService"/>
+			<xs:enumeration value="PauseResourceService"/>
+			<xs:enumeration value="PauseCopyServiceAfterCurrentJob"/>
+			<xs:enumeration value="PauseFaxInServiceAfterCurrentJob"/>
+			<xs:enumeration value="PauseFaxOutServiceAfterCurrentJob"/>
+			<xs:enumeration value="PausePrintServiceAfterCurrentJob"/>
+			<xs:enumeration value="PauseScanServiceAfterCurrentJob"/>
+			<xs:enumeration value="Power"/>
+			<xs:enumeration value="PromoteCopyJob"/>
+			<xs:enumeration value="PromoteFaxInJob"/>
+			<xs:enumeration value="PromoteFaxOutJob"/>
+			<xs:enumeration value="PromotePrintJob"/>
+			<xs:enumeration value="PromoteScanJob"/>
+			<xs:enumeration value="ReleaseCopyJob"/>
+			<xs:enumeration value="ReleaseFaxInJob"/>
+			<xs:enumeration value="ReleaseFaxOutJob"/>
+			<xs:enumeration value="ReleasePrintJob"/>
+			<xs:enumeration value="ReleaseScanJob"/>
+			<xs:enumeration value="ReleaseHeldNewCopyJobs"/>
+			<xs:enumeration value="ReleaseHeldNewFaxInJobs"/>
+			<xs:enumeration value="ReleaseHeldNewFaxOutJobs"/>
+			<xs:enumeration value="ReleaseHeldNewPrintJobs"/>
+			<xs:enumeration value="ReleaseHeldNewScanJobs"/>
+			<xs:enumeration value="RenewResource"/>
+			<xs:enumeration value="ReplaceResource"/>
+			<xs:enumeration value="RestartAllServices"/>
+			<xs:enumeration value="RestartCopyService"/>
+			<xs:enumeration value="RestartFaxInService"/>
+			<xs:enumeration value="RestartFaxOutService"/>
+			<xs:enumeration value="RestartPrintService"/>
+			<xs:enumeration value="RestartResourceService"/>
+			<xs:enumeration value="RestartScanService"/>
+			<xs:enumeration value="RestartService"/>
+			<xs:enumeration value="RestartSystemService"/>
+			<xs:enumeration value="ResubmitCopyJob"/>
+			<xs:enumeration value="ResubmitFaxInJob"/>
+			<xs:enumeration value="ResubmitFaxOutJob"/>
+			<xs:enumeration value="ResubmitPrintJob"/>
+			<xs:enumeration value="ResubmitScanJob"/>
+			<xs:enumeration value="ResumeCopyJob"/>
+			<xs:enumeration value="ResumeFaxInJob"/>
+			<xs:enumeration value="ResumeFaxOutJob"/>
+			<xs:enumeration value="ResumePrintJob"/>
+			<xs:enumeration value="ResumeScanJob"/>
+			<xs:enumeration value="ResumeAllServices"/>
+			<xs:enumeration value="ResumeCopyService"/>
+			<xs:enumeration value="ResumeFaxInService"/>
+			<xs:enumeration value="ResumeFaxOutService"/>
+			<xs:enumeration value="ResumePrintService"/>
+			<xs:enumeration value="ResumeScanService"/>
+			<xs:enumeration value="ResumeResourceService"/>
+			<xs:enumeration value="RetrieveResource"/>
+			<xs:enumeration value="SendFaxOutDocument"/>
+			<xs:enumeration value="SendPrintDocument"/>
+			<xs:enumeration value="SendFaxOutUri"/>
+			<xs:enumeration value="SendPrintUri"/>
+			<xs:enumeration value="SetFaxInDocumentElements"/>
+			<xs:enumeration value="SetFaxOutDocumentElements"/>
+			<xs:enumeration value="SetPrintDocumentElements"/>
+			<xs:enumeration value="SetScanDocumentElements"/>
+			<xs:enumeration value="SetCopyJobElements"/>
+			<xs:enumeration value="SetFaxInJobElements"/>
+			<xs:enumeration value="SetFaxOutJobElements"/>
+			<xs:enumeration value="SetPrintJobElements"/>
+			<xs:enumeration value="SetScanJobElements"/>
+			<xs:enumeration value="SetCopyServiceElements"/>
+			<xs:enumeration value="SetFaxInServiceElements"/>
+			<xs:enumeration value="SetFaxOutServiceElements"/>
+			<xs:enumeration value="SetPrintServiceElements"/>
+			<xs:enumeration value="SetResourceElements"/>
+			<xs:enumeration value="SetSystemElements"/>
+			<xs:enumeration value="SetScanServiceElements"/>
+			<xs:enumeration value="ShutdownAllServices"/>
+			<xs:enumeration value="ShutdownCopyService"/>
+			<xs:enumeration value="ShutdownFaxInService"/>
+			<xs:enumeration value="ShutdownFaxOutService"/>
+			<xs:enumeration value="ShutdownPrintService"/>
+			<xs:enumeration value="ShutdownResourceService"/>
+			<xs:enumeration value="ShutdownScanService"/>
+			<xs:enumeration value="ShutdownService"/>
+			<xs:enumeration value="StartupAllServices"/>
+			<xs:enumeration value="StartupCopyService"/>
+			<xs:enumeration value="StartupFaxInService"/>
+			<xs:enumeration value="StartupFaxOutService"/>
+			<xs:enumeration value="StartupPrintService"/>
+			<xs:enumeration value="StartupResourceService"/>
+			<xs:enumeration value="StartupScanService"/>
+			<xs:enumeration value="StartupService"/>
+			<xs:enumeration value="StoreResource"/>
+			<xs:enumeration value="SuspendCurrentCopyJob"/>
+			<xs:enumeration value="SuspendCurrentFaxInJob"/>
+			<xs:enumeration value="SuspendCurrentFaxOutJob"/>
+			<xs:enumeration value="SuspendCurrentPrintJob"/>
+			<xs:enumeration value="SuspendCurrentScanJob"/>
+			<xs:enumeration value="ValidateFaxInDocumentTicket"/>
+			<xs:enumeration value="ValidateFaxOutDocumentTicket"/>
+			<xs:enumeration value="ValidatePrintDocumentTicket"/>
+			<xs:enumeration value="ValidateScanDocumentTicket"/>
+			<xs:enumeration value="ValidateCopyJobTicket"/>
+			<xs:enumeration value="ValidateFaxInJobTicket"/>
+			<xs:enumeration value="ValidateFaxOutJobTicket"/>
+			<xs:enumeration value="ValidatePrintJobTicket"/>
+			<xs:enumeration value="ValidateScanJobTicket"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ObjectAccessModeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="OwnerRead"/>
+			<xs:enumeration value="OwnerWrite"/>
+			<xs:enumeration value="OwnerExecute"/>
+			<xs:enumeration value="GroupRead"/>
+			<xs:enumeration value="GroupWrite"/>
+			<xs:enumeration value="GroupExecute"/>
+			<xs:enumeration value="WorldRead"/>
+			<xs:enumeration value="WorldWrite"/>
+			<xs:enumeration value="WorldExecute"/>
+			<!-- S_IRUSR bit in POSIX mask -->
+			<!-- S_IWUSR bit in POSIX mask -->
+			<!-- S_IXUSR bit in POSIX mask -->
+			<!-- S_IRGRP bit in POSIX mask -->
+			<!-- S_IWGRP bit in POSIX mask -->
+			<!-- S_IXGRP bit in POSIX mask -->
+			<!-- S_IROTH bit in POSIX mask -->
+			<!-- S_IWOTH bit in POSIX mask -->
+			<!-- S_IXOTH bit in POSIX mask -->
+		</xs:restriction>
+		<!-- access permissions for this object -->
+		<!-- see 'chmod' - POSIX System Interfaces [ISO9945]-->
+		<!-- see 'sys/stat.h' - POSIX System Interfaces [ISO9945]-->
+	</xs:simpleType>
+	<xs:simpleType name="ObjectDataCompressionWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="Deflate"/>
+			<xs:enumeration value="Gzip"/>
+			<xs:enumeration value="Compress"/>
+			<!-- ZIP - [RFC1951] -->
+			<!-- GNU ZIP - [RFC1952] -->
+			<!-- UNIX - [RFC1977] -->
+		</xs:restriction>
+		<!-- data compression (if any) of data/messages for this object -->
+		<!-- see IPP compression-supported - section 4.4.32 [RFC2911] -->
+	</xs:simpleType>
+	<xs:simpleType name="ObjectPersistenceWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Job"/>
+			<xs:enumeration value="Volatile"/>
+			<xs:enumeration value="NonVolatile"/>
+			<xs:enumeration value="Permanent"/>
+			<xs:enumeration value="ReadOnly"/>
+			<!-- no specified object persistence -->
+			<!-- any other object persistence mode -->
+			<!-- see 'other' - section 2 [RFC2579] -->
+			<!-- job-specific object persistence -->
+			<!-- (object is deleted after job lifetime expires) -->
+			<!-- volatile object persistence (for example, in RAM only) -->
+			<!-- (object is lost during restart or power cycle) -->
+			<!-- see 'volatile' - section 2 [RFC2579] -->
+			<!-- non-volatile object persistence (for example, in NVRAM) -->
+			<!-- (object is backed up by stable storage) -->
+			<!-- see 'nonVolatile' - section 2 [RFC2579] -->
+			<!-- permanent object persistence (for example, in EEPROM) -->
+			<!-- (object can be changed but cannot be deleted) -->
+			<!-- see 'permanent' - section 2 [RFC2579] -->
+			<!-- read-only object persistence (for example, in ROM) -->
+			<!-- (object cannot be changed and cannot be deleted) -->
+			<!-- see 'readOnly' - section 2 [RFC2579] -->
+		</xs:restriction>
+		<!-- persistence (life cycle) of this object -->
+		<!-- see 'StorageType' - section 2 [RFC2579] -->
+	</xs:simpleType>
+	<xs:simpleType name="ObjectStateWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="Idle"/>
+			<xs:enumeration value="Processing"/>
+			<xs:enumeration value="Stopped"/>
+			<xs:enumeration value="Testing"/>
+			<xs:enumeration value="Down"/>
+			<!-- object is in other state -->
+			<!-- object is in unknown state -->
+			<!-- object is idle (no active jobs) -->
+			<!-- object is currently processing (in one or more jobs) -->
+			<!-- object is currently stopped (in one or more jobs) -->
+			<!-- (human intervention is required) -->
+			<!-- object is testing (or in maintenance mode) -->
+			<!-- object is down (unavailable for jobs) -->
+		</xs:restriction>
+		<!-- object state -->
+		<!-- see printer-state - section 4.4.11 [RFC2911] -->
+		<!-- see hrDeviceStatus in [RFC2790] -->
+	</xs:simpleType>
+	<xs:simpleType name="OperatingSystemNameWKV">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="40"/>
+			<xs:enumeration value="aegis"/>
+			<xs:enumeration value="amiga-os-1.2"/>
+			<xs:enumeration value="amiga-os-1.3"/>
+			<xs:enumeration value="amiga-os-2.0"/>
+			<xs:enumeration value="amiga-os-2.1"/>
+			<xs:enumeration value="amiga-os-3.0"/>
+			<xs:enumeration value="amiga-os-3.1"/>
+			<xs:enumeration value="amiga-os-3.5"/>
+			<xs:enumeration value="amiga-os-3.9 "/>
+			<xs:enumeration value="apollo"/>
+			<xs:enumeration value="aix/370"/>
+			<xs:enumeration value="aix-ps/2"/>
+			<xs:enumeration value="beos-4.5.2"/>
+			<xs:enumeration value="beos-5.0"/>
+			<xs:enumeration value="bs-2000"/>
+			<xs:enumeration value="cedar"/>
+			<xs:enumeration value="cgw"/>
+			<xs:enumeration value="chorus"/>
+			<xs:enumeration value="chrysalis"/>
+			<xs:enumeration value="cmos"/>
+			<xs:enumeration value="cms"/>
+			<xs:enumeration value="cos"/>
+			<xs:enumeration value="cpix"/>
+			<xs:enumeration value="ctos"/>
+			<xs:enumeration value="ctss"/>
+			<xs:enumeration value="dcn"/>
+			<xs:enumeration value="ddnos"/>
+			<xs:enumeration value="domain"/>
+			<xs:enumeration value="dos"/>
+			<xs:enumeration value="edx"/>
+			<xs:enumeration value="elf"/>
+			<xs:enumeration value="embos"/>
+			<xs:enumeration value="emmos"/>
+			<xs:enumeration value="epos"/>
+			<xs:enumeration value="foonex"/>
+			<xs:enumeration value="freebsd"/>
+			<xs:enumeration value="forth"/>
+			<xs:enumeration value="fuzz"/>
+			<xs:enumeration value="gcos"/>
+			<xs:enumeration value="gpos"/>
+			<xs:enumeration value="hdos"/>
+			<xs:enumeration value="imagen"/>
+			<xs:enumeration value="instant-internet"/>
+			<xs:enumeration value="intercom"/>
+			<xs:enumeration value="impress"/>
+			<xs:enumeration value="interlisp"/>
+			<xs:enumeration value="ios"/>
+			<xs:enumeration value="irix"/>
+			<xs:enumeration value="isi-68020"/>
+			<xs:enumeration value="its"/>
+			<xs:enumeration value="kosos"/>
+			<xs:enumeration value="linux"/>
+			<xs:enumeration value="linux-1.0"/>
+			<xs:enumeration value="linux-1.2"/>
+			<xs:enumeration value="linux-2.0"/>
+			<xs:enumeration value="linux-2.2"/>
+			<xs:enumeration value="linux-2.4"/>
+			<xs:enumeration value="lisp"/>
+			<xs:enumeration value="lispm"/>
+			<xs:enumeration value="locus"/>
+			<xs:enumeration value="macos"/>
+			<xs:enumeration value="minos"/>
+			<xs:enumeration value="mos"/>
+			<xs:enumeration value="mpe5"/>
+			<xs:enumeration value="mpe/v"/>
+			<xs:enumeration value="mpe/ix"/>
+			<xs:enumeration value="msdos"/>
+			<xs:enumeration value="multics"/>
+			<xs:enumeration value="music"/>
+			<xs:enumeration value="music/sp"/>
+			<xs:enumeration value="mvs"/>
+			<xs:enumeration value="mvs/sp"/>
+			<xs:enumeration value="netbsd-1.0"/>
+			<xs:enumeration value="netbsd-1.1"/>
+			<xs:enumeration value="netbsd-1.2"/>
+			<xs:enumeration value="netbsd-1.3"/>
+			<xs:enumeration value="netware-3"/>
+			<xs:enumeration value="netware-3.11"/>
+			<xs:enumeration value="netware-4.0"/>
+			<xs:enumeration value="netware-4.1"/>
+			<xs:enumeration value="netware-5.0"/>
+			<xs:enumeration value="nexus"/>
+			<xs:enumeration value="nms"/>
+			<xs:enumeration value="nonstop"/>
+			<xs:enumeration value="nos-2"/>
+			<xs:enumeration value="ntos"/>
+			<xs:enumeration value="openbsd"/>
+			<xs:enumeration value="openvms"/>
+			<xs:enumeration value="os/ddp"/>
+			<xs:enumeration value="os/2"/>
+			<xs:enumeration value="os4"/>
+			<xs:enumeration value="os86"/>
+			<xs:enumeration value="osx"/>
+			<xs:enumeration value="pcdos"/>
+			<xs:enumeration value="perq/os"/>
+			<xs:enumeration value="pli"/>
+			<xs:enumeration value="psdos/mit"/>
+			<xs:enumeration value="psos"/>
+			<xs:enumeration value="primos"/>
+			<xs:enumeration value="risc-os"/>
+			<xs:enumeration value="risc-os-3.10"/>
+			<xs:enumeration value="risc-os-3.50"/>
+			<xs:enumeration value="risc-os-3.60"/>
+			<xs:enumeration value="risc-os-3.70"/>
+			<xs:enumeration value="risc-os-4.00"/>
+			<xs:enumeration value="rmx/rdos"/>
+			<xs:enumeration value="ros"/>
+			<xs:enumeration value="rsx11m"/>
+			<xs:enumeration value="rte-a"/>
+			<xs:enumeration value="satops"/>
+			<xs:enumeration value="sinix"/>
+			<xs:enumeration value="sco-open-desktop-1.0"/>
+			<xs:enumeration value="sco-open-desktop-1.1"/>
+			<xs:enumeration value="sco-open-desktop-2.0"/>
+			<xs:enumeration value="sco-open-desktop-3.0"/>
+			<xs:enumeration value="sco-open-desktop-lite-3.0"/>
+			<xs:enumeration value="sco-open-server-3.0"/>
+			<xs:enumeration value="sco-unix-3.2.0"/>
+			<xs:enumeration value="sco-unix-3.2v2.0"/>
+			<xs:enumeration value="sco-unix-3.2v2.1"/>
+			<xs:enumeration value="sco-unix-3.2v4.0"/>
+			<xs:enumeration value="sco-unix-3.2v4.1"/>
+			<xs:enumeration value="sco-unix-3.2v4.2"/>
+			<xs:enumeration value="sco-xenix-386-2.3.2"/>
+			<xs:enumeration value="sco-xenix-386-2.3.3"/>
+			<xs:enumeration value="sco-xenix-386-2.3.4"/>
+			<xs:enumeration value="scs"/>
+			<xs:enumeration value="simp"/>
+			<xs:enumeration value="sun"/>
+			<xs:enumeration value="sun-os-3.5"/>
+			<xs:enumeration value="sun-os-4.0"/>
+			<xs:enumeration value="swift"/>
+			<xs:enumeration value="tac"/>
+			<xs:enumeration value="tandem"/>
+			<xs:enumeration value="tenex"/>
+			<xs:enumeration value="the-major-bbs"/>
+			<xs:enumeration value="tops10"/>
+			<xs:enumeration value="tops20"/>
+			<xs:enumeration value="tos"/>
+			<xs:enumeration value="tp3010"/>
+			<xs:enumeration value="trsdos"/>
+			<xs:enumeration value="ultrix"/>
+			<xs:enumeration value="unix"/>
+			<xs:enumeration value="unix-bsd"/>
+			<xs:enumeration value="unix-v1at"/>
+			<xs:enumeration value="unix-v"/>
+			<xs:enumeration value="unix-v.1"/>
+			<xs:enumeration value="unix-v.2"/>
+			<xs:enumeration value="unix-v.3"/>
+			<xs:enumeration value="unix-pc"/>
+			<xs:enumeration value="unknown"/>
+			<xs:enumeration value="ut2d"/>
+			<xs:enumeration value="v"/>
+			<xs:enumeration value="vm"/>
+			<xs:enumeration value="vm/370"/>
+			<xs:enumeration value="vm/cms"/>
+			<xs:enumeration value="vm/sp"/>
+			<xs:enumeration value="vms"/>
+			<xs:enumeration value="vms/eunice"/>
+			<xs:enumeration value="vrtx"/>
+			<xs:enumeration value="waits"/>
+			<xs:enumeration value="wang"/>
+			<xs:enumeration value="win32"/>
+			<xs:enumeration value="windows-95"/>
+			<xs:enumeration value="windows-95-osr1"/>
+			<xs:enumeration value="windows-95-osr2"/>
+			<xs:enumeration value="windows-98"/>
+			<xs:enumeration value="windows-ce"/>
+			<xs:enumeration value="windows-nt"/>
+			<xs:enumeration value="windows-nt-2"/>
+			<xs:enumeration value="windows-nt-3"/>
+			<xs:enumeration value="windows-nt-3.5"/>
+			<xs:enumeration value="windows-nt-3.51"/>
+			<xs:enumeration value="windows-nt-4"/>
+			<xs:enumeration value="windows-nt-5"/>
+			<xs:enumeration value="worldgroup"/>
+			<xs:enumeration value="wyse-wyxware"/>
+			<xs:enumeration value="x11r3"/>
+			<xs:enumeration value="xde"/>
+			<xs:enumeration value="xenix"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OperationModeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Add"/>
+			<xs:enumeration value="Modify"/>
+			<xs:enumeration value="Delete"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OrientationRequestedWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Landscape"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="Portrait"/>
+			<xs:enumeration value="ReverseLandscape"/>
+			<xs:enumeration value="ReversePortrait"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OutputBinWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Bottom"/>
+			<xs:enumeration value="Center"/>
+			<xs:enumeration value="FaceDown"/>
+			<xs:enumeration value="FaceUp"/>
+			<xs:enumeration value="LargeCapacity"/>
+			<xs:enumeration value="Left"/>
+			<xs:enumeration value="Middle"/>
+			<xs:enumeration value="MyMailbox"/>
+			<xs:enumeration value="Rear"/>
+			<xs:enumeration value="Right"/>
+			<xs:enumeration value="Side"/>
+			<xs:enumeration value="Top"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="OutputChannelTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="SerialPort"/>
+			<xs:enumeration value="ParallelPort"/>
+			<xs:enumeration value="IEEE1284Port"/>
+			<xs:enumeration value="SCSIPort"/>
+			<xs:enumeration value="FTP"/>
+			<xs:enumeration value="TFTP"/>
+			<xs:enumeration value="IEEE1394"/>
+			<xs:enumeration value="DCERemoteProcCall"/>
+			<xs:enumeration value="ONCRemoteProcCall"/>
+			<xs:enumeration value="OLE"/>
+			<xs:enumeration value="NamedPipe"/>
+			<xs:enumeration value="ServerMessageBlock"/>
+			<xs:enumeration value="DLLAPI"/>
+			<xs:enumeration value="VxDAPI"/>
+			<xs:enumeration value="SystemObjectManager"/>
+			<xs:enumeration value="DECLAT"/>
+			<xs:enumeration value="USB"/>
+			<xs:enumeration value="IRDA"/>
+			<xs:enumeration value="PortTCP"/>
+			<xs:enumeration value="BidirPortTCP"/>
+			<xs:enumeration value="PortHTTP"/>
+		</xs:restriction>
+		<!-- input channel type (protocol) -->
+		<!-- see PrtChannelTypeTC in [RFC3805] and [IANA-PRT] -->
+	</xs:simpleType>
+	<xs:simpleType name="OutputTrayPageDeliveryOrientationWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="FaceUp"/>
+			<xs:enumeration value="FaceDown"/>
+		</xs:restriction>
+		<!-- output tray page delivery orientation (face up, etc.) -->
+		<!-- see PrtOutputPageDeliveryOrientationTC in [RFC3805] -->
+	</xs:simpleType>
+	<xs:simpleType name="OutputTrayStackingOrderWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="FirstToLast"/>
+			<xs:enumeration value="LastToFirst"/>
+		</xs:restriction>
+		<!-- output tray stacking order (first to last, etc.) -->
+		<!-- see PrtOutputStackingOrderTC in [RFC3805] -->
+	</xs:simpleType>
+	<xs:simpleType name="OutputTrayTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="RemovableBin"/>
+			<xs:enumeration value="UnremovableBin"/>
+			<xs:enumeration value="ContinuousRollDevice"/>
+			<xs:enumeration value="MailBox"/>
+			<xs:enumeration value="ContinuousFanFold"/>
+		</xs:restriction>
+		<!-- output tray type -->
+		<!-- see PrtOutputTypeTC in [RFC3805] and [IANA-PRT] -->
+	</xs:simpleType>
+	<xs:simpleType name="PersistanceWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Lifetime"/>
+			<xs:enumeration value="PowerOn"/>
+			<xs:enumeration value="Reset"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PageDeliveryWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="ReverseOrderFaceDown"/>
+			<xs:enumeration value="ReverseOrderFaceUp"/>
+			<xs:enumeration value="SameOrderFaceDown"/>
+			<xs:enumeration value="SameOrderFaceUp"/>
+			<xs:enumeration value="SystemSpecified"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PageOrderReceivedWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="1ToNOrder"/>
+			<xs:enumeration value="NTo1Order"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PdlOverrideSupportedWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Attempted"/>
+			<xs:enumeration value="Guaranteed"/>
+			<xs:enumeration value="NotAttempted"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PowerRequestStatusWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="InProgress"/>
+			<xs:enumeration value="Warning"/>
+			<xs:enumeration value="Error"/>
+			<xs:enumeration value="Success"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PowerStateWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="On"/>
+			<xs:enumeration value="OnVendor1"/>
+			<xs:enumeration value="OnVendor2"/>
+			<xs:enumeration value="OnVendor3"/>
+			<xs:enumeration value="OnVendor4"/>
+			<xs:enumeration value="OnVendor5"/>
+			<xs:enumeration value="Standby"/>
+			<xs:enumeration value="StandbyVendor1"/>
+			<xs:enumeration value="StandbyVendor2"/>
+			<xs:enumeration value="StandbyVendor3"/>
+			<xs:enumeration value="StandbyVendor4"/>
+			<xs:enumeration value="StandbyVendor5"/>
+			<xs:enumeration value="Suspend"/>
+			<xs:enumeration value="SuspendVendor1"/>
+			<xs:enumeration value="SuspendVendor2"/>
+			<xs:enumeration value="SuspendVendor3"/>
+			<xs:enumeration value="SuspendVendor4"/>
+			<xs:enumeration value="SuspendVendor5"/>
+			<xs:enumeration value="ResetSoft"/>
+			<xs:enumeration value="OffHard"/>
+			<xs:enumeration value="Hibernate"/>
+			<xs:enumeration value="HibernateVendor1"/>
+			<xs:enumeration value="HibernateVendor2"/>
+			<xs:enumeration value="HibernateVendor3"/>
+			<xs:enumeration value="HibernateVendor4"/>
+			<xs:enumeration value="HibernateVendor5"/>
+			<xs:enumeration value="OffSoft"/>
+			<xs:enumeration value="OffSoftVendor1"/>
+			<xs:enumeration value="OffSoftVendor2"/>
+			<xs:enumeration value="OffSoftVendor3"/>
+			<xs:enumeration value="OffSoftVendor4"/>
+			<xs:enumeration value="OffSoftVendor5"/>
+			<xs:enumeration value="ResetHard"/>
+			<xs:enumeration value="ResetMBR"/>
+			<xs:enumeration value="ResetNMI"/>
+			<xs:enumeration value="OffSoftGraceful"/>
+			<xs:enumeration value="OffHardGraceful"/>
+			<xs:enumeration value="ResetMBRGraceful"/>
+			<xs:enumeration value="ResetSoftGraceful"/>
+			<xs:enumeration value="ResetHardGraceful"/>
+			<xs:enumeration value="ResetINIT"/>
+			<xs:enumeration value="NotApplicable"/>
+			<xs:enumeration value="NoChange"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PresentationDirectionNumberUpWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="TobottomToleft"/>
+			<xs:enumeration value="TobottomToright"/>
+			<xs:enumeration value="ToleftTobottom"/>
+			<xs:enumeration value="ToleftTotop"/>
+			<xs:enumeration value="TorightTobottom"/>
+			<xs:enumeration value="TorightTotop"/>
+			<xs:enumeration value="TotopToleft"/>
+			<xs:enumeration value="TotopToright"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PrintColorModeWKV">
+		<xs:annotation>
+			<xs:documentation>JPS3</xs:documentation>
+		</xs:annotation>
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Auto"/>
+			<xs:enumeration value="BiLevel"/>
+			<xs:enumeration value="Color"/>
+			<xs:enumeration value="Highlight"/>
+			<xs:enumeration value="Monochrome"/>
+			<xs:enumeration value="ProcessBiLevel"/>
+			<xs:enumeration value="ProcessMonochrome"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PrintContentOptimizeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Auto"/>
+			<xs:enumeration value="Graphics"/>
+			<xs:enumeration value="Photo"/>
+			<xs:enumeration value="Text"/>
+			<xs:enumeration value="TextAndGraphics"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PrintQualityWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Draft"/>
+			<xs:enumeration value="High"/>
+			<xs:enumeration value="Normal"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PrintRenderingIntentWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Absolute"/>
+			<xs:enumeration value="Auto"/>
+			<xs:enumeration value="Perceptual"/>
+			<xs:enumeration value="Relative"/>
+			<xs:enumeration value="RelativeBpc"/>
+			<xs:enumeration value="Saturation"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PrinterStateWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Idle"/>
+			<xs:enumeration value="Processing"/>
+			<xs:enumeration value="Stopped"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PrinterStateReasonsWKVs">
+		<xs:restriction base="StateReasonsWKVs">
+			<xs:maxLength value="255"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PWGRasterDocumentSheetBackWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Flipped"/>
+			<xs:enumeration value="ManualTumble"/>
+			<xs:enumeration value="Normal"/>
+			<xs:enumeration value="Rotated"/>
+			<xs:enumeration value="TwoSidedLongEdge
+"/>
+			<xs:enumeration value="TwoSidedShortEdge"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PwgRasterDocumentTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="AdobeRgb_8"/>
+			<xs:enumeration value="AdobeRgb_16"/>
+			<xs:enumeration value="Black_1"/>
+			<xs:enumeration value="Black_8"/>
+			<xs:enumeration value="Black_16"/>
+			<xs:enumeration value="Cmyk_8"/>
+			<xs:enumeration value="Cmyk_16"/>
+			<xs:enumeration value="Device1_8"/>
+			<xs:enumeration value="Device1_16"/>
+			<xs:enumeration value="Device2_8"/>
+			<xs:enumeration value="Device2_16"/>
+			<xs:enumeration value="Device3_8"/>
+			<xs:enumeration value="Device3_16"/>
+			<xs:enumeration value="Device4_8"/>
+			<xs:enumeration value="Device4_16"/>
+			<xs:enumeration value="Device5_8"/>
+			<xs:enumeration value="Device5_16"/>
+			<xs:enumeration value="Device6_8"/>
+			<xs:enumeration value="Device6_16"/>
+			<xs:enumeration value="Device7_8"/>
+			<xs:enumeration value="Device7_16"/>
+			<xs:enumeration value="Device8_8"/>
+			<xs:enumeration value="Device8_16"/>
+			<xs:enumeration value="Device9_8"/>
+			<xs:enumeration value="Device9_16"/>
+			<xs:enumeration value="Device10_8"/>
+			<xs:enumeration value="Device10_16"/>
+			<xs:enumeration value="Device11_8"/>
+			<xs:enumeration value="Device11_16"/>
+			<xs:enumeration value="Device12_8"/>
+			<xs:enumeration value="Device12_16"/>
+			<xs:enumeration value="Device13_8"/>
+			<xs:enumeration value="Device13_16"/>
+			<xs:enumeration value="Device14_8"/>
+			<xs:enumeration value="Device14_16"/>
+			<xs:enumeration value="Device15_8"/>
+			<xs:enumeration value="Device15_16"/>
+			<xs:enumeration value="Rgb_8"/>
+			<xs:enumeration value="Rgb_16"/>
+			<xs:enumeration value="Sgray_1"/>
+			<xs:enumeration value="Sgray_8"/>
+			<xs:enumeration value="Sgray_16"/>
+			<xs:enumeration value="Srgb_8"/>
+			<xs:enumeration value="Srgb_16"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ReferenceUriSchemesWKV">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="ftp://"/>
+			<xs:enumeration value="http://"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ResourceCategoryWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Executable"/>
+			<xs:enumeration value="Static"/>
+			<xs:enumeration value="Template"/>
+			<xs:enumeration value="Other"/>
+		</xs:restriction>
+		<!-- service type (function of this service object) -->
+		<!-- see WIMS Object Model - section 4 [WIMS-PRO] -->
+	</xs:simpleType>
+	<xs:simpleType name="RotationWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="0"/>
+			<xs:enumeration value="90"/>
+			<xs:enumeration value="180"/>
+			<xs:enumeration value="270"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SaveDispositionWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="PrintSave"/>
+			<xs:enumeration value="SaveOnly"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ScanMediaPathTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="ADF"/>
+			<xs:enumeration value="FilmReader"/>
+			<xs:enumeration value="Platen"/>
+		</xs:restriction>
+		<!-- media path type -->
+		<!-- see PrtMediaPathTypeTC in [RFC3805] and [IANA-PRT] -->
+	</xs:simpleType>
+	<xs:simpleType name="SeparatorSheetsMemberWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Media"/>
+			<xs:enumeration value="MediaCol"/>
+			<xs:enumeration value="SeparatorSheetsType"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SeparatorSheetsTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="BothSheets"/>
+			<xs:enumeration value="EndSheet"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="SlipSheets"/>
+			<xs:enumeration value="StartSheet"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ServiceRoleWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Client"/>
+			<xs:enumeration value="Server"/>
+			<xs:enumeration value="Authentication"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ServiceTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Copy"/>
+			<xs:enumeration value="EmailIn"/>
+			<xs:enumeration value="EmailOut"/>
+			<xs:enumeration value="FaxIn"/>
+			<xs:enumeration value="FaxOut"/>
+			<xs:enumeration value="Print"/>
+			<xs:enumeration value="Resource"/>
+			<xs:enumeration value="Scan"/>
+			<xs:enumeration value="SystemControl"/>
+			<xs:enumeration value="Transform"/>
+			<xs:enumeration value="Vendor"/>
+		</xs:restriction>
+		<!-- service type (function of this service object) -->
+		<!-- see WIMS Object Model - section 4 [WIMS-PRO] -->
+	</xs:simpleType>
+	<xs:simpleType name="SheetCollateWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Collated"/>
+			<xs:enumeration value="Uncollated"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SidesWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="OneSided"/>
+			<xs:enumeration value="TwoSidedLongEdge"/>
+			<xs:enumeration value="TwoSidedShortEdge"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StateReasonsWKVs">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="AttentionRequired"/>
+			<xs:enumeration value="Calibrating "/>
+			<xs:enumeration value="CleanerLifeAlmostOver"/>
+			<xs:enumeration value="CleanerLifeOver"/>
+			<xs:enumeration value="ConnectingToDevice"/>
+			<xs:enumeration value="CoverClosed"/>
+			<xs:enumeration value="CoverOpen"/>
+			<xs:enumeration value="Deactivated"/>
+			<xs:enumeration value="DeveloperEmpty"/>
+			<xs:enumeration value="DeveloperLow"/>
+			<xs:enumeration value="DoorOpen"/>
+			<xs:enumeration value="FuserOverTemp"/>
+			<xs:enumeration value="FuserUnderTemp"/>
+			<xs:enumeration value="HoldNewJobs"/>
+			<xs:enumeration value="InputCannotFeedSizeSelected"/>
+			<xs:enumeration value="InputManualInputRequest"/>
+			<xs:enumeration value="InputMediaChangeRequest"/>
+			<xs:enumeration value="InputTrayEmpty"/>
+			<xs:enumeration value="InputTrayMissing"/>
+			<xs:enumeration value="InputTrayPositionFailure"/>
+			<xs:enumeration value="InterpreterResourceUnavailable"/>
+			<xs:enumeration value="InterlockClosed"/>
+			<xs:enumeration value="InterlockOpen"/>
+			<xs:enumeration value="InternalStorageFull"/>
+			<xs:enumeration value="LampError "/>
+			<xs:enumeration value="LampWarming "/>
+			<xs:enumeration value="MarkerFailure"/>
+			<xs:enumeration value="MarkerSupplyEmpty"/>
+			<xs:enumeration value="MarkerSupplyLow"/>
+			<xs:enumeration value="MarkerWasteAlmostFull"/>
+			<xs:enumeration value="MarkerWasteFull"/>
+			<xs:enumeration value="MediaEmpty"/>
+			<xs:enumeration value="MediaJam"/>
+			<xs:enumeration value="MediaLow"/>
+			<xs:enumeration value="MediaNeeded"/>
+			<xs:enumeration value="MovingToPaused"/>
+			<xs:enumeration value="MultipleFeedError"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="OpcLifeOver"/>
+			<xs:enumeration value="OpcNearEol"/>
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="OutputAreaAlmostFull"/>
+			<xs:enumeration value="OutputAreaFull"/>
+			<xs:enumeration value="OutputTrayMissing"/>
+			<xs:enumeration value="Paused"/>
+			<xs:enumeration value="Shutdown"/>
+			<xs:enumeration value="SpoolAreaFull"/>
+			<xs:enumeration value="StorageAlmostFull"/>
+			<xs:enumeration value="StorageFull"/>
+			<xs:enumeration value="Stopping"/>
+			<xs:enumeration value="StoppedPartly"/>
+			<xs:enumeration value="TimedOut"/>
+			<xs:enumeration value="TonerEmpty"/>
+			<xs:enumeration value="TonerLow"/>
+			<xs:enumeration value="Unknown"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StateReasons2WKVs">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="AlertRemovalOfBinaryChangeEntry"/>
+			<xs:enumeration value="ConfigurationChange"/>
+			<xs:enumeration value="InputMediaColorChange"/>
+			<xs:enumeration value="InputMediaFormPartsChange"/>
+			<xs:enumeration value="InputMediaSizeChange"/>
+			<xs:enumeration value="InputMediaTypeChange"/>
+			<xs:enumeration value="InputMediaWeightChange"/>
+			<xs:enumeration value="InputTrayElevationFailure"/>
+			<xs:enumeration value="InterpreterCartridgeAdded"/>
+			<xs:enumeration value="InterpreterCartridgeDeleted"/>
+			<xs:enumeration value="InterpreterComplexPageEncountered"/>
+			<xs:enumeration value="InterpreterMemoryDecrease"/>
+			<xs:enumeration value="InterpreterMemoryIncrease"/>
+			<xs:enumeration value="InterpreterResourceAdded"/>
+			<xs:enumeration value="InterpreterResourceDeleted"/>
+			<xs:enumeration value="MarkerAdjustingPrintQuality"/>
+			<xs:enumeration value="MarkerDeveloperAlmostEmpty"/>
+			<xs:enumeration value="MarkerDeveloperEmpty"/>
+			<xs:enumeration value="MarkerFuserOverTemperature"/>
+			<xs:enumeration value="MarkerFuserThermistorFailure"/>
+			<xs:enumeration value="MarkerFuserTimingFailure"/>
+			<xs:enumeration value="MarkerFuserUnderTemperature"/>
+			<xs:enumeration value="MarkerInkAlmostEmpty"/>
+			<xs:enumeration value="MarkerInkEmpty"/>
+			<xs:enumeration value="MarkerOpcLifeAlmostOver"/>
+			<xs:enumeration value="MarkerOpcLifeOver"/>
+			<xs:enumeration value="MarkerPrintRibbonAlmostEmpty"/>
+			<xs:enumeration value="MarkerPrintRibbonEmpty"/>
+			<xs:enumeration value="MarkerTonerAlmostEmpty"/>
+			<xs:enumeration value="MarkerTonerCartridgeMissing"/>
+			<xs:enumeration value="MarkerTonerEmpty"/>
+			<xs:enumeration value="MarkerWasteInkReceptacleAlmostFull"/>
+			<xs:enumeration value="MarkerWasteInkReceptacleFull"/>
+			<xs:enumeration value="MarkerWasteTonerReceptacleAlmostFull"/>
+			<xs:enumeration value="MarkerWasteTonerReceptacleFull"/>
+			<xs:enumeration value="MediaPathCannotDuplexMediaSelected"/>
+			<xs:enumeration value="MediaPathMediaTrayAlmostFull"/>
+			<xs:enumeration value="MediaPathMediaTrayFull"/>
+			<xs:enumeration value="MediaPathMediaTrayMissing"/>
+			<xs:enumeration value="OutputMailboxSelectFailure"/>
+			<xs:enumeration value="PowerDown"/>
+			<xs:enumeration value="PowerUp"/>
+			<xs:enumeration value="PrinterManualReset"/>
+			<xs:enumeration value="PrinterNMSReset"/>
+			<xs:enumeration value="PrinterReadyToPrint"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StateReasonsSubunitWKVs">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="SubunitAdded"/>
+			<xs:enumeration value="SubunitAlmostEmpty"/>
+			<xs:enumeration value="SubunitAlmostFull"/>
+			<xs:enumeration value="SubunitAtLimit"/>
+			<xs:enumeration value="SubunitClosed"/>
+			<xs:enumeration value="SubunitEmpty"/>
+			<xs:enumeration value="SubunitFull"/>
+			<xs:enumeration value="SubunitLifeAlmostOver"/>
+			<xs:enumeration value="SubunitLifeOver"/>
+			<xs:enumeration value="SubunitMemoryExhausted"/>
+			<xs:enumeration value="SubunitMissing"/>
+			<xs:enumeration value="SubunitMotorFailure"/>
+			<xs:enumeration value="SubunitNearLimit"/>
+			<xs:enumeration value="SubunitOffline"/>
+			<xs:enumeration value="SubunitOpened"/>
+			<xs:enumeration value="SubunitOverTemperature"/>
+			<xs:enumeration value="SubunitPowerSaver"/>
+			<xs:enumeration value="SubunitRecoverableFailure"/>
+			<xs:enumeration value="SubunitRecoverableStorageError"/>
+			<xs:enumeration value="SubunitRemoved"/>
+			<xs:enumeration value="SubunitResourceAdded"/>
+			<xs:enumeration value="SubunitResourceRemoved"/>
+			<xs:enumeration value="SubunitThermistorFailure"/>
+			<xs:enumeration value="SubunitTimingFailure"/>
+			<xs:enumeration value="SubunitTurnedOff"/>
+			<xs:enumeration value="SubunitTurnedOn"/>
+			<xs:enumeration value="SubunitUnderTemperature"/>
+			<xs:enumeration value="SubunitUnrecoverableFailure"/>
+			<xs:enumeration value="SubunitUnrecoverableStorageError"/>
+			<xs:enumeration value="SubunitWarmingUp"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StaticResourceTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Font"/>
+			<xs:enumeration value="Form"/>
+			<xs:enumeration value="ICCProfile"/>
+			<xs:enumeration value="Image"/>
+			<xs:enumeration value="Logo"/>
+		</xs:restriction>
+		<!-- service type (function of this service object) -->
+		<!-- see WIMS Object Model - section 4 [WIMS-PRO] -->
+	</xs:simpleType>
+	<xs:simpleType name="StatusStringWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="ClientErrorElementsNotSettable"/>
+			<xs:enumeration value="ClientErrorElementsOrValuesNotSupported"/>
+			<xs:enumeration value="ClientErrorBadRequest"/>
+			<xs:enumeration value="ClientErrorCharsetNotSupported"/>
+			<xs:enumeration value="ClientErrorCompressionError"/>
+			<xs:enumeration value="ClientErrorCompressionNotSupported"/>
+			<xs:enumeration value="ClientErrorConflictingElements"/>
+			<xs:enumeration value="ClientErrorDocumentAccessError"/>
+			<xs:enumeration value="ClientErrorDocumentFormatError"/>
+			<xs:enumeration value="ClientErrorDocumentFormatNotSupported"/>
+			<xs:enumeration value="ClientErrorForbidden"/>
+			<xs:enumeration value="ClientErrorGone"/>
+			<xs:enumeration value="ClientErrorIgnoredAllSubscriptions"/>
+			<xs:enumeration value="ClientErrorNotAuthenticated"/>
+			<xs:enumeration value="ClientErrorNotAuthorized"/>
+			<xs:enumeration value="ClientErrorNotFound"/>
+			<xs:enumeration value="ClientErrorNotPossible"/>
+			<xs:enumeration value="ClientErrorRequestEntityTooLarge"/>
+			<xs:enumeration value="ClientErrorRequestValueTooLong"/>
+			<xs:enumeration value="ClientErrorTimeout"/>
+			<xs:enumeration value="ClientErrorTooManySubscriptions"/>
+			<xs:enumeration value="ClientErrorUriSchemeNotSupported"/>
+			<xs:enumeration value="ServerErrorBusy"/>
+			<xs:enumeration value="ServerErrorDeviceError"/>
+			<xs:enumeration value="ServerErrorInternalError"/>
+			<xs:enumeration value="ServerErrorJobCanceled"/>
+			<xs:enumeration value="ServerErrorCanceled"/>
+			<xs:enumeration value="ServerErrorMultipleDocumentJobsNotSupported"/>
+			<xs:enumeration value="ServerErrorNotAcceptingJobs"/>
+			<xs:enumeration value="ServerErrorNotAcceptingResources"/>
+			<xs:enumeration value="ServerErrorOperationNotSupported"/>
+			<xs:enumeration value="ServerErrorServiceIsDeactivated"/>
+			<xs:enumeration value="ServerErrorServiceUnavailable"/>
+			<xs:enumeration value="ServerErrorTemporaryError"/>
+			<xs:enumeration value="ServerErrorTooManyDocuments"/>
+			<xs:enumeration value="ServerErrorTooManyJobs"/>
+			<xs:enumeration value="ServerErrorVersionNotSupported"/>
+			<xs:enumeration value="SuccessfulOk"/>
+			<xs:enumeration value="SuccessfulOkEventsComplete"/>
+			<xs:enumeration value="SuccessfulOkConflictingElements"/>
+			<xs:enumeration value="SuccessfulOkIgnoredOrSubstitutedElements"/>
+			<xs:enumeration value="SuccessfulOkIgnoredSubscriptions"/>
+			<xs:enumeration value="SuccessfulOkTooManyEvents"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StitchingMemberWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="StitchingLocations"/>
+			<xs:enumeration value="StitchingOffset"/>
+			<xs:enumeration value="StitchingReferenceEdge"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StitchingReferenceEdgeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Bottom"/>
+			<xs:enumeration value="Left"/>
+			<xs:enumeration value="Right"/>
+			<xs:enumeration value="Top"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="StorageTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="RAM"/>
+			<xs:enumeration value="NVRam"/>
+			<xs:enumeration value="HardDisk"/>
+			<xs:enumeration value="ramDisk"/>
+			<xs:enumeration value="CD"/>
+			<xs:enumeration value="DVD"/>
+			<xs:enumeration value="NetworkStorage"/>
+			<xs:enumeration value="floppyDisk"/>
+			<xs:enumeration value="opticalDiskROM"/>
+			<xs:enumeration value="opticalDiskWORM"/>
+			<xs:enumeration value="opticalDiskRW"/>
+			<xs:enumeration value="Other"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="SubunitAddressabilityUnitWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="TenThousandthsOfInches"/>
+			<xs:enumeration value="Micrometers"/>
+		</xs:restriction>
+		<!-- interpreter, marker, or scanner addressability unit -->
+		<!-- see PrtMarkerAddressabilityUnitTC in [RFC3805] -->
+	</xs:simpleType>
+	<xs:simpleType name="SubunitCapacityUnitWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="TenThousandthsOfInches"/>
+			<xs:enumeration value="Micrometers"/>
+			<xs:enumeration value="Sheets"/>
+			<xs:enumeration value="Feet"/>
+			<xs:enumeration value="Meters"/>
+			<xs:enumeration value="Items"/>
+			<xs:enumeration value="Percent"/>
+		</xs:restriction>
+		<!-- input tray, output tray, or finisher capacity/level unit -->
+		<!-- see PrtCapacityUnitTC in [RFC3805] -->
+	</xs:simpleType>
+	<xs:simpleType name="SubunitCounterUnitWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="TenThousandthsOfInches"/>
+			<xs:enumeration value="Micrometers"/>
+			<xs:enumeration value="Characters"/>
+			<xs:enumeration value="Lines"/>
+			<xs:enumeration value="Impressions"/>
+			<xs:enumeration value="Sheets"/>
+			<xs:enumeration value="DotRow"/>
+			<xs:enumeration value="Hours"/>
+			<xs:enumeration value="Feet"/>
+			<xs:enumeration value="Meters"/>
+		</xs:restriction>
+		<!-- marker or scanner usage counter unit -->
+		<!-- see PrtMarkerCounterUnitTC in [RFC3805] -->
+	</xs:simpleType>
+	<xs:simpleType name="SubunitPresentOnOffWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="On"/>
+			<xs:enumeration value="Off"/>
+			<xs:enumeration value="NotPresent"/>
+		</xs:restriction>
+		<!-- subunit or feature present/on/off -->
+		<!-- see PresentOnOff in [RFC3805] and [IANA-PRT] -->
+	</xs:simpleType>
+	<xs:simpleType name="SubunitStateWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="AvailableAndActive"/>
+			<xs:enumeration value="AvailableAndBusy"/>
+			<xs:enumeration value="AvailableAndIdle"/>
+			<xs:enumeration value="AvailableAndStandby"/>
+			<xs:enumeration value="coverClosed"/>
+			<xs:enumeration value="coverOpen"/>
+			<xs:enumeration value="CriticalAlerts"/>
+			<xs:enumeration value="Down"/>
+			<xs:enumeration value="interlockClosed"/>
+			<xs:enumeration value="interlockOpen"/>
+			<xs:enumeration value="Online"/>
+			<xs:enumeration value="Offline"/>
+			<xs:enumeration value="other"/>
+			<xs:enumeration value="Running"/>
+			<xs:enumeration value="Testing"/>
+			<xs:enumeration value="Transitioning"/>
+			<xs:enumeration value="Up"/>
+			<xs:enumeration value="UnavailableAndBroken"/>
+			<xs:enumeration value="UnavailableAndOnRequest"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="WarningAlerts"/>
+		</xs:restriction>
+		<!-- subunit state or condition -->
+		<!-- see PrtSubUnitStatusTC in [RFC3805] -->
+		<!-- see PrtCoverStatusTC in [RFC3805] -->
+	</xs:simpleType>
+	<xs:simpleType name="SubunitTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="Console"/>
+			<xs:enumeration value="Cover"/>
+			<xs:enumeration value="FaxModem"/>
+			<xs:enumeration value="Finisher"/>
+			<xs:enumeration value="InputChannel"/>
+			<xs:enumeration value="InputTray"/>
+			<xs:enumeration value="Interface"/>
+			<xs:enumeration value="Interpreter"/>
+			<xs:enumeration value="Marker"/>
+			<xs:enumeration value="MediaPath"/>
+			<xs:enumeration value="OutputChannel"/>
+			<xs:enumeration value="OutputTray"/>
+			<xs:enumeration value="Processor"/>
+			<xs:enumeration value="ScanMediaPath"/>
+			<xs:enumeration value="Scanner"/>
+			<xs:enumeration value="Storage"/>
+			<xs:enumeration value="System"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TemplateTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="CopyDocument"/>
+			<xs:enumeration value="CopyJob"/>
+			<xs:enumeration value="EmailInDocument"/>
+			<xs:enumeration value="EmailInJob"/>
+			<xs:enumeration value="EmailOutDocument"/>
+			<xs:enumeration value="EmailOutJob"/>
+			<xs:enumeration value="FaxInDocument"/>
+			<xs:enumeration value="FaxInJob"/>
+			<xs:enumeration value="FaxOutDocument"/>
+			<xs:enumeration value="FaxOutJob"/>
+			<xs:enumeration value="NetFaxInDocument"/>
+			<xs:enumeration value="NetFaxInJob"/>
+			<xs:enumeration value="NetFaxOutDocument"/>
+			<xs:enumeration value="NetFaxOutJob"/>
+			<xs:enumeration value="PrintDocument"/>
+			<xs:enumeration value="PrintJob"/>
+			<xs:enumeration value="ScanDocument"/>
+			<xs:enumeration value="ScanJob"/>
+			<xs:enumeration value="TransformDocument"/>
+			<xs:enumeration value="TransformJob"/>
+			<xs:enumeration value="Vendor"/>
+		</xs:restriction>
+		<!-- service type (function of this service object) -->
+		<!-- see WIMS Object Model - section 4 [WIMS-PRO] -->
+	</xs:simpleType>
+	<xs:simpleType name="TimeoutPredicateWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Other"/>
+			<xs:enumeration value="Unknown"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="Activity"/>
+			<xs:enumeration value="Inactivity"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TransformTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Collation"/>
+			<xs:enumeration value="Convert"/>
+			<xs:enumeration value="DataExtract"/>
+			<xs:enumeration value="Image"/>
+			<xs:enumeration value="Imposition"/>
+			<xs:enumeration value="Other"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TransmissionStatusWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Aborted"/>
+			<xs:enumeration value="Canceled"/>
+			<xs:enumeration value="Completed"/>
+			<xs:enumeration value="Pending"/>
+			<xs:enumeration value="PendingRetry"/>
+			<xs:enumeration value="Processing"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UriAuthenticationWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Basic"/>
+			<xs:enumeration value="Certificate"/>
+			<xs:enumeration value="Digest"/>
+			<xs:enumeration value="Negotiate"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="RequestingUserName"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UnitsWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Dpcm"/>
+			<xs:enumeration value="Dpi"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UriSecurityWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="Ssl3"/>
+			<xs:enumeration value="Tls"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="UserRoleWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Administrator"/>
+			<xs:enumeration value="FieldTechnition"/>
+			<xs:enumeration value="GroupMember"/>
+			<xs:enumeration value="Guest"/>
+			<xs:enumeration value="LocalUser"/>
+			<xs:enumeration value="NetworkAdministrator"/>
+			<xs:enumeration value="Operator"/>
+			<xs:enumeration value="Owner"/>
+			<xs:enumeration value="ReadOnlyUser"/>
+			<xs:enumeration value="RemoteUser"/>
+			<xs:enumeration value="SecurityAdministrator"/>
+			<xs:enumeration value="ServiceTechnition"/>
+			<xs:enumeration value="User"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="WhichJobsWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Aborted"/>
+			<xs:enumeration value="All"/>
+			<xs:enumeration value="Canceled"/>
+			<xs:enumeration value="Completed"/>
+			<xs:enumeration value="NotCompleted"/>
+			<xs:enumeration value="Pending"/>
+			<xs:enumeration value="PendingHeld"/>
+			<xs:enumeration value="Processing"/>
+			<xs:enumeration value="ProcessingStopped"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="XImagePositionWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Center"/>
+			<xs:enumeration value="Left"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="Right"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="YImagePositionWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Bottom"/>
+			<xs:enumeration value="Center"/>
+			<xs:enumeration value="None"/>
+			<xs:enumeration value="Top"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">Simple types specific to operations</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="FaxOutDocumentElementNamesWKV">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="FaxOutDocumentReceipt"/>
+			<xs:enumeration value="FaxOutDocumentStatus"/>
+			<xs:enumeration value="FaxOutDocumentTicket"/>
+			<xs:enumeration value="FaxOutDocumentCounters"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PrintDocumentElementNamesWKV">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="PrintDocumentReceipt"/>
+			<xs:enumeration value="PrintDocumentStatus"/>
+			<xs:enumeration value="PrintDocumentTicket"/>
+			<xs:enumeration value="PrintDocumentCounters"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ScanDocumentElementNamesWKV">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="ScanDocumentReceipt"/>
+			<xs:enumeration value="ScanDocumentStatus"/>
+			<xs:enumeration value="ScanDocumentTicket"/>
+			<xs:enumeration value="ScanDocumentCounters"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TransformDocumentElementNamesWKV">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="TransformDocumentReceipt"/>
+			<xs:enumeration value="TransformDocumentStatus"/>
+			<xs:enumeration value="TransformDocumentTicket"/>
+			<xs:enumeration value="TransformDocumentCounters"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CopyJobElementNamesWKV">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="CopyJobReceipt"/>
+			<xs:enumeration value="CopyJobStatus"/>
+			<xs:enumeration value="CopyJobTicket"/>
+			<xs:enumeration value="CopyobCounters"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FaxOutJobElementNamesWKV">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="FaxOutJobReceipt"/>
+			<xs:enumeration value="FaxOutJobStatus"/>
+			<xs:enumeration value="FaxOutJobTicket"/>
+			<xs:enumeration value="FaxOutJobCounters"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PrintJobElementNamesWKV">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="PrintJobReceipt"/>
+			<xs:enumeration value="PrintJobStatus"/>
+			<xs:enumeration value="PrintJobTicket"/>
+			<xs:enumeration value="PrintJobCounters"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ResourceElementNamesWKV">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="ResourceCounters"/>
+			<xs:enumeration value="ResourceDescription"/>
+			<xs:enumeration value="ResourceStatus"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ScanJobElementNamesWKV">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="ScanJobReceipt"/>
+			<xs:enumeration value="ScanJobStatus"/>
+			<xs:enumeration value="ScanJobTicket"/>
+			<xs:enumeration value="ScanJobCounters"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TransformJobElementNamesWKV">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="TransformJobReceipt"/>
+			<xs:enumeration value="TransformJobStatus"/>
+			<xs:enumeration value="TransformJobTicket"/>
+			<xs:enumeration value="TransformJobCounters"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="CopyServiceElementNamesWKV">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="DefaultCopyJobTicket"/>
+			<xs:enumeration value="CopyServiceCapabilities"/>
+			<xs:enumeration value="CopyServiceMediaCol"/>
+			<xs:enumeration value="CopyServiceCapabilitiesReady"/>
+			<xs:enumeration value="CopyServiceMediaColReady"/>
+			<xs:enumeration value="CopyServiceConfiguration"/>
+			<xs:enumeration value="CopyServiceDescription"/>
+			<xs:enumeration value="CopyServiceStatus"/>
+			<xs:enumeration value="CopyServiceCounters"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="FaxOutServiceElementNamesWKV">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="DefaultFaxOutJobTicket"/>
+			<xs:enumeration value="FaxOutServiceCapabilities"/>
+			<xs:enumeration value="FaxOutServiceCapabilitiesReady"/>
+			<xs:enumeration value="FaxOutServiceConfiguration"/>
+			<xs:enumeration value="FaxOutServiceDescription"/>
+			<xs:enumeration value="FaxOutServiceStatus"/>
+			<xs:enumeration value="FaxOutServiceCounters"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="PrintServiceElementNamesWKV">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="DefaultPrintJobTicket"/>
+			<xs:enumeration value="PrintServiceCapabilities"/>
+			<xs:enumeration value="PrintServiceMediaCol"/>
+			<xs:enumeration value="PrintServiceCapabilitiesReady"/>
+			<xs:enumeration value="PrintServiceMediaColReady"/>
+			<xs:enumeration value="PrintServiceConfiguration"/>
+			<xs:enumeration value="PrintServiceDescription"/>
+			<xs:enumeration value="PrintServiceStatus"/>
+			<xs:enumeration value="PrintServiceCounters"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ResourceServiceElementNamesWKV">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="ResourceServiceCapabilities"/>
+			<xs:enumeration value="ResourceServiceConfiguration"/>
+			<xs:enumeration value="ResourceServiceDescription"/>
+			<xs:enumeration value="ResourceServiceStatus"/>
+			<xs:enumeration value="ResourceServiceCounters"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="ScanServiceElementNamesWKV">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="DefaultScanJobTicket"/>
+			<xs:enumeration value="ScanServiceCapabilities"/>
+			<xs:enumeration value="ScanServiceCapabilitiesReady"/>
+			<xs:enumeration value="ScanServiceConfiguration"/>
+			<xs:enumeration value="ScanServiceDescription"/>
+			<xs:enumeration value="ScanServiceStatus"/>
+			<xs:enumeration value="ScanServiceCounters"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="TransformServiceElementNamesWKV">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+			<xs:whiteSpace value="preserve"/>
+			<xs:enumeration value="TransformJobReceipt"/>
+			<xs:enumeration value="TransformJobStatus"/>
+			<xs:enumeration value="TransformJobTicket"/>
+			<xs:enumeration value="TransformJobCounters"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--Keyword extension federated by namespaces-->
+	<xs:simpleType name="KeywordNsExtensionPattern">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:pattern value="\w+:[\w_\-\.]+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--Media type Keyword extension federated by MIME type names-->
+	<xs:simpleType name="MimeExtensionPattern">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+			<xs:pattern value="\w+[\w:/;_\-\\\+\.]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--Natural Laguage pattern allowing keywords adhering to rfc4646 or its successors-->
+	<xs:simpleType name="NatLangExtensionPattern">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="63"/>
+			<xs:pattern value="\w+[\w:/;_\-\\\+\.]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--Operating System Name extension per rfc952-->
+	<xs:simpleType name="OperatingSystemNameExtensionPattern">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="40"/>
+			<xs:pattern value="[a-z/\.\-]+"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--String extension federated by namespaces-->
+	<xs:simpleType name="StringNsExtensionPattern">
+		<xs:restriction base="xs:string">
+			<xs:pattern value="\w+:[\w:/;_\-\\\+\.]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<!--Extension pattern allowing keywords controlled by external bodies (e.g. ISO)-->
+	<xs:simpleType name="StringExtensionPattern">
+		<xs:restriction base="xs:string">
+			<xs:minLength value="63"/>
+			<xs:pattern value="\w+[\w:/;_\-\\\+\.]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

@@ -1,0 +1,764 @@
+﻿<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="PwgCommon.xsd"/>
+	<!--01/02/12 PJZ Added abstract data class for service specific counters-->
+	<!--11/11/11 PJZ Adjusted counters-->
+	<!--11/11/11 PJZ Removed unnecessary complexity of counters structure-->
+	<!--11/02/11 PJZ Simplified inbound (e.g. FaxIn, EmailIn) counters since printing only includes confirmation sheets-->
+	<!--09/24/11 PJZ Removed uneccessary includes-->
+	<!--12/28/10 PJZ changed MediaUsedSizeName to MediaUsedMediaSizeName-->
+	<!--12/02/10 PJZ Remove counter persistence, added extensionpoint, made entry unbounded-->
+	<!--10/06/10 PJZ Created missing abstract types-->
+	<!--09/10/10 PJZ Moved CounterPersistance to PwgCommon.xsd from Counter.xsd-->
+	<!--09/10/10 PJZ Added persistance to counters-->
+	<!--04/14/09 PJZ Updated Namespace-->
+	<!--07/11/08 PJZ Changed TemplateService to ResourceService-->
+	<!--06/01/08 PJZ Added  anyAttribute extension point-->
+	<!--05/31/08 PJZ Move back to ##Other-->
+	<!--05/30/08 PJZ Move back to single namespace-->
+	<!--05/27/08 PJZ Inclusion of Template-->
+	<!--05/21/08 PJZ Partial alignment with WS-Scan-->
+	<!--12/12/07 PJZ Reworked Service/Job/Document counters-->
+	<!--09/12/07 PJZ Replaced MediaUsedSizeName with standard media definition, added MediaUsedAccountingKey-->
+	<!--10/08/06 PJZ Reworked dependencies and removed Chameleon-->
+	<!--08/08/06 PJZ Changed namespace-->
+	<!--070506  PJZ  Changed namespace-->
+	<!--040506  PJZ  modified from ver 1.0 to prepare for SM editing work-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v3   
+
+Copyright 2002-2014, IEEE Industry Standards and Technology Organization/PWG - SM Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald, Daniel Manchala 
+</xs:documentation>
+	</xs:annotation>
+	<xs:annotation>
+		<xs:documentation>Include the master list of semantic elements with included media elements and the well known values for some of the elements</xs:documentation>
+	</xs:annotation>
+	<xs:annotation>
+		<xs:documentation>The description of this managed element on this Imaging System, for use with remote network management scripts and GUIs.   For example:    'Print service supporting IPP and PSI'." </xs:documentation>
+	</xs:annotation>
+	<xs:annotation>
+		<xs:documentation>The following are the impression related counts.  Not listed is Impressions which is the total of impressions generated</xs:documentation>
+	</xs:annotation>
+	<xs:element name="MonochromeImpressions" type="xs:int"/>
+	<xs:element name="BlankImpressions" type="xs:int"/>
+	<xs:element name="BlankImpressionsTwoSided" type="xs:int"/>
+	<xs:element name="FullColorImpressions" type="xs:int"/>
+	<xs:element name="FullColorImpressionsTwoSided" type="xs:int"/>
+	<xs:element name="HighlightColorImpressions" type="xs:int"/>
+	<xs:element name="HighlightColorImpressionsTwoSided" type="xs:int"/>
+	<xs:element name="ImpressionsTwoSided"/>
+	<xs:element name="MonochromeImpressionsTwoSided" type="xs:int"/>
+	<xs:annotation>
+		<xs:documentation>The following are the image related counts.</xs:documentation>
+	</xs:annotation>
+	<xs:element name="Images" type="xs:int"/>
+	<xs:element name="MonochromeImages" type="xs:int"/>
+	<xs:element name="FullColorImages" type="xs:int"/>
+	<xs:annotation>
+		<xs:documentation>The following are the media counts.</xs:documentation>
+	</xs:annotation>
+	<xs:element name="MediaUsedTotalSheets">
+		<xs:simpleType>
+			<xs:restriction base="xs:int"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MediaUsedMonochromeSheets">
+		<xs:simpleType>
+			<xs:restriction base="xs:int"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MediaUsedBlankSheets">
+		<xs:simpleType>
+			<xs:restriction base="xs:int"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MediaUsedFullColorSheets">
+		<xs:simpleType>
+			<xs:restriction base="xs:int"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MediaUsedHighlightColorSheets">
+		<xs:simpleType>
+			<xs:restriction base="xs:int"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MediaUsedMediaSizeName">
+		<xs:simpleType>
+			<xs:union memberTypes="MediaSizeAliasNameWKV MediaSizeLegacyNamesWKV MediaSizeSelfDescribingNameWKV MediaSizeNameExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MediaUsedAccountingKey">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="255"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MediaUsedMediaInfo">
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:minLength value="0"/>
+				<xs:maxLength value="255"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:annotation>
+		<xs:documentation>The following are the data counts.</xs:documentation>
+	</xs:annotation>
+	<xs:element name="InputKOctets" type="xs:int"/>
+	<xs:element name="OutputKOctets" type="xs:int"/>
+	<xs:element name="InputMessages" type="xs:int"/>
+	<xs:element name="OutputMessages" type="xs:int"/>
+	<xs:element name="LocalStorageKOctets">
+		<xs:simpleType>
+			<xs:restriction base="xs:int"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="RemoteStorageKOctets">
+		<xs:simpleType>
+			<xs:restriction base="xs:int"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:annotation>
+		<xs:documentation>The following are the job counts.</xs:documentation>
+	</xs:annotation>
+	<xs:element name="AbortedJobs">
+		<xs:simpleType>
+			<xs:restriction base="xs:int"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="CanceledJobs">
+		<xs:simpleType>
+			<xs:restriction base="xs:int"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="CompletedJobs">
+		<xs:simpleType>
+			<xs:restriction base="xs:int"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="CompletedFinisherJobs">
+		<xs:simpleType>
+			<xs:restriction base="xs:int"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:annotation>
+		<xs:documentation>The following are error/warning and config counts.</xs:documentation>
+	</xs:annotation>
+	<xs:element name="TotalAlerts">
+		<xs:simpleType>
+			<xs:restriction base="xs:int"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="CriticalAlerts">
+		<xs:simpleType>
+			<xs:restriction base="xs:int"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MemoryAllocErrors">
+		<xs:simpleType>
+			<xs:restriction base="xs:int"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MemoryAllocWarnings">
+		<xs:simpleType>
+			<xs:restriction base="xs:int"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="StorageAllocErrors">
+		<xs:simpleType>
+			<xs:restriction base="xs:int"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="StorageAllocWarnings">
+		<xs:simpleType>
+			<xs:restriction base="xs:int"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ConfigChanges">
+		<xs:simpleType>
+			<xs:restriction base="xs:int"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:annotation>
+		<xs:documentation>The following are error/warning and config counts.</xs:documentation>
+	</xs:annotation>
+	<xs:element name="TotalTime">
+		<xs:simpleType>
+			<xs:restriction base="xs:int"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="DownTime">
+		<xs:simpleType>
+			<xs:restriction base="xs:int"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="MaintenanceTime">
+		<xs:simpleType>
+			<xs:restriction base="xs:int"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="ProcessingTime">
+		<xs:simpleType>
+			<xs:restriction base="xs:int"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:annotation>
+		<xs:documentation>The following define types used by the counter elements</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="MediasUsedType">
+		<xs:sequence>
+			<xs:element ref="MediaUsed" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="MediaUsedType">
+		<xs:sequence>
+			<xs:element ref="MediaUsedAccountingKey" minOccurs="0"/>
+			<xs:element ref="MediaUsedBlankSheets" minOccurs="0"/>
+			<xs:element ref="MediaUsedFullColorSheets" minOccurs="0"/>
+			<xs:element ref="MediaUsedHighlightColorSheets" minOccurs="0"/>
+			<xs:element ref="MediaUsedMediaInfo" minOccurs="0"/>
+			<xs:element ref="MediaUsedMonochromeSheets" minOccurs="0"/>
+			<xs:element ref="MediaUsedMediaSizeName" minOccurs="0"/>
+			<xs:element ref="MediaUsedTotalSheets" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:element name="MediaUsed" type="MediaUsedType"/>
+	<xs:complexType name="Counters">
+		<xs:sequence>
+			<xs:element ref="BlankImpressions" minOccurs="0"/>
+			<xs:element ref="BlankImpressionsTwoSided" minOccurs="0"/>
+			<xs:element ref="FullColorImages" minOccurs="0"/>
+			<xs:element ref="FullColorImpressions" minOccurs="0"/>
+			<xs:element ref="FullColorImpressionsTwoSided" minOccurs="0"/>
+			<xs:element ref="HighlightColorImpressions" minOccurs="0"/>
+			<xs:element ref="HighlightColorImpressionsTwoSided" minOccurs="0"/>
+			<xs:element ref="Images" minOccurs="0"/>
+			<xs:element ref="Impressions" minOccurs="0"/>
+			<xs:element ref="ImpressionsTwoSided" minOccurs="0"/>
+			<xs:element ref="InputKOctets" minOccurs="0"/>
+			<xs:element ref="InputMessages" minOccurs="0"/>
+			<xs:element ref="MonochromeImages" minOccurs="0"/>
+			<xs:element ref="MonochromeImpressions" minOccurs="0"/>
+			<xs:element ref="MonochromeImpressionsTwoSided" minOccurs="0"/>
+			<xs:element name="ObjectCount" minOccurs="0"/>
+			<xs:element ref="OutputKOctets" minOccurs="0"/>
+			<xs:element ref="OutputMessages" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="PrintCounts">
+		<xs:sequence>
+			<xs:element ref="pwg:Impressions" minOccurs="0"/>
+			<xs:element ref="MonochromeImpressions" minOccurs="0"/>
+			<xs:element ref="BlankImpressions" minOccurs="0"/>
+			<xs:element ref="FullColorImpressions" minOccurs="0"/>
+			<xs:element ref="HighlightColorImpressions" minOccurs="0"/>
+			<xs:element ref="ImpressionsTwoSided" minOccurs="0"/>
+			<xs:element ref="MonochromeImpressionsTwoSided" minOccurs="0"/>
+			<xs:element ref="BlankImpressionsTwoSided" minOccurs="0"/>
+			<xs:element ref="FullColorImpressionsTwoSided" minOccurs="0"/>
+			<xs:element ref="HighlightColorImpressionsTwoSided" minOccurs="0"/>
+			<xs:element ref="InputKOctets" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="InboundCounts">
+		<xs:sequence>
+			<xs:element ref="InputMessages" minOccurs="0"/>
+			<xs:element ref="InputKOctets" minOccurs="0"/>
+			<xs:element ref="Images" minOccurs="0"/>
+			<xs:element ref="MonochromeImages" minOccurs="0"/>
+			<xs:element ref="FullColorImages" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="OutboundCounts">
+		<xs:sequence>
+			<xs:element ref="Images" minOccurs="0"/>
+			<xs:element ref="MonochromeImages" minOccurs="0"/>
+			<xs:element ref="FullColorImages" minOccurs="0"/>
+			<xs:element ref="OutputKOctets" minOccurs="0"/>
+			<xs:element ref="OutputMessages" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="InOutboundCounts">
+		<xs:sequence>
+			<xs:element ref="Images" minOccurs="0"/>
+			<xs:element ref="MonochromeImages" minOccurs="0"/>
+			<xs:element ref="FullColorImages" minOccurs="0"/>
+			<xs:element ref="InputKOctets" minOccurs="0"/>
+			<xs:element ref="InputMessages" minOccurs="0"/>
+			<xs:element ref="OutputKOctets" minOccurs="0"/>
+			<xs:element ref="OutputMessages" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ImpressionCounters">
+		<xs:sequence>
+			<xs:element ref="pwg:Impressions" minOccurs="0"/>
+			<xs:element ref="MonochromeImpressions" minOccurs="0"/>
+			<xs:element ref="BlankImpressions" minOccurs="0"/>
+			<xs:element ref="FullColorImpressions" minOccurs="0"/>
+			<xs:element ref="HighlightColorImpressions" minOccurs="0"/>
+			<xs:element ref="ImpressionsTwoSided" minOccurs="0"/>
+			<xs:element ref="MonochromeImpressionsTwoSided" minOccurs="0"/>
+			<xs:element ref="BlankImpressionsTwoSided" minOccurs="0"/>
+			<xs:element ref="FullColorImpressionsTwoSided" minOccurs="0"/>
+			<xs:element ref="HighlightColorImpressionsTwoSided" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="StorageCounts">
+		<xs:sequence>
+			<xs:element name="ObjectCount" minOccurs="0"/>
+			<xs:element ref="InputKOctets" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="Availability">
+		<xs:sequence>
+			<xs:element ref="DownTime" minOccurs="0"/>
+			<xs:element ref="MaintenanceTime" minOccurs="0"/>
+			<xs:element ref="ProcessingTime" minOccurs="0"/>
+			<xs:element ref="TotalTime" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="Monitoring">
+		<xs:sequence>
+			<xs:element ref="ConfigChanges" minOccurs="0"/>
+			<xs:element ref="TotalAlerts" minOccurs="0"/>
+			<xs:element ref="CriticalAlerts" minOccurs="0"/>
+			<xs:element ref="AbortedJobs" minOccurs="0"/>
+			<xs:element ref="CanceledJobs" minOccurs="0"/>
+			<xs:element ref="CompletedJobs" minOccurs="0"/>
+			<xs:element ref="CompletedFinisherJobs" minOccurs="0"/>
+			<xs:element ref="MemoryAllocWarnings" minOccurs="0"/>
+			<xs:element ref="MemoryAllocErrors" minOccurs="0"/>
+			<xs:element ref="StorageAllocErrors" minOccurs="0"/>
+			<xs:element ref="StorageAllocWarnings" minOccurs="0"/>
+			<xs:element ref="LocalStorageKOctets" minOccurs="0"/>
+			<xs:element ref="RemoteStorageKOctets" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ImagingSystemCountsType">
+		<xs:annotation>
+			<xs:documentation>Abstract Data Class</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="BlankImpressions" minOccurs="0"/>
+			<xs:element ref="BlankImpressionsTwoSided" minOccurs="0"/>
+			<xs:element ref="FullColorImages" minOccurs="0"/>
+			<xs:element ref="FullColorImpressions" minOccurs="0"/>
+			<xs:element ref="FullColorImpressionsTwoSided" minOccurs="0"/>
+			<xs:element ref="HighlightColorImpressions" minOccurs="0"/>
+			<xs:element ref="HighlightColorImpressionsTwoSided" minOccurs="0"/>
+			<xs:element ref="Images" minOccurs="0"/>
+			<xs:element ref="Impressions" minOccurs="0"/>
+			<xs:element ref="ImpressionsTwoSided" minOccurs="0"/>
+			<xs:element ref="InputKOctets" minOccurs="0"/>
+			<xs:element ref="InputMessages" minOccurs="0"/>
+			<xs:element ref="MonochromeImages" minOccurs="0"/>
+			<xs:element ref="MonochromeImpressions" minOccurs="0"/>
+			<xs:element ref="MonochromeImpressionsTwoSided" minOccurs="0"/>
+			<xs:element name="ObjectCount" minOccurs="0"/>
+			<xs:element ref="OutputKOctets" minOccurs="0"/>
+			<xs:element ref="OutputMessages" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="SystemTotalsType">
+		<xs:sequence>
+			<xs:element ref="WorkTotals" minOccurs="0"/>
+			<xs:element ref="DataStream" minOccurs="0"/>
+			<xs:element ref="Auxiliary" minOccurs="0"/>
+			<xs:element ref="Maintenance" minOccurs="0"/>
+			<xs:element ref="Waste" minOccurs="0"/>
+			<xs:element ref="MediasUsed" minOccurs="0"/>
+			<xs:element ref="Availability" minOccurs="0"/>
+			<xs:element ref="Monitoring" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>The following define the counter elements</xs:documentation>
+	</xs:annotation>
+	<xs:element name="MediasUsed" type="MediasUsedType">
+		<xs:annotation>
+			<xs:documentation>counts of media used per specific media</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="WorkTotals" type="ImagingSystemCountsType">
+		<xs:annotation>
+			<xs:documentation>Summation of all classes of work</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="DataStream" type="ImagingSystemCountsType">
+		<xs:annotation>
+			<xs:documentation>user’s document or image stream counts</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Auxiliary" type="ImagingSystemCountsType">
+		<xs:annotation>
+			<xs:documentation>e.g. cover, separator, confirmation or configuration sheets</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Maintenance" type="ImagingSystemCountsType">
+		<xs:annotation>
+			<xs:documentation>counts while in maintenance mode </xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Waste" type="ImagingSystemCountsType">
+		<xs:annotation>
+			<xs:documentation>e.g.  jam, purge or fuser clean-up</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Availability" type="Availability">
+		<xs:annotation>
+			<xs:documentation>utilization timers</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="Monitoring" type="Monitoring">
+		<xs:annotation>
+			<xs:documentation>error, warning, traffic, job and configuration change counts</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ImagingSystemCounts" type="ImagingSystemCountsType">
+		<xs:annotation>
+			<xs:documentation>Abstract Data Class</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="ServiceSpecificCounters" type="ImagingSystemCountsType">
+		<xs:annotation>
+			<xs:documentation>Abstract Data Class</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="SystemTotals" type="SystemTotalsType"/>
+	<xs:complexType name="EmailInCountersType">
+		<xs:sequence>
+			<xs:element name="WorkTotals" type="InboundCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Summation of all classes of work</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DataStream" type="InboundCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>user’s document or image stream counts</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="Auxiliary" minOccurs="0"/>
+			<xs:element name="Mainenance" type="InboundCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>counts while in maintenance mode </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Waste" type="InboundCounts" minOccurs="0"/>
+			<xs:element ref="MediasUsed" minOccurs="0"/>
+			<xs:element ref="Availability" minOccurs="0"/>
+			<xs:element ref="Monitoring" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:element name="EmailInDocumentCounters" type="EmailInCountersType"/>
+	<xs:element name="EmailInJobCounters" type="EmailInCountersType"/>
+	<xs:element name="EmailInServiceCounters" type="EmailInCountersType"/>
+	<xs:complexType name="EmailOutCountersType">
+		<xs:sequence>
+			<xs:element name="WorkTotals" type="OutboundCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Summation of all classes of work</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DataStream" type="OutboundCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>user’s document or image stream counts</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Mainenance" type="OutboundCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>counts while in maintenance mode </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="Availability" minOccurs="0"/>
+			<xs:element ref="Monitoring" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:element name="EmailOutDocumentCounters" type="EmailOutCountersType"/>
+	<xs:element name="EmailOutJobCounters" type="EmailOutCountersType"/>
+	<xs:element name="EmailOutServiceCounters" type="EmailOutCountersType"/>
+	<xs:complexType name="FaxInCountersType">
+		<xs:sequence>
+			<xs:element name="WorkTotals" type="InboundCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Summation of all classes of work</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DataStream" type="InboundCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>user’s document or image stream counts</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Auxiliary" type="InboundCounts" minOccurs="0"/>
+			<xs:element name="Mainenance" type="InboundCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>counts while in maintenance mode </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Waste" type="InboundCounts" minOccurs="0"/>
+			<xs:element ref="MediasUsed" minOccurs="0"/>
+			<xs:element ref="Availability" minOccurs="0"/>
+			<xs:element ref="Monitoring" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:element name="FaxInDocumentCounters" type="FaxInCountersType"/>
+	<xs:element name="FaxInJobCounters" type="FaxInCountersType"/>
+	<xs:element name="FaxInServiceCounters" type="FaxInCountersType"/>
+	<xs:complexType name="FaxOutCountersType">
+		<xs:sequence>
+			<xs:element name="WorkTotals" type="OutboundCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Summation of all classes of work</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DataStream" type="OutboundCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>user’s document or image stream counts</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Mainenance" type="OutboundCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>counts while in maintenance mode </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="Availability" minOccurs="0"/>
+			<xs:element ref="Monitoring" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:element name="FaxOutDocumentCounters" type="FaxOutCountersType"/>
+	<xs:element name="FaxOutJobCounters" type="FaxOutCountersType"/>
+	<xs:element name="FaxOutServiceCounters" type="FaxOutCountersType"/>
+	<xs:complexType name="NetworkFaxInCountersType">
+		<xs:sequence>
+			<xs:element name="WorkTotals" type="InboundCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Summation of all classes of work</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DataStream" type="InboundCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>user’s document or image stream counts</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="Auxiliary" minOccurs="0"/>
+			<xs:element name="Mainenance" type="InboundCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>counts while in maintenance mode </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Waste" type="InboundCounts" minOccurs="0"/>
+			<xs:element ref="MediasUsed" minOccurs="0"/>
+			<xs:element ref="Availability" minOccurs="0"/>
+			<xs:element ref="Monitoring" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:element name="NetworkFaxInDocumentCounters" type="NetworkFaxInCountersType"/>
+	<xs:element name="NetworkFaxInJobCounters" type="NetworkFaxInCountersType"/>
+	<xs:element name="NetworkFaxInServiceCounters" type="NetworkFaxInCountersType"/>
+	<xs:complexType name="NetworkFaxOutCountersType">
+		<xs:sequence>
+			<xs:element name="WorkTotals" type="OutboundCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Summation of all classes of work</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DataStream" type="OutboundCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>user’s document or image stream counts</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Mainenance" type="OutboundCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>counts while in maintenance mode </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="Availability" minOccurs="0"/>
+			<xs:element ref="Monitoring" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:element name="NetworkFaxOutDocumentCounters" type="NetworkFaxOutCountersType"/>
+	<xs:element name="NetworkFaxOutJobCounters" type="NetworkFaxOutCountersType"/>
+	<xs:element name="NetworkFaxOutServiceCounters" type="NetworkFaxOutCountersType"/>
+	<xs:complexType name="PrintCountersType">
+		<xs:sequence>
+			<xs:element name="WorkTotals" type="PrintCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Summation of all classes of work</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DataStream" type="PrintCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>user’s document or image stream counts</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="Auxiliary" minOccurs="0"/>
+			<xs:element name="Maintenance" type="PrintCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>counts while in maintenance mode </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="Waste" minOccurs="0"/>
+			<xs:element ref="MediasUsed" minOccurs="0"/>
+			<xs:element ref="Availability" minOccurs="0"/>
+			<xs:element ref="Monitoring" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:element name="PrintDocumentCounters" type="PrintCountersType"/>
+	<xs:element name="PrintJobCounters" type="PrintCountersType"/>
+	<xs:element name="PrintServiceCounters" type="PrintCountersType"/>
+	<xs:complexType name="CopyCountersType">
+		<xs:sequence>
+			<xs:element name="WorkTotals" type="PrintCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Summation of all classes of work</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DataStream" type="PrintCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>user’s document or image stream counts</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="Auxiliary" minOccurs="0"/>
+			<xs:element name="Mainenance" type="PrintCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>counts while in maintenance mode </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="Waste" minOccurs="0"/>
+			<xs:element ref="MediasUsed" minOccurs="0"/>
+			<xs:element ref="Availability" minOccurs="0"/>
+			<xs:element ref="Monitoring" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:element name="CopyDocumentCounters" type="CopyCountersType"/>
+	<xs:element name="CopyJobCounters" type="CopyCountersType"/>
+	<xs:element name="CopyServiceCounters" type="CopyCountersType"/>
+	<xs:complexType name="ScanCountersType">
+		<xs:sequence>
+			<xs:element name="WorkTotals" type="OutboundCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Summation of all classes of work</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DataStream" type="OutboundCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>user’s document or image stream counts</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Mainenance" type="OutboundCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>counts while in maintenance mode </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="Availability" minOccurs="0"/>
+			<xs:element ref="Monitoring" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:element name="ScanDocumentCounters" type="ScanCountersType"/>
+	<xs:element name="ScanJobCounters" type="ScanCountersType"/>
+	<xs:element name="ScanServiceCounters" type="ScanCountersType"/>
+	<xs:complexType name="TransformCountersType">
+		<xs:sequence>
+			<xs:element name="WorkTotals" type="InOutboundCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Summation of all classes of work</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DataStream" type="InOutboundCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>user’s document or image stream counts</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Mainenance" type="OutboundCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>counts while in maintenance mode </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="Availability" minOccurs="0"/>
+			<xs:element ref="Monitoring" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:element name="TransformDocumentCounters" type="TransformCountersType"/>
+	<xs:element name="TransformJobCounters" type="TransformCountersType"/>
+	<xs:element name="TransformServiceCounters" type="TransformCountersType"/>
+	<xs:complexType name="ResourceCountersType">
+		<xs:sequence>
+			<xs:element name="WorkTotals" type="StorageCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Summation of all classes of work</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="DataStream" type="StorageCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>user’s document or image stream counts</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="Mainenance" type="StorageCounts" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>counts while in maintenance mode </xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element ref="Availability" minOccurs="0"/>
+			<xs:element ref="Monitoring" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:element name="ResourceServiceCounters" type="ResourceCountersType"/>
+	<xs:element name="ResourceCounters" type="ResourceCountersType"/>
+	<xs:element name="ImagingServiceCounters" type="SystemTotalsType">
+		<xs:annotation>
+			<xs:documentation>Abstract Data Class</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

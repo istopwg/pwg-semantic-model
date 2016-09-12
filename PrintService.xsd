@@ -1,0 +1,349 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="MediaElements.xsd"/>
+	<xs:include schemaLocation="Counter.xsd"/>
+	<xs:include schemaLocation="DocumentTypes.xsd"/>
+	<xs:include schemaLocation="ServiceTypes.xsd"/>
+	<xs:include schemaLocation="JobTypes.xsd"/>
+	<xs:include schemaLocation="Subunits.xsd"/>
+	<xs:include schemaLocation="PrintServiceDefaults.xsd"/>
+	<xs:include schemaLocation="PrintJobTicket.xsd"/>
+	<xs:include schemaLocation="PrintServiceCapabilities.xsd"/>
+	<!--06/06/12 PJZ Final JPS3 update-->
+	<!--03/12/12 PJZ Aligned with  Raster Last Call-->
+	<!--02/24/11 PJZ Added supported XXXPasswordXXXSupported ServiceDescription elements-->
+	<!--02/02/12 PJZ Fixed DocumentPassword & DocumentPasswordSupported-->
+	<!--12/14/11 PJZ Service Description is mandatory-->
+	<!--12/11/11 PJZ ServiceChargeInfoUri and ServiceOrganizations moved to base class-->
+	<!--11/08/11 PJZ Moved PrintServiceDefaults out to its own schema-->
+	<!--11/08/11 PJZ Removed DefaultDocumentTicket & added extension point-->
+	<!--08/23/11 PJZ Added PWG Raster-->
+	<!--05/05/11 PJZ Added JPS3 elements-->
+	<!--04/21/11 PJZ Added JPS3 elements-->
+	<!--04/21/11 PJZ Fixed QueuedJobCount-->
+	<!--03/06/11 PJZ fixed PdlInitFile names-->
+	<!--03/04/11 PJZ fixed SheetsCompletedCopyNumber and SheetsCompletedDocumentNumber names-->
+	<!--03/02/11 PJZ Fixed PdlInitFile, Removed Overrides from Document-->
+	<!--02/27/11 PJZ Fixed some sheet capabiolities-->
+	<!--02/02/11 PJZ added some cloud elements to ServiceDescription-->
+	<!--01/20/11 PJZ Added print color mode-->
+	<!--12/02/10 PJZ ImpressionsCompleted now mandatory-->
+	<!--11/10/10 PJZ Fixed Cover Front and Back-->
+	<!--10/6/10 PJZ Fixed order of capabilitiers and defaults, JobAccountingSheet-->
+	<!--09/23/10 PJZ Made Compression/DocumentFormat Default/Supported mandatory-->
+	<!--09/23/10 PJZ Fixed capabilitiers and defaults-->
+	<!--09/23/10 PJZ Fixed DocumentFormat/Compression Supported-->
+	<!--08/19/10 PJZ Fixed Resolutions in capability-->
+	<!--06/14/10 PJZ Removed IsHoldingNewJobs-->
+	<!--05/04/10 PJZ Restored PrintJobProcessingCapabilities to PrintServiceCapabilities-->
+	<!--04/24/10 PJZ "MessageFromOperator" now in ServiceDescription base class-->
+	<!--04/1/10 PJZ added "Type" suffix to ComplexTypes-->
+	<!--12/30/09 PJZ Generalized PrintQuality to Quality-->
+	<!--12/28/09 PJZ Removed/replaced deprecated elements-->
+	<!--11/06/09 PJZ Updated Media representation-->
+	<!--010/22/09 PJZ Reworked concrete and abstract classes-->
+	<!--09/09/09 PJZ Made some more Print Service elements common-->
+	<!--08/02/09 PJZ Modified configuration representation-->
+	<!--06/17/09 PJZ Reworked NaturalLanguage-->
+	<!--04/14/09 PJZ Updated Namespace-->
+	<!--01/30/09 PJZ Made IsAcceptingJobs service specific-->
+	<!--11/06/08 PJZ Fixed AllowedValues that were no multivalued, Modified media/mediaCol in capabilities so that media database is only in Document ProcessingCapabilities.  All other references merely indicate if media and/or mediaCol may be used.-->
+	<!--05/31/08 PJZ Move back to ##Other-->
+	<!--05/30/08 PJZ Move back to single namespace-->
+	<!--05/21/08 PJZ Partial alignment with WS-Scan-->
+	<!--03/27/08 PJZ Orientation made specific to printing (removed from here since rotation covers semantics)-->
+	<!--12/12/07 PJZ Reworked Service/Job/Document counters-->
+	<!--11/28/07 PJZ supplied elements are print specific -->
+	<!--11/21/07 PJZ JobSave is print specific-->
+	<!--09/13/07 PJZ Reworked default and supported-->
+	<!--10/08/06 PJZ Reworked dependencies and removed Chameleon-->
+	<!--08/08/06 PJZ Changed namespace-->
+	<!--070706  PJZ Changed xxxJobs to xxxQueue and limited to single queue per service instance-->
+	<!--070606  PJZ Added core, media and counters namespace-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-20011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<!---->
+	<!---->
+	<!-- PrintDocument - group -->
+	<!---->
+	<!-- PrintDocumentStatus - group -->
+	<xs:complexType name="PrintDocumentStatusType">
+		<xs:complexContent>
+			<xs:extension base="ImagingDocumentStatusType">
+				<xs:sequence>
+					<!-- Print Document status references here -->
+					<!-- Print Document counters from service counters definition -->
+					<xs:element ref="CurrentPageOrder" minOccurs="0"/>
+					<xs:element ref="DocumentFormatDetailsDetected" minOccurs="0"/>
+					<xs:element ref="DocumentFormatDetected" minOccurs="0"/>
+					<xs:element ref="DocumentFormatVersionDetected" minOccurs="0"/>
+					<xs:element ref="ImpressionsCompleted" minOccurs="1"/>
+					<xs:element ref="ImpressionsCompletedCurrentCopy" minOccurs="0"/>
+					<xs:element ref="MediaSheetsCompleted" minOccurs="0"/>
+					<xs:element ref="OutputDeviceAssigned" minOccurs="0"/>
+					<xs:element ref="SheetsCompletedCopyNumber" minOccurs="0"/>
+					<xs:element ref="PrintDocumentCounters" minOccurs="0"/>
+					<xs:element ref="ServiceUri" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- PrintDocumentStatus - group -->
+	</xs:complexType>
+	<xs:element name="PrintDocumentStatus" type="PrintDocumentStatusType"/>
+	<!-- PrintDocuments - set of Print Documents -->
+	<xs:complexType name="PrintDocumentsType">
+		<xs:sequence>
+			<xs:element ref="PrintDocument" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- PrintDocuments - set of Print Documents -->
+	</xs:complexType>
+	<xs:element name="PrintDocuments" type="PrintDocumentsType"/>
+	<!-- PrintDocument - object -->
+	<xs:complexType name="PrintDocumentType">
+		<xs:sequence>
+			<xs:element ref="PrintDocumentReceipt" minOccurs="0"/>
+			<xs:element ref="PrintDocumentStatus"/>
+			<xs:element ref="PrintDocumentTicket" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- PrintDocument - object -->
+	</xs:complexType>
+	<xs:element name="PrintDocument" type="PrintDocumentType"/>
+	<!---->
+	<!-- PrintJob - group -->
+	<!---->
+	<!-- PrintJobStatus - group -->
+	<xs:complexType name="PrintJobStatusType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobStatusType">
+				<xs:sequence>
+					<!-- Print job status references here -->
+					<xs:element ref="CompressionDetected" minOccurs="0"/>
+					<xs:element ref="DocumentFormatDetailsDetected" minOccurs="0"/>
+					<xs:element ref="DocumentFormatDetected" minOccurs="0"/>
+					<xs:element ref="DocumentFormatVersionDetected" minOccurs="0"/>
+					<xs:element ref="ImpressionsCompleted" minOccurs="1"/>
+					<xs:element ref="ImpressionsCompletedCurrentCopy" minOccurs="0"/>
+					<xs:element ref="MediaSheetsCompleted" minOccurs="0"/>
+					<xs:element ref="OutputDeviceAssigned" minOccurs="0"/>
+					<xs:element ref="SheetsCompletedCopyNumber" minOccurs="0"/>
+					<xs:element ref="SheetsCompletedDocumentNumber" minOccurs="0"/>
+					<!-- Print job counters from service counters definition -->
+					<xs:element ref="ServiceUri" minOccurs="0"/>
+					<xs:element ref="PrintJobCounters" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- PrintJobStatus - group -->
+	</xs:complexType>
+	<xs:element name="PrintJobStatus" type="PrintJobStatusType"/>
+	<!-- PrintJobs - set of Print jobs -->
+	<xs:complexType name="PrintJobsType">
+		<xs:sequence>
+			<xs:element ref="PrintJob" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- PrintJobs - set of Print jobs -->
+	</xs:complexType>
+	<!-- PrintJob - object -->
+	<xs:complexType name="PrintJobType">
+		<xs:sequence>
+			<xs:element ref="PrintJobReceipt" minOccurs="0"/>
+			<xs:element ref="PrintJobStatus"/>
+			<xs:element ref="PrintJobTicket" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- PrintJob - object -->
+	</xs:complexType>
+	<xs:element name="PrintJob">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="PrintJobType">
+					<xs:sequence>
+						<xs:element ref="PrintDocuments" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<!---->
+	<!-- PrintService - group -->
+	<!---->
+	<!-- PrintServiceStatus - group -->
+	<xs:complexType name="PrintServiceStatusType">
+		<xs:complexContent>
+			<xs:extension base="ImagingServiceStatusType">
+				<xs:sequence>
+					<!-- SM/1.0 Printer group import -->
+					<xs:element ref="ImpressionsCompleted"/>
+					<xs:element ref="IsAcceptingJobs"/>
+					<xs:element ref="PrintServiceCounters" minOccurs="0"/>
+					<xs:element ref="QueuedJobCount" minOccurs="1"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PrintServiceStatus" type="PrintServiceStatusType"/>
+	<!-- PrintServiceDescription - group -->
+	<xs:complexType name="PrintServiceDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="ImagingServiceDescriptionType">
+				<xs:sequence>
+					<xs:element ref="ColorSupported" minOccurs="0"/>
+					<xs:element ref="CompressionDefault" minOccurs="1"/>
+					<xs:element ref="CompressionSupported" minOccurs="1"/>
+					<xs:element ref="DocumentFormatDefault" minOccurs="1"/>
+					<xs:element ref="DocumentFormatSupported" minOccurs="1"/>
+					<xs:element ref="DocumentFormatDetailsDefault" minOccurs="0"/>
+					<xs:element ref="DocumentFormatDetailsSupported" minOccurs="0"/>
+					<xs:element ref="DocumentFormatVersionSupported" minOccurs="0"/>
+					<xs:element ref="DocumentFormatVersionDefault" minOccurs="0"/>
+					<xs:element ref="DocumentPasswordSupported" minOccurs="0"/>
+					<xs:element ref="FeaturesSupported" minOccurs="0"/>
+					<xs:element ref="GetEventLife" minOccurs="0"/>
+					<xs:element ref="IdentifyActionsDefault" minOccurs="0"/>
+					<xs:element ref="IdentifyActionsSupported" minOccurs="0"/>
+					<xs:element ref="ImpressionsSupported" minOccurs="0"/>
+					<xs:element ref="JobConstraintsSupported" minOccurs="0"/>
+					<xs:element ref="JobCreationElementsSupported" minOccurs="0"/>
+					<xs:element ref="JobPasswordEncryptionSupported" minOccurs="0"/>
+					<xs:element ref="JobPasswordSupported" minOccurs="0"/>
+					<xs:element ref="PreferredElementsSupported" minOccurs="0"/>
+					<xs:element ref="JobResolversSupported" minOccurs="0"/>
+					<xs:element ref="JobSettableElementsSupported" minOccurs="0"/>
+					<xs:element ref="JobSpoolingSupported" minOccurs="0"/>
+					<xs:element ref="KOctetsSupported" minOccurs="0"/>
+					<xs:element ref="MaxSaveInfoSupported" minOccurs="0"/>
+					<xs:element ref="MaxStitchingLocationsSupported" minOccurs="0"/>
+					<xs:element ref="MediaBottomMarginSupported"/>
+					<xs:element ref="MediaLeftMarginSupported"/>
+					<xs:element ref="MediaRightMarginSupported"/>
+					<xs:element ref="MediaSheetsSupported" minOccurs="0"/>
+					<xs:element ref="MediaSourceSupported"/>
+					<xs:element ref="MediaTopMarginSupported"/>
+					<xs:element ref="MoreInfoManufacturerUri" minOccurs="0"/>
+					<xs:element ref="MoreInfoUri" minOccurs="0"/>
+					<xs:element ref="MultipleDocumentJobsSupported" minOccurs="0"/>
+					<xs:element ref="MultipleOperationTimeout" minOccurs="0"/>
+					<xs:element ref="MultipleOperationTimeoutAction" minOccurs="0"/>
+					<xs:element ref="PagesPerMinute" minOccurs="0"/>
+					<xs:element ref="PagesPerMinuteColor" minOccurs="0"/>
+					<xs:element ref="ParentPrintersSupported" minOccurs="0"/>
+					<xs:element ref="PdlOverrideSupported" minOccurs="0"/>
+					<xs:element ref="PrinterDetailedStatusMessages" minOccurs="0"/>
+					<xs:element ref="PrinterSettableElementsSupported" minOccurs="0"/>
+					<xs:element ref="PwgRasterDocumentSheetBack" minOccurs="0"/>
+					<xs:element ref="PwgRasterDocumentResolutionSupported" minOccurs="0"/>
+					<xs:element ref="PwgRasterDocumentTypeSupported" minOccurs="0"/>
+					<xs:element ref="ReferenceUriSchemesSupported" minOccurs="0"/>
+					<xs:element ref="RepertoiresSupported" minOccurs="0"/>
+					<xs:element ref="ServiceConfigChangeDateTime" minOccurs="0"/>
+					<xs:element ref="ServiceConfigChangeTime" minOccurs="0"/>
+					<xs:element ref="ServiceIccProfiles" minOccurs="0"/>
+					<xs:element ref="ServiceIcons" minOccurs="0"/>
+					<xs:element ref="ServiceMandatoryJobElements" minOccurs="0"/>
+					<xs:element ref="SubordinatePrintersSupported" minOccurs="0"/>
+					<xs:element ref="UserDefinedValuesSupported" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- PrintServiceDescription - group -->
+	</xs:complexType>
+	<xs:element name="PrintServiceDescription" type="PrintServiceDescriptionType"/>
+	<!-- PrintServices - set of Print services -->
+	<xs:complexType name="PrintServicesType">
+		<xs:sequence>
+			<xs:element ref="PrintService" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- PrintServices - set of Print services -->
+	</xs:complexType>
+	<xs:element name="PrintServices" type="PrintServicesType"/>
+	<!-- PrintService - object -->
+	<xs:element name="JobConstraintsSupported">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="JobConstraint">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ResolverName"/>
+							<xs:element name="JobTicketElements" type="PrintServiceCapabilitiesType"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="JobResolversSupported">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="JobResolver">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ResolverName"/>
+							<xs:element name="JobTicketElements" type="PrintServiceCapabilitiesType"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="PrintServiceBaseType">
+		<xs:sequence>
+			<xs:element ref="PrintServiceCapabilities" minOccurs="0"/>
+			<xs:element ref="PrintServiceCapabilitiesReady" minOccurs="0"/>
+			<xs:element name="PrintServiceConfiguration" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Consoles" minOccurs="0"/>
+						<xs:element ref="Covers" minOccurs="0"/>
+						<xs:element ref="Finishers" minOccurs="0"/>
+						<xs:element ref="InputChannels" minOccurs="0"/>
+						<xs:element ref="InputTrays" minOccurs="0"/>
+						<xs:element ref="Interfaces" minOccurs="0"/>
+						<xs:element ref="Interpreters" minOccurs="0"/>
+						<xs:element ref="Markers" minOccurs="0"/>
+						<xs:element ref="MediaPaths" minOccurs="0"/>
+						<xs:element ref="OutputTrays" minOccurs="0"/>
+						<xs:element ref="Processors" minOccurs="0"/>
+						<xs:element ref="Storages" minOccurs="0"/>
+						<xs:element ref="VendorSubunits" minOccurs="0"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="PrintServiceDefaults" minOccurs="0"/>
+			<xs:element ref="PrintServiceDescription"/>
+			<xs:element ref="PrintServiceStatus"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- PrintService - object -->
+	</xs:complexType>
+	<xs:complexType name="PrintServiceType">
+		<xs:complexContent>
+			<xs:extension base="PrintServiceBaseType">
+				<xs:sequence>
+					<xs:element name="JobTable">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="ActiveJobs" type="PrintJobsType"/>
+								<xs:element name="JobHistory" type="PrintJobsType" minOccurs="0"/>
+								<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PrintService" type="PrintServiceType"/>
+</xs:schema>

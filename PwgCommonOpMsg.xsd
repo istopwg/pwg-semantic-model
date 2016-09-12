@@ -1,0 +1,432 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<!--02/07/12 PJZ Added Limits & FirstIndex to GetDocuments-->
+	<!--01/10/12 PJZ Aligned with latest JPS3 and Raster specs-->
+	<!--06/03/11 PJZ Fixes from May Face to Face-->
+	<!--12/20/10 PJZ Added RestartSystemService-->
+	<!--12/19/10 PJZ Restart/Start All now has a sequence of optional IsAccepting[Jobs|Resources]-->
+	<!--12/16/10 PJZ added IsAcceptingResources, choice of global or local identifier-->
+	<!--07/27/10 PJZ Added  elements to control service state on startup and restart-->
+	<!--06/04/10 PJZ Removed requested elements from get documents-->
+	<!--05/13/10 PJZ Removed extension point from operation signatures-->
+	<!--04/22/10 PJZ added "Message parameter and made all operations extensible-->
+	<!--03/01/10 PJZ Added CloseJob back in-->
+	<!--02/26/10 PJZ Changed file name to better reflect usage-->
+	<!--02/05/10 PJZ Fixed operation names-->
+	<!--01/19/10 PJZ Made all service interfaces homogenous (as much as possible)-->
+	<!--10/23/09 PJZ Updates per October face to face-->
+	<!--04/14/09 PJZ Updated Namespace-->
+	<!--10/03/08 PJZ Aligned admin ops-->
+	<!--PJZ 08/29/08    Initial version-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<xs:include schemaLocation="PwgCommon.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">Complex types for administrative operations</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="ActivateServiceRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ActivateServiceResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="CancelCurrentJobRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobId" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CancelCurrentJobResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="CancelDocumentRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentNumber"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CancelDocumentResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="CancelJobRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CancelJobResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="CancelJobsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element name="JobIds" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="JobId" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CancelJobsResponseType">
+		<xs:sequence>
+			<xs:element name="JobIds" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="JobId" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CancelMyJobsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element name="JobIds" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="JobId" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CancelMyJobsResponseType">
+		<xs:sequence>
+			<xs:element name="JobIds" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="JobId" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CloseJobRequestType">
+		<xs:sequence>
+			<xs:element ref="JobId"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="CloseJobResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="DeactivateServiceRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DeactivateServiceResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="DisableServiceRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="DisableServiceResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="EnableServiceRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="EnableServiceResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="GetDocumentsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguageRequested" minOccurs="0"/>
+			<xs:element ref="FirstIndex" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="Limit" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="GetJobsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguageRequested" minOccurs="0"/>
+			<xs:element ref="FirstIndex" minOccurs="0"/>
+			<xs:element ref="Limit" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HoldJobRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:choice>
+				<xs:element ref="JobHoldUntil"/>
+				<xs:element ref="JobHoldUntilTime"/>
+			</xs:choice>
+			<xs:element ref="JobId"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HoldJobResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="HoldNewJobsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:choice>
+				<xs:element ref="JobHoldUntil"/>
+				<xs:element ref="JobHoldUntilTime"/>
+			</xs:choice>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="HoldNewJobsResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="PauseServiceRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PauseServiceResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="PauseServiceAfterCurrentJobRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PauseServiceAfterCurrentJobResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="PromoteJobRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element name="PredecessorJobId" type="xs:int" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PromoteJobResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="PurgeJobsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PurgeJobsResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="ReleaseJobRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName" minOccurs="0"/>
+			<xs:element ref="RequestingUserUri"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReleaseJobResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="ReleaseNewJobsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ReleaseNewJobsResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="RestartAllServiceRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:sequence minOccurs="0">
+				<xs:element ref="IsAcceptingJobs" minOccurs="0"/>
+				<xs:element ref="IsAcceptingResources" minOccurs="0"/>
+			</xs:sequence>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="StartServicePaused" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RestartAllServiceResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="RestartServiceRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:element ref="IsAcceptingJobs" minOccurs="0"/>
+				<xs:element ref="IsAcceptingResources" minOccurs="0"/>
+			</xs:choice>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="StartServicePaused" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RestartServiceResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="RestartSystemServiceRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="RestartSystemServiceResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="ResumeJobRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResumeJobResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="ResumeServiceRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ResumeServiceResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="ShutdownAllServicesRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ShutdownAllServicesResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="ShutdownServiceRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="ShutdownServiceResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="StartupAllServiceRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:sequence minOccurs="0">
+				<xs:element ref="IsAcceptingJobs" minOccurs="0"/>
+				<xs:element ref="IsAcceptingResources" minOccurs="0"/>
+			</xs:sequence>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="StartServicePaused" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StartupAllServiceResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:complexType name="StartupServiceRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:element ref="IsAcceptingJobs" minOccurs="0"/>
+				<xs:element ref="IsAcceptingResources" minOccurs="0"/>
+			</xs:choice>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="ServiceType"/>
+			<xs:element ref="StartServicePaused" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="StartupServiceResponseType">
+		<xs:sequence>
+			<xs:element ref="Id"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SuspendCurrentJobRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobId" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="SuspendCurrentJobResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+</xs:schema>

@@ -1,0 +1,143 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<!--11/17/11 PJZ Removed "Health" prefix and added container element for sequences-->
+	<!--10/22/11 PJZ changed filename from DeviceHealth to SystemHealth-->
+	<!--12/08/10 PJZ changed hexBinary to base64Binary-->
+	<!--06/11/10 PJZ Added missing type fpr patch-->
+	<!--06/11/10 PJZ Made patches an ordered list of patch-->
+	<!--05/28/10 PJZ incorporated system health to Semaqntic Model-->
+	<!--05/25/10 IEM - IDS Health Attributes for the SystemStatus group -->
+	<!--                            -->
+	<!-- health element definitions -->
+	<!--                            -->
+	<xs:element name="CertificationState" type="xs:base64Binary"/>
+	<xs:element name="ConfigurationState" type="xs:base64Binary"/>
+	<xs:element name="DefaultPasswordEnabled" type="xs:boolean"/>
+	<xs:element name="FirewallSetting" type="xs:base64Binary"/>
+	<xs:element name="FirmwareName" type="xs:string"/>
+	<xs:element name="FirmwarePatches">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="FirmwarePatch" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Reverse chonological order</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="FirmwareStringVersion" type="xs:string"/>
+	<xs:element name="FirmwareVersion" type="xs:base64Binary"/>
+	<xs:element name="Firmware">
+		<!-- See section 5.2.1 (conformance) in PWG HCD Attributes -->
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="FirmwareName"/>
+				<xs:element ref="FirmwarePatches"/>
+				<xs:element ref="FirmwareStringVersion"/>
+				<xs:element ref="FirmwareVersion"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="Firmwares">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Firmware" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ForwardingEnabled" type="xs:boolean"/>
+	<xs:element name="MachineTypeModel" type="xs:string"/>
+	<xs:element name="PSTNFaxEnabled" type="xs:boolean"/>
+	<xs:element name="ResidentApplicationName" type="xs:string"/>
+	<xs:element name="ResidentApplicationPatches">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="ResidentApplicationPatch" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Reverse chonological order</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ResidentApplicationStringVersion" type="xs:string"/>
+	<xs:element name="ResidentApplicationVersion" type="xs:base64Binary"/>
+	<xs:element name="ResidentApplication">
+		<!-- See section 5.2.2.2 (conformance) in PWG HCD Attributes -->
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ResidentApplicationName"/>
+				<xs:element ref="ResidentApplicationPatches"/>
+				<xs:element ref="ResidentApplicationStringVersion"/>
+				<xs:element ref="ResidentApplicationVersion"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ResidentApplications">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ResidentApplication" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="TimeSource" type="xs:string"/>
+	<xs:element name="UserApplicationEnabled" type="xs:boolean"/>
+	<xs:element name="UserApplicationPersistenceEnabled" type="xs:boolean"/>
+	<xs:element name="UserApplicationName" type="xs:string"/>
+	<xs:element name="UserApplicationPatches">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="UserApplicationPatch" type="xs:string" minOccurs="0" maxOccurs="unbounded">
+					<xs:annotation>
+						<xs:documentation>Reverse chonological order</xs:documentation>
+					</xs:annotation>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="UserApplications">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="UserApplication" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="UserApplicationStringVersion" type="xs:string"/>
+	<xs:element name="UserApplicationVersion" type="xs:base64Binary"/>
+	<xs:element name="UserApplication">
+		<!-- See section 5.2.2.1 (conformance) in PWG HCD Attributes -->
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="UserApplicationName"/>
+				<xs:element ref="UserApplicationPatches"/>
+				<xs:element ref="UserApplicationStringVersion"/>
+				<xs:element ref="UserApplicationVersion"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="VendorName" type="xs:string"/>
+	<xs:element name="VendorSMICode" type="xs:int"/>
+	<xs:element name="SystemHealth">
+		<!-- See section 5.2 (conformance) in PWG HCD Attributes -->
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CertificationState" minOccurs="0"/>
+				<xs:element ref="ConfigurationState" minOccurs="0"/>
+				<xs:element ref="DefaultPasswordEnabled"/>
+				<xs:element ref="FirewallSetting"/>
+				<xs:element ref="Firmwares"/>
+				<xs:element ref="ForwardingEnabled"/>
+				<xs:element ref="MachineTypeModel"/>
+				<xs:element ref="PSTNFaxEnabled" minOccurs="0"/>
+				<xs:element ref="ResidentApplications" minOccurs="0"/>
+				<xs:element ref="TimeSource" minOccurs="0"/>
+				<xs:element ref="UserApplicationEnabled"/>
+				<xs:element ref="UserApplicationPersistenceEnabled"/>
+				<xs:element ref="UserApplications" minOccurs="0"/>
+				<xs:element ref="VendorName"/>
+				<xs:element ref="VendorSMICode"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

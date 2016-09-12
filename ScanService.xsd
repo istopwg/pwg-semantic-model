@@ -1,0 +1,641 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="Counter.xsd"/>
+	<xs:include schemaLocation="DocumentTypes.xsd"/>
+	<xs:include schemaLocation="JobTypes.xsd"/>
+	<xs:include schemaLocation="ServiceTypes.xsd"/>
+	<xs:include schemaLocation="Subunits.xsd"/>
+	<xs:include schemaLocation="MediaElements.xsd"/>
+	<xs:include schemaLocation="PwgCommon.xsd"/>
+	<!--02/24/11 PJZ Added supported XXXPasswordXXXSupported ServiceDescription elements-->
+	<!--01/06/12 PJZ Changed name of ContentRegionUnits to RegionUnits-->
+	<!--12/14/11 PJZ Service Description is mandatory-->
+	<!--12/11/11 PJZ ServiceChargeInfoUri and ServiceOrganizations moved to base class-->
+	<!--11/14/11 PJZ Added DestinationUris and associated elements-->
+	<!--11/08/11 PJZ Removed DefaultDocumentTicket & added extension point-->
+	<!--09/10/11 PJZ Added missing MustHonor and attribute extensions-->
+	<!--04/21/11 PJZ Added service charge stuff-->
+	<!--04/21/11 PJZ Fixed QueuedJobCount-->
+	<!--02/02/11 PJZ Removed Finisher, added storage-->
+	<!--02/02/11 PJZ Fixed missing ScanDocument in Scan Job-->
+	<!--02/02/11 PJZ added some cloud elements to ServiceDescription-->
+	<!--12/06/10 PJZ ImagesCompleted mandatory for Service-->
+	<!--12/02/10 PJZ ImagesCompleted mandatory for Jobs and Documents-->
+	<!--10/11/10 PJZ Fixed Service Description base type-->
+	<!--09/23/10 PJZ Fixed capabilitiers and defaults-->
+	<!--08/19/10 PJZ Fixed Resolutions in capability-->
+	<!--06/14/10 PJZ Removed IsHoldingNewJobs-->
+	<!--04/1/10 PJZ added "Type" suffix to ComplexTypes-->
+	<!--01/19/10 PJZ Added ImagesCompleted to Document Status-->
+	<!--10/22/09 PJZ Reworked concrete and abstract classes-->
+	<!--08/02/09 PJZ Modified configuration representation-->
+	<!--07/20/09 PJZ Added Capabilities Ready-->
+	<!--04/14/09 PJZ Updated Namespace-->
+	<!--01/30/09 PJZ Made IsAcceptingJobs service specific-->
+	<!--01/19/09 PJZ Needed a set of Scan Region capabilities (expressed in each of the supported units), fixed missing capabilities-->
+	<!--11/06/08 PJZ Fixed AllowedValues (should be unbounded)-->
+	<!--05/31/08 PJZ Move back to ##Other-->
+	<!--05/30/08 PJZ Move back to single namespace-->
+	<!--05/21/08 PJZ Partial alignment with WS-Scan-->
+	<!--05/21/08 PJZ WS-Scan alignment-->
+	<!--03/27/08 PJZ Simplified Magnification syntax and semantics-->
+	<!--02/03/08 PJZ Adjusted Scan semantics-->
+	<!--09/13/07 PJZ Reworked default and supported-->
+	<!--10/08/06 PJZ Reworked dependencies and removed Chameleon-->
+	<!--07/20/06 PJZ Updated based on PWG input-->
+	<!--10/04/06 PJZ Created-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<!--Some common Scan things -->
+	<!-- ScanDocumentStatus - group -->
+	<xs:complexType name="ScanDocumentStatusType">
+		<xs:complexContent>
+			<xs:extension base="ImagingDocumentStatusType">
+				<xs:sequence>
+					<!-- Scan Document status references here -->
+					<!-- Scan Document counters from service counters definition -->
+					<xs:element ref="ImagesCompleted"/>
+					<xs:element ref="ScanDocumentCounters" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- ScanDocumentStatus - group -->
+	</xs:complexType>
+	<xs:element name="ScanDocumentStatus" type="ScanDocumentStatusType"/>
+	<!--ScanTicket - groups-->
+	<xs:complexType name="ScanJobTicketType">
+		<xs:sequence>
+			<xs:element ref="ScanDocumentProcessing" minOccurs="0"/>
+			<xs:element ref="ScanJobDescription" minOccurs="0"/>
+			<xs:element ref="ScanJobProcessing" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:element name="ScanJobTicket" type="ScanJobTicketType"/>
+	<xs:element name="ScanJobReceipt" type="ScanJobTicketType"/>
+	<xs:element name="DefaultScanJobTicket" type="ScanJobTicketType"/>
+	<xs:complexType name="ScanDocumentTicketType">
+		<xs:sequence>
+			<xs:element ref="ScanDocumentDescription" minOccurs="0"/>
+			<xs:element ref="ScanDocumentProcessing" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:element name="ScanDocumentTicket" type="ScanDocumentTicketType"/>
+	<xs:element name="ScanDocumentReceipt" type="ScanDocumentTicketType"/>
+	<!--DefaultScanTicket - group -->
+	<!-- ScanDocumentDescription - group -->
+	<xs:complexType name="ScanDocumentDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="ImagingDocumentDescriptionType">
+				<xs:sequence>
+					<!-- Scan Document description references here -->
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- ScanDocumentDescription - group -->
+	</xs:complexType>
+	<xs:element name="ScanDocumentDescription" type="ScanDocumentDescriptionType"/>
+	<!-- ScanDocuments - set of Scan Documents -->
+	<xs:complexType name="ScanDocumentsType">
+		<xs:sequence>
+			<xs:element ref="ScanDocument" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- ScanDocuments - set of Scan Documents -->
+	</xs:complexType>
+	<xs:element name="ScanDocuments" type="ScanDocumentsType"/>
+	<!-- ScanDocument - object -->
+	<xs:complexType name="ScanDocumentType">
+		<xs:sequence>
+			<xs:element name="ScanDocumentReceipt" type="ScanDocumentTicketType" minOccurs="0"/>
+			<xs:element ref="ScanDocumentStatus"/>
+			<xs:element ref="ScanDocumentTicket" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- ScanDocument - object -->
+	</xs:complexType>
+	<xs:element name="ScanDocument" type="ScanDocumentType"/>
+	<!-- ScanJobStatus - group -->
+	<xs:complexType name="ScanJobStatusType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobStatusType">
+				<xs:sequence>
+					<!-- Scan job status references here -->
+					<!-- Scan job counters from service counters definition -->
+					<xs:element name="DestinationsStatuses" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="DestinationsStatus" maxOccurs="unbounded">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="DestinationURI" type="xs:anyURI"/>
+											<xs:element name="TransmissionStatus" type="TransmissionStatusWKV"/>
+											<xs:element ref="ImagesCompleted"/>
+											<xs:any namespace="##other" minOccurs="0"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element ref="ImagesCompleted" minOccurs="1"/>
+					<xs:element ref="ScanJobCounters" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- ScanJobStatus - group -->
+	</xs:complexType>
+	<xs:element name="ScanJobStatus" type="ScanJobStatusType"/>
+	<!-- ScanJobDescription - group -->
+	<xs:complexType name="ScanJobDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobDescriptionType">
+				<xs:sequence>
+					<!-- Scan job description references here -->
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- ScanJobDescription - group -->
+	</xs:complexType>
+	<xs:element name="ScanJobDescription" type="ScanJobDescriptionType"/>
+	<!-- ScanJobProcessing - group -->
+	<xs:complexType name="ScanJobProcessingType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobProcessingType">
+				<xs:sequence>
+					<!-- Scan job processing references here -->
+					<xs:element ref="BatchMode" minOccurs="0"/>
+					<xs:element ref="DocumentOutputMode" minOccurs="0"/>
+					<xs:element ref="MultipleSetOriginal" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- ScanJobProcessing - group -->
+	</xs:complexType>
+	<xs:element name="ScanJobProcessing" type="ScanJobProcessingType"/>
+	<!-- ScanDocumentProcessing - group -->
+	<xs:complexType name="ScanDocumentProcessingType">
+		<xs:complexContent>
+			<xs:extension base="ImagingDocumentProcessingType">
+				<xs:sequence>
+					<!-- Scan document processing references here -->
+					<xs:element ref="AutoSkewCorrection" minOccurs="0"/>
+					<xs:element ref="ColorEntry" minOccurs="0"/>
+					<xs:element ref="Compression" minOccurs="0"/>
+					<xs:element ref="CompressionQualityFactor" minOccurs="0"/>
+					<xs:element ref="ContentType" minOccurs="0"/>
+					<xs:choice>
+						<xs:element ref="Destination"/>
+						<xs:element ref="DestinationUris"/>
+					</xs:choice>
+					<xs:element ref="DocumentDigitalSignature" minOccurs="0"/>
+					<xs:element ref="DocumentFormat" minOccurs="0"/>
+					<xs:element ref="Exposure" minOccurs="0"/>
+					<xs:element ref="FilmScanMode" minOccurs="0"/>
+					<xs:element ref="ImagesToTransfer" minOccurs="0"/>
+					<xs:element ref="InputSource" minOccurs="0"/>
+					<xs:element ref="MediaBox" minOccurs="0"/>
+					<xs:element ref="Resolution" minOccurs="0"/>
+					<xs:element ref="Rotation" minOccurs="0"/>
+					<xs:element ref="Scaling" minOccurs="0"/>
+					<xs:choice>
+						<xs:element ref="ScanRegions" minOccurs="0"/>
+						<xs:element ref="DocumentSizeAutoDetect" minOccurs="0"/>
+					</xs:choice>
+					<xs:element ref="Sides" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- ScanDocumentProcessing - group -->
+	</xs:complexType>
+	<xs:element name="ScanDocumentProcessing" type="ScanDocumentProcessingType"/>
+	<!-- ScanJobs - set of Scan jobs -->
+	<xs:complexType name="ScanJobsType">
+		<xs:sequence>
+			<xs:element ref="ScanJob" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- ScanJobs - set of Scan jobs -->
+	</xs:complexType>
+	<!-- ScanJob - object -->
+	<xs:complexType name="ScanJobType">
+		<xs:sequence>
+			<xs:element name="ScanJobReceipt" type="ScanJobTicketType" minOccurs="0"/>
+			<xs:element ref="ScanJobStatus"/>
+			<xs:element ref="ScanJobTicket" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- ScanJob - object -->
+	</xs:complexType>
+	<xs:element name="ScanJob">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ScanJobType">
+					<xs:sequence>
+						<xs:element ref="ScanDocuments" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<!-- ScanServiceStatus - group -->
+	<xs:complexType name="ScanServiceStatusType">
+		<xs:complexContent>
+			<xs:extension base="ImagingServiceStatusType">
+				<xs:sequence>
+					<xs:element ref="ImagesCompleted"/>
+					<xs:element ref="IsAcceptingJobs"/>
+					<xs:element ref="QueuedJobCount" minOccurs="1"/>
+					<xs:element ref="ScanServiceCounters" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- ScanServiceStatus - group -->
+	</xs:complexType>
+	<xs:element name="ScanServiceStatus" type="ScanServiceStatusType"/>
+	<!-- ScanServiceDescription - group -->
+	<xs:complexType name="ScanServiceDescriptionType">
+		<xs:complexContent>
+			<xs:extension base="ImagingServiceDescriptionType">
+				<xs:sequence>
+					<!--  service type (function of this service object) REQUIRED - MUST be single-valued  see WIMS Object Model - section 4 [WIMS-PRO] -->
+					<!--  list of URI supported by this service  REQUIRED - MAY be multi-valued  see printer-uri-supported - section 4.4.1 [RFC2911] -->
+					<!-- service vendor-supplied description and/or label  OPTIONAL - MUST be single-valued  see printer-info - section 4.4.6 [RFC2911] -->
+					<!--  Object administrative name OPTIONAL - MUST be single-valued  see printer-name - section 4.4.4 [RFC2911]  see prtGeneralPrinterName - section 6 [RFC3805] -->
+					<!-- list of services (by ID/name/URI) subordinate to this service  REQUIRED - MAY be multi-valued -->
+					<!-- list of devices (by ID/name/URI) subordinate to this service  REQUIRED - MAY be multi-valued -->
+					<!-- list of subunits (by ID) supported by this service,  REQUIRED - MAY be multi-valued  see Printer Sub-Units - section 2.2 [RFC3805] -->
+					<!--  document formats supported by this service REQUIRED - MAY be multi-valued  see document-format-supported - section 4.4.22 [RFC2911] -->
+					<!-- list of resources (by ID/name/URI) supported by this service  OPTIONAL - MAY be multi-valued see ResourceId in Resource XML schema  see ResourceName in Resource XML schema -->
+					<xs:element ref="DocumentPasswordSupported" minOccurs="0"/>
+					<xs:element ref="JobPasswordSupported" minOccurs="0"/>
+					<xs:element ref="JobPasswordEncryptionSupported" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- ScanServiceDescription - group -->
+	</xs:complexType>
+	<xs:element name="ScanServiceDescription" type="ScanServiceDescriptionType"/>
+	<!-- ScanService Capabilities - group -->
+	<xs:complexType name="ScanDocumentProcessingCapabilitiesType">
+		<xs:complexContent>
+			<xs:extension base="ImagingDocumentProcessingCapabilitiesType">
+				<xs:sequence>
+					<xs:element name="AutoSkewCorrection" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="ColorEntry" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" maxOccurs="unbounded">
+									<xs:simpleType>
+										<xs:union memberTypes="ColorEntryWKV KeywordNsExtensionPattern"/>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Compression" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" type="CompressionType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="CompressionQualityFactor" type="RangeOfIntType" minOccurs="0"/>
+					<xs:element name="ContentType" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" type="ContentTypeType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Destination" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="DestinationUriSchemes" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValues" type="xs:string" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="DestinationUris" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="DestinationUriSchemes" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValues" type="xs:string" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="PreDialString" type="xs:boolean" minOccurs="0"/>
+								<xs:element name="PostDialString" type="xs:boolean" minOccurs="0"/>
+								<xs:element name="T33Subaddress" type="xs:boolean" minOccurs="0"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="DocumentDigitalSignature" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" type="DocumentDigitalSignatureType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="DocumentFormat" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" type="DocumentFormatType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Exposure" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AutoExposure" type="xs:boolean" minOccurs="0"/>
+								<xs:element name="Brightness" type="xs:boolean" minOccurs="0"/>
+								<xs:element name="Contrast" type="xs:boolean" minOccurs="0"/>
+								<xs:element name="Sharpness" type="xs:boolean" minOccurs="0"/>
+								<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="FilmScanMode" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" type="FilmScanModeType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="ImagesToTransfer" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="InputSource" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValues" type="InputSourceType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="MediaBox" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="ImageBox">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="Height" type="RangeOfIntType"/>
+											<xs:element name="Width" type="RangeOfIntType"/>
+											<xs:element name="XOffset" type="RangeOfIntType" minOccurs="0"/>
+											<xs:element name="YOffset" type="RangeOfIntType" minOccurs="0"/>
+											<xs:element name="ContentRegionUnits">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="AllowedValues" type="ContentRegionUnitsType" maxOccurs="unbounded"/>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="ImageCroppingPolicy">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValues" type="ImageCroppingPolicyType" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="MediaSizeName">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValues" type="MediaSizeNameType" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="OrientationRequested">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValues" type="OrientationRequestedType" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Resolutions" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="Resolution" maxOccurs="unbounded">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="CrossFeedDir">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="AllowedValue" type="xs:int"/>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="FeedDir">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="AllowedValue" type="xs:int"/>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element ref="Units"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Rotation" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" type="RotationWKV" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Scaling" minOccurs="0">
+						<xs:complexType>
+							<xs:choice>
+								<xs:sequence>
+									<xs:element name="ScalingHeight" type="RangeOfIntType"/>
+									<xs:element name="ScalingWidth" type="RangeOfIntType"/>
+								</xs:sequence>
+								<xs:element name="AutoScaling" type="xs:boolean"/>
+							</xs:choice>
+						</xs:complexType>
+					</xs:element>
+					<xs:sequence minOccurs="0">
+						<xs:element name="DocumentSizeAutoDetect" type="xs:boolean" minOccurs="0"/>
+						<xs:element name="ScanRegions" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="ScanRegion" minOccurs="0" maxOccurs="unbounded">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="Height" type="RangeOfIntType"/>
+												<xs:element ref="RegionUnits"/>
+												<xs:element name="Width" type="RangeOfIntType"/>
+												<xs:element name="XOffset" type="RangeOfIntType" minOccurs="0"/>
+												<xs:element name="YOffset" type="RangeOfIntType" minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+					<xs:element name="Sides" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValues" type="SidesType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ScanDocumentProcessingCapabilities" type="ScanDocumentProcessingCapabilitiesType"/>
+	<xs:complexType name="ScanJobDescriptionCapabilitiesType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobDescriptionCapabilitiesType">
+				<xs:sequence>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ScanJobDescriptionCapabilities" type="ScanJobDescriptionCapabilitiesType"/>
+	<xs:complexType name="ScanJobProcessingCapabilitiesType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobProcessingCapabilitiesType">
+				<xs:sequence>
+					<xs:element name="BatchMode" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="DocumentOutputMode" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" type="DocumentOutputModeType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="MultipleSetOriginal" type="xs:boolean" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ScanJobProcessingCapabilities" type="ScanJobProcessingCapabilitiesType"/>
+	<xs:complexType name="ScanJobTicketCapabilitiesType">
+		<xs:sequence>
+			<xs:element ref="ScanDocumentProcessingCapabilities" minOccurs="0"/>
+			<xs:element ref="ScanJobDescriptionCapabilities" minOccurs="0"/>
+			<xs:element ref="ScanJobProcessingCapabilities" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:element name="ScanJobTicketCapabilities" type="ScanJobTicketCapabilitiesType"/>
+	<xs:complexType name="ScanServiceCapabilitiesType">
+		<xs:sequence>
+			<xs:element ref="ScanJobTicketCapabilities" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ScanServiceCapabilities" type="ScanServiceCapabilitiesType"/>
+	<xs:element name="ScanServiceCapabilitiesReady" type="ScanServiceCapabilitiesType"/>
+	<xs:element name="ScanServiceDefaults">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="DefaultScanJobTicket" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- ScanServiceProcessingReady - group -->
+	<xs:element name="ScanCapabilitiesReady"/>
+	<!-- ScanService Configuration - group -->
+	<xs:element name="ScanServiceConfiguration">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="Consoles" minOccurs="0"/>
+				<xs:element ref="Covers" minOccurs="0"/>
+				<xs:element ref="Interfaces" minOccurs="0"/>
+				<xs:element ref="Interpreters" minOccurs="0"/>
+				<xs:element ref="OutputChannels" minOccurs="0"/>
+				<xs:element ref="Processors" minOccurs="0"/>
+				<xs:element ref="ScanMediaPaths" minOccurs="0"/>
+				<xs:element ref="Scanners" minOccurs="0"/>
+				<xs:element ref="Storages" minOccurs="0"/>
+				<xs:element ref="VendorSubunits" minOccurs="0"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!-- ScanServices - set of Scan services -->
+	<xs:complexType name="ScanServicesType">
+		<xs:sequence>
+			<xs:element ref="ScanService" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- ScanServices - set of Scan services -->
+	</xs:complexType>
+	<xs:element name="ScanServices" type="ScanServicesType"/>
+	<!-- ScanService - object -->
+	<xs:complexType name="ScanServiceBaseType">
+		<xs:sequence>
+			<xs:element ref="ScanServiceCapabilities" minOccurs="0"/>
+			<xs:element ref="ScanServiceCapabilitiesReady" minOccurs="0"/>
+			<xs:element ref="ScanServiceConfiguration" minOccurs="0"/>
+			<xs:element ref="ScanServiceDefaults" minOccurs="0"/>
+			<xs:element ref="ScanServiceDescription"/>
+			<xs:element ref="ScanServiceStatus"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- ScanService - object -->
+	</xs:complexType>
+	<xs:complexType name="ScanServiceType">
+		<xs:complexContent>
+			<xs:extension base="ScanServiceBaseType">
+				<xs:sequence>
+					<xs:element name="JobTable">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="ActiveJobs" type="ScanJobsType"/>
+								<xs:element name="JobHistory" type="ScanJobsType" minOccurs="0"/>
+								<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="ScanService" type="ScanServiceType"/>
+</xs:schema>

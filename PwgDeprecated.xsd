@@ -1,0 +1,263 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="PwgWellKnownValues.xsd"/>
+	<!--11/02/11 PJZ Removed PdlInitFile-->
+	<!--12/31/09 PJZ Added more-->
+	<!--07/09/09 PJZ Document deprecated element and their replacement-->
+	<!---->
+	<xs:annotation>
+		<xs:documentation>Deprecated Complex Types</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="DocumentOverrides">
+		<xs:annotation>
+			<xs:documentation>Document (object)</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:choice minOccurs="0">
+				<xs:element name="InputDocuments" type="xs:int" minOccurs="0" maxOccurs="unbounded"/>
+				<xs:element name="OutputDocuments" type="xs:int" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:choice>
+			<xs:element name="Copies" type="xs:int" minOccurs="0"/>
+			<xs:element name="DocumentFormat" minOccurs="0"/>
+			<xs:element name="DocumentName" type="xs:string" minOccurs="0"/>
+			<xs:element name="Compression" minOccurs="0"/>
+			<xs:element name="DocumentNaturalLanguage" minOccurs="0"/>
+			<xs:element name="PageRangesSupported" type="xs:int" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Deprecated Semantic elements from IPP</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ElementFidelity" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation>MustHonor attributes or JobMandatoryElements element</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PrinterAuthenticationSupported">
+		<xs:annotation>
+			<xs:documentation>XriSupported.Xri.XriAuthentication</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:union memberTypes="pwg:UriAuthenticationWKV pwg:KeywordNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="PrinterDriverInstaller" type="xs:anyURI">
+		<xs:annotation>
+			<xs:documentation source="www.pwg.org">None</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PrinterInfo">
+		<xs:annotation>
+			<xs:documentation>ServiceInfo</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="127"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="PrinterIsAcceptingJobs" type="xs:boolean">
+		<xs:annotation>
+			<xs:documentation>IsAcceptingJobs</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PrinterLocation">
+		<xs:annotation>
+			<xs:documentation>ServiceLocation</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="127"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="PrinterMakeAndModel">
+		<xs:annotation>
+			<xs:documentation>MakeAndModel</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="127"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="PrinterMessageDateTime" type="xs:dateTime">
+		<xs:annotation>
+			<xs:documentation>MessageDateTime</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PrinterMessageFromOperator">
+		<xs:annotation>
+			<xs:documentation>MessageFromOperator</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="127"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="PrinterMessageTime" type="xs:int">
+		<xs:annotation>
+			<xs:documentation>MessageTime</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PrinterMoreInfo" type="xs:anyURI">
+		<xs:annotation>
+			<xs:documentation>MoreInfoUri</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PrinterMoreInfoManufacturer" type="xs:anyURI">
+		<xs:annotation>
+			<xs:documentation>MoreInfoManufacturerUri</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PrinterName">
+		<xs:annotation>
+			<xs:documentation>ServiceName</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="127"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="PrintQuality" type="PrintQualityWKV">
+		<xs:annotation>
+			<xs:documentation>Quality</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PrinterResolution" type="pwg:PrinterStateWKV">
+		<xs:annotation>
+			<xs:documentation>Resolution</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PrinterSecuritySupported">
+		<xs:annotation>
+			<xs:documentation>XriSupported.Xri.XriSecurity</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:union memberTypes="pwg:UriSecurityWKV pwg:KeywordNsExtensionPattern"/>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="PrinterState" type="pwg:PrinterStateWKV">
+		<xs:annotation>
+			<xs:documentation>State</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PrinterStateMessage">
+		<xs:annotation>
+			<xs:documentation>StateMessage</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:string">
+				<xs:maxLength value="1023"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="PrinterStateReasons">
+		<xs:annotation>
+			<xs:documentation>StateReasons</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="PrinterStateReason" minOccurs="0" maxOccurs="unbounded">
+					<xs:simpleType>
+						<xs:union memberTypes="pwg:PrinterStateReasonsWKVs pwg:KeywordNsExtensionPattern"/>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PrinterUpTime" type="xs:int">
+		<xs:annotation>
+			<xs:documentation>UpTime</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="PrinterUri">
+		<xs:annotation>
+			<xs:documentation>ServiceUri</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:anyURI">
+				<xs:maxLength value="1023"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="PrinterUriSupported">
+		<xs:annotation>
+			<xs:documentation>XriSupported.Xri.XriUri</xs:documentation>
+		</xs:annotation>
+		<xs:simpleType>
+			<xs:restriction base="xs:anyURI">
+				<xs:maxLength value="1023"/>
+			</xs:restriction>
+		</xs:simpleType>
+	</xs:element>
+	<xs:element name="PrinterXriSupported">
+		<xs:annotation>
+			<xs:documentation>XriSupported</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="Xri" minOccurs="0" maxOccurs="unbounded">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="XriUri">
+								<xs:simpleType>
+									<xs:restriction base="xs:anyURI">
+										<xs:maxLength value="1023"/>
+									</xs:restriction>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="XriAuthentication" minOccurs="0">
+								<xs:simpleType>
+									<xs:union memberTypes="pwg:UriAuthenticationWKV pwg:KeywordNsExtensionPattern"/>
+								</xs:simpleType>
+							</xs:element>
+							<xs:element name="XriSecurity" minOccurs="0">
+								<xs:simpleType>
+									<xs:union memberTypes="pwg:UriSecurityWKV pwg:KeywordNsExtensionPattern"/>
+								</xs:simpleType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ServiceURISupported" type="xs:anyURI">
+		<xs:annotation>
+			<xs:documentation>Deprecated</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:element name="UriAuthenticationSupported">
+		<xs:annotation>
+			<xs:documentation>XriSupported.Xri.XriAuthentication</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="UriAuthentication" minOccurs="0" maxOccurs="unbounded">
+					<xs:simpleType>
+						<xs:union memberTypes="pwg:UriAuthenticationWKV pwg:KeywordNsExtensionPattern"/>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="UriSecuritySupported">
+		<xs:annotation>
+			<xs:documentation>XriSupported.Xri.XriSecurity</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="UriSecurity" minOccurs="0" maxOccurs="unbounded">
+					<xs:simpleType>
+						<xs:union memberTypes="pwg:UriSecurityWKV pwg:KeywordNsExtensionPattern"/>
+					</xs:simpleType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

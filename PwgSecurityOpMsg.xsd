@@ -1,0 +1,38 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<!--01/10/12 PJZ Aligned with latest JPS3 and Raster specs-->
+	<!--07/30/2011 JBM Initial version-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v3   
+
+Copyright 2002-2016, IEEE Industry Standards and Technology Organization/SM Working Group. 
+All rights reserved  
+
+    - version 1.3 2 Feb 2015 -Editors:  Joe Murdock, Peter Zehler, Ira McDonald, Daniel Manchala 
+</xs:documentation>
+	</xs:annotation>
+	<xs:include schemaLocation="Security.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">Complex types and elements specific to operations</xs:documentation>
+	</xs:annotation>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">Operation and Response messages</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="GetSecurityElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguageRequested" minOccurs="0"/>
+			<xs:element name="RequestingSecurityOwner" type="SecurityIdentificationType"/>
+			<xs:element name="OwnerAuthentication" type="AuthenticationInfoType"/>
+			<xs:element name="RequestedSecurityElements" type="SecurityElementsType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetSecurityElementsRequest" type="GetSecurityElementsRequestType"/>
+	<xs:complexType name="GetSecurityElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element name="SecurityElements" type="SecurityElementsType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetSecurityElementsResponse" type="GetSecurityElementsResponseType"/>
+</xs:schema>

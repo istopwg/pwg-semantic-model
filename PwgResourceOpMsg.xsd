@@ -1,0 +1,293 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<!--01/10/12 PJZ Aligned with latest JPS3 and Raster specs-->
+	<!--09/20/11 PJZ Moved ResourceSummary & Type to PwgCommon-->
+	<!--07/19/11 PJZ Completed fixes for Set operation-->
+	<!--05/02/11 PJZ Added missing SetResourceServiceElement operation-->
+	<!--05/02/11 PJZ Removed Startup operation-->
+	<!--05/13/10 PJZ Removed extension point from operation signatures-->
+	<!--04/22/10 PJZ added "Message parameter and made all operations extensible-->
+	<!--01/02/10 PJZ Gets/Sets now contain NaturalLanguage(declarative) and ElementsNaturalLanguageRequested(request) as appropriate-->
+	<!--05/06/09 PJZ changed Get/Put to Store/Retrieve-->
+	<!--04/14/09 PJZ Updated Namespace-->
+	<!--02/04/09 PJZ Added Restart operation and added Resource ID to PutResource response-->
+	<!--11/06/08 PJZ Removed Pause and Resume-->
+	<!--02/04/09 PJZ Fixed Resource Data MTOM attachment-->
+	<!--07/11/08 PJZ Changed to Resource-->
+	<!--05/31/08 PJZ Move back to ##Other-->
+	<!--05/30/08 PJZ Move back to single namespace-->
+	<!--05/21/08 PJZ Partial alignment with WS-Scan-->
+	<!--PJZ 12/14/07   Updates per 12/11 Face to Face meeting-->
+	<!--PJZ 07/09/07    Initial version-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<xs:include schemaLocation="PwgCommon.xsd"/>
+	<xs:include schemaLocation="Subunits.xsd"/>
+	<xs:include schemaLocation="PwgWellKnownValues.xsd"/>
+	<xs:include schemaLocation="ResourceService.xsd"/>
+	<xs:include schemaLocation="PwgCommonOpMsg.xsd"/>
+	<xs:import namespace="http://www.w3.org/2004/08/xop/include" schemaLocation="include.xsd"/>
+	<xs:import namespace="http://www.w3.org/2005/05/xmlmime" schemaLocation="xmlmime.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">Operation and Response messages</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="DeleteResourceRequestType">
+		<xs:sequence>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName" minOccurs="0"/>
+			<xs:element ref="RequestingUserUri"/>
+			<xs:element ref="ResourceCreatorUserName" minOccurs="0"/>
+			<xs:element ref="ResourceId"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="DeleteResourceRequest" type="DeleteResourceRequestType"/>
+	<xs:complexType name="DeleteResourceResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:element name="DeleteResourceResponse" type="DeleteResourceResponseType"/>
+	<xs:element name="DisableResourceServiceRequest" type="DisableServiceRequestType"/>
+	<xs:element name="DisableResourceServiceResponse" type="DisableServiceResponseType"/>
+	<xs:element name="EnableResourceServiceRequest" type="EnableServiceRequestType"/>
+	<xs:element name="EnableResourceServiceResponse" type="EnableServiceResponseType"/>
+	<xs:complexType name="GetResourceServiceElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguageRequested" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="RequestedElements" minOccurs="0"/>
+			<xs:element ref="ResourceCreatorUserName" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetResourceServiceElementsRequest" type="GetResourceServiceElementsRequestType"/>
+	<xs:complexType name="GetResourceServiceElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element name="ResourceServiceCapability" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="NaturalLanguageSupported" minOccurs="0" maxOccurs="unbounded"/>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="ResourceServiceConfiguration" minOccurs="0"/>
+			<xs:element ref="ResourceServiceDescription" minOccurs="0"/>
+			<xs:element ref="ResourceServiceStatus" minOccurs="0"/>
+		</xs:sequence>
+		<!-- ResourceService - object -->
+	</xs:complexType>
+	<xs:element name="GetResourceServiceElementsResponse" type="GetResourceServiceElementsResponseType"/>
+	<xs:complexType name="GetResourceElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguageRequested" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="ResourceCategory" minOccurs="0"/>
+			<xs:element ref="ResourceCreatorUserName" minOccurs="0"/>
+			<xs:element ref="RequestedElements" minOccurs="0"/>
+			<xs:element ref="ResourceId"/>
+			<xs:element ref="ResourceType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetResourceElementsRequest" type="GetResourceElementsRequestType"/>
+	<xs:complexType name="GetResourceElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="ResourceDescription" minOccurs="0"/>
+			<xs:element ref="ResourceStatus" minOccurs="0"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:element name="GetResourceElementsResponse" type="GetResourceElementsResponseType"/>
+	<xs:complexType name="ListResourcesRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="ResourceCreatorUserName" minOccurs="0"/>
+			<xs:element ref="ResourceCategory" minOccurs="0"/>
+			<xs:element ref="ResourceName" minOccurs="0"/>
+			<xs:element ref="ResourceType" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ListResourcesRequest" type="ListResourcesRequestType"/>
+	<xs:complexType name="ListResourcesResponseType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element name="ResourceList" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ResourceSummary" type="ResourceSummaryType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ListResourcesResponse" type="ListResourcesResponseType"/>
+	<xs:complexType name="RenewResourceRequestType">
+		<xs:sequence>
+			<xs:element ref="DateTimeOfExpiration"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="ResourceId"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="RenewResourceRequest" type="RenewResourceRequestType"/>
+	<xs:complexType name="RenewResourceResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:element name="RenewResourceResponse" type="RenewResourceResponseType"/>
+	<xs:complexType name="ReplaceResourceRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="ResourceDescription"/>
+			<xs:element ref="ResourceId"/>
+			<xs:element ref="ResourceData"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ReplaceResourceRequest" type="ReplaceResourceRequestType"/>
+	<xs:complexType name="ReplaceResourceResponseType">
+		<xs:sequence>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ReplaceResourceResponse" type="ReplaceResourceResponseType"/>
+	<xs:element name="ResourceData" type="xs:base64Binary"/>
+	<xs:element name="RestartResourceServiceRequest" type="RestartServiceRequestType"/>
+	<xs:element name="RestartResourceServiceResponse" type="RestartServiceResponseType"/>
+	<xs:complexType name="RetrieveResourceRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguageRequested" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="ResourceCreatorUserName" minOccurs="0"/>
+			<xs:element ref="ResourceId"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="RetrieveResourceRequest" type="RetrieveResourceRequestType"/>
+	<xs:complexType name="RetrieveResourceResponseType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="ResourceDescription"/>
+			<xs:element ref="ResourceData"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="RetrieveResourceResponse" type="RetrieveResourceResponseType"/>
+	<xs:complexType name="SetResourceElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="OperationMode" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="ResourceDescription"/>
+			<xs:element ref="ResourceId"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetResourceElementsRequest" type="SetResourceElementsRequestType"/>
+	<xs:complexType name="SetResourceElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetResourceElementsResponse" type="SetResourceElementsResponseType"/>
+	<xs:complexType name="SetResourceServiceElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="OperationMode" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element name="ResourceServiceElements">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="ResourceServiceCapability" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="ResourceDescriptionCapabilities" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="ElementsNaturalLanguage" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="AllowedValue" type="NaturalLanguageType" maxOccurs="unbounded"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="DateTimeOfExpiration" type="xs:boolean" minOccurs="0"/>
+												<xs:element name="ResourceCategory" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="AllowedValue" maxOccurs="unbounded">
+																<xs:simpleType>
+																	<xs:union memberTypes="ResourceCategoryWKV KeywordNsExtensionPattern"/>
+																</xs:simpleType>
+															</xs:element>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="ResourceCreatorUserName" type="xs:boolean" minOccurs="0"/>
+												<xs:element name="ResourceFormat" type="xs:boolean" minOccurs="0"/>
+												<xs:element name="ResourceInfo" type="xs:boolean" minOccurs="0"/>
+												<xs:element name="ResourceName" type="xs:boolean"/>
+												<xs:element name="ResourceType">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="AllowedValue" type="ResourceTypeType" maxOccurs="unbounded"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element ref="ResourceServiceConfiguration" minOccurs="0"/>
+						<xs:element ref="ResourceDescription" minOccurs="0"/>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetResourceServiceElementsRequest" type="SetResourceServiceElementsRequestType"/>
+	<xs:complexType name="SetResourceServiceElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetResourceServiceElementsResponse" type="SetResourceServiceElementsResponseType"/>
+	<xs:element name="ShutdownResourceServiceResponse" type="ShutdownServiceResponseType"/>
+	<xs:element name="ShutdownResourceServiceRequest" type="ShutdownServiceRequestType"/>
+	<xs:complexType name="StoreResourceRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="ResourceDescription"/>
+			<xs:element ref="ResourceData"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="StoreResourceRequest" type="StoreResourceRequestType"/>
+	<xs:complexType name="StoreResourceResponseType">
+		<xs:sequence>
+			<xs:element ref="ResourceId"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="StoreResourceResponse" type="StoreResourceResponseType"/>
+</xs:schema>

@@ -1,0 +1,477 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="Counter.xsd"/>
+	<xs:include schemaLocation="DocumentTypes.xsd"/>
+	<!--06/06/12 PJZ Final JPS3 update-->
+	<!--03/05/12 PJZ Removed JobPassword, JobPasswordEncryption-->
+	<!--01/02/12 PJZ Added abstract data class for service specific counters-->
+	<!--11/11/11 PJZ Added Example elements to document service specific elements-->
+	<!--09/10/11 PJZ Added missing MustHonor and attribute extensions-->
+	<!--08/12/11 PJZ JobMandatoryElements removed from JobDescription (remains in JobProcessing)-->
+	<!--07/18/11 PJZ Completed fixes for Set operation-->
+	<!--03/03/11 PJZ Changed JobInformation to MoreJobInfo, fix Password datatype in capabilities-->
+	<!--12/08/10 PJZ changed hexBinary to base64Binary-->
+	<!--12/07/10 PJZ Added simple counter to abstract Job class-->
+	<!--07/19/10 PJZ Fixed document cardinality in abstract Job class-->
+	<!--07/19/10 PJZ Added global ID (uuid) -->
+	<!--07/05/10 PJZ Added missing capability elements-->
+	<!--05/25/10 PJZ Fixed JobDelayOutputXXX-->
+	<!--04/01/10 PJZ added "Type" suffix to ComplexTypes-->
+	<!--01/11/10 PJZ changed Delay* to JobDelay*-->
+	<!--12/28/09 PJZ Added DelayOutputUntil and DelayOutputUntilTime-->
+	<!--010/23/09 PJZ Completed abstract classes definitions-->
+	<!--010/22/09 PJZ Split concrete and abstract classes-->
+	<!--06/17/09 PJZ Reworked NaturalLanguage-->
+	<!--06/16/09 PJZ Created simple types for some unions-->
+	<!--04/14/09 PJZ Updated Namespace-->
+	<!--11/06/08 PJZ Fixed AllowedValues (should be unbounded)-->
+	<!--06/01/08 PJZ Added  anyAttribute extension point & fixed Template Service(s)-->
+	<!--05/31/08 PJZ Move back to ##Other-->
+	<!--05/30/08 PJZ Move back to single namespace-->
+	<!--05/21/08 PJZ Partial alignment with WS-Scan-->
+	<!--12/12/07 PJZ Added Template ID and type, removed actuals, reworked Imaging Job-->
+	<!--11/21/07 PJZ Added direction for number up, JobSave and supplied moved to print specific-->
+	<!--10/08/06 PJZ Reworked dependencies and removed Chameleon-->
+	<!--08/08/06 PJZ Changed namespace-->
+	<!--070706  PJZ Changes xxxJobs to xxxQueue-->
+	<!--070606  PJZ Added core, media and counters  namespace-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<!--                                 -->
+	<!---->
+	<!--Concrete Class definitions-->
+	<xs:complexType name="ImagingJobStatusType">
+		<xs:sequence>
+			<xs:element ref="DateTimeAtCompleted"/>
+			<xs:element ref="DateTimeAtCreation"/>
+			<xs:element ref="DateTimeAtProcessing"/>
+			<xs:element ref="DetailedStatusMessages" minOccurs="0"/>
+			<xs:element ref="DocumentAccessErrors" minOccurs="0"/>
+			<xs:element ref="ErrorsCount" minOccurs="0"/>
+			<xs:sequence>
+				<xs:element ref="JobId"/>
+				<xs:element ref="JobUuid"/>
+			</xs:sequence>
+			<xs:element ref="JobOriginatingUserAuthenticationInfo"/>
+			<xs:element ref="JobOriginatingUserName"/>
+			<xs:element ref="JobOriginatingUserUri" minOccurs="0"/>
+			<xs:element ref="JobPagesCompleted" minOccurs="0"/>
+			<xs:element ref="JobPagesCompletedCurrentCopy" minOccurs="0"/>
+			<xs:element ref="JobState"/>
+			<xs:element ref="JobStateMessage" minOccurs="0"/>
+			<xs:element ref="JobStateReasons"/>
+			<xs:element ref="JobUri" minOccurs="0"/>
+			<xs:element ref="KOctetsProcessed" minOccurs="0"/>
+			<xs:element ref="MoreInfo" minOccurs="0"/>
+			<xs:element ref="NumberOfDocuments" minOccurs="0"/>
+			<xs:element ref="NumberOfInterveningJobs" minOccurs="0"/>
+			<xs:element ref="TimeAtCompleted" minOccurs="0"/>
+			<xs:element ref="TimeAtCreation" minOccurs="0"/>
+			<xs:element ref="TimeAtProcessing" minOccurs="0"/>
+			<xs:element ref="UpTime" minOccurs="0"/>
+			<xs:element ref="WarningsCount" minOccurs="0"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- ImagingJobStatus - group -->
+	</xs:complexType>
+	<xs:complexType name="ImagingJobDescriptionType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobAccountingID" minOccurs="0"/>
+			<xs:element ref="JobAccountingUserID" minOccurs="0"/>
+			<xs:element ref="JobMessageFromOperator" minOccurs="0"/>
+			<xs:element ref="JobMessageToOperator" minOccurs="0"/>
+			<xs:element ref="JobMoreInfo" minOccurs="0"/>
+			<xs:element ref="JobName"/>
+			<xs:element ref="JobOriginatingUserName" minOccurs="0"/>
+			<xs:element ref="JobOriginatingUserUri" minOccurs="0"/>
+			<xs:element ref="JobPages" minOccurs="0"/>
+			<xs:element ref="KOctets" minOccurs="0"/>
+			<xs:sequence minOccurs="0">
+				<xs:element ref="TemplateCreatorUserName" minOccurs="0"/>
+				<xs:element ref="TemplateId" minOccurs="0"/>
+				<xs:element ref="TemplateInfo" minOccurs="0"/>
+				<xs:element ref="TemplateName" minOccurs="0"/>
+				<xs:element ref="TemplateType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- ImagingJobDescription - group -->
+	</xs:complexType>
+	<xs:complexType name="ImagingJobDescriptionCapabilitiesType">
+		<xs:sequence>
+			<xs:element name="ElementsNaturalLanguage" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AllowedValue" type="NaturalLanguageType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="JobAccountingID" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="JobAccountingUserID" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="JobMandatoryElements" type="xs:boolean" minOccurs="0">
+				<xs:annotation>
+					<xs:documentation>Alternative encoding of MustHonor attribute</xs:documentation>
+				</xs:annotation>
+			</xs:element>
+			<xs:element name="JobMessageFromOperator" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="JobMessageToOperator" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="JobMoreInfo" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="JobName" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="JobOriginatingUserName" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="JobOriginatingUserUri" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="JobPages" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="JobPassword" type="xs:int" minOccurs="0"/>
+			<xs:element name="JobPasswordEncryption" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AllowedValue" type="JobPasswordEncryptionType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="KOctets" type="xs:boolean" minOccurs="0"/>
+			<xs:sequence>
+				<xs:element name="TemplateCreatorUserName" type="xs:boolean" minOccurs="0"/>
+				<xs:element name="TemplateId" type="xs:boolean" minOccurs="0"/>
+				<xs:element name="TemplateInfo" type="xs:boolean" minOccurs="0"/>
+				<xs:element name="TemplateName" type="xs:boolean" minOccurs="0"/>
+				<xs:element name="TemplateType" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="AllowedValue" type="TemplateTypeType" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- ImagingJobDescription - group -->
+	</xs:complexType>
+	<xs:complexType name="ImagingJobDescriptionSetType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobAccountingID" minOccurs="0"/>
+			<xs:element ref="JobAccountingUserID" minOccurs="0"/>
+			<xs:element ref="JobMandatoryElements" minOccurs="0"/>
+			<xs:element ref="JobMessageFromOperator" minOccurs="0"/>
+			<xs:element ref="JobMessageToOperator" minOccurs="0"/>
+			<xs:element ref="JobMoreInfo" minOccurs="0"/>
+			<xs:element ref="JobName" minOccurs="0"/>
+			<xs:element ref="JobOriginatingUserName" minOccurs="0"/>
+			<xs:element ref="JobOriginatingUserUri" minOccurs="0"/>
+			<xs:element ref="JobPassword" minOccurs="0"/>
+			<xs:element ref="JobPasswordEncryption" minOccurs="0"/>
+			<xs:element ref="KOctets" minOccurs="0"/>
+			<xs:sequence minOccurs="0">
+				<xs:element ref="TemplateCreatorUserName" minOccurs="0"/>
+				<xs:element ref="TemplateId" minOccurs="0"/>
+				<xs:element ref="TemplateInfo" minOccurs="0"/>
+				<xs:element ref="TemplateName" minOccurs="0"/>
+				<xs:element ref="TemplateType" minOccurs="0"/>
+			</xs:sequence>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- ImagingJobDescription - group -->
+	</xs:complexType>
+	<xs:complexType name="ImagingJobProcessingType">
+		<xs:sequence>
+			<xs:choice minOccurs="0">
+				<xs:element ref="JobDelayOutputUntil" minOccurs="0"/>
+				<xs:element ref="JobDelayOutputUntilTime" minOccurs="0"/>
+			</xs:choice>
+			<xs:element ref="JobErrorAction" minOccurs="0"/>
+			<xs:choice minOccurs="0">
+				<xs:element ref="JobHoldUntil" minOccurs="0"/>
+				<xs:element ref="JobHoldUntilTime" minOccurs="0"/>
+			</xs:choice>
+			<xs:element ref="JobMandatoryElements" minOccurs="0"/>
+			<xs:element ref="JobPhoneNumber" minOccurs="0"/>
+			<xs:element ref="JobPriority" minOccurs="0"/>
+			<xs:element ref="JobRecipientName" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- ImagingJobProcessing - group -->
+	</xs:complexType>
+	<xs:complexType name="ImagingJobProcessingCapabilitiesType">
+		<xs:sequence>
+			<xs:element name="JobDelayOutputUntil" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AllowedValues" type="HoldUntilType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="JobDelayOutputUntilTime" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="JobErrorAction" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AllowedValues" type="JobErrorActionType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="JobHoldUntil" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="AllowedValues" type="HoldUntilType" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element name="JobHoldUntilTime" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="JobMandatoryElements" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="JobPhoneNumber" type="xs:boolean" minOccurs="0"/>
+			<xs:element name="JobPriority" type="RangeOfIntType" minOccurs="0"/>
+			<xs:element name="JobRecipientName" type="xs:boolean" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<!--Example Class Extensions-->
+	<xs:element name="ServiceSpecificJobStatus">
+		<xs:annotation>
+			<xs:documentation>Example</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CompressionDetected" minOccurs="0"/>
+				<xs:element name="DestinationsStatuses" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="DestinationsStatus" maxOccurs="unbounded">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="DestinationURI" type="xs:anyURI"/>
+										<xs:element name="TransmissionStatus" type="TransmissionStatusWKV"/>
+										<xs:element ref="ImagesCompleted"/>
+										<xs:any namespace="##other" minOccurs="0"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="DocumentFormatDetailsDetected" minOccurs="0"/>
+				<xs:element ref="DocumentFormatDetected" minOccurs="0"/>
+				<xs:element ref="DocumentFormatVersionDetected" minOccurs="0"/>
+				<xs:element ref="ImagesCompleted"/>
+				<xs:element ref="ImpressionsCompleted"/>
+				<xs:element ref="ImpressionsCompletedCurrentCopy" minOccurs="0"/>
+				<xs:element ref="MediaSheetsCompleted" minOccurs="0"/>
+				<xs:element ref="OutputDeviceAssigned" minOccurs="0"/>
+				<xs:element name="ServiceSpecificCounters" minOccurs="0"/>
+				<xs:element ref="SheetsCompletedCopyNumber" minOccurs="0"/>
+				<xs:element ref="SheetsCompletedDocumentNumber" minOccurs="0"/>
+				<xs:element ref="ServiceUri" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ServiceSpecificJobDescription">
+		<xs:annotation>
+			<xs:documentation>Example</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CompressionSupplied" minOccurs="0"/>
+				<xs:element ref="DocumentCharsetSupplied" minOccurs="0"/>
+				<xs:element ref="DocumentDigitalSignatureSupplied" minOccurs="0"/>
+				<xs:element ref="DocumentFormatDetailsSupplied" minOccurs="0"/>
+				<xs:element ref="DocumentFormatSupplied" minOccurs="0"/>
+				<xs:element ref="DocumentFormatVersionSupplied" minOccurs="0"/>
+				<xs:element ref="DocumentMessageSupplied" minOccurs="0"/>
+				<xs:element ref="DocumentNameSupplied" minOccurs="0"/>
+				<xs:element ref="DocumentUri" minOccurs="0"/>
+				<xs:element ref="Impressions" minOccurs="0"/>
+				<xs:element ref="MediaSheets" minOccurs="0"/>
+				<xs:element ref="PageOrderReceived" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ServiceSpecificJobProcessing">
+		<xs:annotation>
+			<xs:documentation>Example</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="BatchMode" minOccurs="0"/>
+				<xs:element ref="DocumentOutputMode" minOccurs="0"/>
+				<xs:element ref="JobAccountingSheets" minOccurs="0"/>
+				<xs:element ref="JobCollationType" minOccurs="0"/>
+				<xs:element ref="JobCopies" minOccurs="0"/>
+				<xs:element ref="JobCoverBack" minOccurs="0"/>
+				<xs:element ref="JobCoverFront" minOccurs="0"/>
+				<xs:element ref="JobErrorSheet" minOccurs="0"/>
+				<xs:element ref="JobFinishings" minOccurs="0"/>
+				<xs:element ref="JobFinishingsCol" minOccurs="0"/>
+				<xs:element ref="JobSaveDisposition" minOccurs="0"/>
+				<xs:element ref="JobSheetMessage" minOccurs="0"/>
+				<xs:element ref="JobSheets" minOccurs="0"/>
+				<xs:element ref="JobSheetsCol" minOccurs="0"/>
+				<xs:element ref="MultipleDocumentsHandling" minOccurs="0"/>
+				<xs:element ref="MultipleSetOriginal" minOccurs="0"/>
+				<xs:element ref="OutputBin" minOccurs="0"/>
+				<xs:element ref="OutputDevice" minOccurs="0"/>
+				<xs:element ref="Overrides" minOccurs="0"/>
+				<xs:element ref="PagesPerSubset" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!--                                -->
+	<!-- imaging job abstract base classes-->
+	<xs:element name="ImagingJobDescription">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ImagingJobDescriptionType">
+					<xs:sequence>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ImagingJobDescriptionCapabilities">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ImagingJobDescriptionCapabilitiesType">
+					<xs:sequence>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ImagingJobProcessing">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ImagingJobProcessingType">
+					<xs:sequence>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ImagingJobProcessingCapabilities">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ImagingJobProcessingCapabilitiesType">
+					<xs:sequence>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ImagingJobStatus">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ImagingJobStatusType">
+					<xs:sequence>
+						<xs:choice>
+							<xs:element ref="ImagesCompleted"/>
+							<xs:element ref="ImpressionsCompleted"/>
+						</xs:choice>
+						<xs:element ref="ServiceSpecificCounters"/>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="ImagingJobTicketType">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="ImagingDocumentProcessing" minOccurs="0"/>
+			<xs:element ref="ImagingJobDescription" minOccurs="0"/>
+			<xs:element ref="ImagingJobProcessing" minOccurs="0"/>
+			<xs:sequence>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:element name="ImagingJobTicket">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ImagingJobTicketType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="ImagingJobReceipt" type="ImagingJobTicketType">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+	<xs:complexType name="ImagingJobType">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="ImagingJobStatus"/>
+			<xs:element ref="ImagingJobTicket" minOccurs="0"/>
+			<xs:element ref="ImagingJobReceipt" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+		<!-- ImagingJob - object -->
+	</xs:complexType>
+	<xs:element name="ImagingJob">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="ImagingJobType">
+					<xs:sequence>
+						<xs:element ref="ImagingDocuments" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="ImagingJobsType">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+		<xs:sequence>
+			<xs:element ref="ImagingJob" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other"/>
+		<!-- CopyJobs - set of Copy jobs -->
+	</xs:complexType>
+	<xs:element name="ImagingJobs" type="ImagingJobsType">
+		<xs:annotation>
+			<xs:documentation>Abstract Base Class</xs:documentation>
+		</xs:annotation>
+	</xs:element>
+</xs:schema>

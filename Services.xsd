@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="ResourceService.xsd"/>
+	<xs:include schemaLocation="TransformService.xsd"/>
+	<xs:include schemaLocation="ScanService.xsd"/>
+	<xs:include schemaLocation="PrintService.xsd"/>
+	<xs:include schemaLocation="EmailInService.xsd"/>
+	<xs:include schemaLocation="EmailOutService.xsd"/>
+	<xs:include schemaLocation="FaxInService.xsd"/>
+	<xs:include schemaLocation="FaxOutService.xsd"/>
+	<xs:include schemaLocation="CopyService.xsd"/>
+	<xs:include schemaLocation="SystemControlService.xsd"/>
+	<xs:include schemaLocation="ServicesOperations.xsd"/>
+	<!--04/21/11 PJZ Fixed SystemControlService name-->
+	<!--06/15/10 PJZ Changed MfdService to SystemService-->
+	<!--04/1/10 PJZ added "Type" suffix to ComplexTypes-->
+	<!--08/02/09 PJZ Modified configuration representation-->
+	<!--07/20/09 PJZ Collapsed various Fax services excluding EmailIn and EmailOut-->
+	<!--04/14/09 PJZ Updated Namespace-->
+	<!--11/13/08 PJZ Unified Fax Services-->
+	<!--06/01/08 PJZ Added  anyAttribute extension point & fixed Template Service(s)-->
+	<!--05/31/08 PJZ Move back to ##Other-->
+	<!--05/30/08 PJZ Move back to single namespace-->
+	<!--05/27/08 PJZ Inclusion of Template-->
+	<!--05/21/08 PJZ Partial alignment with WS-Scan-->
+	<!--09/13/07 PJZ Reworked default and supported-->
+	<!--10/08/06 PJZ Reworked dependencies and removed Chameleon-->
+	<!--08/08/06 PJZ Changed namespace-->
+	<!--070706  PJZ Changed xxxJobs to xxxQueue and limited to single queue per service instance-->
+	<!--070606  PJZ Added core, media and counters namespace-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<!--                           -->
+	<!--                            -->
+	<!-- service class definitions -->
+	<!--                            -->
+	<xs:complexType name="ServicesType">
+		<xs:sequence>
+			<xs:element ref="CopyServices" minOccurs="0"/>
+			<xs:element ref="EmailInServices" minOccurs="0"/>
+			<xs:element ref="EmailOutServices" minOccurs="0"/>
+			<xs:element ref="FaxInServices" minOccurs="0"/>
+			<xs:element ref="FaxOutServices" minOccurs="0"/>
+			<xs:element ref="PrintServices" minOccurs="0"/>
+			<xs:element ref="ResourceServices" minOccurs="0"/>
+			<xs:element ref="ScanServices" minOccurs="0"/>
+			<xs:element ref="SystemControlService"/>
+			<xs:element ref="TransformServices" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<!-- Services - set of services -->
+	</xs:complexType>
+	<xs:complexType name="ServiceType">
+		<xs:choice minOccurs="0">
+			<xs:element ref="CopyServices" minOccurs="0"/>
+			<xs:element ref="EmailInServices" minOccurs="0"/>
+			<xs:element ref="EmailOutServices" minOccurs="0"/>
+			<xs:element ref="FaxInServices" minOccurs="0"/>
+			<xs:element ref="FaxOutServices" minOccurs="0"/>
+			<xs:element ref="PrintServices" minOccurs="0"/>
+			<xs:element ref="ScanServices" minOccurs="0"/>
+			<xs:element ref="SystemControlService"/>
+			<xs:element ref="TransformServices" minOccurs="0"/>
+		</xs:choice>
+		<!-- Service - object -->
+	</xs:complexType>
+	<xs:element name="Services" type="ServicesType"/>
+</xs:schema>

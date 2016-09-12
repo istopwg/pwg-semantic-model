@@ -1,0 +1,563 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" xmlns:xop="http://www.w3.org/2004/08/xop/include" xmlns:xmime="http://www.w3.org/2005/05/xmlmime" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<!--03/04/11 PJZ Removed GetTransformJobs, fixed GetTransformJobHistory-->
+	<!--02/24/11 PJZ Added password operational elements, Fixed Transform names-->
+	<!--01/18/12 PJZ Aligned with latest JPS3 and Raster specs-->
+	<!--PJZ 11/08/11    Initial version-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler 
+</xs:documentation>
+	</xs:annotation>
+	<xs:include schemaLocation="Subunits.xsd"/>
+	<xs:include schemaLocation="PwgCommon.xsd"/>
+	<xs:include schemaLocation="PwgWellKnownValues.xsd"/>
+	<xs:include schemaLocation="TransformService.xsd"/>
+	<xs:include schemaLocation="PwgCommonOpMsg.xsd"/>
+	<xs:import namespace="http://www.w3.org/2004/08/xop/include" schemaLocation="include.xsd"/>
+	<xs:import namespace="http://www.w3.org/2005/05/xmlmime" schemaLocation="xmlmime.xsd"/>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">Complex types and elements specific to operations</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="TransformDocumentSummaryType">
+		<xs:sequence>
+			<xs:element ref="DocumentNumber"/>
+			<xs:element ref="DocumentState"/>
+			<xs:element ref="DocumentStateReasons" minOccurs="0"/>
+			<xs:element ref="ImpressionsCompleted"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ListOfTransformDocumentSummarysType">
+		<xs:sequence>
+			<xs:element name="DocumentSummary" type="TransformDocumentSummaryType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="TransformJobSummaryType">
+		<xs:sequence>
+			<xs:element ref="ImpressionsCompleted"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="JobName"/>
+			<xs:element ref="JobOriginatingUserName"/>
+			<xs:element ref="JobState"/>
+			<xs:element ref="JobStateReasons" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ListOfTransformJobSummarysType">
+		<xs:sequence>
+			<xs:element name="JobSummary" type="TransformJobSummaryType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">Operation and Response messages</xs:documentation>
+	</xs:annotation>
+	<xs:element name="CancelTransformDocumentRequest" type="CancelDocumentRequestType"/>
+	<xs:element name="CancelTransformDocumentResponse" type="CancelDocumentResponseType"/>
+	<xs:element name="CancelTransformJobRequest" type="CancelJobRequestType"/>
+	<xs:element name="CancelTransformJobResponse" type="CancelJobResponseType"/>
+	<xs:element name="CancelCurrentTransformJobRequest" type="CancelCurrentJobRequestType"/>
+	<xs:element name="CancelCurrentTransformJobResponse" type="CancelCurrentJobResponseType"/>
+	<xs:element name="CancelMyTransformJobsRequest" type="CancelMyJobsRequestType"/>
+	<xs:element name="CancelMyTransformJobsResponse" type="CancelMyJobsResponseType"/>
+	<xs:element name="CancelTransformJobsRequest" type="CancelJobsRequestType"/>
+	<xs:element name="CancelTransformJobsResponse" type="CancelJobsResponseType"/>
+	<xs:element name="CloseTransformJobRequest" type="CloseJobRequestType"/>
+	<xs:element name="CloseTransformJobResponse" type="CloseJobResponseType"/>
+	<xs:complexType name="CreateTransformJobRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentPassword" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobPassword" minOccurs="0"/>
+			<xs:element ref="JobPasswordEncryption" minOccurs="0"/>
+			<xs:element ref="TransformJobTicket" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CreateTransformJobRequest" type="CreateTransformJobRequestType"/>
+	<xs:complexType name="CreateTransformJobResponseType">
+		<xs:sequence>
+			<xs:element ref="JobId"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="CreateTransformJobResponse" type="CreateTransformJobResponseType"/>
+	<xs:element name="DisableTransformServiceRequest" type="DisableServiceRequestType"/>
+	<xs:element name="DisableTransformServiceResponse" type="DisableServiceResponseType"/>
+	<xs:element name="EnableTransformServiceRequest" type="EnableServiceRequestType"/>
+	<xs:element name="EnableTransformServiceResponse" type="EnableServiceResponseType"/>
+	<xs:element name="GetActiveTransformJobsRequest" type="GetJobsRequestType"/>
+	<xs:complexType name="GetActiveTransformJobsResponseType">
+		<xs:sequence>
+			<xs:element name="ActiveJobs" type="ListOfTransformJobSummarysType"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetActiveTransformJobsResponse" type="GetActiveTransformJobsResponseType"/>
+	<xs:element name="GetTransformDocumentsRequest" type="GetDocumentsRequestType"/>
+	<xs:complexType name="GetTransformDocumentsResponseType">
+		<xs:sequence>
+			<xs:element name="Documents" type="ListOfTransformDocumentSummarysType"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="JobName"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetTransformDocumentsResponse" type="GetTransformDocumentsResponseType"/>
+	<xs:complexType name="GetTransformDocumentElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentNumber"/>
+			<xs:element ref="ElementsNaturalLanguageRequested" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element name="RequestedElements" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Name" maxOccurs="unbounded">
+							<xs:simpleType>
+								<xs:union memberTypes="PrintDocumentElementNamesWKV KeywordNsExtensionPattern"/>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetTransformDocumentElementsRequest" type="GetTransformDocumentElementsRequestType"/>
+	<xs:complexType name="GetTransformDocumentElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element name="TransformDocument">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="TransformDocumentReceipt" minOccurs="0"/>
+						<xs:element ref="TransformDocumentStatus" minOccurs="0"/>
+						<xs:element ref="TransformDocumentTicket" minOccurs="0"/>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetTransformDocumentElementsResponse" type="GetTransformDocumentElementsResponseType"/>
+	<xs:complexType name="GetTransformJobElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguageRequested" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element name="RequestedElements" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Name" maxOccurs="unbounded">
+							<xs:simpleType>
+								<xs:union memberTypes="TransformJobElementNamesWKV KeywordNsExtensionPattern"/>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetTransformJobElementsRequest" type="GetTransformJobElementsRequestType"/>
+	<xs:complexType name="GetTransformJobElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element name="TransformJob">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="TransformJobReceipt" minOccurs="0"/>
+						<xs:element ref="TransformJobStatus" minOccurs="0"/>
+						<xs:element ref="TransformJobTicket" minOccurs="0"/>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetTransformJobElementsResponse" type="GetTransformJobElementsResponseType"/>
+	<xs:element name="GetTransformJobHistoryRequest" type="GetJobsRequestType"/>
+	<xs:complexType name="GetTransformJobHistoryResponseType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element name="JobHistory" type="ListOfTransformJobSummarysType"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetTransformJobHistoryResponse" type="GetTransformJobHistoryResponseType"/>
+	<xs:complexType name="GetTransformServiceElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentFormat" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguageRequested" minOccurs="0"/>
+			<xs:element ref="FirstIndex" minOccurs="0"/>
+			<xs:element ref="Limit" minOccurs="0"/>
+			<xs:element name="RequestedElements" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="Name" maxOccurs="unbounded">
+							<xs:simpleType>
+								<xs:union memberTypes="TransformServiceElementNamesWKV KeywordNsExtensionPattern"/>
+							</xs:simpleType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="TransformName" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetTransformServiceElementsRequest" type="GetTransformServiceElementsRequestType"/>
+	<xs:complexType name="GetTransformServiceElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element name="TransformService" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="DefaultTransformJobTicket" minOccurs="0"/>
+						<xs:element ref="TransformServiceCapabilities" minOccurs="0"/>
+						<xs:element name="TransformServiceConfiguration" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element ref="Consoles" minOccurs="0"/>
+									<xs:element ref="Covers" minOccurs="0"/>
+									<xs:element ref="Finishers" minOccurs="0"/>
+									<xs:element ref="InputChannels" minOccurs="0"/>
+									<xs:element ref="InputTrays" minOccurs="0"/>
+									<xs:element ref="Interfaces" minOccurs="0"/>
+									<xs:element ref="Interpreters" minOccurs="0"/>
+									<xs:element ref="Markers" minOccurs="0"/>
+									<xs:element ref="MediaPaths" minOccurs="0"/>
+									<xs:element ref="OutputTrays" minOccurs="0"/>
+									<xs:element ref="Processors" minOccurs="0"/>
+									<xs:element ref="Storages" minOccurs="0"/>
+									<xs:element ref="VendorSubunits" minOccurs="0"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element ref="TransformServiceDescription" minOccurs="0"/>
+						<xs:element ref="TransformServiceStatus" minOccurs="0"/>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="GetTransformServiceElementsResponse" type="GetTransformServiceElementsResponseType"/>
+	<xs:element name="HoldNewTransformJobsRequest" type="HoldNewJobsRequestType"/>
+	<xs:element name="HoldNewTransformJobsResponse" type="HoldNewJobsResponseType"/>
+	<xs:element name="HoldTransformJobRequest" type="HoldJobRequestType"/>
+	<xs:element name="HoldTransformJobResponse" type="HoldJobResponseType"/>
+	<xs:complexType name="IdentifyTransformerRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="IdentifyActions"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="IdentifyTransformerRequest" type="IdentifyTransformerRequestType"/>
+	<xs:complexType name="IdentifyTransformerResponseType">
+		<xs:sequence/>
+	</xs:complexType>
+	<xs:element name="IdentifyTransformerResponse" type="IdentifyTransformerResponseType"/>
+	<xs:complexType name="ListInputDocumentFormatsRequestType">
+		<xs:sequence>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element name="TargetDocumentFormat">
+				<xs:complexType>
+					<xs:choice minOccurs="0">
+						<xs:element ref="DocumentFormatDetails"/>
+						<xs:sequence>
+							<xs:element ref="DocumentFormat"/>
+							<xs:element ref="DocumentFormatVersion" minOccurs="0"/>
+						</xs:sequence>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ListInputDocumentFormatsRequest" type="ListInputDocumentFormatsRequestType"/>
+	<xs:complexType name="ListInputDocumentFormatsResponseType">
+		<xs:sequence>
+			<xs:element name="InputDocumentFormatSupported" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="InputDocumentFormatEntry" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:choice>
+									<xs:annotation>
+										<xs:documentation>Choice because DocumentFormatDetails has mandatory DocumentFormatVersion</xs:documentation>
+									</xs:annotation>
+									<xs:element ref="DocumentFormatDetails"/>
+									<xs:sequence>
+										<xs:element ref="DocumentFormat"/>
+										<xs:element ref="DocumentFormatVersion" minOccurs="0"/>
+									</xs:sequence>
+								</xs:choice>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ListInputDocumentFormatsResponse" type="ListInputDocumentFormatsResponseType"/>
+	<xs:complexType name="ListOutputputDocumentFormatsRequestType">
+		<xs:sequence>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element name="SourceDocumentFormat">
+				<xs:complexType>
+					<xs:choice minOccurs="0">
+						<xs:element ref="DocumentFormatDetails"/>
+						<xs:sequence>
+							<xs:element ref="DocumentFormat"/>
+							<xs:element ref="DocumentFormatVersion" minOccurs="0"/>
+						</xs:sequence>
+					</xs:choice>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ListOutputputDocumentFormatsRequest" type="ListOutputputDocumentFormatsRequestType"/>
+	<xs:complexType name="ListOutPutputDocumentFormatsResponseType">
+		<xs:sequence>
+			<xs:element name="OutputDocumentFormatSupported" minOccurs="0">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element name="OutputDocumentFormatEntry" maxOccurs="unbounded">
+							<xs:complexType>
+								<xs:choice>
+									<xs:annotation>
+										<xs:documentation>Choice because DocumentFormatDetails has mandatory DocumentFormatVersion</xs:documentation>
+									</xs:annotation>
+									<xs:element ref="DocumentFormatDetails"/>
+									<xs:sequence>
+										<xs:element ref="DocumentFormat"/>
+										<xs:element ref="DocumentFormatVersion" minOccurs="0"/>
+									</xs:sequence>
+								</xs:choice>
+							</xs:complexType>
+						</xs:element>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ListOutPutputDocumentFormatsResponse" type="ListOutPutputDocumentFormatsResponseType"/>
+	<xs:element name="PauseTransformServiceRequest" type="PauseServiceRequestType"/>
+	<xs:element name="PauseTransformServiceResponse" type="PauseServiceResponseType"/>
+	<xs:element name="PauseTransformServiceAfterCurrentJobRequest" type="PauseServiceAfterCurrentJobRequestType"/>
+	<xs:element name="PauseTransformServiceAfterCurrentJobResponse" type="PauseServiceAfterCurrentJobResponseType"/>
+	<xs:element name="PromoteTransformJobRequest" type="PromoteJobRequestType"/>
+	<xs:element name="PromoteTransformJobResponse" type="PromoteJobResponseType"/>
+	<xs:element name="PurgeTransformJobRequest" type="PurgeJobsRequestType"/>
+	<xs:element name="PurgeTransformJobResponse" type="PurgeJobsResponseType"/>
+	<xs:element name="ReleaseNewTransformJobsRequest" type="ReleaseNewJobsRequestType"/>
+	<xs:element name="ReleaseNewTransformJobsResponse" type="ReleaseNewJobsResponseType"/>
+	<xs:element name="ReleaseTransformJobRequest" type="ReleaseJobRequestType"/>
+	<xs:element name="ReleaseTransformJobResponse" type="ReleaseJobResponseType"/>
+	<xs:element name="RestartTransformServiceRequest" type="RestartServiceRequestType"/>
+	<xs:element name="RestartTransformServiceResponse" type="RestartServiceResponseType"/>
+	<xs:complexType name="ResubmitTransformJobRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="TransformJobTicket" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ResubmitTransformJobRequest" type="ResubmitTransformJobRequestType"/>
+	<xs:complexType name="ResubmitTransformJobResponseType">
+		<xs:sequence>
+			<xs:element ref="JobId"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ResubmitTransformJobResponse" type="ResubmitTransformJobResponseType"/>
+	<xs:element name="ResumeTransformJobRequest" type="ResumeJobRequestType"/>
+	<xs:element name="ResumeTransformJobResponse" type="ResumeJobResponseType"/>
+	<xs:element name="ResumeTransformServiceRequest" type="ResumeServiceRequestType"/>
+	<xs:element name="ResumeTransformServiceResponse" type="ResumeServiceResponseType"/>
+	<xs:complexType name="SendTransformDocumentRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentPassword" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="LastDocument"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="TransformDocumentTicket" minOccurs="0"/>
+			<xs:element name="DocumentData">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="xop:Include"/>
+					</xs:sequence>
+					<xs:attribute ref="xmime:contentType"/>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SendTransformDocumentRequest" type="SendTransformDocumentRequestType"/>
+	<xs:complexType name="SendTransformDocumentResponseType">
+		<xs:sequence>
+			<xs:element ref="DocumentNumber"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SendTransformDocumentResponse" type="SendTransformDocumentResponseType"/>
+	<xs:complexType name="SendTransformUriRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentPassword" minOccurs="0"/>
+			<xs:element ref="DocumentUri"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="LastDocument"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="TransformDocumentTicket" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SendTransformUriRequest" type="SendTransformUriRequestType"/>
+	<xs:complexType name="SendTransformUriResponseType">
+		<xs:sequence>
+			<xs:element ref="DocumentNumber"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SendTransformUriResponse" type="SendTransformUriResponseType"/>
+	<xs:complexType name="SetTransformDocumentElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentNumber"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="OperationMode" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="TransformDocumentTicket" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetTransformDocumentElementsRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="SetTransformDocumentElementsRequestType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="SetTransformDocumentElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetTransformDocumentElementsResponse" type="SetTransformDocumentElementsResponseType"/>
+	<xs:complexType name="SetTransformJobElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobId"/>
+			<xs:element ref="OperationMode" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element ref="TransformJobTicket" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetTransformJobElementsRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="SetTransformJobElementsRequestType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="SetTransformJobElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetTransformJobElementsResponse" type="SetTransformJobElementsResponseType"/>
+	<xs:complexType name="SetTransformServiceElementsRequestType">
+		<xs:sequence>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="Message" minOccurs="0"/>
+			<xs:element ref="OperationMode" minOccurs="0"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+			<xs:element name="TransformServiceElements">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="DefaultTransformJobTicket" minOccurs="0"/>
+						<xs:element ref="TransformServiceCapabilities" minOccurs="0"/>
+						<xs:element ref="TransformServiceDescription" minOccurs="0"/>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetTransformServiceElementsRequest">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="SetTransformServiceElementsRequestType"/>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="SetTransformServiceElementsResponseType">
+		<xs:sequence>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="SetTransformServiceElementsResponse" type="SetTransformServiceElementsResponseType"/>
+	<xs:element name="ShutdownTransformServiceRequest" type="ShutdownServiceRequestType"/>
+	<xs:element name="ShutdownTransformServiceResponse" type="ShutdownServiceResponseType"/>
+	<xs:element name="SuspendCurrentTransformJobRequest" type="SuspendCurrentJobRequestType"/>
+	<xs:element name="SuspendCurrentTransformJobResponse" type="SuspendCurrentJobResponseType"/>
+	<xs:complexType name="ValidateTransformDocumentTicketRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentPassword" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="TransformDocumentTicket"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ValidateTransformDocumentTicketRequest" type="ValidateTransformDocumentTicketRequestType"/>
+	<xs:complexType name="ValidateTransformDocumentTicketResponseType">
+		<xs:sequence>
+			<xs:element ref="PreferredElements" minOccurs="0"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ValidateTransformDocumentTicketResponse" type="ValidateTransformDocumentTicketResponseType"/>
+	<xs:complexType name="ValidateTransformJobTicketRequestType">
+		<xs:sequence>
+			<xs:element ref="DocumentPassword" minOccurs="0"/>
+			<xs:element ref="ElementsNaturalLanguage" minOccurs="0"/>
+			<xs:element ref="JobPasswordEncryption" minOccurs="0"/>
+			<xs:element ref="JobPassword" minOccurs="0"/>
+			<xs:element ref="TransformJobTicket"/>
+			<xs:element ref="RequestingUserName"/>
+			<xs:element ref="RequestingUserUri" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ValidateTransformJobTicketRequest" type="ValidateTransformJobTicketRequestType"/>
+	<xs:complexType name="ValidateTransformJobTicketResponseType">
+		<xs:sequence>
+			<xs:element ref="JobId"/>
+			<xs:element ref="PreferredElements" minOccurs="0"/>
+			<xs:element ref="UnsupportedElements" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="ValidateTransformJobTicketResponse" type="ValidateTransformJobTicketResponseType"/>
+</xs:schema>

@@ -1,0 +1,682 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<!--07/02/12 PJZ Fixed MediaInputTrayWKV values-->
+	<!--01/10/12 PJZ Aligned with latest JPS3 and Raster specs-->
+	<!--10/12/11 PJZ Added missing alias names-->
+	<!--09/28/11 PJZ Added JPS3 elements-->
+	<!--02/27/11 PJZ Removed MediaMaterial-->
+	<!--04/14/09 PJZ Added corrected MediaSizeNameExtensionPatterns pending deletion of existing(incorrect) ones-->
+	<!--04/14/09 PJZ Updated Namespace-->
+	<!--05/30/08 PJZ Move back to single namespace-->
+	<!--05/21/08 PJZ Partial alignment with WS-Scan-->
+	<!--09/12/07 PJZ added maxlen to MediaSizeAliasNameWKV to match NMTOKEN and patterns-->
+	<!--10/08/06 PJZ Reworked dependencies and removed Chameleon-->
+	<!--08/08/06  PJZ  Changed namespace-->
+	<!--070606  PJZ  Changed namespace-->
+	<!--040506  PJZ  modified from ver 1.0 to prepare for SM editing work-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<xs:annotation>
+		<xs:documentation xml:lang="en">Editor: Peter Zehler</xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="MediaWKV">
+		<xs:union memberTypes="MediaSizeAliasNameWKV MediaSizeLegacyNamesWKV MediaSizeSelfDescribingNameWKV MediaSizeNameExtensionPattern MediaNsExtensionPattern"/>
+	</xs:simpleType>
+	<xs:simpleType name="MediaCoatingWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="none"/>
+			<xs:enumeration value="glossy"/>
+			<xs:enumeration value="high-gloss"/>
+			<xs:enumeration value="semi-gloss"/>
+			<xs:enumeration value="satin"/>
+			<xs:enumeration value="matte"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MediaColMemberWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="MediaInfo"/>
+			<xs:enumeration value="MediaKey"/>
+			<xs:enumeration value="MediaType"/>
+			<xs:enumeration value="MediaColor"/>
+			<xs:enumeration value="MediaPreprinted"/>
+			<xs:enumeration value="MediaHoleCount"/>
+			<xs:enumeration value="MediaOrderCount"/>
+			<xs:enumeration value="MediaSize"/>
+			<xs:enumeration value="MediaWeightMeteric"/>
+			<xs:enumeration value="MediaBackCoating"/>
+			<xs:enumeration value="MediaFrontCoating"/>
+			<xs:enumeration value="MediaRecycled"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MediaColorWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="no-color"/>
+			<xs:enumeration value="white"/>
+			<xs:enumeration value="pink"/>
+			<xs:enumeration value="yellow"/>
+			<xs:enumeration value="blue"/>
+			<xs:enumeration value="green"/>
+			<xs:enumeration value="buff"/>
+			<xs:enumeration value="goldenrod"/>
+			<xs:enumeration value="red"/>
+			<xs:enumeration value="gray"/>
+			<xs:enumeration value="ivory"/>
+			<xs:enumeration value="orange"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MediaGrainWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="x-direction"/>
+			<xs:enumeration value="y-direction"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MediaInputTrayWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="Top"/>
+			<xs:enumeration value="Middle"/>
+			<xs:enumeration value="Bottom"/>
+			<xs:enumeration value="Side"/>
+			<xs:enumeration value="LargeCapacity"/>
+			<xs:enumeration value="Envelope"/>
+			<xs:enumeration value="Main"/>
+			<xs:enumeration value="Manual"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MediaPreprintedWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="blank"/>
+			<xs:enumeration value="preprinted"/>
+			<xs:enumeration value="letterhead"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MediaRecycledWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="none"/>
+			<xs:enumeration value="standard"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MediaSizeAliasNameWKV">
+		<xs:restriction base="xs:string">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="10x11"/>
+			<xs:enumeration value="10x13"/>
+			<xs:enumeration value="10x14"/>
+			<xs:enumeration value="10x15"/>
+			<xs:enumeration value="11x12"/>
+			<xs:enumeration value="11x15"/>
+			<xs:enumeration value="12x19"/>
+			<xs:enumeration value="2a0"/>
+			<xs:enumeration value="5x7"/>
+			<xs:enumeration value="6x9"/>
+			<xs:enumeration value="7x9"/>
+			<xs:enumeration value="9x11"/>
+			<xs:enumeration value="a"/>
+			<xs:enumeration value="a0"/>
+			<xs:enumeration value="a1"/>
+			<xs:enumeration value="a10"/>
+			<xs:enumeration value="a2"/>
+			<xs:enumeration value="a3"/>
+			<xs:enumeration value="a4"/>
+			<xs:enumeration value="a4-extra"/>
+			<xs:enumeration value="a4-tab"/>
+			<xs:enumeration value="a5"/>
+			<xs:enumeration value="a5-extra"/>
+			<xs:enumeration value="a6"/>
+			<xs:enumeration value="a7"/>
+			<xs:enumeration value="a8"/>
+			<xs:enumeration value="a9"/>
+			<xs:enumeration value="architecture-a"/>
+			<xs:enumeration value="architecture-b"/>
+			<xs:enumeration value="architecture-c"/>
+			<xs:enumeration value="architecture-d"/>
+			<xs:enumeration value="architecture-e"/>
+			<xs:enumeration value="architecture-f"/>
+			<xs:enumeration value="b"/>
+			<xs:enumeration value="b0"/>
+			<xs:enumeration value="b1"/>
+			<xs:enumeration value="b10"/>
+			<xs:enumeration value="b2"/>
+			<xs:enumeration value="b3"/>
+			<xs:enumeration value="b4"/>
+			<xs:enumeration value="b5"/>
+			<xs:enumeration value="b5-extra"/>
+			<xs:enumeration value="b6"/>
+			<xs:enumeration value="b6/c4"/>
+			<xs:enumeration value="b7"/>
+			<xs:enumeration value="b8"/>
+			<xs:enumeration value="b9"/>
+			<xs:enumeration value="b-plus"/>
+			<xs:enumeration value="c0"/>
+			<xs:enumeration value="c1"/>
+			<xs:enumeration value="c10"/>
+			<xs:enumeration value="c2"/>
+			<xs:enumeration value="c3"/>
+			<xs:enumeration value="c4"/>
+			<xs:enumeration value="c5"/>
+			<xs:enumeration value="c6"/>
+			<xs:enumeration value="c6/c5"/>
+			<xs:enumeration value="c7"/>
+			<xs:enumeration value="c7/c6"/>
+			<xs:enumeration value="c8"/>
+			<xs:enumeration value="c9"/>
+			<xs:enumeration value="chou2"/>
+			<xs:enumeration value="chou3"/>
+			<xs:enumeration value="chou4"/>
+			<xs:enumeration value="comm-10"/>
+			<xs:enumeration value="dai-pa-kai"/>
+			<xs:enumeration value="designated-long"/>
+			<xs:enumeration value="dl"/>
+			<xs:enumeration value="e1"/>
+			<xs:enumeration value="edp"/>
+			<xs:enumeration value="engineering-a"/>
+			<xs:enumeration value="engineering-b"/>
+			<xs:enumeration value="engineering-c"/>
+			<xs:enumeration value="engineering-d"/>
+			<xs:enumeration value="engineering-e"/>
+			<xs:enumeration value="engineering-f"/>
+			<xs:enumeration value="european-edp"/>
+			<xs:enumeration value="exec"/>
+			<xs:enumeration value="f"/>
+			<xs:enumeration value="fanfold-European"/>
+			<xs:enumeration value="fanfold-us"/>
+			<xs:enumeration value="folio-sp"/>
+			<xs:enumeration value="foolscap"/>
+			<xs:enumeration value="german-legal-fanfold"/>
+			<xs:enumeration value="government-legal"/>
+			<xs:enumeration value="government-letter"/>
+			<xs:enumeration value="hagaki"/>
+			<xs:enumeration value="half-letter"/>
+			<xs:enumeration value="index-3x5"/>
+			<xs:enumeration value="index-4x6"/>
+			<xs:enumeration value="index-4x6-ext"/>
+			<xs:enumeration value="index-5x8"/>
+			<xs:enumeration value="Invite"/>
+			<xs:enumeration value="Italian"/>
+			<xs:enumeration value="juuro-ku-kai"/>
+			<xs:enumeration value="kahu"/>
+			<xs:enumeration value="kaku2"/>
+			<xs:enumeration value="large-photo"/>
+			<xs:enumeration value="ledger"/>
+			<xs:enumeration value="legal"/>
+			<xs:enumeration value="legal-extra"/>
+			<xs:enumeration value="letter"/>
+			<xs:enumeration value="letter-extra"/>
+			<xs:enumeration value="letter-plus"/>
+			<xs:enumeration value="letter-tab"/>
+			<xs:enumeration value="mini"/>
+			<xs:enumeration value="number-11"/>
+			<xs:enumeration value="number-12"/>
+			<xs:enumeration value="number-14"/>
+			<xs:enumeration value="oufuku"/>
+			<xs:enumeration value="pa-kai"/>
+			<xs:enumeration value="personal"/>
+			<xs:enumeration value="Postfix"/>
+			<xs:enumeration value="prc1"/>
+			<xs:enumeration value="prc10"/>
+			<xs:enumeration value="prc-16k"/>
+			<xs:enumeration value="prc2"/>
+			<xs:enumeration value="prc3"/>
+			<xs:enumeration value="prc-32k"/>
+			<xs:enumeration value="prc4"/>
+			<xs:enumeration value="prc5"/>
+			<xs:enumeration value="prc6"/>
+			<xs:enumeration value="prc7"/>
+			<xs:enumeration value="prc8"/>
+			<xs:enumeration value="roc-16k"/>
+			<xs:enumeration value="roc-8k"/>
+			<xs:enumeration value="small-photo"/>
+			<xs:enumeration value="statement"/>
+			<xs:enumeration value="super-a"/>
+			<xs:enumeration value="super-b"/>
+			<xs:enumeration value="tabloid-extra"/>
+			<xs:enumeration value="wide-format"/>
+			<xs:enumeration value="you4"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MediaSizeLegacyNamesWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="a0x2"/>
+			<xs:enumeration value="a0x3"/>
+			<xs:enumeration value="a1x3"/>
+			<xs:enumeration value="a1x4"/>
+			<xs:enumeration value="a2x3"/>
+			<xs:enumeration value="a2x4"/>
+			<xs:enumeration value="a2x5"/>
+			<xs:enumeration value="a3x3"/>
+			<xs:enumeration value="a3x4"/>
+			<xs:enumeration value="a3x5"/>
+			<xs:enumeration value="a3x6"/>
+			<xs:enumeration value="a3x7"/>
+			<xs:enumeration value="a4x3"/>
+			<xs:enumeration value="a4x4"/>
+			<xs:enumeration value="a4x5"/>
+			<xs:enumeration value="a4x6"/>
+			<xs:enumeration value="a4x7"/>
+			<xs:enumeration value="a4x8"/>
+			<xs:enumeration value="a4x9"/>
+			<xs:enumeration value="arch-a"/>
+			<xs:enumeration value="arch-b"/>
+			<xs:enumeration value="arch-c"/>
+			<xs:enumeration value="arch-d"/>
+			<xs:enumeration value="arch-e"/>
+			<xs:enumeration value="c"/>
+			<xs:enumeration value="d"/>
+			<xs:enumeration value="e"/>
+			<xs:enumeration value="executive"/>
+			<xs:enumeration value="f"/>
+			<xs:enumeration value="folio"/>
+			<xs:enumeration value="invoice"/>
+			<xs:enumeration value="iso-a0"/>
+			<xs:enumeration value="iso-a1"/>
+			<xs:enumeration value="iso-a10"/>
+			<xs:enumeration value="iso-a1x3"/>
+			<xs:enumeration value="iso-a1x4"/>
+			<xs:enumeration value="iso-a2"/>
+			<xs:enumeration value="iso-a2x3"/>
+			<xs:enumeration value="iso-a2x4"/>
+			<xs:enumeration value="iso-a2x5"/>
+			<xs:enumeration value="iso-a3"/>
+			<xs:enumeration value="iso-a3-extra"/>
+			<xs:enumeration value="iso-a3x3"/>
+			<xs:enumeration value="iso-a3x4"/>
+			<xs:enumeration value="iso-a3x5"/>
+			<xs:enumeration value="iso-a3x6"/>
+			<xs:enumeration value="iso-a3x7"/>
+			<xs:enumeration value="iso-a4"/>
+			<xs:enumeration value="iso-a4x3"/>
+			<xs:enumeration value="iso-a4x4"/>
+			<xs:enumeration value="iso-a4x5"/>
+			<xs:enumeration value="iso-a4x6"/>
+			<xs:enumeration value="iso-a4x7"/>
+			<xs:enumeration value="iso-a4x8"/>
+			<xs:enumeration value="iso-a4x9"/>
+			<xs:enumeration value="iso-a5"/>
+			<xs:enumeration value="iso-a6"/>
+			<xs:enumeration value="iso-a7"/>
+			<xs:enumeration value="iso-a8"/>
+			<xs:enumeration value="iso-a9"/>
+			<xs:enumeration value="iso-b0"/>
+			<xs:enumeration value="iso-b1"/>
+			<xs:enumeration value="iso-b10"/>
+			<xs:enumeration value="iso-b2"/>
+			<xs:enumeration value="iso-b3"/>
+			<xs:enumeration value="iso-b4"/>
+			<xs:enumeration value="iso-b5"/>
+			<xs:enumeration value="iso-b6"/>
+			<xs:enumeration value="iso-b7"/>
+			<xs:enumeration value="iso-b8"/>
+			<xs:enumeration value="iso-b9"/>
+			<xs:enumeration value="iso-c0"/>
+			<xs:enumeration value="iso-c1"/>
+			<xs:enumeration value="iso-c2"/>
+			<xs:enumeration value="iso-c3"/>
+			<xs:enumeration value="iso-c4"/>
+			<xs:enumeration value="iso-c5"/>
+			<xs:enumeration value="iso-c6"/>
+			<xs:enumeration value="iso-c7"/>
+			<xs:enumeration value="iso-c8"/>
+			<xs:enumeration value="iso-designated"/>
+			<xs:enumeration value="iso-ra0"/>
+			<xs:enumeration value="iso-ra1"/>
+			<xs:enumeration value="iso-ra2"/>
+			<xs:enumeration value="iso-sra0"/>
+			<xs:enumeration value="iso-sra1"/>
+			<xs:enumeration value="iso-sra2"/>
+			<xs:enumeration value="jis-b0"/>
+			<xs:enumeration value="jis-b1"/>
+			<xs:enumeration value="jis-b10"/>
+			<xs:enumeration value="jis-b2"/>
+			<xs:enumeration value="jis-b3"/>
+			<xs:enumeration value="jis-b4"/>
+			<xs:enumeration value="jis-b5"/>
+			<xs:enumeration value="jis-b6"/>
+			<xs:enumeration value="jis-b7"/>
+			<xs:enumeration value="jis-b8"/>
+			<xs:enumeration value="jis-b9"/>
+			<xs:enumeration value="monarch-envelope"/>
+			<xs:enumeration value="na-10x13-envelope"/>
+			<xs:enumeration value="na-10x14-envelope"/>
+			<xs:enumeration value="na-10x15-envelope"/>
+			<xs:enumeration value="na-10x15-envelope"/>
+			<xs:enumeration value="na-6x9-envelope"/>
+			<xs:enumeration value="na-7x9-envelope"/>
+			<xs:enumeration value="na-8x10"/>
+			<xs:enumeration value="na-9x11-envelope"/>
+			<xs:enumeration value="na-legal"/>
+			<xs:enumeration value="na-letter"/>
+			<xs:enumeration value="na-number-10-envelope"/>
+			<xs:enumeration value="na-number-9-envelope"/>
+			<xs:enumeration value="quarto"/>
+			<xs:enumeration value="tabloid"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MediaSizeMemberWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="XDimension"/>
+			<xs:enumeration value="YDimension"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MediaSizeNameWKV">
+		<xs:union memberTypes="MediaSizeAliasNameWKV MediaSizeLegacyNamesWKV MediaSizeSelfDescribingNameWKV"/>
+	</xs:simpleType>
+	<xs:simpleType name="MediaSizeSelfDescribingNameWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="asme_f_28x40in"/>
+			<xs:enumeration value="iso_2a0_1189x1682mm"/>
+			<xs:enumeration value="iso_a0_841x1189mm"/>
+			<xs:enumeration value="iso_a0x3_1189x2523mm"/>
+			<xs:enumeration value="iso_a1_594x841mm"/>
+			<xs:enumeration value="iso_a10_26x37mm"/>
+			<xs:enumeration value="iso_a1x3_841x1783mm"/>
+			<xs:enumeration value="iso_a1x4_841x2378mm"/>
+			<xs:enumeration value="iso_a2_420x594mm"/>
+			<xs:enumeration value="iso_a2x3_594x1261mm"/>
+			<xs:enumeration value="iso_a2x4_594x1682mm"/>
+			<xs:enumeration value="iso_a2x5_594x2102mm"/>
+			<xs:enumeration value="iso_a3_297x420mm"/>
+			<xs:enumeration value="iso_a3-extra_322x445mm"/>
+			<xs:enumeration value="iso_a3x3_420x891mm"/>
+			<xs:enumeration value="iso_a3x4_420x1189mm"/>
+			<xs:enumeration value="iso_a3x5_420x1486mm"/>
+			<xs:enumeration value="iso_a3x6_420x1783mm"/>
+			<xs:enumeration value="iso_a3x7_420x2080mm"/>
+			<xs:enumeration value="iso_a4_210x297mm"/>
+			<xs:enumeration value="iso_a4-extra_235.5x322.3mm"/>
+			<xs:enumeration value="iso_a4-tab_225x297mm"/>
+			<xs:enumeration value="iso_a4x3_297x630mm"/>
+			<xs:enumeration value="iso_a4x4_297x841mm"/>
+			<xs:enumeration value="iso_a4x5_297x1051mm"/>
+			<xs:enumeration value="iso_a4x6_297x1261mm"/>
+			<xs:enumeration value="iso_a4x7_297x1471mm"/>
+			<xs:enumeration value="iso_a4x8_297x1682mm"/>
+			<xs:enumeration value="iso_a4x9_297x1892mm"/>
+			<xs:enumeration value="iso_a5_148x210mm"/>
+			<xs:enumeration value="iso_a5-extra_174x235mm"/>
+			<xs:enumeration value="iso_a6_105x148mm"/>
+			<xs:enumeration value="iso_a7_74x105mm"/>
+			<xs:enumeration value="iso_a8_52x74mm"/>
+			<xs:enumeration value="iso_a9_37x52mm"/>
+			<xs:enumeration value="iso_b0_1000x1414mm"/>
+			<xs:enumeration value="iso_b1_707x1000mm"/>
+			<xs:enumeration value="iso_b10_31x44mm"/>
+			<xs:enumeration value="iso_b2_500x707mm"/>
+			<xs:enumeration value="iso_b3_353x500mm"/>
+			<xs:enumeration value="iso_b4_250x353mm"/>
+			<xs:enumeration value="iso_b5_176x250mm"/>
+			<xs:enumeration value="iso_b5-extra_201x276mm"/>
+			<xs:enumeration value="iso_b6_125x176mm"/>
+			<xs:enumeration value="iso_b6c4_125x324mm"/>
+			<xs:enumeration value="iso_b7_88x125mm"/>
+			<xs:enumeration value="iso_b8_62x88mm"/>
+			<xs:enumeration value="iso_b9_44x62mm"/>
+			<xs:enumeration value="iso_c0_917x1297mm"/>
+			<xs:enumeration value="iso_c1_648x917mm"/>
+			<xs:enumeration value="iso_c10_28x40mm"/>
+			<xs:enumeration value="iso_c2_458x648mm"/>
+			<xs:enumeration value="iso_c3_324x458mm"/>
+			<xs:enumeration value="iso_c4_229x324mm"/>
+			<xs:enumeration value="iso_c5_162x229mm"/>
+			<xs:enumeration value="iso_c6_114x162mm"/>
+			<xs:enumeration value="iso_c6c5_114x229mm"/>
+			<xs:enumeration value="iso_c7_81x114mm"/>
+			<xs:enumeration value="iso_c7c6_81x162mm"/>
+			<xs:enumeration value="iso_c8_57x81mm"/>
+			<xs:enumeration value="iso_c9_40x57mm"/>
+			<xs:enumeration value="iso_dl_110x220mm"/>
+			<xs:enumeration value="iso_ra0_860x1220mm"/>
+			<xs:enumeration value="iso_ra1_610x860mm"/>
+			<xs:enumeration value="iso_ra2_430x610mm"/>
+			<xs:enumeration value="iso_sra0_900x1280mm"/>
+			<xs:enumeration value="iso_sra1_640x900mm"/>
+			<xs:enumeration value="iso_sra2_450x640mm"/>
+			<xs:enumeration value="jis_b0_1030x1456mm"/>
+			<xs:enumeration value="jis_b1_728x1030mm"/>
+			<xs:enumeration value="jis_b10_32x45mm"/>
+			<xs:enumeration value="jis_b2_515x728mm"/>
+			<xs:enumeration value="jis_b3_364x515mm"/>
+			<xs:enumeration value="jis_b4_257x364mm"/>
+			<xs:enumeration value="jis_b5_182x257mm"/>
+			<xs:enumeration value="jis_b6_128x182mm"/>
+			<xs:enumeration value="jis_b7_91x128mm"/>
+			<xs:enumeration value="jis_b8_64x91mm"/>
+			<xs:enumeration value="jis_b9_45x64mm"/>
+			<xs:enumeration value="jis_exec_216x330mm"/>
+			<xs:enumeration value="jpn_chou2_111.1x146mm"/>
+			<xs:enumeration value="jpn_chou3_120x235mm"/>
+			<xs:enumeration value="jpn_chou4_90x205mm"/>
+			<xs:enumeration value="jpn_hagaki_100x148mm"/>
+			<xs:enumeration value="jpn_kahu_240x322.1mm"/>
+			<xs:enumeration value="jpn_kaku2_240x332mm"/>
+			<xs:enumeration value="jpn_oufuku_148x200mm"/>
+			<xs:enumeration value="jpn_you4_105x235mm"/>
+			<xs:enumeration value="na_10x11_10x11in"/>
+			<xs:enumeration value="na_10x13_10x13in"/>
+			<xs:enumeration value="na_10x14_10x14in"/>
+			<xs:enumeration value="na_10x15_10x15in"/>
+			<xs:enumeration value="na_10x15_10x15in"/>
+			<xs:enumeration value="na_11x12_11x12in"/>
+			<xs:enumeration value="na_11x15_11x15in"/>
+			<xs:enumeration value="na_12x19_12x19in"/>
+			<xs:enumeration value="na_5x7_5x7in"/>
+			<xs:enumeration value="na_6x9_6x9in"/>
+			<xs:enumeration value="na_7x9_7x9in"/>
+			<xs:enumeration value="na_9x11_9x11in"/>
+			<xs:enumeration value="na_a2_4.375x5.75in"/>
+			<xs:enumeration value="na_arch-a_9x12in"/>
+			<xs:enumeration value="na_arch-b_12x18in"/>
+			<xs:enumeration value="na_arch-c_18x24in"/>
+			<xs:enumeration value="na_arch-d_24x36in"/>
+			<xs:enumeration value="na_arch-e_36x48in"/>
+			<xs:enumeration value="na_b-plus_12x19.17in"/>
+			<xs:enumeration value="na_c_17x22in"/>
+			<xs:enumeration value="na_c5_6.5x9.5in"/>
+			<xs:enumeration value="na_d_22x34in"/>
+			<xs:enumeration value="na_e_34x44in"/>
+			<xs:enumeration value="na_edp_11x14in"/>
+			<xs:enumeration value="na_eur-edp_12x14in"/>
+			<xs:enumeration value="na_executive_7.25x10.5in"/>
+			<xs:enumeration value="na_f_44x68in"/>
+			<xs:enumeration value="na_fanfold-eur_8.5x12in"/>
+			<xs:enumeration value="na_fanfold-us_11x14.875in"/>
+			<xs:enumeration value="na_foolscap_8.5x13in"/>
+			<xs:enumeration value="na_govt-legal_8x13in"/>
+			<xs:enumeration value="na_govt-letter_8x10in"/>
+			<xs:enumeration value="na_index-3x5_3x5in"/>
+			<xs:enumeration value="na_index-4x6_4x6in"/>
+			<xs:enumeration value="na_index-4x6-ext_6x8in"/>
+			<xs:enumeration value="na_index-5x8_5x8in"/>
+			<xs:enumeration value="na_invoice_5.5x8.5in"/>
+			<xs:enumeration value="na_ledger_11x17in"/>
+			<xs:enumeration value="na_legal_8.5x14in"/>
+			<xs:enumeration value="na_legal-extra_9.5x15in"/>
+			<xs:enumeration value="na_letter_8.5x11in"/>
+			<xs:enumeration value="na_letter-extra_9.5x12in"/>
+			<xs:enumeration value="na_letter-plus_8.5x12.69in"/>
+			<xs:enumeration value="na_monarch_3.875x7.5in"/>
+			<xs:enumeration value="na_number-10_4.125x9.5in"/>
+			<xs:enumeration value="na_number-11_4.5x10.375in"/>
+			<xs:enumeration value="na_number-12_4.75x11in"/>
+			<xs:enumeration value="na_number-14_5x11.5in"/>
+			<xs:enumeration value="na_number-9_3.875x8.875in"/>
+			<xs:enumeration value="na_personal_3.625x6.5in"/>
+			<xs:enumeration value="na_quarto_8.5x10.83in"/>
+			<xs:enumeration value="na_super-a_8.94x14in"/>
+			<xs:enumeration value="na_super-b_13x19in"/>
+			<xs:enumeration value="na_wide-format_30x42in"/>
+			<xs:enumeration value="om_dai-pa-kai_275x395mm"/>
+			<xs:enumeration value="om_folio_210x330mm"/>
+			<xs:enumeration value="om_folio-sp_215x315mm"/>
+			<xs:enumeration value="om_invite_220x220mm"/>
+			<xs:enumeration value="om_italian_110x230mm"/>
+			<xs:enumeration value="om_juuro-ku-kai_198x275mm"/>
+			<xs:enumeration value="om_large-photo_200x300mm"/>
+			<xs:enumeration value="om_pa-kai_267x389mm"/>
+			<xs:enumeration value="om_postfix_114x229mm"/>
+			<xs:enumeration value="om_small-photo_100x150mm"/>
+			<xs:enumeration value="prc_1_102x165mm"/>
+			<xs:enumeration value="prc_10_324x458mm"/>
+			<xs:enumeration value="prc_16k_146x215mm"/>
+			<xs:enumeration value="prc_2_102x176mm"/>
+			<xs:enumeration value="prc_3_125x176mm"/>
+			<xs:enumeration value="prc_32k_97x151mm"/>
+			<xs:enumeration value="prc_4_110x208mm"/>
+			<xs:enumeration value="prc_5_110x220mm"/>
+			<xs:enumeration value="prc_6_120x320mm"/>
+			<xs:enumeration value="prc_7_160x230mm"/>
+			<xs:enumeration value="prc_8_120x309mm"/>
+			<xs:enumeration value="pwg_letter-or-a4_choice"/>
+			<xs:enumeration value="roc_16k_7.75x10.75in"/>
+			<xs:enumeration value="roc_8k_10.75x15.5in"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MediaSourceWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:enumeration value="Alternate"/>
+			<xs:enumeration value="AlternateRoll"/>
+			<xs:enumeration value="Auto"/>
+			<xs:enumeration value="Bottom"/>
+			<xs:enumeration value="ByPassTray"/>
+			<xs:enumeration value="Center"/>
+			<xs:enumeration value="Disc"/>
+			<xs:enumeration value="Envelope"/>
+			<xs:enumeration value="Hagaki"/>
+			<xs:enumeration value="LargeCapacity"/>
+			<xs:enumeration value="Left"/>
+			<xs:enumeration value="Main"/>
+			<xs:enumeration value="MainRoll"/>
+			<xs:enumeration value="Manual"/>
+			<xs:enumeration value="Middle"/>
+			<xs:enumeration value="Photo"/>
+			<xs:enumeration value="Rear"/>
+			<xs:enumeration value="Right"/>
+			<xs:enumeration value="Roll1"/>
+			<xs:enumeration value="Roll2"/>
+			<xs:enumeration value="Roll3"/>
+			<xs:enumeration value="Roll4"/>
+			<xs:enumeration value="Roll5"/>
+			<xs:enumeration value="Roll6"/>
+			<xs:enumeration value="Roll7"/>
+			<xs:enumeration value="Roll8"/>
+			<xs:enumeration value="Roll9"/>
+			<xs:enumeration value="Roll10"/>
+			<xs:enumeration value="Side"/>
+			<xs:enumeration value="Top"/>
+			<xs:enumeration value="Tray1"/>
+			<xs:enumeration value="Tray2"/>
+			<xs:enumeration value="Tray3"/>
+			<xs:enumeration value="Tray4"/>
+			<xs:enumeration value="Tray5"/>
+			<xs:enumeration value="Tray6"/>
+			<xs:enumeration value="Tray7"/>
+			<xs:enumeration value="Tray8"/>
+			<xs:enumeration value="Tray9"/>
+			<xs:enumeration value="Tray10"/>
+			<xs:enumeration value="Tray11"/>
+			<xs:enumeration value="Tray12"/>
+			<xs:enumeration value="Tray13"/>
+			<xs:enumeration value="Tray14"/>
+			<xs:enumeration value="Tray15"/>
+			<xs:enumeration value="Tray16"/>
+			<xs:enumeration value="Tray17"/>
+			<xs:enumeration value="Tray18"/>
+			<xs:enumeration value="Tray19"/>
+			<xs:enumeration value="Tray20"/>
+		</xs:restriction>
+		<!-- media path type -->
+		<!-- see PrtMediaPathTypeTC in [RFC3805] and [IANA-PRT] -->
+	</xs:simpleType>
+	<xs:simpleType name="MediaToothWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="coarse"/>
+			<xs:enumeration value="fine"/>
+			<xs:enumeration value="medium"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MediaTypeWKV">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:enumeration value="back-print-film"/>
+			<xs:enumeration value="cardstock"/>
+			<xs:enumeration value="continuous"/>
+			<xs:enumeration value="continuous-long"/>
+			<xs:enumeration value="continuous-short"/>
+			<xs:enumeration value="envelope"/>
+			<xs:enumeration value="envelope-plain"/>
+			<xs:enumeration value="envelope-window"/>
+			<xs:enumeration value="full-cut-tabs"/>
+			<xs:enumeration value="labels"/>
+			<xs:enumeration value="pre-cut-tabs"/>
+			<xs:enumeration value="multi-layer"/>
+			<xs:enumeration value="multi-part-forms"/>
+			<xs:enumeration value="photographic"/>
+			<xs:enumeration value="photographic-film"/>
+			<xs:enumeration value="photographic-glossy"/>
+			<xs:enumeration value="photographic-high-gloss"/>
+			<xs:enumeration value="photographic-matte"/>
+			<xs:enumeration value="photographic-satin"/>
+			<xs:enumeration value="photographic-semi-gloss"/>
+			<xs:enumeration value="roll"/>
+			<xs:enumeration value="screen"/>
+			<xs:enumeration value="screen-paged"/>
+			<xs:enumeration value="stationery"/>
+			<xs:enumeration value="stationery-coated"/>
+			<xs:enumeration value="stationery-fine"/>
+			<xs:enumeration value="stationery-heavyweight"/>
+			<xs:enumeration value="stationery-inkjet"/>
+			<xs:enumeration value="stationery-letterhead"/>
+			<xs:enumeration value="stationery-lightweight"/>
+			<xs:enumeration value="stationery-preprinted"/>
+			<xs:enumeration value="stationery-prepunched"/>
+			<xs:enumeration value="tab-stock"/>
+			<xs:enumeration value="transparency"/>
+			<xs:enumeration value="other"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:annotation>
+		<xs:documentation>Patterns for media keyword extension </xs:documentation>
+	</xs:annotation>
+	<xs:simpleType name="MediaColorExtensionPattern">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:pattern value="custom-media-color-[a-z][a-z0-9\-]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MediaSizeNameExtensionPattern">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:pattern value="(custom_max|custom_min|custom|na|asme|roc|oe)_[\p{Ll}\d][\p{Ll}\d\-]*_\d+(\.\d+)?x\d+(\.\d+)?in"/>
+			<xs:pattern value="(custom_max|custom_min|custom|na|asme|roc|oe)_[\p{Ll}\d][\p{Ll}\d\-]*_\d+(\.\d+)?x\d+(\.\d+)?mm"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MediaTypeExtensionPattern">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:pattern value="custom-media-type-[a-z][a-z0-9\-]*"/>
+		</xs:restriction>
+	</xs:simpleType>
+	<xs:simpleType name="MediaNsExtensionPattern">
+		<xs:restriction base="xs:NMTOKEN">
+			<xs:maxLength value="255"/>
+			<xs:pattern value="\w+:[\w:/;_\-\.]+"/>
+		</xs:restriction>
+	</xs:simpleType>
+</xs:schema>

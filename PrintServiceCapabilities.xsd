@@ -1,0 +1,1075 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!-- edited with XMLSpy v2011 rel. 3 sp1 (x64) (http://www.altova.com) by Peter J Zehler (Xerox) -->
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="ServiceTypes.xsd"/>
+	<xs:include schemaLocation="PrintServiceDefaults.xsd"/>
+	<!--07/16/12 PJZ Added missing JobCollationType, ProofPrint  Copies changed to ProofPrintCopies-->
+	<!--02/25/12 PJZ Fixed FontSizeRequested, StitchingLocations, StitchongOffset capabilities dataType, fixed FontSizeRequested capabilities name-->
+	<!--02/02/12 PJZ Change DocumentGenerationElements to JobCreationElements & add JobPaXXX, Change PrinterCapabilities to PrintServiceJobCapabilities-->
+	<!--02/02/12 PJZ Fixed DocumentPassword & DocumentPasswordSupported-->
+	<!--01/24/12 PJZ Fixed MediaColSupported and added MediaColDatabase-->
+	<!--01/10/12 PJZ Aligned with latest JPS3 and Raster specs-->
+	<!--01/09/12 PJZ Adjusted DocumentGenerationElements, Fixed media size and source elements-->
+	<!--12/11/11 PJZ Fixed ForceFrontSide datatype-->
+	<!--11/15/11 PJZ Adjusted PrinterCapabilities-->
+	<!--11/15/11 PJZ Created PrinterCapabilities to contain Ticket capabilities and required raster generation info-->
+	<!--09/10/11 PJZ Added missing MustHonor and attribute extensions-->
+	<!--08/26/11 PJZ FixedResolution-->
+	<!--08/23/11 PJZ Fixed location of Media, MediaType and MediaSource-->
+	<!--08/19/11 PJZ Added MediaSource as a choice everywhere Media is located-->
+	<!--08/16/11 PJZSplit out from PrintService.xsd-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-20011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<!---->
+	<!-- Printer Capabilities - group for use in a cloud based print service protocol exchange-->
+	<xs:element name="PrintServiceJobCapabilities">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="PrintJobCreationElements" minOccurs="0"/>
+				<xs:element ref="PrintDocumentTicketCapabilities" minOccurs="0"/>
+				<xs:element ref="PrintJobTicketCapabilities"/>
+				<xs:element ref="DefaultPrintJobTicket" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<xs:element name="PrintJobCreationElements">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="CharsetConfigured"/>
+				<xs:element ref="ColorSupported" minOccurs="0"/>
+				<xs:element ref="DocumentFormatDetailsSupported" minOccurs="0"/>
+				<xs:element ref="DocumentFormatSupported"/>
+				<xs:element ref="DocumentPasswordSupported" minOccurs="0"/>
+				<xs:element ref="JobPasswordEncryptionSupported" minOccurs="0"/>
+				<xs:element ref="JobPasswordSupported" minOccurs="0"/>
+				<xs:element name="MediaBottomMarginSupported">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="MediaBottomMargin" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="MediaLeftMarginSupported">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="MediaLeftMargin" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="MediaRightMarginSupported">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="MediaRightMargin" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="MediaTopMarginSupported">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="MediaTopMargin" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="PwgRasterDocumentTypeSupported" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="AllowedValue" maxOccurs="unbounded">
+								<xs:simpleType>
+									<xs:union memberTypes="PwgRasterDocumentTypeWKV KeywordNsExtensionPattern"/>
+								</xs:simpleType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="PwgRasterDocumentResolutionSupported" minOccurs="0">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element ref="Resolution" maxOccurs="unbounded"/>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element ref="PwgRasterDocumentSheetBack" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+	<!---->
+	<!---->
+	<!---->
+	<!-- PrintService Capabilities - group -->
+	<!---->
+	<xs:complexType name="PrintServiceCapabilitiesType">
+		<xs:sequence>
+			<xs:element ref="PrintDocumentTicketCapabilities" minOccurs="0"/>
+			<xs:element ref="PrintJobTicketCapabilities" minOccurs="0"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:complexType name="PrintDocumentTicketCapabilitiesType">
+		<xs:sequence>
+			<xs:element ref="PrintDocumentDescriptionCapabilities" minOccurs="0"/>
+			<xs:element ref="PrintDocumentProcessingCapabilities" minOccurs="0"/>
+		</xs:sequence>
+		<xs:attribute ref="MustHonor"/>
+		<xs:anyAttribute namespace="##other"/>
+	</xs:complexType>
+	<xs:element name="PrintDocumentTicketCapabilities" type="PrintDocumentTicketCapabilitiesType"/>
+	<xs:complexType name="PrintDocumentDescriptionCapabilitiesType">
+		<xs:complexContent>
+			<xs:extension base="ImagingDocumentDescriptionCapabilitiesType">
+				<xs:sequence>
+					<xs:element name="CompressionSupplied" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" type="CompressionType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="DocumentCharsetSupplied" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" type="CharsetType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="DocumentDigitalSignatureSupplied" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" type="DocumentDigitalSignatureType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="DocumentFormatDetailsSupplied" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" type="DocumentFormatDetailsType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="DocumentFormatSupplied" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" type="DocumentFormatType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="DocumentFormatVersionSupplied" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="DocumentMessageSupplied" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="DocumentMetadata" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="DocumentNameSupplied" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="DocumentUri" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="Impressions" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="KOctets" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="MediaSheets" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="PageOrderReceived" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" type="PageOrderReceivedType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+		<!-- PrintDocumentDescription - group -->
+	</xs:complexType>
+	<xs:element name="PrintDocumentDescriptionCapabilities" type="PrintDocumentDescriptionCapabilitiesType"/>
+	<xs:complexType name="PrintDocumentProcessingCapabilitiesType">
+		<xs:complexContent>
+			<xs:extension base="ImagingDocumentProcessingCapabilitiesType">
+				<xs:sequence>
+					<xs:element name="Copies" type="RangeOfIntType" minOccurs="0"/>
+					<xs:element name="CoverBack" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="CoverType" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValue" type="CoverTypeWKV" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:sequence minOccurs="0">
+									<xs:sequence minOccurs="0">
+										<xs:sequence>
+											<xs:element name="Media" type="MediaSupportedType" minOccurs="0"/>
+											<xs:element name="MediaType" type="MediaTypeSupportedType" minOccurs="0"/>
+										</xs:sequence>
+										<xs:element name="MediaSource" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>JPS3</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="AllowedValue" maxOccurs="unbounded">
+														<xs:simpleType>
+															<xs:union memberTypes="MediaSourceWKV KeywordNsExtensionPattern"/>
+														</xs:simpleType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:element name="MediaCol" type="xs:boolean" minOccurs="0"/>
+								</xs:sequence>
+								<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="CoverFront" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="CoverType" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValue" maxOccurs="unbounded">
+												<xs:simpleType>
+													<xs:union memberTypes="CoverTypeWKV KeywordNsExtensionPattern"/>
+												</xs:simpleType>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:sequence minOccurs="0">
+									<xs:sequence minOccurs="0">
+										<xs:sequence>
+											<xs:element name="Media" type="MediaSupportedType" minOccurs="0"/>
+											<xs:element name="MediaType" type="MediaTypeSupportedType" minOccurs="0"/>
+										</xs:sequence>
+										<xs:element name="MediaSource" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>JPS3</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="AllowedValue" maxOccurs="unbounded">
+														<xs:simpleType>
+															<xs:union memberTypes="MediaSourceWKV KeywordNsExtensionPattern"/>
+														</xs:simpleType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:element name="MediaCol" type="xs:boolean" minOccurs="0"/>
+								</xs:sequence>
+								<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="DocumentPassword" type="xs:int" minOccurs="0"/>
+					<xs:element name="FeedOrientation" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" maxOccurs="unbounded">
+									<xs:simpleType>
+										<xs:union memberTypes="FeedOrientationWKV KeywordNsExtensionPattern"/>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Finishings" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" maxOccurs="unbounded">
+									<xs:simpleType>
+										<xs:union memberTypes="FinishingsWKV KeywordNsExtensionPattern"/>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="FinishingsCol" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="FinishingTemplate" type="xs:boolean" minOccurs="0"/>
+								<xs:element name="Stitching" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="StitchingLocations" type="SetOfRangeOfIntType" minOccurs="0"/>
+											<xs:element name="StitchingOffset" type="SetOfRangeOfIntType" minOccurs="0"/>
+											<xs:element name="StitchingReferenceEdge" minOccurs="0">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="AllowedValues" maxOccurs="unbounded">
+															<xs:simpleType>
+																<xs:union memberTypes="StitchingReferenceEdgeWKV KeywordNsExtensionPattern"/>
+															</xs:simpleType>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="FontNameRequested" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" type="xs:string" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="FontSizeRequested" type="SetOfRangeOfIntType" minOccurs="0"/>
+					<xs:element name="ForceFrontSide" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="ImpositionTemplate" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValues" maxOccurs="unbounded">
+									<xs:simpleType>
+										<xs:restriction base="xs:string">
+											<xs:maxLength value="255"/>
+										</xs:restriction>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="InsertSheets" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence minOccurs="0">
+								<xs:element name="InsertSheet" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence minOccurs="0">
+											<xs:element name="InsertAfterPageNumber" type="RangeOfIntType" minOccurs="0"/>
+											<xs:element name="InsertCount" type="RangeOfIntType" minOccurs="0"/>
+											<xs:sequence minOccurs="0">
+												<xs:sequence minOccurs="0">
+													<xs:sequence>
+														<xs:element name="Media" type="MediaSupportedType" minOccurs="0"/>
+														<xs:element name="MediaType" type="MediaTypeSupportedType" minOccurs="0"/>
+													</xs:sequence>
+													<xs:element name="MediaSource" minOccurs="0">
+														<xs:annotation>
+															<xs:documentation>JPS3</xs:documentation>
+														</xs:annotation>
+														<xs:complexType>
+															<xs:sequence>
+																<xs:element name="AllowedValue" maxOccurs="unbounded">
+																	<xs:simpleType>
+																		<xs:union memberTypes="MediaSourceWKV KeywordNsExtensionPattern"/>
+																	</xs:simpleType>
+																</xs:element>
+															</xs:sequence>
+														</xs:complexType>
+													</xs:element>
+												</xs:sequence>
+												<xs:element name="MediaCol" type="xs:boolean" minOccurs="0"/>
+											</xs:sequence>
+											<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:sequence minOccurs="0">
+						<xs:sequence>
+							<xs:element name="Media" type="MediaSupportedType" minOccurs="0"/>
+							<xs:element name="MediaType" type="MediaTypeSupportedType" minOccurs="0"/>
+						</xs:sequence>
+						<xs:element ref="MediaColDatabase" minOccurs="0"/>
+					</xs:sequence>
+					<xs:element ref="MediaColSupported" minOccurs="0"/>
+					<xs:element name="MediaInputTrayCheck" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" maxOccurs="unbounded">
+									<xs:simpleType>
+										<xs:union memberTypes="MediaInputTrayWKV MediaNsExtensionPattern"/>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="OrientationRequested" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" type="OrientationRequestedType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="OutputBin" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" maxOccurs="unbounded">
+									<xs:simpleType>
+										<xs:union memberTypes="OutputBinWKV KeywordNsExtensionPattern"/>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="OutputDevice" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" type="xs:string" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="PageDelivery" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" maxOccurs="unbounded">
+									<xs:simpleType>
+										<xs:union memberTypes="PageDeliveryWKV KeywordNsExtensionPattern"/>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="PageRanges" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="PagesPerSubset" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="PdlInitFile" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="PdlInitFileLocation" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValues" type="xs:string" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="PdlInitFileName" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValues" type="xs:string" maxOccurs="unbounded"/>
+										</xs:sequence>
+										<xs:attribute name="PdlInitFileNameSubdirectory" type="xs:boolean"/>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="PdlInitFileEntry" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValues" type="xs:string" maxOccurs="unbounded"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="PrintColorMode" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>JPS3</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" maxOccurs="unbounded">
+									<xs:simpleType>
+										<xs:union memberTypes="PrintColorModeWKV KeywordNsExtensionPattern"/>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="PrintContentOptimize" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" maxOccurs="unbounded">
+									<xs:simpleType>
+										<xs:union memberTypes="PrintContentOptimizeWKV KeywordNsExtensionPattern"/>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="PrintRenderingIntent" minOccurs="0">
+						<xs:annotation>
+							<xs:documentation>JPS3</xs:documentation>
+						</xs:annotation>
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" type="PrintRenderingIntentType" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Quality" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" maxOccurs="unbounded">
+									<xs:simpleType>
+										<xs:union memberTypes="PrintQualityWKV KeywordNsExtensionPattern"/>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Resolution" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValues" maxOccurs="unbounded">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="CrossFeedDir">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="AllowedValue" type="xs:int"/>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element name="FeedDir">
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="AllowedValue" type="xs:int"/>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+											<xs:element ref="Units"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="SeparatorSheets" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="SeparatorSheetsType" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValue" maxOccurs="unbounded">
+												<xs:simpleType>
+													<xs:union memberTypes="SeparatorSheetsTypeWKV KeywordNsExtensionPattern"/>
+												</xs:simpleType>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:sequence minOccurs="0">
+									<xs:sequence minOccurs="0">
+										<xs:sequence>
+											<xs:element name="Media" type="MediaSupportedType" minOccurs="0"/>
+											<xs:element name="MediaType" type="MediaTypeSupportedType" minOccurs="0"/>
+										</xs:sequence>
+										<xs:element name="MediaSource" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>JPS3</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="AllowedValue" maxOccurs="unbounded">
+														<xs:simpleType>
+															<xs:union memberTypes="MediaSourceWKV KeywordNsExtensionPattern"/>
+														</xs:simpleType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:element name="MediaCol" type="xs:boolean" minOccurs="0"/>
+								</xs:sequence>
+								<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="SheetCollate" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" maxOccurs="unbounded">
+									<xs:simpleType>
+										<xs:union memberTypes="SheetCollateWKV KeywordNsExtensionPattern"/>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Sides" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" maxOccurs="unbounded">
+									<xs:simpleType>
+										<xs:union memberTypes="SidesWKV KeywordNsExtensionPattern"/>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="XImagePosition" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" maxOccurs="unbounded">
+									<xs:simpleType>
+										<xs:union memberTypes="XImagePositionWKV KeywordNsExtensionPattern"/>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="XImageShift" type="RangeOfIntType" minOccurs="0"/>
+					<xs:element name="XSide1ImageShift" type="RangeOfIntType" minOccurs="0"/>
+					<xs:element name="XSide2ImageShift" type="RangeOfIntType" minOccurs="0"/>
+					<xs:element name="YImagePosition" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" maxOccurs="unbounded">
+									<xs:simpleType>
+										<xs:union memberTypes="YImagePositionWKV KeywordNsExtensionPattern"/>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="YImageShift" type="RangeOfIntType" minOccurs="0"/>
+					<xs:element name="YSide1ImageShift" type="RangeOfIntType" minOccurs="0"/>
+					<xs:element name="YSide2ImageShift" type="RangeOfIntType" minOccurs="0"/>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PrintDocumentProcessingCapabilities" type="PrintDocumentProcessingCapabilitiesType"/>
+	<xs:complexType name="PrintJobDescriptionCapabilitiesType">
+		<xs:complexContent>
+			<xs:extension base="pwg:ImagingJobDescriptionCapabilitiesType">
+				<xs:sequence>
+					<xs:element name="CompressionSupplied" type="CompressionSupportedType" minOccurs="0"/>
+					<xs:element name="DocumentCharsetSupplied" type="DocumentCharsetSupportedType" minOccurs="0"/>
+					<xs:element name="DocumentDigitalSignatureSupplied" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="DocumentFormatDetailsSupplied" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="DocumentSourceApplicationName" type="xs:boolean" minOccurs="0"/>
+								<xs:element name="DocumentSourceApplicationVersion" type="xs:boolean" minOccurs="0"/>
+								<xs:element name="DocumentSourceOsName" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValues" maxOccurs="unbounded">
+												<xs:simpleType>
+													<xs:union memberTypes="OperatingSystemNameWKV OperatingSystemNameExtensionPattern"/>
+												</xs:simpleType>
+											</xs:element>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="DocumentSourceOsVersion" type="xs:boolean" minOccurs="0"/>
+								<xs:element name="DocumentFormat" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValues" type="DocumentFormatType"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="DocumentFormatDeviceId" type="xs:boolean" minOccurs="0"/>
+								<xs:element name="DocumentFormatVersion" type="xs:boolean" minOccurs="0"/>
+								<xs:element name="DocumentNaturalLanguage" minOccurs="0">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element name="AllowedValues" type="NaturalLanguageType"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="DocumentFormatSupplied" type="DocumentFormatSupportedType" minOccurs="0"/>
+					<xs:element name="DocumentFormatVersionSupplied" type="DocumentFormatVersionSupportedType" minOccurs="0"/>
+					<xs:element name="DocumentMessageSupplied" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="DocumentNameSupplied" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="JobCollationType" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" maxOccurs="unbounded">
+									<xs:simpleType>
+										<xs:union memberTypes="JobCollationTypeWKV KeywordNsExtensionPattern"/>
+									</xs:simpleType>
+								</xs:element>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:element name="Impressions" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="MediaSheets" type="xs:boolean" minOccurs="0"/>
+					<xs:element name="PageOrderReceived" minOccurs="0">
+						<xs:complexType>
+							<xs:sequence>
+								<xs:element name="AllowedValue" type="PageOrderReceivedType" minOccurs="0"/>
+							</xs:sequence>
+						</xs:complexType>
+					</xs:element>
+					<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+				</xs:sequence>
+			</xs:extension>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PrintJobDescriptionCapabilities" type="PrintJobDescriptionCapabilitiesType"/>
+	<xs:complexType name="PrintJobProcessingCapabilitiesType">
+		<xs:complexContent>
+			<xs:extension base="ImagingJobProcessingCapabilitiesType"/>
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:element name="PrintJobProcessingCapabilities">
+		<xs:complexType>
+			<xs:complexContent>
+				<xs:extension base="PrintJobProcessingCapabilitiesType">
+					<xs:sequence>
+						<!-- Print job processing references here -->
+						<xs:element name="JobAccountingSheets" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="JobAccountingSheetsType" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="AllowedValues" type="JobAccountingSheetsTypeType" maxOccurs="unbounded"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="JobAccountingOutputBin" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="AllowedValues" type="JobAccountingOutputBinType" maxOccurs="unbounded"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:sequence minOccurs="0">
+										<xs:sequence minOccurs="0">
+											<xs:sequence>
+												<xs:element name="Media" type="MediaSupportedType" minOccurs="0"/>
+												<xs:element name="MediaType" type="MediaTypeSupportedType" minOccurs="0"/>
+											</xs:sequence>
+											<xs:element name="MediaSource" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation>JPS3</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="AllowedValue" maxOccurs="unbounded">
+															<xs:simpleType>
+																<xs:union memberTypes="MediaSourceWKV KeywordNsExtensionPattern"/>
+															</xs:simpleType>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+										<xs:element name="MediaCol" type="xs:boolean" minOccurs="0"/>
+									</xs:sequence>
+									<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="JobCopies" type="RangeOfIntType" minOccurs="0"/>
+						<xs:element name="JobCoverBack" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="CoverType" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="AllowedValues" type="CoverTypeType" minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:sequence minOccurs="0">
+										<xs:sequence minOccurs="0">
+											<xs:sequence>
+												<xs:element name="Media" type="MediaSupportedType" minOccurs="0"/>
+												<xs:element name="MediaType" type="MediaTypeSupportedType" minOccurs="0"/>
+											</xs:sequence>
+											<xs:element name="MediaSource" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation>JPS3</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="AllowedValue" maxOccurs="unbounded">
+															<xs:simpleType>
+																<xs:union memberTypes="MediaSourceWKV KeywordNsExtensionPattern"/>
+															</xs:simpleType>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+										<xs:element name="MediaCol" type="xs:boolean" minOccurs="0"/>
+									</xs:sequence>
+									<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="JobCoverFront" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="CoverType" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="AllowedValues" type="CoverTypeType" minOccurs="0"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:sequence minOccurs="0">
+										<xs:sequence>
+											<xs:element name="Media" type="MediaSupportedType" minOccurs="0"/>
+											<xs:element name="MediaType" type="MediaTypeSupportedType" minOccurs="0"/>
+										</xs:sequence>
+										<xs:element name="MediaSource" minOccurs="0">
+											<xs:annotation>
+												<xs:documentation>JPS3</xs:documentation>
+											</xs:annotation>
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element name="AllowedValue" maxOccurs="unbounded">
+														<xs:simpleType>
+															<xs:union memberTypes="MediaSourceWKV KeywordNsExtensionPattern"/>
+														</xs:simpleType>
+													</xs:element>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+									<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="JobErrorSheet" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="JobErrorSheetType" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="AllowedValues" type="JobErrorSheetTypeType" maxOccurs="unbounded"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="JobErrorSheetWhen" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="AllowedValues" type="JobErrorSheetWhenType" maxOccurs="unbounded"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:sequence minOccurs="0">
+										<xs:sequence minOccurs="0">
+											<xs:sequence>
+												<xs:element name="Media" type="MediaSupportedType" minOccurs="0"/>
+												<xs:element name="MediaType" type="MediaTypeSupportedType" minOccurs="0"/>
+											</xs:sequence>
+											<xs:element name="MediaSource" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation>JPS3</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="AllowedValue" maxOccurs="unbounded">
+															<xs:simpleType>
+																<xs:union memberTypes="MediaSourceWKV KeywordNsExtensionPattern"/>
+															</xs:simpleType>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+										<xs:element name="MediaCol" type="xs:boolean" minOccurs="0"/>
+									</xs:sequence>
+									<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="JobFinishings" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="Finishing">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="AllowedValues" type="FinishingType" maxOccurs="unbounded"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="JobFinishingsCol" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="FinishingTemplate" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="AllowedValues" type="xs:string" maxOccurs="unbounded"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="Stitching" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="StitchingReferenceEdge" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="AllowedValues" type="StitchingReferenceEdgeType" maxOccurs="unbounded"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="StitchingOffset" type="SetOfRangeOfIntType" minOccurs="0"/>
+												<xs:element name="StitchingLocations" type="SetOfRangeOfIntType" minOccurs="0"/>
+												<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="JobSaveDisposition" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="SaveDisposition" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="AllowedValues" type="SaveDispositionType" maxOccurs="unbounded"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:element name="SaveInfo" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="SaveDocumentFormat" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element name="AllowedValues" type="SaveDocumentFormatType" maxOccurs="unbounded"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="SaveLocation" minOccurs="0">
+													<xs:complexType>
+														<xs:sequence>
+															<xs:element ref="UriSchemSupported" maxOccurs="unbounded"/>
+														</xs:sequence>
+													</xs:complexType>
+												</xs:element>
+												<xs:element name="SaveName" type="xs:boolean" minOccurs="0"/>
+												<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="JobSheetMessage" type="xs:boolean" minOccurs="0"/>
+						<xs:element name="JobSheets" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="AllowedValues" type="JobSheetsType" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="JobSheetsCol" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="JobSheets" minOccurs="0">
+										<xs:complexType>
+											<xs:sequence>
+												<xs:element name="AllowedValues" type="JobSheetsType" maxOccurs="unbounded"/>
+											</xs:sequence>
+										</xs:complexType>
+									</xs:element>
+									<xs:sequence minOccurs="0">
+										<xs:sequence minOccurs="0">
+											<xs:sequence>
+												<xs:element name="Media" type="MediaSupportedType" minOccurs="0"/>
+												<xs:element name="MediaType" type="MediaTypeSupportedType" minOccurs="0"/>
+											</xs:sequence>
+											<xs:element name="MediaSource" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation>JPS3</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="AllowedValue" maxOccurs="unbounded">
+															<xs:simpleType>
+																<xs:union memberTypes="MediaSourceWKV KeywordNsExtensionPattern"/>
+															</xs:simpleType>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+										<xs:element name="MediaCol" type="xs:boolean" minOccurs="0"/>
+									</xs:sequence>
+									<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="MultipleDocumentsHandling" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="AllowedValues" type="MultipleDocumentsHandlingType" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="OutputBin" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="AllowedValues" type="OutputBinType" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="OutputDevice" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="AllowedValues" type="OutputDeviceType" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:element name="Overrides" type="xs:boolean" minOccurs="0"/>
+						<xs:element name="PagesPerSubset" type="xs:boolean" minOccurs="0"/>
+						<xs:element name="ProofPrint" minOccurs="0">
+							<xs:complexType>
+								<xs:sequence>
+									<xs:element name="ProofPrintCopies" type="RangeOfIntType" minOccurs="0"/>
+									<xs:sequence minOccurs="0">
+										<xs:sequence minOccurs="0">
+											<xs:sequence>
+												<xs:element name="Media" type="MediaSupportedType" minOccurs="0"/>
+												<xs:element name="MediaType" type="MediaTypeSupportedType" minOccurs="0"/>
+											</xs:sequence>
+											<xs:element name="MediaSource" minOccurs="0">
+												<xs:annotation>
+													<xs:documentation>JPS3</xs:documentation>
+												</xs:annotation>
+												<xs:complexType>
+													<xs:sequence>
+														<xs:element name="AllowedValue" maxOccurs="unbounded">
+															<xs:simpleType>
+																<xs:union memberTypes="MediaSourceWKV KeywordNsExtensionPattern"/>
+															</xs:simpleType>
+														</xs:element>
+													</xs:sequence>
+												</xs:complexType>
+											</xs:element>
+										</xs:sequence>
+										<xs:element name="MediaCol" type="xs:boolean" minOccurs="0"/>
+									</xs:sequence>
+									<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+								</xs:sequence>
+							</xs:complexType>
+						</xs:element>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:extension>
+			</xs:complexContent>
+		</xs:complexType>
+	</xs:element>
+	<xs:complexType name="PrintJobTicketCapabilitiesType">
+		<xs:sequence>
+			<xs:element ref="PrintDocumentProcessingCapabilities" minOccurs="0"/>
+			<xs:element ref="PrintJobDescriptionCapabilities" minOccurs="0"/>
+			<xs:element ref="PrintJobProcessingCapabilities" minOccurs="0"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+	</xs:complexType>
+	<xs:element name="PrintJobTicketCapabilities" type="PrintJobTicketCapabilitiesType"/>
+	<xs:element name="PrintServiceCapabilitiesReady" type="PrintServiceCapabilitiesType"/>
+	<xs:element name="PrintServiceCapabilities" type="PrintServiceCapabilitiesType"/>
+</xs:schema>

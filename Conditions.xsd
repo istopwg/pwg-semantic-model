@@ -1,0 +1,76 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="PwgCommon.xsd"/>
+	<!--04/14/09 PJZ Updated Namespace-->
+	<!--06/12/08 PJZ created from WS-Scan-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v2   
+
+Copyright 2002-2011, IEEE Industry Standards and Technology Organization/PWG - MFD Working Group. 
+All rights reserved  
+
+   Editors:  Peter Zehler, Ira McDonald 
+</xs:documentation>
+	</xs:annotation>
+	<xs:annotation>
+		<xs:documentation>Conditions Type definition</xs:documentation>
+	</xs:annotation>
+	<xs:complexType name="ActiveConditionsTableType">
+		<xs:sequence>
+			<xs:element name="DeviceCondition" type="pwg:DeviceConditionType" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ConditionHistoryTableType">
+		<xs:sequence>
+			<xs:element name="ConditionHistoryEntry" type="pwg:ConditionHistoryEntryType" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="DeviceConditionType">
+		<xs:sequence>
+			<xs:element name="Component">
+				<xs:complexType>
+					<xs:sequence>
+						<xs:element ref="Group"/>
+						<xs:element name="Name" type="xs:string"/>
+						<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+					</xs:sequence>
+				</xs:complexType>
+			</xs:element>
+			<xs:element ref="ConditionId"/>
+			<xs:element name="Name" type="ConditionNameType"/>
+			<xs:element ref="Severity"/>
+			<xs:element ref="Time"/>
+			<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+		</xs:sequence>
+		<xs:anyAttribute namespace="##other" processContents="lax"/>
+	</xs:complexType>
+	<xs:complexType name="ConditionHistoryEntryType">
+		<xs:complexContent>
+			<xs:extension base="pwg:DeviceConditionType">
+				<xs:sequence>
+					<xs:element ref="ClearTime"/>
+				</xs:sequence>
+			</xs:extension>
+			<!-- GT: the type this is extending, DeviceConditionType, already has anyAttribute 
+				<xs:anyAttribute namespace="##other" processContents="lax"/>
+        -->
+		</xs:complexContent>
+	</xs:complexType>
+	<xs:annotation>
+		<xs:documentation>Conditions Element definition</xs:documentation>
+	</xs:annotation>
+	<xs:element name="ActiveConditions" type="pwg:ActiveConditionsTableType"/>
+	<xs:element name="ConditionHistory" type="pwg:ConditionHistoryTableType"/>
+	<xs:element name="ConditionTable">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element ref="ActiveConditions"/>
+				<xs:element ref="ConditionHistory" minOccurs="0"/>
+				<xs:any namespace="##other" minOccurs="0" maxOccurs="unbounded"/>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>

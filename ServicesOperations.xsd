@@ -1,0 +1,2118 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<xs:schema xmlns="http://www.pwg.org/schemas/2016/01/sm" xmlns:xs="http://www.w3.org/2001/XMLSchema" xmlns:pwg="http://www.pwg.org/schemas/2016/01/sm" targetNamespace="http://www.pwg.org/schemas/2016/01/sm" elementFormDefault="qualified" attributeFormDefault="qualified" version="2.905">
+	<xs:include schemaLocation="PwgCommonOpMsg.xsd"/>
+	<xs:include schemaLocation="PwgCopyOpMsg.xsd"/>
+	<xs:include schemaLocation="ScanService.xsd"/>
+	<xs:include schemaLocation="PwgFaxInOpMsg.xsd"/>
+	<xs:include schemaLocation="PwgFaxOutOpMsg.xsd"/>
+	<xs:include schemaLocation="PwgSystemControlOpMsg.xsd"/>
+	<xs:include schemaLocation="PwgNotificationOpMsg.xsd"/>
+	<xs:include schemaLocation="PwgPrintOpMsg.xsd"/>
+	<xs:include schemaLocation="PwgResourceOpMsg.xsd"/>
+	<xs:include schemaLocation="PwgScanOpMsg.xsd"/>
+	<xs:include schemaLocation="PwgSecurityOpMsg.xsd"/>
+	<xs:include schemaLocation="PwgTransformOpMsg.xsd"/>
+	<!--12/06/12 PJZ Normalized Cloud operation names-->
+	<!--12/04/12 PJZ Added experimental Notification service-->
+	<!--12/03/12 PJZ updated Cloud Print Services-->
+	<!--10/11/12 PJZ Merged strawman Cloud Print Service -->
+	<!--03/04/12 PJZ Removed GetTransformJobs-->
+	<!--02/24/12 PJZ Fixed Transform names-->
+	<!--12/11/11 PJZ Added Strawman Cloud Print-->
+	<!--11/30/11 PJZ Added RestartFaxInService-->
+	<!--11/08/11 PJZ Added strawman Transform-->
+	<!--11/02/11 PJZ Added FaxIn-->
+	<!--08/01/11 PJZ Incorporated IDS operations-->
+	<!--06/03/11 PJZ Fixes from May Face to Face-->
+	<!--05/05/11 PJZ Added IdentifyPrinter operation-->
+	<!--05/02/11 PJZ Removed Startup operation from all services except SystemControl-->
+	<!--04/21/11 PJZ Fixed SystemControlService name-->
+	<!--12/20/10 PJZ Removed System from Service operations-->
+	<!--10/19/10 PJZ Changed URI to Uri-->
+	<!--07/26/10 PJZ Added listing of services-->
+	<!--07/23/10 PJZ Changed MFD to System-->
+	<!--04/22/10 PJZ added "Message parameter and made all operations extensible-->
+	<!--03/01/10 PJZ Added CloseJob back in-->
+	<!--02/05/10 PJZ Fixed operation names-->
+	<!--01/02/10 PJZ Initial convenience schema to generate online documentation for all System Service Operations-->
+	<xs:annotation>
+		<xs:documentation xml:lang="en">
+   PWG Semantic Model v3   
+
+	Copyright 2002-2014, IEEE Industry Standards and Technology Organization/PWG - System Working Group. 
+	All rights reserved  
+
+   Editors:  Peter Zehler
+   </xs:documentation>
+	</xs:annotation>
+	<!--                           -->
+	<!--                            -->
+	<xs:element name="ServiceOperations">
+		<xs:complexType>
+			<xs:sequence>
+				<xs:element name="CopyServiceOperations">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="CancelCopyJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelCopyJobRequest"/>
+										<xs:element ref="CancelCopyJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CancelCopyJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelCopyJobsRequest"/>
+										<xs:element ref="CancelCopyJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CancelCurrentCopyJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelCurrentCopyJobRequest"/>
+										<xs:element ref="CancelCurrentCopyJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CancelMyCopyJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelMyCopyJobsRequest"/>
+										<xs:element ref="CancelMyCopyJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CreateCopyJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CreateCopyJobRequest"/>
+										<xs:element ref="CreateCopyJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="DisableCopyService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="DisableCopyServiceRequest"/>
+										<xs:element ref="DisableCopyServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="EnableCopyService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="EnableCopyServiceRequest"/>
+										<xs:element ref="EnableCopyServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetActiveCopyJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetActiveCopyJobsRequest"/>
+										<xs:element ref="GetActiveCopyJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetCopyJobElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetCopyJobElementsRequest"/>
+										<xs:element ref="GetCopyJobElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetCopyJobHistory">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetCopyJobHistoryRequest"/>
+										<xs:element ref="GetCopyJobHistoryResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetCopyServiceElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetCopyServiceElementsRequest"/>
+										<xs:element ref="GetCopyServiceElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="HoldCopyJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="HoldCopyJobRequest"/>
+										<xs:element ref="HoldCopyJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="HoldNewCopyJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="HoldNewCopyJobsRequest"/>
+										<xs:element ref="HoldNewCopyJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PauseCopyService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="PauseCopyServiceRequest"/>
+										<xs:element ref="PauseCopyServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PauseCopyServiceAfterCurrentJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="PauseCopyServiceAfterCurrentJobRequest"/>
+										<xs:element ref="PauseCopyServiceAfterCurrentJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PromoteCopyJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="PromoteCopyJobRequest"/>
+										<xs:element ref="PromoteCopyJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ReleaseCopyJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ReleaseCopyJobRequest"/>
+										<xs:element ref="ReleaseCopyJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ReleaseNewCopyJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ReleaseNewCopyJobsRequest"/>
+										<xs:element ref="ReleaseNewCopyJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="RestartCopyService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="RestartCopyServiceRequest"/>
+										<xs:element ref="RestartCopyServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ResubmitCopyJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ResubmitCopyJobRequest"/>
+										<xs:element ref="ResubmitCopyJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ResumeCopyJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ResumeCopyJobRequest"/>
+										<xs:element ref="ResumeCopyJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ResumeCopyService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ResumeCopyServiceRequest"/>
+										<xs:element ref="ResumeCopyServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SetCopyJobElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SetCopyJobElementsRequest"/>
+										<xs:element ref="SetCopyJobElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SetCopyServiceElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SetCopyServiceElementsRequest"/>
+										<xs:element ref="SetCopyServiceElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ShutdownCopyService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ShutdownCopyServiceRequest"/>
+										<xs:element ref="ShutdownCopyServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SuspendCurrentCopyJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SuspendCurrentCopyJobRequest"/>
+										<xs:element ref="SuspendCurrentCopyJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ValidateCopyJobTicket">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ValidateCopyJobTicketRequest"/>
+										<xs:element ref="ValidateCopyJobTicketResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="FaxOutServiceOperations">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="AddFaxOutHardcopyDocument">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="AddFaxOutHardcopyDocumentRequest"/>
+										<xs:element ref="AddFaxOutHardcopyDocumentResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CancelCurrentFaxOutJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelCurrentFaxOutJobRequest"/>
+										<xs:element ref="CancelCurrentFaxOutJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CancelFaxOutDocument">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelFaxOutDocumentRequest"/>
+										<xs:element ref="CancelFaxOutDocumentResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CancelFaxOutJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelFaxOutJobRequest"/>
+										<xs:element ref="CancelFaxOutJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CancelFaxOutJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelFaxOutJobsRequest"/>
+										<xs:element ref="CancelFaxOutJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CancelMyFaxOutJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelMyFaxOutJobsRequest"/>
+										<xs:element ref="CancelMyFaxOutJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CloseFaxOutJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CloseFaxOutJobRequest"/>
+										<xs:element ref="CloseFaxOutJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CreateFaxOutJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CreateFaxOutJobRequest"/>
+										<xs:element ref="CreateFaxOutJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="DisableFaxOutService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="DisableFaxOutServiceRequest"/>
+										<xs:element ref="DisableFaxOutServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="EnableFaxOutService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="EnableFaxOutServiceRequest"/>
+										<xs:element ref="EnableFaxOutServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetActiveFaxOutJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetActiveFaxOutJobsRequest"/>
+										<xs:element ref="GetActiveFaxOutJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetFaxOutDocumentElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetFaxOutDocumentElementsRequest"/>
+										<xs:element ref="GetFaxOutDocumentElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetFaxOutDocuments">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetFaxOutDocumentsRequest"/>
+										<xs:element ref="GetFaxOutDocumentsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetFaxOutJobElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetFaxOutJobElementsRequest"/>
+										<xs:element ref="GetFaxOutJobElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetFaxOutJobHistory">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetFaxOutJobHistoryRequest"/>
+										<xs:element ref="GetFaxOutJobHistoryResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetFaxOutServiceElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetFaxOutServiceElementsRequest"/>
+										<xs:element ref="GetFaxOutServiceElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="HoldFaxOutJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="HoldFaxOutJobRequest"/>
+										<xs:element ref="HoldFaxOutJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="HoldNewFaxOutJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="HoldNewFaxOutJobsRequest"/>
+										<xs:element ref="HoldNewFaxOutJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PauseFaxOutService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="PauseFaxOutServiceRequest"/>
+										<xs:element ref="PauseFaxOutServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PauseFaxOutServiceAfterCurrentJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="PauseFaxOutServiceAfterCurrentJobRequest"/>
+										<xs:element ref="PauseFaxOutServiceAfterCurrentJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PromoteFaxOutJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="PromoteFaxOutJobRequest"/>
+										<xs:element ref="PromoteFaxOutJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ReleaseFaxOutJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ReleaseFaxOutJobRequest"/>
+										<xs:element ref="ReleaseFaxOutJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ReleaseNewFaxOutJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ReleaseNewFaxOutJobsRequest"/>
+										<xs:element ref="ReleaseNewFaxOutJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="RestartFaxOutService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="RestartFaxOutServiceRequest"/>
+										<xs:element ref="RestartFaxOutServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ResubmitFaxOutJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ResubmitFaxOutJobRequest"/>
+										<xs:element ref="ResubmitFaxOutJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ResumeFaxOutJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ResumeFaxOutJobRequest"/>
+										<xs:element ref="ResumeFaxOutJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ResumeFaxOutService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ResumeFaxOutServiceRequest"/>
+										<xs:element ref="ResumeFaxOutServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SendFaxOutDocument">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SendFaxOutDocumentRequest"/>
+										<xs:element ref="SendFaxOutDocumentResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SendFaxOutUri">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SendFaxOutUriRequest"/>
+										<xs:element ref="SendFaxOutUriResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SetFaxOutDocumentElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SetFaxOutDocumentElementsRequest"/>
+										<xs:element ref="SetFaxOutDocumentElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SetFaxOutJobElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SetFaxOutJobElementsRequest"/>
+										<xs:element ref="SetFaxOutJobElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SetFaxOutServiceElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SetFaxOutServiceElementsRequest"/>
+										<xs:element ref="SetFaxOutServiceElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ShutdownFaxOutService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ShutdownFaxOutServiceRequest"/>
+										<xs:element ref="ShutdownFaxOutServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SuspendCurrentFaxOutJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SuspendCurrentFaxOutJobRequest"/>
+										<xs:element ref="SuspendCurrentFaxOutJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ValidateFaxOutDocumentTicket">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ValidateFaxOutDocumentTicketRequest"/>
+										<xs:element ref="ValidateFaxOutDocumentTicketResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ValidateFaxOutJobTicket">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ValidateFaxOutJobTicketRequest"/>
+										<xs:element ref="ValidateFaxOutJobTicketResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="FaxInServiceOperations">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="CancelCurrentFaxInJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelCurrentFaxInJobRequest"/>
+										<xs:element ref="CancelCurrentFaxInJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CancelFaxInJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelFaxInJobRequest"/>
+										<xs:element ref="CancelFaxInJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CancelFaxInJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelFaxInJobsRequest"/>
+										<xs:element ref="CancelFaxInJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="DisableFaxInService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="DisableFaxInServiceRequest"/>
+										<xs:element ref="DisableFaxInServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="EnableFaxInService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="EnableFaxInServiceRequest"/>
+										<xs:element ref="EnableFaxInServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetActiveFaxInJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetActiveFaxInJobsRequest"/>
+										<xs:element ref="GetActiveFaxInJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetFaxInDocumentElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetFaxInDocumentElementsRequest"/>
+										<xs:element ref="GetFaxInDocumentElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetFaxInDocuments">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetFaxInDocumentsRequest"/>
+										<xs:element ref="GetFaxInDocumentsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetFaxInJobElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetFaxInJobElementsRequest"/>
+										<xs:element ref="GetFaxInJobElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetFaxInJobHistory">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetFaxInJobHistoryRequest"/>
+										<xs:element ref="GetFaxInJobHistoryResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetFaxInServiceElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetFaxInServiceElementsRequest"/>
+										<xs:element ref="GetFaxInServiceElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="HoldFaxInJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="HoldFaxInJobRequest"/>
+										<xs:element ref="HoldFaxInJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="HoldNewFaxInJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="HoldNewFaxInJobsRequest"/>
+										<xs:element ref="HoldNewFaxInJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PauseFaxInService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="PauseFaxInServiceRequest"/>
+										<xs:element ref="PauseFaxInServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PauseFaxInServiceAfterCurrentJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="PauseFaxInServiceAfterCurrentJobRequest"/>
+										<xs:element ref="PauseFaxInServiceAfterCurrentJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PromoteFaxInJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="PromoteFaxInJobRequest"/>
+										<xs:element ref="PromoteFaxInJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ReleaseFaxInJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ReleaseFaxInJobRequest"/>
+										<xs:element ref="ReleaseFaxInJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ReleaseNewFaxInJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ReleaseNewFaxInJobsRequest"/>
+										<xs:element ref="ReleaseNewFaxInJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="RestartFaxInService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="RestartFaxInServiceRequest"/>
+										<xs:element ref="RestartFaxInServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ResumeFaxInJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ResumeFaxInJobRequest"/>
+										<xs:element ref="ResumeFaxInJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ResumeFaxInService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ResumeFaxInServiceRequest"/>
+										<xs:element ref="ResumeFaxInServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SetFaxInServiceElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SetFaxInServiceElementsRequest"/>
+										<xs:element ref="SetFaxInServiceElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ShutdownFaxInService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ShutdownFaxInServiceRequest"/>
+										<xs:element ref="ShutdownFaxInServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SuspendCurrentFaxInJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SuspendCurrentFaxInJobRequest"/>
+										<xs:element ref="SuspendCurrentFaxInJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ValidateFaxInDocumentTicket">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ValidateFaxInDocumentTicketRequest"/>
+										<xs:element ref="ValidateFaxInDocumentTicketResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ValidateFaxInJobTicket">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ValidateFaxInJobTicketRequest"/>
+										<xs:element ref="ValidateFaxInJobTicketResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="NotificationService">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="CancelSubscription">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelSubscriptionRequest"/>
+										<xs:element ref="CancelSubscriptionResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CreateJobSubscriptions">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CreateJobSubscriptionsRequest"/>
+										<xs:element ref="CreateJobSubscriptionsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CreateServiceSubscriptions">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CreateServiceSubscriptionsRequest"/>
+										<xs:element ref="CreateServiceSubscriptionsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetSubscriptionElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetSubscriptionElementsRequest"/>
+										<xs:element ref="GetSubscriptionElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetSubscriptions">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetSubscriptionsRequest"/>
+										<xs:element ref="GetSubscriptionsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="RenewSubscription">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="RenewSubscriptionRequest"/>
+										<xs:element ref="RenewSubscriptionResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="PrintServiceOperations">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="ActivatePrintService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ActivatePrintServiceRequest"/>
+										<xs:element ref="ActivatePrintServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CancelCurrentPrintJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelCurrentPrintJobRequest"/>
+										<xs:element ref="CancelCurrentPrintJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CancelPrintDocument">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelPrintDocumentRequest"/>
+										<xs:element ref="CancelPrintDocumentResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CancelPrintJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelPrintJobRequest"/>
+										<xs:element ref="CancelPrintJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CancelPrintJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelPrintJobsRequest"/>
+										<xs:element ref="CancelPrintJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CancelMyPrintJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelMyPrintJobsRequest"/>
+										<xs:element ref="CancelMyPrintJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ClosePrintJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ClosePrintJobRequest"/>
+										<xs:element ref="ClosePrintJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CreatePrintJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CreatePrintJobRequest"/>
+										<xs:element ref="CreatePrintJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="DeactivatePrintService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="DeactivatePrintServiceRequest"/>
+										<xs:element ref="DeactivatePrintServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="DisablePrintService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="DisablePrintServiceRequest"/>
+										<xs:element ref="DisablePrintServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="EnablePrintService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="EnablePrintServiceRequest"/>
+										<xs:element ref="EnablePrintServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetActivePrintJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetActivePrintJobsRequest"/>
+										<xs:element ref="GetActivePrintJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetPrintDocumentElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetPrintDocumentElementsRequest"/>
+										<xs:element ref="GetPrintDocumentElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetPrintDocuments">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetPrintDocumentsRequest"/>
+										<xs:element ref="GetPrintDocumentsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetPrintJobElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetPrintJobElementsRequest"/>
+										<xs:element ref="GetPrintJobElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetPrintJobHistory">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetPrintJobHistoryRequest"/>
+										<xs:element ref="GetPrintJobHistoryResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetPrintJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetPrintJobsRequest"/>
+										<xs:element ref="GetPrintJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetPrintServiceElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetPrintServiceElementsRequest"/>
+										<xs:element ref="GetPrintServiceElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="HoldNewPrintJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="HoldNewPrintJobsRequest"/>
+										<xs:element ref="HoldNewPrintJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="HoldPrintJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="HoldPrintJobRequest"/>
+										<xs:element ref="HoldPrintJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="IdentifyPrinter">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="IdentifyPrinterRequest"/>
+										<xs:element ref="IdentifyPrinterResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PausePrintService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="PausePrintServiceRequest"/>
+										<xs:element ref="PausePrintServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PausePrintServiceAfterCurrentJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="PausePrintServiceAfterCurrentJobRequest"/>
+										<xs:element ref="PausePrintServiceAfterCurrentJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PrintJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="PrintJobRequest"/>
+										<xs:element ref="PrintJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PrintUri">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="PrintUriRequest"/>
+										<xs:element ref="PrintUriResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PromotePrintJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="PromotePrintJobRequest"/>
+										<xs:element ref="PromotePrintJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PurgePrintJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="PurgePrintJobRequest"/>
+										<xs:element ref="PurgePrintJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ReleaseNewPrintJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ReleaseNewPrintJobsRequest"/>
+										<xs:element ref="ReleaseNewPrintJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ReleasePrintJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ReleasePrintJobRequest"/>
+										<xs:element ref="ReleasePrintJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ReprocessPrintJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ReprocessPrintJobRequest"/>
+										<xs:element ref="ReprocessPrintJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="RestartPrintJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="RestartPrintJobRequest"/>
+										<xs:element ref="RestartPrintJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="RestartPrintService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="RestartPrintServiceRequest"/>
+										<xs:element ref="RestartPrintServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ResubmitPrintJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ResubmitPrintJobRequest"/>
+										<xs:element ref="ResubmitPrintJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ResumePrintJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ResumePrintJobRequest"/>
+										<xs:element ref="ResumePrintJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ResumePrintService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ResumePrintServiceRequest"/>
+										<xs:element ref="ResumePrintServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SendPrintDocument">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SendPrintDocumentRequest"/>
+										<xs:element ref="SendPrintDocumentResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SendPrintUri">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SendPrintUriRequest"/>
+										<xs:element ref="SendPrintUriResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SetPrintDocumentElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SetPrintDocumentElementsRequest"/>
+										<xs:element ref="SetPrintDocumentElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SetPrintJobElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SetPrintJobElementsRequest"/>
+										<xs:element ref="SetPrintJobElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SetPrintServiceElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SetPrintServiceElementsRequest"/>
+										<xs:element ref="SetPrintServiceElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ShutdownPrintService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ShutdownPrintServiceRequest"/>
+										<xs:element ref="ShutdownPrintServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SuspendCurrentPrintJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SuspendCurrentPrintJobRequest"/>
+										<xs:element ref="SuspendCurrentPrintJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ValidatePrintDocumentTicket">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ValidatePrintDocumentTicketRequest"/>
+										<xs:element ref="ValidatePrintDocumentTicketResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ValidatePrintJobTicket">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ValidatePrintJobTicketRequest"/>
+										<xs:element ref="ValidatePrintJobTicketResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:sequence>
+								<xs:element name="AcknowledgePrintDocument">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element ref="AcknowledgePrintDocumentRequest"/>
+											<xs:element ref="AcknowledgePrintDocumentResponse"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="AcknowledgePrintJob">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element ref="AcknowledgePrintJobRequest"/>
+											<xs:element ref="AcknowledgePrintJobResponse"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="FetchPrintDocument">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element ref="FetchPrintDocumentRequest"/>
+											<xs:element ref="FetchPrintDocumentResponse"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="FetchPrintJob">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element ref="FetchPrintJobRequest"/>
+											<xs:element ref="FetchPrintJobResponse"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="GetFetchablePrintJobs">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element ref="GetFetchablePrintJobsRequest"/>
+											<xs:element ref="GetFetchablePrintJobsResponse"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="UpdateFetchablePrintJobs">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element ref="UpdateFetchablePrintJobsRequest"/>
+											<xs:element ref="UpdateFetchablePrintJobsResponse"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="UpdatePrintDocumentState">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element ref="UpdatePrintDocumentStateRequest"/>
+											<xs:element ref="UpdatePrintDocumentStateResponse"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="UpdatePrintJobState">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element ref="UpdatePrintJobStateRequest"/>
+											<xs:element ref="UpdatePrintJobStateResponse"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+								<xs:element name="UpdatePrintServiceState">
+									<xs:complexType>
+										<xs:sequence>
+											<xs:element ref="UpdatePrintServiceStateRequest"/>
+											<xs:element ref="UpdatePrintServiceStateResponse"/>
+										</xs:sequence>
+									</xs:complexType>
+								</xs:element>
+							</xs:sequence>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ResourceServiceOperations">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="DeleteResource">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="DeleteResourceRequest"/>
+										<xs:element ref="DeleteResourceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="DisableResourceService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="DisableResourceServiceRequest"/>
+										<xs:element ref="DisableResourceServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="EnableResourceService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="EnableResourceServiceRequest"/>
+										<xs:element ref="EnableResourceServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetResourceElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetResourceElementsRequest"/>
+										<xs:element ref="GetResourceElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetResourceServiceElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetResourceServiceElementsRequest"/>
+										<xs:element ref="GetResourceServiceElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ListResources">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ListResourcesRequest"/>
+										<xs:element ref="ListResourcesResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="RenewResource">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="RenewResourceRequest"/>
+										<xs:element ref="RenewResourceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ReplaceResource">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ReplaceResourceRequest"/>
+										<xs:element ref="ReplaceResourceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="RestartResourceService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="RestartResourceServiceRequest"/>
+										<xs:element ref="RestartResourceServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="RetrieveResource">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="RetrieveResourceRequest"/>
+										<xs:element ref="RetrieveResourceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SetResourceElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SetResourceElementsRequest"/>
+										<xs:element ref="SetResourceElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SetResourceServiceElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SetResourceElementsRequest"/>
+										<xs:element ref="SetResourceServiceElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ShutdownResourceService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ShutdownResourceServiceRequest"/>
+										<xs:element ref="ShutdownResourceServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="StoreResource">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="StoreResourceRequest"/>
+										<xs:element ref="StoreResourceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="ScanServiceOperations">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="CancelCurrentScanJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelCurrentScanJobRequest"/>
+										<xs:element ref="CancelCurrentScanJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CancelMyScanJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelMyScanJobsRequest"/>
+										<xs:element ref="CancelMyScanJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CancelScanDocument">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelScanDocumentRequest"/>
+										<xs:element ref="CancelScanDocumentResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CancelScanJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelScanJobRequest"/>
+										<xs:element ref="CancelScanJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CancelScanJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelScanJobsRequest"/>
+										<xs:element ref="CancelScanJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CloseScanJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CloseScanJobRequest"/>
+										<xs:element ref="CloseScanJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CreateScanJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CreateScanJobRequest"/>
+										<xs:element ref="CreateScanJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="DisableScanService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="DisableScanServiceRequest"/>
+										<xs:element ref="DisableScanServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="EnableScanService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="EnableScanServiceRequest"/>
+										<xs:element ref="EnableScanServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetActiveScanJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetActiveScanJobsRequest"/>
+										<xs:element ref="GetActiveScanJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetScanDocumentElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetScanDocumentElementsRequest"/>
+										<xs:element ref="GetScanDocumentElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetScanDocuments">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetScanDocumentsRequest"/>
+										<xs:element ref="GetScanDocumentsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetScanJobElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetScanJobElementsRequest"/>
+										<xs:element ref="GetScanJobElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetScanJobHistory">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetScanJobHistoryRequest"/>
+										<xs:element ref="GetScanJobHistoryResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetScanServiceElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetScanServiceElementsRequest"/>
+										<xs:element ref="GetScanServiceElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="HoldNewScanJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="HoldNewScanJobsRequest"/>
+										<xs:element ref="HoldNewScanJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="HoldScanJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="HoldScanJobRequest"/>
+										<xs:element ref="HoldScanJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PauseScanService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="PauseScanServiceRequest"/>
+										<xs:element ref="PauseScanServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PauseScanServiceAfterCurrentJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="PauseScanServiceAfterCurrentJobRequest"/>
+										<xs:element ref="PauseScanServiceAfterCurrentJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PromoteScanJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="PromoteScanJobRequest"/>
+										<xs:element ref="PromoteScanJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ReleaseNewScanJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ReleaseNewScanJobsRequest"/>
+										<xs:element ref="ReleaseNewScanJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ReleaseScanJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ReleaseScanJobRequest"/>
+										<xs:element ref="ReleaseScanJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="RestartScanService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="RestartScanServiceRequest"/>
+										<xs:element ref="RestartScanServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ResubmitScanJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ResubmitScanJobRequest"/>
+										<xs:element ref="ResubmitScanJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ResumeScanJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ResumeScanJobRequest"/>
+										<xs:element ref="ResumeScanJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ResumeScanService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ResumeScanServiceRequest"/>
+										<xs:element ref="ResumeScanServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SetScanDocumentElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SetScanDocumentElementsRequest"/>
+										<xs:element ref="SetScanDocumentElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SetScanJobElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SetScanJobElementsRequest"/>
+										<xs:element ref="SetScanJobElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SetScanServiceElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SetScanServiceElementsRequest"/>
+										<xs:element ref="SetScanServiceElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ShutdownScanService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ShutdownScanServiceRequest"/>
+										<xs:element ref="ShutdownScanServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SuspendCurrentScanJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SuspendCurrentScanJobRequest"/>
+										<xs:element ref="SuspendCurrentScanJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ValidateScanDocumentTicket">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ValidateScanDocumentTicketRequest"/>
+										<xs:element ref="ValidateScanDocumentTicketResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ValidateScanJobTicket">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ValidateScanJobTicketRequest"/>
+										<xs:element ref="ValidateScanJobTicketResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="TransformServiceOperations">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="CancelCurrentTransformJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelCurrentTransformJobRequest"/>
+										<xs:element ref="CancelCurrentTransformJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CancelMyTransformJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelMyTransformJobsRequest"/>
+										<xs:element ref="CancelMyTransformJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CancelTransformDocument">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelTransformDocumentRequest"/>
+										<xs:element ref="CancelTransformDocumentResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CancelTransformJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelTransformJobRequest"/>
+										<xs:element ref="CancelTransformJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CancelTransformJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CancelTransformJobsRequest"/>
+										<xs:element ref="CancelTransformJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CloseTransformJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CloseTransformJobRequest"/>
+										<xs:element ref="CloseTransformJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="CreateTransformJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="CreateTransformJobRequest"/>
+										<xs:element ref="CreateTransformJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="DisableTransformService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="DisableTransformServiceRequest"/>
+										<xs:element ref="DisableTransformServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="EnableTransformService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="EnableTransformServiceRequest"/>
+										<xs:element ref="EnableTransformServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetActiveTransformJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetActiveTransformJobsRequest"/>
+										<xs:element ref="GetActiveTransformJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetTransformDocumentElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetTransformDocumentElementsRequest"/>
+										<xs:element ref="GetTransformDocumentElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetTransformDocuments">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetTransformDocumentsRequest"/>
+										<xs:element ref="GetTransformDocumentsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetTransformJobElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetTransformJobElementsRequest"/>
+										<xs:element ref="GetTransformJobElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetTransformJobHistory">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetTransformJobHistoryRequest"/>
+										<xs:element ref="GetTransformJobHistoryResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetTransformServiceElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetTransformServiceElementsRequest"/>
+										<xs:element ref="GetTransformServiceElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="HoldNewTransformJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="HoldNewTransformJobsRequest"/>
+										<xs:element ref="HoldNewTransformJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="HoldTransformJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="HoldTransformJobRequest"/>
+										<xs:element ref="HoldTransformJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ListInputDocumentFormats">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ListInputDocumentFormatsRequest"/>
+										<xs:element ref="ListInputDocumentFormatsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ListOutputDocumentFormats">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ListOutputputDocumentFormatsRequest"/>
+										<xs:element ref="ListOutPutputDocumentFormatsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PauseTransformService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="PauseTransformServiceRequest"/>
+										<xs:element ref="PauseTransformServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PauseTransformServiceAfterCurrentJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="PauseTransformServiceAfterCurrentJobRequest"/>
+										<xs:element ref="PauseTransformServiceAfterCurrentJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PromoteTransformJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="PromoteTransformJobRequest"/>
+										<xs:element ref="PromoteTransformJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PurgeTransformJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="PurgeTransformJobRequest"/>
+										<xs:element ref="PurgeTransformJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ReleaseNewTransformJobs">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ReleaseNewTransformJobsRequest"/>
+										<xs:element ref="ReleaseNewTransformJobsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ReleaseTransformJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ReleaseTransformJobRequest"/>
+										<xs:element ref="ReleaseTransformJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="RestartTransformService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="RestartTransformServiceRequest"/>
+										<xs:element ref="RestartTransformServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ResubmitTransformJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ResubmitTransformJobRequest"/>
+										<xs:element ref="ResubmitTransformJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ResumeTransformJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ResumeTransformJobRequest"/>
+										<xs:element ref="ResumeTransformJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ResumeTransformService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ResumeTransformServiceRequest"/>
+										<xs:element ref="ResumeTransformServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SendTransformDocument">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SendTransformDocumentRequest"/>
+										<xs:element ref="SendTransformDocumentResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SendTransformUri">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SendTransformUriRequest"/>
+										<xs:element ref="SendTransformUriResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SetTransformDocumentElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SetTransformDocumentElementsRequest"/>
+										<xs:element ref="SetTransformDocumentElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SetTransformJobElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SetTransformJobElementsRequest"/>
+										<xs:element ref="SetTransformJobElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SetTransformServiceElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SetTransformServiceElementsRequest"/>
+										<xs:element ref="SetTransformServiceElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ShutdownTransformService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ShutdownTransformServiceRequest"/>
+										<xs:element ref="ShutdownTransformServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SuspendCurrentTransformJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SuspendCurrentTransformJobRequest"/>
+										<xs:element ref="SuspendCurrentTransformJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ValidateTransformDocumentTicket">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ValidateTransformDocumentTicketRequest"/>
+										<xs:element ref="ValidateTransformDocumentTicketResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ValidateTransformJobTicket">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ValidateTransformJobTicketRequest"/>
+										<xs:element ref="ValidateTransformJobTicketResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+				<xs:element name="SystemControlServiceOperations">
+					<xs:complexType>
+						<xs:sequence>
+							<xs:element name="DeleteService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="DeleteServiceRequest"/>
+										<xs:element ref="DeleteServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="DisableAllServices">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="DisableAllServicesRequest"/>
+										<xs:element ref="DisableAllServicesResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="EnableAllServices">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="EnableAllServicesRequest"/>
+										<xs:element ref="EnableAllServicesResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="GetSystemElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="GetSystemElementsRequest"/>
+										<xs:element ref="GetSystemElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ListAllServices">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ListAllServicesRequest"/>
+										<xs:element ref="ListAllServicesResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PauseAllServices">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="PauseAllServicesRequest"/>
+										<xs:element ref="PauseAllServicesResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="PauseAllServicesAfterCurrentJob">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="PauseAllServicesAfterCurrentJobRequest"/>
+										<xs:element ref="PauseAllServicesAfterCurrentJobResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="RestartAllServices">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="RestartAllServicesRequest"/>
+										<xs:element ref="RestartAllServicesResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="RestartService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="RestartServiceRequest"/>
+										<xs:element ref="RestartServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ResumeAllServices">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ResumeAllServicesRequest"/>
+										<xs:element ref="ResumeAllServicesResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SetSystemElements">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="SetSystemElementsRequest"/>
+										<xs:element ref="SetSystemElementsResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ShutdownAllServices">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ShutdownAllServicesRequest"/>
+										<xs:element ref="ShutdownAllServicesResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="ShutdownService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="ShutdownServiceRequest"/>
+										<xs:element ref="ShutdownServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="StartupAllServices">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="StartupAllServicesRequest"/>
+										<xs:element ref="StartupAllServicesResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="StartupService">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element ref="StartupServiceRequest"/>
+										<xs:element ref="StartupServiceResponse"/>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+							<xs:element name="SecurityOperations">
+								<xs:complexType>
+									<xs:sequence>
+										<xs:element name="GetSecurityElements">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element ref="GetSecurityElementsRequest"/>
+													<xs:element ref="GetSecurityElementsResponse"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+										<xs:element name="RequestSecurityElements">
+											<xs:complexType>
+												<xs:sequence>
+													<xs:element ref="RequestSecurityElementsRequest"/>
+													<xs:element ref="RequestSecurityElementsResponse"/>
+												</xs:sequence>
+											</xs:complexType>
+										</xs:element>
+									</xs:sequence>
+								</xs:complexType>
+							</xs:element>
+						</xs:sequence>
+					</xs:complexType>
+				</xs:element>
+			</xs:sequence>
+		</xs:complexType>
+	</xs:element>
+</xs:schema>
